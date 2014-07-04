@@ -250,6 +250,11 @@ html, body {
 ////////////////////////////////////////////////////////////////////////////////
 // This is all the stuff with the light background in the left half of the page
 
+.logo {
+  margin-left: 20%;
+  margin-top: 20px;
+}
+
 .content {
   // to place content above the dark box
   position: relative;
