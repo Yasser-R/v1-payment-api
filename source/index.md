@@ -2,13 +2,16 @@
 title: API Reference
 
 language_tabs:
-  - shell
+  - json
+  - php
   - ruby
   - python
+  - node.js
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://www.dwolla.com/applications/create' target="_blank">Get API Credentials</a>
+  - <a href='https://sandbox.uat.dwolla.com/' target="_blank">Sandbox Admin</a>
+  - <a href='http://github.com/tripit/slate' target="_blank">Documentation Powered by Slate</a>
 
 includes:
   - errors
@@ -24,7 +27,7 @@ We have language bindings in Shell, Ruby, and Python! You can view code examples
 
 This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
-# Authentication
+# Blah
 
 > To authorize, use this code:
 
