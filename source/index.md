@@ -14,10 +14,14 @@ toc_footers:
   - <a href='http://github.com/tripit/slate' target="_blank">Documentation Powered by Slate</a>
 
 includes:
+  # overview
   - introduction
   - authentication
   - errors
+  - metadata
   - webhooks
+
+  # resources
   - checkouts
   - fundingsources
   - requests
@@ -30,6 +34,7 @@ includes:
   - send
   - refund
  
+  # misc
   - kittens
   - changelog
 
