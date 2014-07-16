@@ -29,7 +29,6 @@ To create a PayLater Checkout, set `checkoutWithApi` to `true`.
   "redirect": "http://www.something.com/return",
   "checkoutWithApi": "false",
   "orderId": "foo123",
-  "profileId": "8c95ba86-89de-468d-b390-2bc1495266c2",
   "allowFundingSources": "true",
   "additionalFundingSources": "true",
   "purchaseOrder": {
@@ -42,7 +41,12 @@ To create a PayLater Checkout, set `checkoutWithApi` to `true`.
 			}
 		],
     "destinationId": "812-740-4294",
-    "total": 15.00
+    "total": 15.00,
+    "notes": "blahhh",
+    "metadata": {
+    	"key1": "something",
+    	"key2": "another thing"
+    }
   }
 }
 ```
@@ -96,6 +100,7 @@ discount | yes | Order discount (must be negative).  For order display purposes 
 shipping | yes | Order shipping total.  For order display purposes only, not persisted.
 notes | yes | A note of max 255 chars. to attach to the resulting payment.
 facilitatorAmount | yes | Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to `0`, facilitator fee is disabled for transaction.
+metadata | yes | An object containing up to 10 key-value pairs of your choice which is persisted with the resulting transaction.  [Learn about Metadata](#metadata)
 orderItems | yes | An array of JSON object(s) which contain a `name`, `description`, `quantity`, and `price`.
 
 
@@ -116,7 +121,7 @@ Fetch an existing checkout by its `checkoutId` to get its status and details.
         "Status": "Completed",
         "FundingSource": "Balance",
         "TransactionId": 69960,
-        "ProfileId": "8c95ba86-89de-468d-b390-2bc1495266c2",
+        "ProfileId": null,
         "DestinationTransactionId": 69959,
         "OrderItems": [
             {
@@ -136,12 +141,13 @@ Fetch an existing checkout by its `checkoutId` to get its status and details.
 `GET https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}? client_id={key}&client_secret={secret}`
 
 ### Response Parameters
-This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems` of the checkout in addition to some additional information:
+This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems`, `ProfileId`, `Metadata` of the checkout in addition to some additional information:
 
 Parameter | Description
 --------- | -----------
 Status | Status of the checkout.  <br>Possible values: `Created`, `ReadyForApiCheckout`, `Expired`, `Completed`
 FundingSource | Type of funding source used to complete the checkout.  <br>Possible values: `Balance`, `Bank`, `null`
-TransactionId | The resulting transaction's ID.  This is the _Sender's_ Transaction ID.
+TransactionId | For the resulting payment, this is the [_Sender's_ Transaction ID](#how-transactions-work).
+DestinationTransactionId | For the resulting payment, this is the [_Recipient's_ Transaction ID](#how-transactions-work).
 
 ## Complete a PayLater Checkout
