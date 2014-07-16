@@ -1,3 +1,3 @@
 # Contacts
 
-## Retrieve Contacts
+## Get a user's contacts
