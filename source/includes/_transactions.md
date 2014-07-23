@@ -19,6 +19,9 @@ Additional transactions are created:
  - if the payment is over $10 it will incur a $0.25 _Dwolla Fee_
  - if there is a facilitator fee
 
+### Transaction Types
+
+### Transaction Statuses
 
 ## Get all transactions
 
