@@ -1,11 +1,11 @@
 # MassPay
 
-## Create Job
+## Create a new Job
 
-## Get all Jobs
+## List all Jobs
 
-## Get a Job
+## Retrieve a Job
 
-## Get a Job's Items
+## List a Job's Items
 
-## Get a Job's Item
+## Retrieve a Job's Item
