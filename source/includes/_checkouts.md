@@ -141,7 +141,7 @@ Fetch an existing checkout by its `checkoutId` to get its status and details.
 `GET https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}? client_id={key}&client_secret={secret}`
 
 ### Response Parameters
-This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems`, `ProfileId`, `Metadata` of the checkout in addition to some additional information:
+This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems`, `ProfileId`, `Metadata` of the checkout and some additional information:
 
 Parameter | Description
 --------- | -----------
@@ -151,3 +151,54 @@ TransactionId | For the resulting payment, this is the [_Sender's_ Transaction I
 DestinationTransactionId | For the resulting payment, this is the [_Recipient's_ Transaction ID](#how-transactions-work).
 
 ## Complete a PayLater Checkout
+
+Finish a PayLater checkout.  This will attempt to create the payment.
+
+```json
+{
+  "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
+  "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"
+}
+```
+
+> If successful, you'll get back:
+
+```
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": {
+        "Amount": 15,
+        "CheckoutId": "041f503b-bf68-4d35-83b3-bc6304a98e78",
+        "ClearingDate": "",
+        "OrderId": "foo",
+        "TestMode": false,
+        "TransactionId": 69958,
+        "DestinationTransactionId": 69957
+    }
+}
+```
+
+> Otherwise, you might get an error like this one:
+
+```
+{
+	"Success":false,
+	"Message":"There are insufficient funds for this transaction.",
+	"Response":null
+}
+```
+
+### HTTP Request
+`POST https://uat.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}/complete`
+
+### Response Parameters
+
+Parameter | Description
+--------- | -----------
+Amount | Payment amount
+CheckoutId | Same Checkout ID you passed in!
+OrderId | Any order ID provided when the checkout was created.  Otherwise, `null`.
+TestMode | Boolean.  True if `Checkout.test` was set to true when checkout was created.
+TransactionId | For the resulting payment, this is the [_Sender's_ Transaction ID](#how-transactions-work).
+DestinationTransactionId | For the resulting payment, this is the [_Recipient's_ Transaction ID](#how-transactions-work).
