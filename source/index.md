@@ -6,7 +6,7 @@ language_tabs:
   - php
   - ruby
   - python
-  - node.js
+  - js: node.js
 
 toc_footers:
   - <a href='https://www.dwolla.com/applications/create' target="_blank">Get API Credentials</a>
@@ -17,6 +17,8 @@ includes:
   # overview
   - introduction
   - authentication
+  - oauth
+  - responses
   - errors
   - metadata
   - webhooks

@@ -1,5 +1,5 @@
 # Users
 
-## Lookup
+## Lookup User
 
 ## Get Account Info
