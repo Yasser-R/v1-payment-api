@@ -1,33 +1,53 @@
 # Authentication
 
-> To authorize, use this code:
+> You'll need to provide your Application key and secret when you initialize our libraries.
+
+
+```js
+var Dwolla = require('dwolla')("key here", "secret here");
+
+Dwolla.setToken("token goes here");
+```
 
 ```ruby
-require 'kittn'
+require 'dwolla'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+# set API keys
+Dwolla::api_key = "blahblahblah"
+Dwolla::api_secret = "shhhhhh"
+
+# set an OAuth access token
+Dwolla::token = "JRRTolkien"
 ```
+```php
+<?php
+require 'dwolla.php';
 
+// Instantiate a new Dwolla REST Client
+$Dwolla = new DwollaRestClient("key goes here", "secret goes here");
+
+// Set an OAuth access token:
+$Dwolla->setToken("token goes here");
+?>
+```
 ```python
-import 'kittn'
+from dwolla import DwollaClientApp, DwollaUser
 
-api = Kittn.authorize('meowmeowmeow')
+# Instantiate a new Dwolla client
+Dwolla = DwollaClientApp("key goes here", "secret goes here")
+
+# set an OAuth access token
+DwollaUser = DwollaUser("token goes here")
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+To interact with the API, you will need API keys.  [Create a consumer application](https://www.dwolla.com/applications/create) in order to get an Application `key` and `secret`.
 
-> Make sure to replace `meowmeowmeow` with your API key.
+Some API endpoints only require your application `key` and `secret` (for instance, [creating a checkout](#create-a-checkout) or [looking up a user](#lookup-user)), but most require an OAuth `access_token`.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+For endpoints that require an OAuth access token, it should be included in the Authorization HTTP header like so:
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`Authorization: Bearer <T0K3N_H3R3>`
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+Needless to say, you should replace `<T0K3N_H3R3>` with an OAuth `access_token`!
 </aside>
