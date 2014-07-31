@@ -24,6 +24,7 @@ includes:
   - webhooks
 
   # resources
+  - accounts
   - checkouts
   - fundingsources
   - requests
