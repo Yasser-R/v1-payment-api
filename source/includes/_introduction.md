@@ -1,7 +1,5 @@
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Dwolla API. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. 
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Example requests are available in JSON, PHP, Ruby, Python, and Node.js in the dark area to the right. JSON is shown by default, however, the tabs in the top right can be used to switch the language in which the examples are displayed in.

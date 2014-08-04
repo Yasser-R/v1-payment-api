@@ -19,7 +19,6 @@ includes:
   - authentication
   - oauth
   - responses
-  - errors
   - metadata
   - webhooks
 
@@ -38,7 +37,6 @@ includes:
   - refund
  
   # misc
-  - kittens
   - changelog
 
 search: true
