@@ -18,7 +18,6 @@ includes:
   - introduction
   - authentication
   - oauth
-  - responses
   - metadata
   - webhooks
 
