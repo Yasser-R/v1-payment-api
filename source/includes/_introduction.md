@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Dwolla API. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. 
+Welcome to the Dwolla API docs. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. 
 
 Example requests are available in JSON, PHP, Ruby, Python, and Node.js in the dark area to the right. JSON is shown by default, however, the tabs in the top right can be used to switch the language in which the examples are displayed in.
 
@@ -25,6 +25,8 @@ A handful of libraries are officially maintained, and others are community maint
 - C# / .NET: [dwolla.net](https://github.com/justinsoliz/dwolla.net)
 
 ## Making Requests
+
+All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.
 
 ```
 POST https://www.dwolla.com/oauth/rest/transactions/send
@@ -54,7 +56,7 @@ Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET 
 
 ## Responses
 
-Responses are contained in an _envelope_.
+> Happy response
 
 ```
 {
@@ -63,3 +65,21 @@ Responses are contained in an _envelope_.
     "Response": 71332
 }
 ```
+
+> Unsuccessful response
+
+```
+{
+	"Success": false,
+	"Message": "Invalid access token.",
+	"Response": null
+}
+```
+
+Responses are always JSON encoded and are contained in an _envelope_.  
+
+That means every API response contains: 
+
+- `Success`, a boolean indicating whether or not the call was successful, or resulted in an error
+- `Message`, an error message if the API call was unsuccessful, or `"Success"` otherwise
+- `Response`, the actual data returned by the API call.
