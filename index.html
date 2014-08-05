@@ -12,7 +12,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["json","php","ruby","python","node.js"]);
+          setupLanguages(["json","php","ruby","python","js"]);
         });
       </script>
   </head>
@@ -38,105 +38,274 @@
         
           <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Dwolla API. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. </p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>Example requests are available in JSON, PHP, Ruby, Python, and Node.js in the dark area to the right. JSON is shown by default, however, the tabs in the top right can be used to switch the language in which the examples are displayed in.</p>
 
-<p>This example API documentation page was created with <a href="http://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&rsquo;s documentation.</p>
+<h2 id="helper-libraries">Helper Libraries</h2>
+
+<p>A handful of libraries are officially maintained, and others are community maintained.</p>
+
+<ul>
+<li>PHP: <a href="https://github.com/Dwolla/dwolla-php">dwolla-php</a></li>
+<li>Ruby: <a href="https://github.com/Dwolla/dwolla-ruby">dwolla-ruby</a></li>
+<li>Python: <a href="https://github.com/Dwolla/dwolla-python">dwolla-python</a></li>
+<li>Node.JS: <a href="https://github.com/Dwolla/dwolla-node">dwolla-node</a></li>
+<li>Java: <a href="https://github.com/Dwolla/dwolla-java">dwolla-java</a></li>
+<li>Clojure: <a href="https://github.com/Dwolla/dwolla-clojure">dwolla-clojure</a></li>
+<li>Scala: <a href="https://github.com/Dwolla/dwolla-scala">dwolla-scala</a></li>
+<li>Windows 8 SDK
+
+<ul>
+<li><a href="http://www.nuget.org/packages/Dwolla.InAppSDKWP8/">Phone</a></li>
+<li><a href="http://www.nuget.org/packages/Dwolla.InAppSDK/">XAML</a></li>
+<li><a href="http://www.nuget.org/packages/Dwolla.InAppSDK.JS/">JS</a></li>
+</ul></li>
+<li>iOS: <a href="https://github.com/Dwolla/dwolla-ios">dwolla-ios</a></li>
+<li>OS X Cocoa: <a href="https://github.com/Dwolla/dwolla-cocoa">dwolla-cocoa</a></li>
+<li>Perl: <a href="http://search.cpan.org/dist/WebService-Dwolla/">WebService-Dwolla</a></li>
+<li>C# / .NET: <a href="https://github.com/justinsoliz/dwolla.net">dwolla.net</a></li>
+</ul>
+
+<h2 id="making-requests">Making Requests</h2>
+<pre class="highlight plaintext">POST https://www.dwolla.com/oauth/rest/transactions/send
+Content-Type: application/json
+
+{
+    amount: 15.23,
+    destinationId: 'gordon@dwolla.com',
+    destinationType: 'Email',
+    pin: 1234
+}
+</pre>
+
+<p><code class="prettyprint">POST</code> requests must have a JSON encoded body and the 
+<code class="prettyprint">Content-Type: application/json</code> header.</p>
+
+<p><code class="prettyprint">GET</code> requests have parameters provided in the querysting.</p>
+<pre class="highlight plaintext">GET https://www.dwolla.com/oauth/rest/transactions?client_id=XYZ&amp;client_secret=JJJ&amp;limit=10
+</pre>
+
+<p><aside class="notice">
+Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</a> all GET querystring parameters!
+</aside></p>
+
+<h2 id="responses">Responses</h2>
+
+<p>Responses are contained in an <em>envelope</em>.</p>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mi">71332</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
           <h1 id="authentication">Authentication</h1>
 
 <blockquote>
-<p>To authorize, use this code:</p>
+<p>You&rsquo;ll need to provide your Application key and secret when you initialize our libraries.</p>
 </blockquote>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">Dwolla</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'dwolla'</span><span class="p">)(</span><span class="s2">"key here"</span><span class="p">,</span> <span class="s2">"secret here"</span><span class="p">);</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">setToken</span><span class="p">(</span><span class="s2">"token goes here"</span><span class="p">);</span>
 </pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
+<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'dwolla'</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
+<span class="c1"># set API keys</span>
+<span class="no">Dwolla</span><span class="o">::</span><span class="n">api_key</span> <span class="o">=</span> <span class="s2">"blahblahblah"</span>
+<span class="no">Dwolla</span><span class="o">::</span><span class="n">api_secret</span> <span class="o">=</span> <span class="s2">"shhhhhh"</span>
+
+<span class="c1"># set an OAuth access token</span>
+<span class="no">Dwolla</span><span class="o">::</span><span class="n">token</span> <span class="o">=</span> <span class="s2">"JRRTolkien"</span>
 </pre>
-<pre class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="k">require</span> <span class="s1">'dwolla.php'</span><span class="p">;</span>
+
+<span class="c1">// Instantiate a new Dwolla REST Client
+</span><span class="nv">$Dwolla</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaRestClient</span><span class="p">(</span><span class="s2">"key goes here"</span><span class="p">,</span> <span class="s2">"secret goes here"</span><span class="p">);</span>
+
+<span class="c1">// Set an OAuth access token:
+</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">setToken</span><span class="p">(</span><span class="s2">"token goes here"</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">dwolla</span> <span class="kn">import</span> <span class="n">DwollaClientApp</span><span class="p">,</span> <span class="n">DwollaUser</span>
+
+<span class="c"># Instantiate a new Dwolla client</span>
+<span class="n">Dwolla</span> <span class="o">=</span> <span class="n">DwollaClientApp</span><span class="p">(</span><span class="s">"key goes here"</span><span class="p">,</span> <span class="s">"secret goes here"</span><span class="p">)</span>
+
+<span class="c"># set an OAuth access token</span>
+<span class="n">DwollaUser</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="p">(</span><span class="s">"token goes here"</span><span class="p">)</span>
 </pre>
 
-<blockquote>
-<p>Make sure to replace <code class="prettyprint">meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>To interact with the API, you will need API keys.  <a href="https://www.dwolla.com/applications/create">Create a consumer application</a> in order to get an Application <code class="prettyprint">key</code> and <code class="prettyprint">secret</code>.</p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Some API endpoints only require your application <code class="prettyprint">key</code> and <code class="prettyprint">secret</code> (for instance, <a href="#create-a-checkout">creating a checkout</a> or <a href="#lookup-user">looking up a user</a>), but most require an OAuth <code class="prettyprint">access_token</code>.</p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>For endpoints that require an OAuth access token, it should be included in the Authorization HTTP header like so:</p>
 
-<p><code class="prettyprint">Authorization: meowmeowmeow</code></p>
+<p><code class="prettyprint">Authorization: Bearer &lt;T0K3N_H3R3&gt;</code></p>
 
 <p><aside class="notice">
-You must replace <code class="prettyprint">meowmeowmeow</code> with your personal API key.
+Needless to say, you should replace <code class="prettyprint">&lt;T0K3N_H3R3&gt;</code> with an OAuth <code class="prettyprint">access_token</code>!
 </aside></p>
 
-          <h1 id="errors">Errors</h1>
+          <h1 id="oauth">OAuth</h1>
 
-<p><aside class="notice">This error section is stored in a separate file in <code class="prettyprint">includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files&hellip;just save them to the <code class="prettyprint">includes</code> folder and add them to the top of your <code class="prettyprint">index.md</code>&rsquo;s frontmatter. Files are included in the order listed.</aside></p>
+<h2 id="request-authorization">Request Authorization</h2>
 
-<p>The Kittn API uses the following error codes:</p>
+<h2 id="finish-authorization">Finish Authorization</h2>
 
-<table><thead>
-<tr>
-<th>Error Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>400</td>
-<td>Bad Request &ndash; Your request sucks</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized &ndash; Your API key is wrong</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden &ndash; The kitten requested is hidden for administrators only</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found &ndash; The specified kitten could not be found</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed &ndash; You tried to access a kitten with an invalid method</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t json</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone &ndash; The kitten requested has been removed from our servers</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&rsquo;m a teapot</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests &ndash; You&rsquo;re requesting too many kittens! Slown down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable &ndash; We&rsquo;re temporarially offline for maintanance. Please try again later.</td>
-</tr>
-</tbody></table>
+<h2 id="refresh-authorization">Refresh Authorization</h2>
+
+<p>{
+access_token: &ldquo;hr1tSJk23tOv9RxR8cQuDpUD/kpUgf0cb9WfKtRoPxTw8ymbVt&rdquo;
+expires_in: 3600
+refresh_token: &ldquo;lqopeyjq5AJln5fpMedElUULz+XBNNw9nAkIinxE0g4aEzxmDc&rdquo;
+refresh_expires_in: 2147483647
+token_type: &ldquo;bearer&rdquo;
+}</p>
 
           <h1 id="metadata">Metadata</h1>
 
           <h1 id="webhooks">Webhooks</h1>
+
+          <h1 id="auto-withdrawal">Auto Withdrawal</h1>
+
+<p>Dwolla allows users to withdraw funds from their Dwolla balance funding sources associated with the account. The API exposes methods to toggle auto-withdrawal functionality.</p>
+
+<p>These endpoints require an OAuth token with the <code class="prettyprint">ManageAccount</code> scope. </p>
+
+<h2 id="get-auto-withdrawal-status">Get Auto Withdrawal Status</h2>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * Example 1:
+ * Get autowithdrawal status for the 
+ * account associted with the OAuth token
+ */
+
+$status = $Dwolla-&gt;getAutoWithdrawalStatus();
+if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($status); } // Print status
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
+<span class="c1">#   Get autowithdrawal status of the user</span>
+<span class="c1">#   associated with the current OAuth token</span>
+
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="p">.</span><span class="nf">get_autowithdrawal_status</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+        Fetch autowithdraw status for the account
+        associated with the current OAuth token.
+'''</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_autowithdraw_status</span>
+<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Find out whether or not auto-withdrawal is enabled for the user
+ * associated with the OAuth token
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">getAutoWithdrawalStatus</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl?oauth_token={token}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>A valid OAuth token with <code class="prettyprint">ManageAccount</code> scope.</td>
+</tr>
+</tbody></table>
+
+<h2 id="set-auto-withdrawal-status">Set Auto Withdrawal Status</h2>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * Example 1:
+ * Enable autowithdraw for funding source '12345' under the
+ * account associted with the OAuth token
+ */
+
+$status = $Dwolla-&gt;toggleAutoWithdrawalStatus('true', '12345');
+if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($status); } // Print status
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
+<span class="c1">#   Enable autowithdraw for funding source '12345' under the</span>
+<span class="c1">#   associated with the current OAuth token</span>
+
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="p">.</span><span class="nf">auto_withdrawal</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="s1">'12345'</span><span class="p">)</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+        nable autowithdraw for funding source '12345' under the
+        associated with the current OAuth token.
+'''</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">set_autowithdraw_status</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="s">'12345'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Enable auto-withdraw for the user associated with the OAuth token,
+ * for the funding ID '1234567'.
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">toggleAutoWithdraw</span><span class="p">(</span><span class="s1">'true'</span><span class="p">,</span> <span class="s1">'1234567'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl
+Content-Type: application/json
+</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>A valid OAuth token with <code class="prettyprint">ManageAccount</code> scope.</td>
+</tr>
+<tr>
+<td>enabled</td>
+<td>no</td>
+<td>Boolean value of autowithdrawal feature.</td>
+</tr>
+<tr>
+<td>fundingId</td>
+<td>no</td>
+<td>Funding source ID of account to autowithdraw funds to.</td>
+</tr>
+</tbody></table>
 
           <h1 id="checkouts">Checkouts</h1>
 
@@ -479,29 +648,1175 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 
           <h1 id="money-requests">Money Requests</h1>
 
-<h2 id="create">Create</h2>
+<p>Dwolla&rsquo;s API exposes methods to view, create, and fulfill/cancel money requests. All of the methods below require the <code class="prettyprint">Request</code> OAuth token scope.</p>
 
 <h2 id="list-money-requests">List Money Requests</h2>
 
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries: </p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Get list of pending requests
+ **/
+$requests = $Dwolla-&gt;requests();
+if(!$requests) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($requests); }
+</pre>
+<pre class="highlight ruby"><span class="c1"># Example 1: Get all pending requests</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">get</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1:
+      Get a list of pending requests
+      for the user with the given oauth token
+'''</span>
+<span class="n">pending_requests</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_pending_requests</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pending_requests</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * List pending money requests for the user associated with the
+ * OAuth token
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">requests</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/requests/?oauth_token={token}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>yes</td>
+<td>Earliest date and time for which to retrieve pending requests (defaults to 0300 UTC for current day)</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>yes</td>
+<td>Latest date and time for which to retrieve pending requests (defaults to UTC current date/time)</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>yes</td>
+<td>Number of pending requests to retrieve (defaults to 20, must be in range of 1-200)</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">640</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-693-9484"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Spencer Hunter"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"Destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-706-1396"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"DateRequested"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-23T21:49:06Z"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="w"> </span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Transaction"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"CancelledBy"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"DateCancelled"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SenderAssumeFee"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"AdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"Metadata"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w"> 
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">663</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-693-9484"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Spencer Hunter"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"Destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-706-1396"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"DateRequested"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-25T21:58:01Z"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="w"> </span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Transaction"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"CancelledBy"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"DateCancelled"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SenderAssumeFee"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"AdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"Metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"InvoiceDate"</span><span class="p">:</span><span class="w">  </span><span class="s2">"12-06-2014"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"Priority"</span><span class="p">:</span><span class="w"> </span><span class="s2">"High"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"TShirtSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Small"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"blah"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
 <h2 id="lookup-money-request">Lookup Money Request</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries: </p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Get request by ID
+ **/
+$request = $Dwolla-&gt;requestById($requestId);
+if(!$request) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($request); }
+</pre>
+<pre class="highlight ruby"><span class="c1"># Example 1: Get request details for request '12345'</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'12345'</span><span class="p">)</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1:
+      Get detailed information for the request
+      with the given 'request_id'
+'''</span>
+<span class="n">request_id</span> <span class="o">=</span> <span class="s">'2209516'</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Fetch detailed information about a money request by specific id '12345678'
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">requestById</span><span class="p">(</span><span class="s1">'12345678'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/requests/{request_id}?oauth_token={token}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
+</tr>
+<tr>
+<td>request_id</td>
+<td>no</td>
+<td>Request ID of the target request to look-up.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">660</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-693-9484"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Spencer Hunter"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"Destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-706-1396"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DateRequested"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-25T17:38:26Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pending"</span><span class="w"> </span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Transaction"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"CancelledBy"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"DateCancelled"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"SenderAssumeFee"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+        </span><span class="s2">"Metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"InvoiceDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12-06-2014"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Priority"</span><span class="p">:</span><span class="w"> </span><span class="s2">"High"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"TShirtSize"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Small"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"blah"</span><span class="p">:</span><span class="w"> </span><span class="s2">"blah"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h2 id="create">Create</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Request money ($1.00) to a Dwolla ID 
+ **/
+$requestId = $Dwolla-&gt;request('812-713-9234', 1.00);
+if(!$requestId) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { echo("Request ID: {$requestId} \n"); }
+</pre>
+<pre class="highlight ruby"><span class="c1"># Example 1: Request 1.00 from a Dwolla ID</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span><span class="ss">:sourceId</span><span class="o">=&gt;</span> <span class="s1">'812-114-1111'</span><span class="p">,</span> <span class="ss">:amount</span><span class="o">=&gt;</span> <span class="s1">'1.00'</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1:
+      Initiate a money request
+'''</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">request_funds</span><span class="p">(</span><span class="s">'1.00'</span><span class="p">,</span> <span class="s">'reflector@dwolla.com'</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="s">'Email'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Request $5 from Source ID '812-111-1111'
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="s1">'812-111-1111'</span><span class="p">,</span> <span class="s1">'5.00'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
+</tr>
+<tr>
+<td>sourceId</td>
+<td>no</td>
+<td>ID of user to request funds from. Must be either a Dwolla ID, FB ID, Twitter screen-name, phone number, or e-mail address.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>no</td>
+<td>Amount of funds to request from user (please exclude currency symbols; this will cause your request to be rejected).</td>
+</tr>
+<tr>
+<td>sourceType</td>
+<td>yes</td>
+<td>Type of source user (either Dwolla, Email or Phone).</td>
+</tr>
+<tr>
+<td>facilitatorAmount</td>
+<td>yes</td>
+<td>Amount of the facilitator feeto override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the &lsquo;amount&rsquo;.</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>yes</td>
+<td>Note to attach to request (250 character limit).</td>
+</tr>
+<tr>
+<td>senderAssumeCosts</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> if the fulfilling user is to assume the Dwolla fee. Defaults to <code class="prettyprint">false</code>; does not affect facilitator fees.</td>
+</tr>
+<tr>
+<td>senderAssumeAdditionalFees</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> if the fulfilling user is to assume all facilitator fees. Defaults to <code class="prettyprint">false</code>; does not affect the Dwolla transaction fee.</td>
+</tr>
+<tr>
+<td>additionalFees</td>
+<td>yes</td>
+<td>Array of additional facilitator fees</td>
+</tr>
+<tr>
+<td>&ndash;&gt; destinationId</td>
+<td>yes</td>
+<td>Facilitator&rsquo;s Dwolla ID</td>
+</tr>
+<tr>
+<td>&ndash;&gt; amount</td>
+<td>yes</td>
+<td>Facilitator amount.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mi">996</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
 <h2 id="fulfill-money-request">Fulfill Money Request</h2>
 
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Fulfill request with ID
+ **/
+$fulfilledRequest = $Dwolla-&gt;fulfillRequest($requestId, $pin);
+if(!$fulfilledRequest) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($fulfilledRequest); }
+</pre>
+<pre class="highlight ruby"><span class="c1"># Example 1: Fulfill a request to ID 12345 of amount 1.00</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="s1">'12345'</span><span class="p">,</span> <span class="p">{</span><span class="ss">:pin</span> <span class="o">=&gt;</span><span class="p">:</span> <span class="s1">'1234'</span><span class="p">,</span> <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="s1">'1.00'</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1:
+      Fulfill (:pay) a pending payment request
+'''</span>
+<span class="n">request_id</span> <span class="o">=</span> <span class="s">'2214710'</span>
+<span class="n">fulfilled_request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">fulfill_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fulfilled</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Fulfill money request '12345678' of amount '10.00'
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">fulfillRequest</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="s1">'12345678'</span><span class="p">,</span> <span class="s1">'10.00'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/{request_id}/fulfill</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
+</tr>
+<tr>
+<td>request_id</td>
+<td>no</td>
+<td>The request ID to fulfill.</td>
+</tr>
+<tr>
+<td>pin</td>
+<td>no</td>
+<td>The PIN associated with the user&rsquo;s account.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>no</td>
+<td>Amount to pay for request (must be greater than or equal to the request amount or the request will fail).</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>yes</td>
+<td>Note to attach to transaction (250 character limit).</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td>yes</td>
+<td>ID of funding source to use for transaction (defaults to <code class="prettyprint">Balance</code>).</td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="mi">147659</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"RequestId"</span><span class="p">:</span><span class="w"> </span><span class="mi">999</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"SentDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-01-22T13:11:10Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ClearingDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-01-22T13:11:10Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processed"</span><span class="w"> </span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-693-9484"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Schonfeld"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"Destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-600-6705"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Schonfeld"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
 <h2 id="cancel-a-money-request">Cancel a Money Request</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Cancel request with ID
+ **/
+$canceledRequest = $Dwolla-&gt;cancelRequest($requestId);
+if(!$canceledRequest) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { echo("Canceled? {$canceledRequest} \n"); }
+</pre>
+<pre class="highlight ruby"><span class="c1"># Example 1: Cancel request with ID '12345'</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">cancel</span><span class="p">(</span><span class="s1">'12345'</span><span class="p">)</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1:
+      Cancel a pending money request
+'''</span>
+<span class="n">request_id</span> <span class="o">=</span> <span class="n">request</span>
+<span class="n">canceled_request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">cancel_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">canceled_request</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Cancel money request with ID '12345678'
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">cancelRequest</span><span class="p">(</span><span class="s1">'12345678'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/{request_id}/cancel</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
+</tr>
+<tr>
+<td>request_id</td>
+<td>no</td>
+<td>The request ID to cancel/deny.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll recieve this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
           <h1 id="users">Users</h1>
 
-<h2 id="lookup">Lookup</h2>
+<p>The API exposes methods for applications to look up users. Either <a href="#get-full-account-info">full</a> or <a href="#get-basic-account-info">basic</a> info is accessible. Full account information requires the <code class="prettyprint">AccountInfoFull</code> scope to be set for the user&rsquo;s OAuth token. </p>
 
-<h2 id="get-account-info">Get Account Info</h2>
+<h2 id="lookup-users-by-location">Lookup Users By Location</h2>
+
+<p>This method helps retrieve Dwolla users near a location (lat and lon).</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Get users nearby a given geolocation
+ **/
+$lat = "40.708322";
+$long = "-74.0147477";
+
+$users = $Dwolla-&gt;usersNearby($lat, $long);
+if(!$users) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($users); }
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Fetch users near lat 45, lon 45
+'''</span>
+<span class="n">me</span> <span class="o">=</span> <span class="n">Dwolla</span><span class="o">.</span><span class="n">get_nearby_users</span><span class="p">(</span><span class="s">'45'</span><span class="p">,</span> <span class="s">'45'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
+<span class="c1">#   Fetch users near account associated with</span>
+<span class="c1">#   the configured OAuth token</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">nearby</span><span class="p">()</span>
+</pre>
+<pre class="highlight javascript"><span class="c1">// Example 1: Users near lat 45, lon 45
+</span><span class="nx">Dwolla</span><span class="p">.</span><span class="nx">nearbyUsers</span><span class="p">(</span><span class="s1">'45'</span><span class="p">,</span> <span class="s1">'45'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/users/nearby?client_id={client_id}&amp;client_secret={client_secret}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>no</td>
+<td>Consumer key for the application.</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>no</td>
+<td>Consumer secret for the application.</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>no</td>
+<td>Latitude coordinates (must be between -90.0 and 90.0)</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>no</td>
+<td>Longitude coordinates (must be between -180.0 and 180.0)</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-734-7288"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">40.708448</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Schonfeld"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-74.014429</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Delta"</span><span class="p">:</span><span class="w"> </span><span class="mf">114.72287700000001</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatars/812-734-7288"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h2 id="get-basic-account-info">Get Basic Account Info</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Fetch basic account information
+ *   for a given Dwolla ID
+ **/
+$user = $Dwolla-&gt;getUser('812-546-3855');
+if(!$user) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($user); } // Print user information
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
+<span class="c1">#   Fetch basic account information</span>
+<span class="c1">#   for a given Dwolla ID</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'812-626-8794'</span><span class="p">)</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Fetch basic account information
+      for a given Dwolla ID
+'''</span>
+<span class="n">me</span> <span class="o">=</span> <span class="n">Dwolla</span><span class="o">.</span><span class="n">get_account_info</span><span class="p">(</span><span class="s">'812-626-8794'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * EXAMPLE 1: 
+ *   Fetch basic account information
+ *   for a given Dwolla ID
+ **/</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">basicAccountInfo</span><span class="p">(</span><span class="s1">'812-546-3855'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/users/{account_identifier}?client_id={client_id}&amp;client_secret={client_secret}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>no</td>
+<td>Consumer key for the application.</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>no</td>
+<td>Consumer secret for the application.</td>
+</tr>
+<tr>
+<td>account_identifier</td>
+<td>no</td>
+<td>Dwolla ID or e-mail address associated with the account desired for lookup.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-1111"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.584546</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-93.634167</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test User"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h2 id="get-full-account-info">Get Full Account Info</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Fetch account information for the
+ *   account associated with the provided
+ *   OAuth token
+ **/
+$me = $Dwolla-&gt;me();
+if(!$me) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($me); } // Print user information
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
+<span class="c1">#   Fetch account information for the</span>
+<span class="c1">#   account associated with the provided</span>
+<span class="c1">#   OAuth token</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">get</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Fetch account information for the
+      account associated with the provided
+      OAuth token
+'''</span>
+<span class="n">me</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_account_info</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * EXAMPLE 1: 
+ *   Fetch account information for the
+ *   account associated with the provided
+ *   OAuth token
+ **/</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">fullAccountInfo</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/users/?oauth_token={token}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>A valid OAuth token with <code class="prettyprint">AccountInfoFull</code> scope.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Des Moines"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-1111"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.584546</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-93.634167</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test User"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Personal"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h2 id="get-avatar">Get Avatar</h2>
+
+<p>User avatars can also be retrieved using the API. This requires no authentication and will return a 220px x 220px PNG file.</p>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/avatars/{dwolla_id}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>dwolla_id</td>
+<td>no</td>
+<td>Target user&rsquo;s Dwolla ID</td>
+</tr>
+</tbody></table>
 
           <h1 id="contacts">Contacts</h1>
 
+<p>The Dwolla API exposes functionality to allow users to look-up the contacts of another user or users near a certain location (latitude and longitude).</p>
+
+<p>In order to retrieve a user&rsquo;s contacts, an OAuth token is required with the <code class="prettyprint">Contacts</code> permission scope. </p>
+
 <h2 id="get-a-user&#39;s-contacts">Get a user&rsquo;s contacts</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/contacts/?oauth_token={token}</code></p>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight json"></pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="sd">/**
+ * EXAMPLE 1: 
+ *   Fetch last 10 contacts from the 
+ *   account associated with the provided
+ *   OAuth token
+ **/</span>
+<span class="nv">$contacts</span> <span class="o">=</span> <span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">contacts</span><span class="p">(</span><span class="s1">'Ben'</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$contacts</span><span class="p">)</span> <span class="p">{</span> <span class="k">echo</span> <span class="s2">"Error: </span><span class="si">{</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()}</span> <span class="nx">\n</span><span class="s2">"; } // Check for errors
+else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // Print contacts
+
+/**
+ * EXAMPLE 2: 
+ *   Search through the contacts of the
+ *   account associated with the provided
+ *   OAuth token for 'David', return 20 
+ *   "</span><span class="nx">Dwolla</span><span class="s2">" type results. 
+ **/
+
+</span><span class="nv">$contacts</span><span class="s2"> = </span><span class="nv">$Dwolla-&gt;contacts</span><span class="s2">('David', array('dwolla'), 20);
+if(!</span><span class="nv">$contacts</span><span class="s2">) { echo "</span><span class="nx">Error</span><span class="o">:</span> <span class="p">{</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()}</span> <span class="nx">\n</span><span class="s2">"; } // Check for errors
+else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // Print contacts
+?&gt;
+</span></pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
+<span class="c1">#   Fetch last 10 contacts from the </span>
+<span class="c1">#   account associated with the provided</span>
+<span class="c1">#   OAuth token</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Contacts</span><span class="p">.</span><span class="nf">get</span>
+
+
+<span class="c1"># EXAMPLE 2: </span>
+<span class="c1">#   Search through the contacts of the</span>
+<span class="c1">#   account associated with the provided</span>
+<span class="c1">#   OAuth token</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Contacts</span><span class="p">.</span><span class="nf">get</span><span class="p">({</span><span class="ss">:search</span> <span class="o">=&gt;</span> <span class="s1">'Ben'</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Fetch last 10 contacts from the 
+      account associated with the provided
+      OAuth token
+'''</span>
+<span class="n">contacts</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_contacts</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+
+
+<span class="s">'''
+    EXAMPLE 2: 
+      Search through the contacts of the
+      account associated with the provided
+      OAuth token
+'''</span>
+<span class="n">contacts</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_contacts</span><span class="p">(</span><span class="s">'Ben'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * EXAMPLE 1: 
+ *   Fetch last 10 contacts from the 
+ *   account associated with the provided
+ *   OAuth token
+ **/</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">contacts</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="cm">/**
+ * EXAMPLE 2: 
+ *   Search through the contacts of the
+ *   account associated with the provided
+ *   OAuth token
+ **/</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">contacts</span><span class="p">({</span><span class="na">search</span><span class="p">:</span> <span class="s1">'Ben'</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+</pre>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>A valid OAuth token with <code class="prettyprint">Contacts</code> scope.</td>
+</tr>
+<tr>
+<td>search</td>
+<td>yes</td>
+<td>Search term used to search contacts.</td>
+</tr>
+<tr>
+<td>types</td>
+<td>yes</td>
+<td>Account types to return.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>yes</td>
+<td>Number of contacts to return (default is 10).</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe Schmoe"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-999-0090"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatars/812-999-0090"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"St Louis"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MO"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sam Schmoe Super Foods"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-999-0091"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatars/812-999-0091"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Des Moines"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IA"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Moe Schmoe"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-999-0092"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatars/812-999-0092"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Simpsonville"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SC"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<h2 id="find-contacts-by-location">Find contacts by location</h2>
+
+<p>Please note that this will not return any personal account results; only businesses (&lsquo;spots&rsquo;) will be returned by searching via this endpoint.</p>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/contacts/nearby?client_id={client_id}&amp;client_secret={client_secret}</code></p>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight json"></pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="sd">/**
+ * EXAMPLE 1: 
+ * Fetch contacts of businesses near lat 45, lon 45
+ **/</span>
+<span class="nv">$contacts</span> <span class="o">=</span> <span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">nearby</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">45</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$contacts</span><span class="p">)</span> <span class="p">{</span> <span class="k">echo</span> <span class="s2">"Error: </span><span class="si">{</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()}</span> <span class="nx">\n</span><span class="s2">"; } // Check for errors
+else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // Print contacts
+?&gt;
+</span></pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
+<span class="c1">#   Get a list of nearby Dwolla spots</span>
+<span class="c1">#   for a given set of coordinates</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Contacts</span><span class="p">.</span><span class="nf">nearby</span><span class="p">({</span><span class="ss">:latitude</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="ss">:longitude</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Fetch spots near  41.59 and 
+      -93.62 (default parameters in dwolla-python)
+'''</span>
+<span class="n">contacts</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_nearby_spots</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * EXAMPLE 1: 
+ * Fetch all spots near lat 45 and 
+ * long 45
+ **/</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">nearby</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">apiKey</span><span class="p">,</span> <span class="nx">cfg</span><span class="p">.</span><span class="nx">apiSecret</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>no</td>
+<td>Consumer key for the application</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>no</td>
+<td>Consume secret for the application</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>no</td>
+<td>Latitude coordinates (between -90.0 and 90.0)</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>no</td>
+<td>Longitude coordinates (between -180.0 and 180.0)</td>
+</tr>
+<tr>
+<td>range</td>
+<td>yes</td>
+<td>Range to retrieve spots for in miles (default 10, minimum 1)</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>yes</td>
+<td>Number of spots to retrieve (default 10, minimum 1, maximum 100)</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111 West 5th St. Suite A"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Des Moines"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-2222"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-1111"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatar.aspx?u=812-111-1111"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.5852257</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-93.6245059</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Spot 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"PostalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50309"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IA"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111 West 5th St. Suite B"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"City"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Des Moines"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-1111"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-2222"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatar.aspx?u=812-111-2222"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">41.5852257</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-93.6245059</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Spot 2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"PostalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"50309"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"State"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IA"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
           <h1 id="balance">Balance</h1>
 
+<p>This method can be used to access the account balance for a user with an authorized OAuth token. Please note that the application must request a token with the <code class="prettyprint">Balance</code> scope or else the endpoint will return an error. </p>
+
 <h2 id="get-balance">Get Balance</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Fetch account balance for the 
+ *   account associated with the provided
+ *   OAuth token
+ **/
+$balance = $Dwolla-&gt;balance();
+if($balance == NULL) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { echo $balance; } // Print user's balance
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
+<span class="c1">#   Get the balance of the authenticated user</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Balance</span><span class="p">.</span><span class="nf">get</span>
+</pre>
+<pre class="highlight python"><span class="n">balance</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_balance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Get balance of the user associated with the OAuth token.
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">balance</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/balance/?oauth_token={token}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>A valid OAuth token with <code class="prettyprint">Balance</code> scope.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mf">55.76</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
           <h1 id="masspay">MassPay</h1>
 
@@ -554,125 +1869,136 @@ You must replace <code class="prettyprint">meowmeowmeow</code> with your persona
 
           <h1 id="send-money">Send Money</h1>
 
-          <h1 id="refund">Refund</h1>
-
-          <h1 id="kittens">Kittens</h1>
-
-<h2 id="get-all-kittens">Get All Kittens</h2>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</pre>
-<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</pre>
-
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json"><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></pre>
-
-<p>This endpoint retrieves all kittens.</p>
+<p>The API allows users to easily send money to other users&#39; Dwolla accounts via their Dwolla ID, Facebook ID, Twitter screen-name, phone number, or e-mail address from the account associated with an active OAuth token. In order for the transaction to successfully complete, the OAuth token must be granted with the <code class="prettyprint">Send</code> scope. </p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET http://example.com/kittens</code></p>
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Send money ($1.00) to a Dwolla ID 
+ **/
+$transactionId = $Dwolla-&gt;send($pin, '812-734-7288', 1.00);
+if(!$transactionId) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction ID
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
+<span class="c1">#   Send money ($1.00) to a Dwolla ID</span>
+<span class="n">transactionId</span> <span class="o">=</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">send</span><span class="p">({</span><span class="ss">:destinationId</span> <span class="o">=&gt;</span> <span class="s1">'812-626-8794'</span><span class="p">,</span> <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mo">00</span><span class="p">,</span> <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
+<span class="n">pp</span> <span class="n">transactionId</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Send money ($1.00) to a Dwolla ID 
+'''</span>
+<span class="n">transaction</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">send_funds</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="s">'812-626-8794'</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * EXAMPLE 1: 
+ *   Send money ($1.00) to a Dwolla ID 
+ **/</span>
 
-<h3 id="query-parameters">Query Parameters</h3>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="s1">'812-626-8794'</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/send</code></p>
 
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
+<th>Optional?</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>oauth_token</td>
+<td>no</td>
+<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>destinationId</td>
+<td>no</td>
+<td>Identification of the user to send funds to. Must be the Dwolla identifier, Facebook identifier, Twitter identifier, phone number, or email address.</td>
+</tr>
+<tr>
+<td>pin</td>
+<td>no</td>
+<td>The PIN associated with the user&rsquo;s account.</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>no</td>
+<td>Amount of funds to transfer to destination user.</td>
+</tr>
+<tr>
+<td>destinationType</td>
+<td>yes</td>
+<td>Type of destination user (defaults to &lsquo;Dwolla&rsquo;, possible values are &lsquo;Dwolla&rsquo;, &lsquo;Email&rsquo;, and &lsquo;Phone&rsquo;).</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td>yes</td>
+<td>ID of funding source to use for transaction (defaults to <code class="prettyprint">Balance</code>).</td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> if the fulfilling user is to assume all facilitator fees. Defaults to <code class="prettyprint">false</code>; does not affect the Dwolla transaction fee.</td>
+</tr>
+<tr>
+<td>additionalFees</td>
+<td>yes</td>
+<td>Array of additional facilitator fees</td>
+</tr>
+<tr>
+<td>&ndash;&gt; destinationId</td>
+<td>yes</td>
+<td>Facilitator&rsquo;s Dwolla ID</td>
+</tr>
+<tr>
+<td>&ndash;&gt; amount</td>
+<td>yes</td>
+<td>Facilitator amount.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).</td>
+</tr>
+<tr>
+<td>assumeAdditionalFees</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> if the sending user will assume all additional facilitator fees, <code class="prettyprint">false</code> if the destination user will assume the fees. Defaults to <code class="prettyprint">false</code>.</td>
+</tr>
+<tr>
+<td>facilitatorAmount</td>
+<td>yes</td>
+<td>Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the &lsquo;amount&rsquo;.</td>
 </tr>
 </tbody></table>
 
-<p><aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside></p>
-
-<h2 id="get-a-specific-kitten">Get a Specific Kitten</h2>
-<pre class="highlight ruby"><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre>
-<pre class="highlight python"><span class="kn">import</span> <span class="s">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">Kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre>
-<pre class="highlight shell">curl <span class="s2">"http://example.com/api/kittens/3"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</pre>
-
 <blockquote>
-<p>The above command returns JSON structured like this:</p>
+<p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Isis"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
-<p>This endpoint retrieves a specific kitten.</p>
-
-<p><aside class="warning">If you&rsquo;re not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside></p>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">GET http://example.com/kittens/&lt;ID&gt;</code></p>
-
-<h3 id="url-parameters">URL Parameters</h3>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>ID</td>
-<td>The ID of the cat to retrieve</td>
-</tr>
-</tbody></table>
+          <h1 id="refund">Refund</h1>
 
           <h1 id="changelog">Changelog</h1>
 
@@ -683,7 +2009,7 @@ Remember — a happy kitten is an authenticated kitten!
                 <a href="#" data-language-name="php">php</a>
                 <a href="#" data-language-name="ruby">ruby</a>
                 <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="node.js">node.js</a>
+                <a href="#" data-language-name="js">node.js</a>
           </div>
       </div>
     </div>
