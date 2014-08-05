@@ -38,7 +38,7 @@
         
           <h1 id="introduction">Introduction</h1>
 
-<p>Welcome to the Dwolla API. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. </p>
+<p>Welcome to the Dwolla API docs. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. </p>
 
 <p>Example requests are available in JSON, PHP, Ruby, Python, and Node.js in the dark area to the right. JSON is shown by default, however, the tabs in the top right can be used to switch the language in which the examples are displayed in.</p>
 
@@ -68,6 +68,8 @@
 </ul>
 
 <h2 id="making-requests">Making Requests</h2>
+
+<p>All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.</p>
 <pre class="highlight plaintext">POST https://www.dwolla.com/oauth/rest/transactions/send
 Content-Type: application/json
 
@@ -92,13 +94,35 @@ Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</
 
 <h2 id="responses">Responses</h2>
 
-<p>Responses are contained in an <em>envelope</em>.</p>
+<blockquote>
+<p>Happy response</p>
+</blockquote>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mi">71332</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+
+<blockquote>
+<p>Unsuccessful response</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Invalid access token."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>Responses are always JSON encoded and are contained in an <em>envelope</em>.  </p>
+
+<p>That means every API response contains: </p>
+
+<ul>
+<li><code class="prettyprint">Success</code>, a boolean indicating whether or not the call was successful, or resulted in an error</li>
+<li><code class="prettyprint">Message</code>, an error message if the API call was unsuccessful, or <code class="prettyprint">&quot;Success&quot;</code> otherwise</li>
+<li><code class="prettyprint">Response</code>, the actual data returned by the API call.</li>
+</ul>
 
           <h1 id="authentication">Authentication</h1>
 
