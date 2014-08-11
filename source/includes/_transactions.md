@@ -23,6 +23,8 @@ Additional transactions are created:
 
 ### Transaction Statuses
 
-## Get all transactions
+## List a user's transactions
+
+## List an app's transactions 
 
 ## Get a specific transaction
