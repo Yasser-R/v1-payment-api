@@ -175,19 +175,274 @@ Needless to say, you should replace <code class="prettyprint">&lt;T0K3N_H3R3&gt;
 
           <h1 id="oauth">OAuth</h1>
 
+<p>Dwolla&rsquo;s API lets you interact with a user&rsquo;s Dwolla account and act on its behalf to send money, request money, and more.  To do so, your application first needs to request authorization from users.  </p>
+
+<p>Dwolla implements the <a href="http://oauth.net/2/">OAuth 2.0 standard</a> to facilitate this authorization. Similar to Facebook and Twitter&rsquo;s authentication flow, the user is first presented with a permission dialog for your application, at which point the user can either approve the permissions requested, or reject them. Once the user approves, an <code class="prettyprint">authorization_code</code> is sent to your application, which will then <a href="#finish-authorization">be exchanged</a> for an <code class="prettyprint">access_token</code> and a <code class="prettyprint">refresh_token</code> pair. </p>
+
+<p>The <code class="prettyprint">access_token</code> can then be used to make API calls which require user authentication like <a href="#send-money">Send</a> or <a href="#list-a-user's-transactions">List Transactions</a>. </p>
+
+<h3 id="token-lifetimes">Token lifetimes</h3>
+
+<p><strong>Access tokens</strong> are <em>short lived</em>: 1 hour.</p>
+
+<p><strong>Refresh tokens</strong> are <em>long lived</em>: 60 days.</p>
+
+<p>A refresh token can be used within 60 days to generate a new access_token and refresh_token pair.  So long as you <a href="#refresh-authorization">refresh your authorization</a> at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.</p>
+
 <h2 id="request-authorization">Request Authorization</h2>
 
+<blockquote>
+<p>Example initiation URL:</p>
+</blockquote>
+<pre class="highlight plaintext">https://www.dwolla.com/oauth/v2/authenticate?client_id=abcdefg&amp;response_type=code&amp;redirect_uri=https%3A%2F%2Fwww.myredirect.com%2Fredirect&amp;scope=send|transactions
+</pre>
+
+<p>To start the OAuth process, construct the initiation URL which the user will visit in order to grant permission to your application.  It describes the permissions your application requires (<code class="prettyprint">scope</code>), who the client application is (<code class="prettyprint">client_id</code>), and where the user should be redirected to after they grant or deny permissions to your application (<code class="prettyprint">redirect_uri</code>).</p>
+
+<h3 id="url-format:">URL Format:</h3>
+
+<p><code class="prettyprint">
+https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_type=code&amp;redirect_uri={redirect_uri}&amp;scope={scope}
+</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>Application key</td>
+</tr>
+<tr>
+<td>response_type</td>
+<td>This must always be set to <code class="prettyprint">code</code></td>
+</tr>
+<tr>
+<td>redirect_uri</td>
+<td>URL where the user will be redirected to afterwards</td>
+</tr>
+<tr>
+<td>scope</td>
+<td>Permissions you are requesting.  See <a href="#oauth-scopes">below</a> for list of available scopes.  Scopes are delimited by a pipe (&ldquo;&#124;&rdquo;)</td>
+</tr>
+</tbody></table>
+
+<p><aside class="notice">
+Remember to url-encode all querystring parameters!
+</aside></p>
+
+<h3 id="oauth-scopes">OAuth Scopes</h3>
+
+<p>Applications may request the following permission scopes when generating an access token:</p>
+
+<table><thead>
+<tr>
+<th>Scope Name</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>AccountInfoFull</td>
+<td>Access detailed account profile</td>
+</tr>
+<tr>
+<td>Contacts</td>
+<td>Access the user&rsquo;s contacts</td>
+</tr>
+<tr>
+<td>Transactions</td>
+<td>Access the user&rsquo;s transaction data</td>
+</tr>
+<tr>
+<td>Balance</td>
+<td>Access the user&rsquo;s Dwolla account balance</td>
+</tr>
+<tr>
+<td>Send</td>
+<td>Send money on the user&rsquo;s behalf</td>
+</tr>
+<tr>
+<td>Request</td>
+<td>Send money requests, list them, fulfill them</td>
+</tr>
+<tr>
+<td>Funding</td>
+<td>Access the user&rsquo;s funding sources (i.e. connected bank accounts)</td>
+</tr>
+<tr>
+<td>ManageAccount</td>
+<td>Manage the user&rsquo;s account settings</td>
+</tr>
+</tbody></table>
+
 <h2 id="finish-authorization">Finish Authorization</h2>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"h6TvQZH+5BsV//O43uOJ0uRkBLk="</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"authorization_code"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.myredirect.com/redirect"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>Successful Response:</p>
+</blockquote>
+<pre class="highlight plaintext">{
+    "access_token": "YLAZSreh165CAD2tPhAEzFCYYIrVyFomLWUDMGFBZIw9KtIg4q",
+    "expires_in": 35,
+    "refresh_token": "Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY",
+    "refresh_expires_in": 5184000,
+    "token_type": "bearer"
+}
+</pre>
+
+<p>Once the user returns to your application via the <code class="prettyprint">redirect_uri</code> you specified, there will be a <code class="prettyprint">code</code> querystring parameter appended to that URL.  Exchange the authorization <code class="prettyprint">code</code> for an <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
+
+<h3 id="request-url">Request URL</h3>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>Application key</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>Application secret</td>
+</tr>
+<tr>
+<td>code</td>
+<td>The authorization code included in the redirect URL</td>
+</tr>
+<tr>
+<td>grant_type</td>
+<td>This must be set to <code class="prettyprint">authorization_code</code></td>
+</tr>
+<tr>
+<td>redirect_uri</td>
+<td>The same redirect_uri specified in the intiation step</td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>access_token</td>
+<td>A new access token with requested scopes</td>
+</tr>
+<tr>
+<td>expires_in</td>
+<td>The lifetime of the access token, in seconds.  Default is 3600.</td>
+</tr>
+<tr>
+<td>refresh_token</td>
+<td>New refresh token</td>
+</tr>
+<tr>
+<td>refresh_expires_in</td>
+<td>The lifetime of the refresh token, in seconds.  Default is 5184000.</td>
+</tr>
+<tr>
+<td>token_type</td>
+<td>Always <code class="prettyprint">bearer</code>.</td>
+</tr>
+</tbody></table>
 
 <h2 id="refresh-authorization">Refresh Authorization</h2>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"refresh_token"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
-<p>{
-access_token: &ldquo;hr1tSJk23tOv9RxR8cQuDpUD/kpUgf0cb9WfKtRoPxTw8ymbVt&rdquo;
-expires_in: 3600
-refresh_token: &ldquo;lqopeyjq5AJln5fpMedElUULz+XBNNw9nAkIinxE0g4aEzxmDc&rdquo;
-refresh_expires_in: 2147483647
-token_type: &ldquo;bearer&rdquo;
-}</p>
+<blockquote>
+<p>Successful Response:</p>
+</blockquote>
+<pre class="highlight plaintext">{
+    "access_token": "hr1tSJk23tOv9RxR8cQuDpUD/kpUgf0cb9WfKtRoPxTw8ymbVt",
+    "expires_in": 3600,
+    "refresh_token": "lqopeyjq5AJln5fpMedElUULz+XBNNw9nAkIinxE0g4aEzxmDc",
+    "refresh_expires_in": 5184000,
+    "token_type": "bearer"
+}
+</pre>
+
+<p>Use a valid <code class="prettyprint">refresh_token</code> to generate a new <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
+
+<h3 id="request-url">Request URL</h3>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td>Application key</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td>Application secret</td>
+</tr>
+<tr>
+<td>refresh_token</td>
+<td>A valid refresh token</td>
+</tr>
+<tr>
+<td>grant_type</td>
+<td>This must be set to <code class="prettyprint">refresh_token</code></td>
+</tr>
+</tbody></table>
+
+<h3 id="response-parameters">Response Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>access_token</td>
+<td>A new access token with requested scopes</td>
+</tr>
+<tr>
+<td>expires_in</td>
+<td>The lifetime of the access token, in seconds.  Default is 3600.</td>
+</tr>
+<tr>
+<td>refresh_token</td>
+<td>New refresh token</td>
+</tr>
+<tr>
+<td>refresh_expires_in</td>
+<td>The lifetime of the refresh token, in seconds.  Default is 5184000.</td>
+</tr>
+<tr>
+<td>token_type</td>
+<td>Always <code class="prettyprint">bearer</code>.</td>
+</tr>
+</tbody></table>
 
           <h1 id="metadata">Metadata</h1>
 
@@ -1885,7 +2140,9 @@ else { echo $balance; } // Print user's balance
 
 <h3 id="transaction-statuses">Transaction Statuses</h3>
 
-<h2 id="get-all-transactions">Get all transactions</h2>
+<h2 id="list-a-user&#39;s-transactions">List a user&rsquo;s transactions</h2>
+
+<h2 id="list-an-app&#39;s-transactions">List an app&rsquo;s transactions</h2>
 
 <h2 id="get-a-specific-transaction">Get a specific transaction</h2>
 
