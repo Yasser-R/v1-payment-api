@@ -1,5 +1,15 @@
 #OAuth
-
+```sss
+  /$$$$$$   /$$$$$$              /$$     /$$      
+ /$$__  $$ /$$__  $$            | $$    | $$      
+| $$  \ $$| $$  \ $$ /$$   /$$ /$$$$$$  | $$$$$$$ 
+| $$  | $$| $$$$$$$$| $$  | $$|_  $$_/  | $$__  $$
+| $$  | $$| $$__  $$| $$  | $$  | $$    | $$  \ $$
+| $$  | $$| $$  | $$| $$  | $$  | $$ /$$| $$  | $$
+|  $$$$$$/| $$  | $$|  $$$$$$/  |  $$$$/| $$  | $$
+ \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
+                             
+```
 Dwolla's API lets you interact with a user's Dwolla account and act on its behalf to send money, request money, and more.  To do so, your application first needs to request authorization from users.  
 
 Dwolla implements the [OAuth 2.0 standard](http://oauth.net/2/) to facilitate this authorization. Similar to Facebook and Twitter's authentication flow, the user is first presented with a permission dialog for your application, at which point the user can either approve the permissions requested, or reject them. Once the user approves, an `authorization_code` is sent to your application, which will then [be exchanged](#finish-authorization) for an `access_token` and a `refresh_token` pair. 

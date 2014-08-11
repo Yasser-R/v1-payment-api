@@ -1,10 +1,31 @@
 # Introduction
+```
+  _          _ _             
+ | |__   ___| | | ___        
+ | '_ \ / _ \ | |/ _ \       
+ | | | |  __/ | | (_) |      
+ |_| |_|\___|_|_|\___/     _ 
+ __      _____  _ __| | __| |
+ \ \ /\ / / _ \| '__| |/ _` |
+  \ V  V / (_) | |  | | (_| |
+   \_/\_/ \___/|_|  |_|\__,_|
+
+```
 
 Welcome to the Dwolla API docs. This is a listing of all publically available endpoints which allow developers to modify their accounts, process transactions, find other users, and modify funding sources. All endpoints are listed in the sidebar to the left. 
 
 Example requests are available in JSON, PHP, Ruby, Python, and Node.js in the dark area to the right. JSON is shown by default, however, the tabs in the top right can be used to switch the language in which the examples are displayed in.
 
 ## Helper Libraries
+```
+We'll you show sample code on this pane!
+```
+```
+Quote of the day:
+
+<erno> hm. I've lost a machine.. literally _lost_. it responds to ping, it works completely, I just can't figure out where in my apartment it is.
+
+```
 
 A handful of libraries are officially maintained, and others are community maintained.
 
