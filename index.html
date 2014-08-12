@@ -86,8 +86,6 @@
 </ul>
 
 <h2 id="making-requests">Making Requests</h2>
-
-<p>All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.</p>
 <pre class="highlight plaintext">POST https://www.dwolla.com/oauth/rest/transactions/send
 Content-Type: application/json
 
@@ -98,13 +96,17 @@ Content-Type: application/json
     pin: 1234
 }
 </pre>
+<pre class="highlight plaintext">...
+
+GET https://www.dwolla.com/oauth/rest/transactions?client_id=XYZ&amp;client_secret=JJJ&amp;limit=10
+</pre>
 
 <p><code class="prettyprint">POST</code> requests must have a JSON encoded body and the 
 <code class="prettyprint">Content-Type: application/json</code> header.</p>
 
 <p><code class="prettyprint">GET</code> requests have parameters provided in the querysting.</p>
-<pre class="highlight plaintext">GET https://www.dwolla.com/oauth/rest/transactions?client_id=XYZ&amp;client_secret=JJJ&amp;limit=10
-</pre>
+
+<p>All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.</p>
 
 <p><aside class="notice">
 Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</a> all GET querystring parameters!
@@ -141,6 +143,8 @@ Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</
 <li><code class="prettyprint">Message</code>, an error message if the API call was unsuccessful, or <code class="prettyprint">&quot;Success&quot;</code> otherwise</li>
 <li><code class="prettyprint">Response</code>, the actual data returned by the API call.</li>
 </ul>
+
+<h2 id="errors">Errors</h2>
 
           <h1 id="authentication">Authentication</h1>
 
@@ -329,7 +333,7 @@ Remember to url-encode all querystring parameters!
 
 <p>Once the user returns to your application via the <code class="prettyprint">redirect_uri</code> you specified, there will be a <code class="prettyprint">code</code> querystring parameter appended to that URL.  Exchange the authorization <code class="prettyprint">code</code> for an <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
 
-<h3 id="request-url">Request URL</h3>
+<h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -414,7 +418,7 @@ Remember to url-encode all querystring parameters!
 
 <p>Use a valid <code class="prettyprint">refresh_token</code> to generate a new <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
 
-<h3 id="request-url">Request URL</h3>
+<h3 id="http-request">HTTP Request</h3>
 
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
@@ -474,59 +478,94 @@ Remember to url-encode all querystring parameters!
 
           <h1 id="metadata">Metadata</h1>
 
+<p>Metadata can be supplied for Send, MassPay Items, Money Requests, Refunds, and Checkouts in the metadata property. The <code class="prettyprint">metadata</code> property is a JSON object (a collection of &ldquo;key&rdquo;: &ldquo;value&rdquo; pairs). A maximum of 10 key-value pairs can be stored. Keys and values must be strings of maximum length 255 characters.</p>
+<pre class="highlight plaintext">{
+    "Shipment ID": "d289e89ej893r3r",
+    "TShirtSize": "Small",
+    "DeliveryOption": "Rush Shipping",
+    "InvoiceDate": "12-06-2014",
+    "Priority": "High",
+    "blah": "blah"
+}
+</pre>
+
+<h3 id="visibility-/-access">Visibility / Access</h3>
+
+<p>Metadata is intended as an expansion of the existing <code class="prettyprint">notes</code> field (a string of max length 255), in order to allow applications to store more data with resources.</p>
+
+<p>Unlike the <code class="prettyprint">notes</code> field, which is visible to:</p>
+
+<ol>
+<li>the application that created the transaction</li>
+<li>the recipient and sender of the transaction (through the Dwolla.com dashboard)</li>
+<li>any future applications that view the transaction</li>
+</ol>
+
+<p><code class="prettyprint">metadata</code> is only visible to the application that created the transaction. No other application, nor the sender or receiver may access the metadata field.</p>
+
+<h3 id="warnings">Warnings</h3>
+
+<p>Currently, there are 2 bugs we are aware of:</p>
+
+<ol>
+<li>If an metadata collection contains two duplicate keys, a HTTP 500 XML response will be thrown instead of a proper error response.</li>
+<li>Keys which start with a number or symbol (ex. &ldquo;10&rdquo;, &ldquo;10abc&rdquo;, &ldquo;$abc&rdquo;) are rejected.</li>
+</ol>
+
           <h1 id="webhooks">Webhooks</h1>
 
-          <h1 id="auto-withdrawal">Auto Withdrawal</h1>
-
-<p>Dwolla allows users to withdraw funds from their Dwolla balance funding sources associated with the account. The API exposes methods to toggle auto-withdrawal functionality.</p>
-
-<p>These endpoints require an OAuth token with the <code class="prettyprint">ManageAccount</code> scope. </p>
-
-<h2 id="get-auto-withdrawal-status">Get Auto Withdrawal Status</h2>
-
-<blockquote>
-<p>Examples with Dwolla Libraries:</p>
-</blockquote>
+          <h1 id="send-money">Send Money</h1>
 <pre class="highlight php">/**
- * Example 1:
- * Get autowithdrawal status for the 
- * account associted with the OAuth token
- */
-
-$status = $Dwolla-&gt;getAutoWithdrawalStatus();
-if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($status); } // Print status
+ *   Send money ($1.00) to Dwolla ID 812-734-7288
+ **/
+$transactionId = $Dwolla-&gt;send($pin, '812-734-7288', 1.00);
+if(!$transactionId) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction ID
 </pre>
-<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
-<span class="c1">#   Get autowithdrawal status of the user</span>
-<span class="c1">#   associated with the current OAuth token</span>
-
-<span class="n">pp</span> <span class="no">Dwolla</span><span class="p">.</span><span class="nf">get_autowithdrawal_status</span>
+<pre class="highlight ruby"><span class="c1">#   Send money ($1.00) to a Dwolla ID 812-626-8794</span>
+<span class="n">transactionId</span> <span class="o">=</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">send</span><span class="p">({</span><span class="ss">:destinationId</span> <span class="o">=&gt;</span> <span class="s1">'812-626-8794'</span><span class="p">,</span> <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mo">00</span><span class="p">,</span> <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
+<span class="n">pp</span> <span class="n">transactionId</span>
 </pre>
 <pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-        Fetch autowithdraw status for the account
-        associated with the current OAuth token.
+      Send money ($1.00) to a Dwolla ID 812-626-8794
 '''</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_autowithdraw_status</span>
-<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+<span class="n">transaction</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">send_funds</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="s">'812-626-8794'</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
 </pre>
-<pre class="highlight javascript"><span class="cm">/***
- * Example 1:
- *
- * Find out whether or not auto-withdrawal is enabled for the user
- * associated with the OAuth token
- */</span>
+<pre class="highlight javascript"><span class="cm">/**
+ *   Send money ($1.00) to a Dwolla ID 812-626-8794
+ **/</span>
 
-<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">getAutoWithdrawalStatus</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="s1">'812-626-8794'</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"destinationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gordon@dwolla.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"destinationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pin"</span><span class="p">:</span><span class="w"> </span><span class="mi">4321</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>The API allows users to easily send money to other users&#39; Dwolla accounts via their Dwolla ID, phone number, or e-mail address from the account associated with an active OAuth token. In order for the transaction to successfully complete, the OAuth token must be granted with the <code class="prettyprint">Send</code> scope. </p>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl?oauth_token={token}</code></p>
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/send</code></p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Send</code> scope.</aside></p>
 
 <table><thead>
 <tr>
@@ -536,81 +575,54 @@ else { print_r($status); } // Print status
 </tr>
 </thead><tbody>
 <tr>
-<td>oauth_token</td>
+<td>destinationId</td>
 <td>no</td>
-<td>A valid OAuth token with <code class="prettyprint">ManageAccount</code> scope.</td>
-</tr>
-</tbody></table>
-
-<h2 id="set-auto-withdrawal-status">Set Auto Withdrawal Status</h2>
-
-<blockquote>
-<p>Examples with Dwolla Libraries:</p>
-</blockquote>
-<pre class="highlight php">/**
- * Example 1:
- * Enable autowithdraw for funding source '12345' under the
- * account associted with the OAuth token
- */
-
-$status = $Dwolla-&gt;toggleAutoWithdrawalStatus('true', '12345');
-if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($status); } // Print status
-</pre>
-<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
-<span class="c1">#   Enable autowithdraw for funding source '12345' under the</span>
-<span class="c1">#   associated with the current OAuth token</span>
-
-<span class="n">pp</span> <span class="no">Dwolla</span><span class="p">.</span><span class="nf">auto_withdrawal</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="s1">'12345'</span><span class="p">)</span>
-</pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-        nable autowithdraw for funding source '12345' under the
-        associated with the current OAuth token.
-'''</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">set_autowithdraw_status</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="s">'12345'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
-</pre>
-<pre class="highlight javascript"><span class="cm">/***
- * Example 1:
- *
- * Enable auto-withdraw for the user associated with the OAuth token,
- * for the funding ID '1234567'.
- */</span>
-
-<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">toggleAutoWithdraw</span><span class="p">(</span><span class="s1">'true'</span><span class="p">,</span> <span class="s1">'1234567'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">});</span>
-</pre>
-
-<h3 id="http-request">HTTP Request</h3>
-
-<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl
-Content-Type: application/json
-</code></p>
-
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Optional?</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>oauth_token</td>
-<td>no</td>
-<td>A valid OAuth token with <code class="prettyprint">ManageAccount</code> scope.</td>
+<td>Email, Dwolla ID, or phone number of recipient.</td>
 </tr>
 <tr>
-<td>enabled</td>
+<td>pin</td>
 <td>no</td>
-<td>Boolean value of autowithdrawal feature.</td>
+<td>The PIN associated with the sender&rsquo;s account.</td>
 </tr>
 <tr>
-<td>fundingId</td>
+<td>amount</td>
 <td>no</td>
-<td>Funding source ID of account to autowithdraw funds to.</td>
+<td>Amount of funds to transfer to destination user.</td>
+</tr>
+<tr>
+<td>destinationType</td>
+<td>yes</td>
+<td>Type of destination user. Defaults to &lsquo;Dwolla&rsquo;. Possible values are <code class="prettyprint">Dwolla</code>, <code class="prettyprint">Email</code>, and <code class="prettyprint">Phone</code>.</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td>yes</td>
+<td>ID of <a href="#funding-sources">funding source</a> to use for transaction (defaults to <code class="prettyprint">Balance</code>).</td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
+</tr>
+<tr>
+<td>additionalFees</td>
+<td>yes</td>
+<td>Array of additional facilitator fee objects.  <code class="prettyprint">[{&quot;destinationId&quot;: &quot;&quot;, &quot;amount&quot;: 0.01}, ...]</code></td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  <a href="#metadata">Read more</a></td>
+</tr>
+<tr>
+<td>assumeAdditionalFees</td>
+<td>yes</td>
+<td>Set to <code class="prettyprint">true</code> if the sending user will assume all additional facilitator fees, <code class="prettyprint">false</code> if the destination user will assume the fees. Defaults to <code class="prettyprint">false</code>.</td>
+</tr>
+<tr>
+<td>facilitatorAmount</td>
+<td>yes</td>
+<td>Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the <code class="prettyprint">amount</code>.</td>
 </tr>
 </tbody></table>
 
@@ -640,6 +652,7 @@ Content-Type: application/json
   </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"callback"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.something.com/callback"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"redirect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.something.com/return"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"allowGuestCheckout"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"checkoutWithApi"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo123"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"allowFundingSources"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
@@ -726,6 +739,11 @@ Content-Type: application/json
 <td>checkoutWithApi</td>
 <td>yes</td>
 <td>Create a <em>PayLater</em> checkout.  Defaults to <code class="prettyprint">false</code>.</td>
+</tr>
+<tr>
+<td>allowGuestCheckout</td>
+<td>yes</td>
+<td>Enable <a href="https://developers.dwolla.com/dev/pages/gateway/direct">Dwolla Direct</a> experience for users without a Dwolla account</td>
 </tr>
 <tr>
 <td>orderId</td>
@@ -1776,6 +1794,125 @@ else { print_r($me); } // Print user information
 </tr>
 </tbody></table>
 
+          <h1 id="transactions">Transactions</h1>
+
+<h3 id="how-transactions-work">How Transactions Work</h3>
+
+<p>When a payment is placed, 2 or more transactions are created.  At least one is created to credit the recipient&rsquo;s account balance, and another one to debit the sender&rsquo;s account balance.  </p>
+
+<p>As a simple example, let&rsquo;s say Bob sends $5 to Alice from his account balance.  From this action, two <code class="prettyprint">Transactions</code> are created:</p>
+
+<ol>
+<li>Transaction <code class="prettyprint">512010</code>: credits Alice&rsquo;s account with $5</li>
+<li>Transaction <code class="prettyprint">512011</code>: deducts $5 from Bob&rsquo;s account</li>
+</ol>
+
+<p>It&rsquo;s important to keep in mind that when Bob looks at this payment, he will see the credit transaction&rsquo;s ID: <code class="prettyprint">512010</code>.  This is called the <strong>Sender&rsquo;s Transaction ID</strong>. </p>
+
+<p>Similarly, when Alice looks up this payment, she will see a different transaction of ID <code class="prettyprint">512011</code>, which we call the <strong>Recipient&rsquo;s Transaction ID</strong>.</p>
+
+<h4 id="additional-transactions">Additional Transactions</h4>
+
+<p>Additional transactions are created: </p>
+
+<ul>
+<li>if the payment is bank sourced, to fund the payment</li>
+<li>if the payment is over $10 it will incur a $0.25 <em>Dwolla Fee</em></li>
+<li>if there is a facilitator fee</li>
+</ul>
+
+<h3 id="transaction-types">Transaction Types</h3>
+
+<h3 id="transaction-statuses">Transaction Statuses</h3>
+
+<h2 id="list-a-user&#39;s-transactions">List a user&rsquo;s transactions</h2>
+
+<h2 id="list-an-app&#39;s-transactions">List an app&rsquo;s transactions</h2>
+
+<h2 id="get-a-specific-transaction">Get a specific transaction</h2>
+
+          <h1 id="transaction-stats">Transaction Stats</h1>
+
+          <h1 id="balance">Balance</h1>
+
+<p>This method can be used to access the account balance for a user with an authorized OAuth token. Please note that the application must request a token with the <code class="prettyprint">Balance</code> scope or else the endpoint will return an error. </p>
+
+<h2 id="get-balance">Get Balance</h2>
+
+<h3 id="http-request">HTTP Request</h3>
+
+<blockquote>
+<p>Examples with Dwolla Libraries:</p>
+</blockquote>
+<pre class="highlight php">/**
+ * EXAMPLE 1: 
+ *   Fetch account balance for the 
+ *   account associated with the provided
+ *   OAuth token
+ **/
+$balance = $Dwolla-&gt;balance();
+if($balance == NULL) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { echo $balance; } // Print user's balance
+</pre>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
+<span class="c1">#   Get the balance of the authenticated user</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Balance</span><span class="p">.</span><span class="nf">get</span>
+</pre>
+<pre class="highlight python"><span class="n">balance</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_balance</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Get balance of the user associated with the OAuth token.
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">balance</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/balance/?oauth_token={token}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>oauth_token</td>
+<td>no</td>
+<td>A valid OAuth token with <code class="prettyprint">Balance</code> scope.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mf">55.76</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+          <h1 id="masspay">MassPay</h1>
+
+<h2 id="create-a-new-job">Create a new Job</h2>
+
+<h2 id="list-all-jobs">List all Jobs</h2>
+
+<h2 id="retrieve-a-job">Retrieve a Job</h2>
+
+<h2 id="list-a-job&#39;s-items">List a Job&rsquo;s Items</h2>
+
+<h2 id="retrieve-a-job&#39;s-item">Retrieve a Job&rsquo;s Item</h2>
+
+          <h1 id="refund">Refund</h1>
+
           <h1 id="contacts">Contacts</h1>
 
 <p>The Dwolla API exposes functionality to allow users to look-up the contacts of another user or users near a certain location (latitude and longitude).</p>
@@ -2059,47 +2196,57 @@ else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // 
 </span><span class="p">}</span><span class="w">
 </span></pre>
 
-          <h1 id="balance">Balance</h1>
+          <h1 id="auto-withdrawal">Auto Withdrawal</h1>
 
-<p>This method can be used to access the account balance for a user with an authorized OAuth token. Please note that the application must request a token with the <code class="prettyprint">Balance</code> scope or else the endpoint will return an error. </p>
+<p>Dwolla allows users to withdraw funds from their Dwolla balance funding sources associated with the account. The API exposes methods to toggle auto-withdrawal functionality.</p>
 
-<h2 id="get-balance">Get Balance</h2>
+<p>These endpoints require an OAuth token with the <code class="prettyprint">ManageAccount</code> scope. </p>
 
-<h3 id="http-request">HTTP Request</h3>
+<h2 id="get-auto-withdrawal-status">Get Auto Withdrawal Status</h2>
 
 <blockquote>
 <p>Examples with Dwolla Libraries:</p>
 </blockquote>
 <pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Fetch account balance for the 
- *   account associated with the provided
- *   OAuth token
- **/
-$balance = $Dwolla-&gt;balance();
-if($balance == NULL) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { echo $balance; } // Print user's balance
+ * Example 1:
+ * Get autowithdrawal status for the 
+ * account associted with the OAuth token
+ */
+
+$status = $Dwolla-&gt;getAutoWithdrawalStatus();
+if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($status); } // Print status
 </pre>
-<pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
-<span class="c1">#   Get the balance of the authenticated user</span>
-<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Balance</span><span class="p">.</span><span class="nf">get</span>
+<pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
+<span class="c1">#   Get autowithdrawal status of the user</span>
+<span class="c1">#   associated with the current OAuth token</span>
+
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="p">.</span><span class="nf">get_autowithdrawal_status</span>
 </pre>
-<pre class="highlight python"><span class="n">balance</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_balance</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+        Fetch autowithdraw status for the account
+        associated with the current OAuth token.
+'''</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_autowithdraw_status</span>
+<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Example 1:
  *
- * Get balance of the user associated with the OAuth token.
+ * Find out whether or not auto-withdrawal is enabled for the user
+ * associated with the OAuth token
  */</span>
 
-<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">balance</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
-   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">getAutoWithdrawalStatus</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
 
-<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/balance/?oauth_token={token}</code></p>
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl?oauth_token={token}</code></p>
 
 <table><thead>
 <tr>
@@ -2111,112 +2258,57 @@ else { echo $balance; } // Print user's balance
 <tr>
 <td>oauth_token</td>
 <td>no</td>
-<td>A valid OAuth token with <code class="prettyprint">Balance</code> scope.</td>
+<td>A valid OAuth token with <code class="prettyprint">ManageAccount</code> scope.</td>
 </tr>
 </tbody></table>
 
-<blockquote>
-<p>If successful, you&rsquo;ll receive this response:</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mf">55.76</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
-
-          <h1 id="masspay">MassPay</h1>
-
-<h2 id="create-a-new-job">Create a new Job</h2>
-
-<h2 id="list-all-jobs">List all Jobs</h2>
-
-<h2 id="retrieve-a-job">Retrieve a Job</h2>
-
-<h2 id="list-a-job&#39;s-items">List a Job&rsquo;s Items</h2>
-
-<h2 id="retrieve-a-job&#39;s-item">Retrieve a Job&rsquo;s Item</h2>
-
-          <h1 id="transactions">Transactions</h1>
-
-<h3 id="how-transactions-work">How Transactions Work</h3>
-
-<p>When a payment is placed, 2 or more transactions are created.  At least one is created to credit the recipient&rsquo;s account balance, and another one to debit the sender&rsquo;s account balance.  </p>
-
-<p>As a simple example, let&rsquo;s say Bob sends $5 to Alice from his account balance.  From this action, two <code class="prettyprint">Transactions</code> are created:</p>
-
-<ol>
-<li>Transaction <code class="prettyprint">512010</code>: credits Alice&rsquo;s account with $5</li>
-<li>Transaction <code class="prettyprint">512011</code>: deducts $5 from Bob&rsquo;s account</li>
-</ol>
-
-<p>It&rsquo;s important to keep in mind that when Bob looks at this payment, he will see the credit transaction&rsquo;s ID: <code class="prettyprint">512010</code>.  This is called the <strong>Sender&rsquo;s Transaction ID</strong>. </p>
-
-<p>Similarly, when Alice looks up this payment, she will see a different transaction of ID <code class="prettyprint">512011</code>, which we call the <strong>Recipient&rsquo;s Transaction ID</strong>.</p>
-
-<h4 id="additional-transactions">Additional Transactions</h4>
-
-<p>Additional transactions are created: </p>
-
-<ul>
-<li>if the payment is bank sourced, to fund the payment</li>
-<li>if the payment is over $10 it will incur a $0.25 <em>Dwolla Fee</em></li>
-<li>if there is a facilitator fee</li>
-</ul>
-
-<h3 id="transaction-types">Transaction Types</h3>
-
-<h3 id="transaction-statuses">Transaction Statuses</h3>
-
-<h2 id="list-a-user&#39;s-transactions">List a user&rsquo;s transactions</h2>
-
-<h2 id="list-an-app&#39;s-transactions">List an app&rsquo;s transactions</h2>
-
-<h2 id="get-a-specific-transaction">Get a specific transaction</h2>
-
-          <h1 id="transaction-stats">Transaction Stats</h1>
-
-          <h1 id="send-money">Send Money</h1>
-
-<p>The API allows users to easily send money to other users&#39; Dwolla accounts via their Dwolla ID, Facebook ID, Twitter screen-name, phone number, or e-mail address from the account associated with an active OAuth token. In order for the transaction to successfully complete, the OAuth token must be granted with the <code class="prettyprint">Send</code> scope. </p>
-
-<h3 id="http-request">HTTP Request</h3>
+<h2 id="set-auto-withdrawal-status">Set Auto Withdrawal Status</h2>
 
 <blockquote>
 <p>Examples with Dwolla Libraries:</p>
 </blockquote>
 <pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Send money ($1.00) to a Dwolla ID 
- **/
-$transactionId = $Dwolla-&gt;send($pin, '812-734-7288', 1.00);
-if(!$transactionId) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction ID
+ * Example 1:
+ * Enable autowithdraw for funding source '12345' under the
+ * account associted with the OAuth token
+ */
+
+$status = $Dwolla-&gt;toggleAutoWithdrawalStatus('true', '12345');
+if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
+else { print_r($status); } // Print status
 </pre>
 <pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
-<span class="c1">#   Send money ($1.00) to a Dwolla ID</span>
-<span class="n">transactionId</span> <span class="o">=</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">send</span><span class="p">({</span><span class="ss">:destinationId</span> <span class="o">=&gt;</span> <span class="s1">'812-626-8794'</span><span class="p">,</span> <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mo">00</span><span class="p">,</span> <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
-<span class="n">pp</span> <span class="n">transactionId</span>
+<span class="c1">#   Enable autowithdraw for funding source '12345' under the</span>
+<span class="c1">#   associated with the current OAuth token</span>
+
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="p">.</span><span class="nf">auto_withdrawal</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="s1">'12345'</span><span class="p">)</span>
 </pre>
 <pre class="highlight python"><span class="s">'''
     EXAMPLE 1: 
-      Send money ($1.00) to a Dwolla ID 
+        nable autowithdraw for funding source '12345' under the
+        associated with the current OAuth token.
 '''</span>
-<span class="n">transaction</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">send_funds</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="s">'812-626-8794'</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">set_autowithdraw_status</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="s">'12345'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
 </pre>
-<pre class="highlight javascript"><span class="cm">/**
- * EXAMPLE 1: 
- *   Send money ($1.00) to a Dwolla ID 
- **/</span>
+<pre class="highlight javascript"><span class="cm">/***
+ * Example 1:
+ *
+ * Enable auto-withdraw for the user associated with the OAuth token,
+ * for the funding ID '1234567'.
+ */</span>
 
-<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="s1">'812-626-8794'</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">toggleAutoWithdraw</span><span class="p">(</span><span class="s1">'true'</span><span class="p">,</span> <span class="s1">'1234567'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
 
-<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/send</code></p>
+<h3 id="http-request">HTTP Request</h3>
+
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl
+Content-Type: application/json
+</code></p>
 
 <table><thead>
 <tr>
@@ -2228,86 +2320,19 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <tr>
 <td>oauth_token</td>
 <td>no</td>
-<td>Valid OAuth token with the <code class="prettyprint">Request</code> scope.</td>
+<td>A valid OAuth token with <code class="prettyprint">ManageAccount</code> scope.</td>
 </tr>
 <tr>
-<td>destinationId</td>
+<td>enabled</td>
 <td>no</td>
-<td>Identification of the user to send funds to. Must be the Dwolla identifier, Facebook identifier, Twitter identifier, phone number, or email address.</td>
+<td>Boolean value of autowithdrawal feature.</td>
 </tr>
 <tr>
-<td>pin</td>
+<td>fundingId</td>
 <td>no</td>
-<td>The PIN associated with the user&rsquo;s account.</td>
-</tr>
-<tr>
-<td>amount</td>
-<td>no</td>
-<td>Amount of funds to transfer to destination user.</td>
-</tr>
-<tr>
-<td>destinationType</td>
-<td>yes</td>
-<td>Type of destination user (defaults to &lsquo;Dwolla&rsquo;, possible values are &lsquo;Dwolla&rsquo;, &lsquo;Email&rsquo;, and &lsquo;Phone&rsquo;).</td>
-</tr>
-<tr>
-<td>fundsSource</td>
-<td>yes</td>
-<td>ID of funding source to use for transaction (defaults to <code class="prettyprint">Balance</code>).</td>
-</tr>
-<tr>
-<td>assumeCosts</td>
-<td>yes</td>
-<td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
-</tr>
-<tr>
-<td>metadata</td>
-<td>yes</td>
-<td>Set to <code class="prettyprint">true</code> if the fulfilling user is to assume all facilitator fees. Defaults to <code class="prettyprint">false</code>; does not affect the Dwolla transaction fee.</td>
-</tr>
-<tr>
-<td>additionalFees</td>
-<td>yes</td>
-<td>Array of additional facilitator fees</td>
-</tr>
-<tr>
-<td>&ndash;&gt; destinationId</td>
-<td>yes</td>
-<td>Facilitator&rsquo;s Dwolla ID</td>
-</tr>
-<tr>
-<td>&ndash;&gt; amount</td>
-<td>yes</td>
-<td>Facilitator amount.</td>
-</tr>
-<tr>
-<td>metadata</td>
-<td>yes</td>
-<td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).</td>
-</tr>
-<tr>
-<td>assumeAdditionalFees</td>
-<td>yes</td>
-<td>Set to <code class="prettyprint">true</code> if the sending user will assume all additional facilitator fees, <code class="prettyprint">false</code> if the destination user will assume the fees. Defaults to <code class="prettyprint">false</code>.</td>
-</tr>
-<tr>
-<td>facilitatorAmount</td>
-<td>yes</td>
-<td>Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the &lsquo;amount&rsquo;.</td>
+<td>Funding source ID of account to autowithdraw funds to.</td>
 </tr>
 </tbody></table>
-
-<blockquote>
-<p>If successful, you&rsquo;ll receive this response:</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
-
-          <h1 id="refund">Refund</h1>
 
           <h1 id="changelog">Changelog</h1>
 
