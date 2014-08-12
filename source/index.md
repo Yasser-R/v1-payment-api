@@ -22,18 +22,18 @@ includes:
   - webhooks
 
   # resources
-  - accounts
+  - send
   - checkouts
   - fundingsources
   - requests
   - users
-  - contacts
-  - balance
-  - masspay
   - transactions
   - transactionStats
-  - send
+  - balance
+  - masspay
   - refund
+  - contacts
+  - accounts
  
   # misc
   - changelog
