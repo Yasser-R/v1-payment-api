@@ -47,8 +47,6 @@ A handful of libraries are officially maintained, and others are community maint
 
 ## Making Requests
 
-All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.
-
 ```
 POST https://www.dwolla.com/oauth/rest/transactions/send
 Content-Type: application/json
@@ -61,15 +59,18 @@ Content-Type: application/json
 }
 ```
 
+```
+...
+
+GET https://www.dwolla.com/oauth/rest/transactions?client_id=XYZ&client_secret=JJJ&limit=10
+```
+
 `POST` requests must have a JSON encoded body and the 
 `Content-Type: application/json` header.
 
-
 `GET` requests have parameters provided in the querysting.
 
-```
-GET https://www.dwolla.com/oauth/rest/transactions?client_id=XYZ&client_secret=JJJ&limit=10
-```
+All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.
 
 <aside class="notice">
 Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET querystring parameters!
@@ -104,3 +105,5 @@ That means every API response contains:
 - `Success`, a boolean indicating whether or not the call was successful, or resulted in an error
 - `Message`, an error message if the API call was unsuccessful, or `"Success"` otherwise
 - `Response`, the actual data returned by the API call.
+
+## Errors
