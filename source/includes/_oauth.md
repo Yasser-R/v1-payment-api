@@ -94,7 +94,7 @@ ManageAccount | Manage the user's account settings
 
 Once the user returns to your application via the `redirect_uri` you specified, there will be a `code` querystring parameter appended to that URL.  Exchange the authorization `code` for an `access_token` and `refresh_token` pair.
 
-### Request URL
+### HTTP Request
 `POST https://www.dwolla.com/oauth/v2/token`
 
 Parameter | Description
@@ -139,7 +139,7 @@ token_type | Always `bearer`.
 
 Use a valid `refresh_token` to generate a new `access_token` and `refresh_token` pair.
 
-### Request URL
+### HTTP Request
 `POST https://www.dwolla.com/oauth/v2/token`
 
 Parameter | Description
