@@ -27,6 +27,7 @@ To create a PayLater Checkout, set `checkoutWithApi` to `true`.
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
   "callback": "http://www.something.com/callback",
   "redirect": "http://www.something.com/return",
+  "allowGuestCheckout": "true",
   "checkoutWithApi": "false",
   "orderId": "foo123",
   "allowFundingSources": "true",
@@ -84,6 +85,7 @@ callback |  | Dwolla will POST a Callback containing results of the checkout whe
 redirect |  | User will be redirected to this URL after successfully checking out, or cancelling.
 purchaseOrder | | A purchaseOrder JSON object. See below.
 checkoutWithApi | yes | Create a *PayLater* checkout.  Defaults to `false`.
+allowGuestCheckout | yes | Enable [Dwolla Direct](https://developers.dwolla.com/dev/pages/gateway/direct) experience for users without a Dwolla account
 orderId | yes | Custom string to identify the checkout.  Not persisted in resulting transaction.
 allowFundingSources | yes | Allow the user to pay with a funding source other than their account Balance.  Defaults to `false`.
 additionalFundingSources | yes | If `allowFundingSources` enabled, use this to filter the types of funding sources allowed. <br> `credit`: Only allow Dwolla Credit, if both the merchant and user support it <br> `banks`: Only allow bank (ACH) funding sources <br> `fisync`: Only allow FiSync-enabled bank funding sources <br> `realtime`: Only allow `credit` and `fisync` sources <br> `true`: Allow all funding source types <br> `false`: Do not allow any funding sources
