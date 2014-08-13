@@ -1795,10 +1795,79 @@ else { print_r($me); } // Print user information
 </tbody></table>
 
           <h1 id="transactions">Transactions</h1>
+<pre class="highlight plaintext">{
+    "Id": 4443952,
+    "Amount": 0.01,
+    "Date": "2014-01-22T13:09:38Z",
+    "Type": "money_sent",
+    "UserType": "Dwolla",
+    "DestinationId": "812-713-9234",
+    "DestinationName": "Peter Douglas",
+    "Destination": {
+        "Id": "812-713-9234",
+        "Name": "Peter Douglas",
+        "Type": "Dwolla",
+        "Image": "http://uat.dwolla.com/avatars/812-713-9234"
+    },
+    "SourceId": "812-629-2658",
+    "SourceName": "Tom Walker",
+    "Source": {
+        "Id": "812-713-9234",
+        "Name": "Tom Walker",
+        "Type": "Dwolla",
+        "Image": "http://uat.dwolla.com/avatars/812-713-9234"
+    },
+    "ClearingDate": "",
+    "Status": "processed" ,
+    "Notes": "don't spend it all in one place!",
+    "OriginalTransactionId": null,
+    "Metadata": null ,
+    "Fees": null
+}
+</pre>
+<pre class="highlight plaintext">$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$,,,$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$"OOO"$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$!OOO!$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$,"OOO",$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$,"OOOOOOO",$$$$$$$$$$$$$
+$$$$$$$$$$$$!"OOOOOOOOOOO"!$$$$$$$$$$$
+$$$$$$$$$$,"OOOOOOOOOOOOOOO",$$$$$$$$$
+$$$$$$$$,1OOOOOOOOOOOOOOOOOOO7,$$$$$$$
+$$$$$$,!OOOOOOOOOOOOOOOOOOOOOO"$$$$$$$
+$$$$$$!OOOOOOOOO/""""'\OOOOOOOO1$$$$$$
+$$$$$$"OOOOOOOOOO"$$$$!OOOOOOOO"$$$$$$
+$$$$$$"OOOOOOOOOOO!$$$",OOOOOOO!$$$$$$
+$$$$$$$",OOOOOOOOOO",$$$"""""""$$$$$$$
+$$$$$$$$"!OOOOOOOOOOO",$$$$$$$$$$$$$$$
+$$$$$$$$$$",OOOOOOOOOOO",$$$$$$$$$$$$$
+$$$$$$$$$$$$"OOOOOOOOOOOO",$$$$$$$$$$$
+$$$$$$$$$$$$$"!OOOOOOOOOOOO"+$$$$$$$$$
+$$$$$$$$$$$$$$$"==OOOOOOOOOOO,$$$$$$$$
+$$$$$$$$,,,,,,$$$$",OOOOOOOOOO",$$$$$$
+$$$$$$,"OOOOOO',$$$$",OOOOOOOOO!$$$$$$
+$$$$$$1OOOOOOOO."~~~"OOOOOOOOOO!$$$$$$
+$$$$$$!OOOOOOOOOOOOOOOOOOOOOOO1$$$$$$$
+$$$$$$",OOOOOOOOOOOOOOOOOOOOO,"$$$$$$$
+$$$$$$$",OOOOOOOOOOOOOOOOOOO!$$$$$$$$$
+$$$$$$$$$1OOOOOOOOOOOOOOOO,1$$$$$$$$$$
+$$$$$$$$$$"~~,OOOOOOOOOO,"$$$$$$$$$$$$
+$$$$$$$$$$$$$$"""1OOO1"'$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$!OOO!$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$,OOO,$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$"""$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$ "DWOLLA DWOLLA BILL YA'LL" $$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+</pre>
+
+<p>Any movement of money, whether payment, withdrawal, deposit, or fee, is recorded as an individual Transaction.  For instance, depositing money from a funding source into your Dwolla account balance creates a <code class="prettyprint">Transaction</code> of type <code class="prettyprint">deposit</code>.</p>
 
 <h3 id="how-transactions-work">How Transactions Work</h3>
 
-<p>When a payment is placed, 2 or more transactions are created.  At least one is created to credit the recipient&rsquo;s account balance, and another one to debit the sender&rsquo;s account balance.  </p>
+<p>When a payment is sent, 2 or more transactions are created.  At least one is created to credit the recipient&rsquo;s account balance, and another one to debit the sender&rsquo;s account balance.  </p>
 
 <p>As a simple example, let&rsquo;s say Bob sends $5 to Alice from his account balance.  From this action, two <code class="prettyprint">Transactions</code> are created:</p>
 
@@ -1813,7 +1882,7 @@ else { print_r($me); } // Print user information
 
 <h4 id="additional-transactions">Additional Transactions</h4>
 
-<p>Additional transactions are created: </p>
+<p>For a particular payment, additional transactions are created: </p>
 
 <ul>
 <li>if the payment is bank sourced, to fund the payment</li>
@@ -1823,7 +1892,67 @@ else { print_r($me); } // Print user information
 
 <h3 id="transaction-types">Transaction Types</h3>
 
+<table><thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>money_sent</td>
+<td>Payment sent by a user</td>
+</tr>
+<tr>
+<td>money_received</td>
+<td>Payment received by a user</td>
+</tr>
+<tr>
+<td>deposit</td>
+<td>Funds deposited from a Funding Source (e.g. bank account) to the user&rsquo;s Dwolla account balance</td>
+</tr>
+<tr>
+<td>withdrawal</td>
+<td>Funds withdrawn from the user&rsquo;s Dwolla account balance to an associated Funding Source</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>Transaction fee of $0.25 or Facilitator Fee</td>
+</tr>
+</tbody></table>
+
 <h3 id="transaction-statuses">Transaction Statuses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pending</td>
+<td>Bank-funded payment awaiting clearance; typically requires 3 - 5 business days to clear.</td>
+</tr>
+<tr>
+<td>processed</td>
+<td>Transaction has cleared successfully.</td>
+</tr>
+<tr>
+<td>failed</td>
+<td>Transaction failed to clear successfully.  Usually, this is a result of an ACH failure (insufficient funds, etc.).</td>
+</tr>
+<tr>
+<td>cancelled</td>
+<td>A pending transaction has been canceled, and will not process further.</td>
+</tr>
+<tr>
+<td>reclaimed</td>
+<td>The payment was returned to the sender after being unclaimed by the recipient for a period of time.</td>
+</tr>
+</tbody></table>
+
+<p><aside class="notice">The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be &ldquo;processed&rdquo;.</aside></p>
+
+<h3 id="transaction-resource">Transaction Resource</h3>
 
 <h2 id="list-a-user&#39;s-transactions">List a user&rsquo;s transactions</h2>
 
