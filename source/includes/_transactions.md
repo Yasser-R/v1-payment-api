@@ -113,10 +113,236 @@ reclaimed | The payment was returned to the sender after being unclaimed by the 
 <aside class="notice">The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be "processed".</aside>
 
 ### Transaction Resource
+```always
+{
+  "Amount": 1,
+  "Date": "2014-01-22T13:11:10Z",
+  "UserType": "Email",
+  "DestinationId": "bob@dwolla.com",
+  "DestinationName": "bob@dwolla.com,
+  "Destination": {
+      "Id": "bob@dwolla.com",
+      "Name": "bob@dwolla.com",
+      "Type": "Email",
+      "Image": ""
+  },
+  "Id": 12345,
+  "SourceId": "812-111-2222",
+  "SourceName": "Alice",
+  "Source": {
+      "Id": "812-111-2222",
+      "Name": "Alice",
+      "Type": "Dwolla",
+      "Image": "http://uat.dwolla.com/avatars/812-111-2222"
+  },
+  "Type": "money_sent",
+  "Status": "processed" ,
+  "ClearingDate": "",
+  "Notes": "Thank you for lunch!",
+  "OriginalTransactionId": null,
+  "Metadata": {
+      "some meta info":  "foobar",
+      "aProfoundRealization": "pretzels"
+  },
+  "Fees": [
+      {
+          "Id": 1646163,
+          "Amount": 0.1,
+          "Type": "Facilitator Fee"
+      }
+  ]
+}
+```
 
+Property | Description
+---------|-------------
+Amount | Amount of funds involved.
+Date | Timestamp of when the transaction was created.  ISO-8601 format.
+UserType | Type of destination.  Can be `Dwolla` if money was sent to a Dwolla ID, `Email`, or `PhoneNumber`.
+DestinationId | Dwolla ID, email address, or phone number of recipient.
+DestinationName | Full name of recipient Dwolla user, if available.  Otherwise, email or phone number of non-user.
+Destination | JSON object describing the DestinationId, DestinationName, recipient type (possible values: `Dwolla`, `Email`, `Phone`), and avatar URL of recipient, if available.
+Id | Unique Transaction ID.  Incrementally generated integer.  Currently, Transaction IDs are 7 digits long in production, but will eventually grow longer.
+SourceId | Dwolla ID of the sender's account
+SourceName | Full name of the sender
+Source | JSON object describing the SourceId, DestinationName, and avatar URL of sender, if available.  `Type` will always be `Dwolla`.
+Type | Transaction type [See above](#transaction-types)
+Status | Transaction Status.  [See above](#transaction-statuses)
+ClearingDate | For bank funded payments, this is the expected clearing date.  Otherwise, for real time payments (e.g. funded by `Balance`), this will be an empty string: `""`
+Notes | Note attached to the payment.  Max 250 characters.
+OriginalTransactionId | If the transaction is a refund, this is the transaction ID of the original transaction which was refunded. Otherwise, `null`.
+Metadata | JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. `null` if not provided or visible to application.  [Read more](#metadata)
+Fees | Array of any facilitator fees or transaction fees incurred by this payment.  Otherwise, `null`.
 
 ## List a user's transactions
 
+```json
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": [
+        {
+            "Id": 5569196,
+            "Amount": 0.01,
+            "Date": "2014-08-13T05:17:15Z",
+            "Type": "money_sent",
+            "UserType": "Email",
+            "DestinationId": "ejfwefjwfk02022@gmail.com",
+            "DestinationName": "ejfwefjwfk02022@gmail.com",
+            "Destination": {
+                "Id": "ejfwefjwfk02022@gmail.com",
+                "Name": "ejfwefjwfk02022@gmail.com",
+                "Type": "Email",
+                "Image": ""
+            },
+            "SourceId": "812-687-7049",
+            "SourceName": "Gordon Zheng",
+            "Source": {
+                "Id": "812-687-7049",
+                "Name": "Gordon Zheng",
+                "Type": "Dwolla",
+                "Image": "https://dwolla-avatars.s3.amazonaws.com/812-687-7049/ac044552"
+            },
+            "ClearingDate": "",
+            "Status": "cancelled",
+            "Notes": "",
+            "Fees": null,
+            "OriginalTransactionId": null,
+            "Metadata": null
+        },
+        ...
+    ]
+}
+```
+
+Retrieve the transaction history of the authenticated user.
+
+### HTTP Request
+`GET https://www.dwolla.com/oauth/rest/transactions`
+
+#### Example:
+To get the latest 200 transactions of type `money_sent`, `fee`, and `deposit`:
+
+`GET https://www.dwolla.com/oauth/rest/transactions?types=money_sent,fee,deposit&limit=200`
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
+
+### Request Parameters
+Parameter | Description
+----------|------------
+types | Types of transactions to return.  By default, all types returned.  Possible values: `money_sent`, `money_received`, `deposit`, `withdrawal`, `fee`.  Delimited by `,`
+limit | Number of transactions to return.  Max 200.  Defaults to 10.
+skip | Number of transactions to skip.
+sinceDate | Earliest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
+endDate | Latest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
+
 ## List an app's transactions 
 
+```json
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": [
+        {
+            "Id": 5569196,
+            "Amount": 0.01,
+            "Date": "2014-08-13T05:17:15Z",
+            "Type": "money_sent",
+            "UserType": "Email",
+            "DestinationId": "ejfwefjwfk02022@gmail.com",
+            "DestinationName": "ejfwefjwfk02022@gmail.com",
+            "Destination": {
+                "Id": "ejfwefjwfk02022@gmail.com",
+                "Name": "ejfwefjwfk02022@gmail.com",
+                "Type": "Email",
+                "Image": ""
+            },
+            "SourceId": "812-687-7049",
+            "SourceName": "Gordon Zheng",
+            "Source": {
+                "Id": "812-687-7049",
+                "Name": "Gordon Zheng",
+                "Type": "Dwolla",
+                "Image": "https://dwolla-avatars.s3.amazonaws.com/812-687-7049/ac044552"
+            },
+            "ClearingDate": "",
+            "Status": "cancelled",
+            "Notes": "",
+            "Fees": null,
+            "OriginalTransactionId": null,
+            "Metadata": null
+        },
+        ...
+    ]
+}
+```
+
+List the transactions which your application has created / facilitated.
+
+### HTTP Request
+`GET https://www.dwolla.com/oauth/rest/transactions?client_id={}&client_secret={}`
+
+#### Example:
+To get the latest 200 transactions of type `money_sent`, `fee`, and `deposit`:
+
+`GET https://www.dwolla.com/oauth/rest/transactions?types=money_sent,fee,deposit&limit=200`
+
+### Request Parameters
+Parameter | Description
+----------|------------
+client_id | Application key
+client_secret | Application secret
+types | Types of transactions to return.  By default, all types returned.  Possible values: `money_sent`, `money_received`, `deposit`, `withdrawal`, `fee`.  Delimited by `,`
+limit | Number of transactions to return.  Max 200.  Defaults to 10.
+skip | Number of transactions to skip.
+sinceDate | Earliest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
+endDate | Latest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
+
 ## Get a specific transaction
+
+```json
+{
+  "Success": true,
+  "Message": "Success",
+  "Response": {
+    "Id": 331506,
+    "Amount": 15.25,
+    "Date": "2014-09-17T18:18:46Z",
+    "Type": "withdrawal",
+    "UserType": "Dwolla",
+    "DestinationId": "XXX9999",
+    "DestinationName": "Blah",
+    "Destination": {
+      "Id": "XXX9999",
+      "Name": "Blah",
+      "Type": "Dwolla",
+      "Image": ""
+    },
+    "SourceId": "812-742-8722",
+    "SourceName": "Cafe Kubal",
+    "Source": {
+      "Id": "812-742-8722",
+      "Name": "Cafe Kubal",
+      "Type": "Dwolla",
+      "Image": "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "ClearingDate": "2014-09-19T00:00:00Z",
+    "Status": "pending",
+    "Notes": null,
+    "Fees": null,
+    "OriginalTransactionId": null,
+    "Metadata": null
+  }
+}
+```
+
+Look up a particular transaction by its ID (Either Sender's or Recipient's.  Read about transaction IDs [here](#how-transactions-work).)  Either an OAuth access token can be supplied, or application key and secret.
+
+### HTTP Request
+To fetch a transaction which belongs to the authorized user:
+
+`GET https://www.dwolla.com/oauth/rest/transactions/{id}`
+
+or to fetch a transaction which belongs to an application:
+
+`GET https://www.dwolla.com/oauth/rest/transactions/{id}?client_id={}&client_secret={}`
