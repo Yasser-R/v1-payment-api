@@ -106,4 +106,6 @@ That means every API response contains:
 - `Message`, an error message if the API call was unsuccessful, or `"Success"` otherwise
 - `Response`, the actual data returned by the API call.
 
+## Dates
+
 ## Errors
