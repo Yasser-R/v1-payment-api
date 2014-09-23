@@ -36,6 +36,7 @@ includes:
   - accounts
  
   # misc
+  - bugs
   - changelog
 
 search: true
