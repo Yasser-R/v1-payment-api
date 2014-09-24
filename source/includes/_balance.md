@@ -1,13 +1,5 @@
 # Balance
 
-This method can be used to access the account balance for a user with an authorized OAuth token. Please note that the application must request a token with the `Balance` scope or else the endpoint will return an error. 
-
-## Get Balance
-
-### HTTP Request
-
-> Examples with Dwolla Libraries:
-
 ```php
 /**
  * EXAMPLE 1: 
@@ -41,14 +33,6 @@ Dwolla.balance(function(err, data){
 });
 ```
 
-`GET https://www.dwolla.com/oauth/rest/balance/?oauth_token={token}`
-
-| Parameter   | Optional? | Description                                   |
-|-------------|-----------|-----------------------------------------------|
-| oauth_token | no        | A valid OAuth token with `Balance` scope.     |
-
-> If successful, you'll receive this response:
-
 ```json
 {
     "Success": true,
@@ -56,3 +40,11 @@ Dwolla.balance(function(err, data){
     "Response": 55.76
 }
 ```
+
+Fetch a user's account balance.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Balance` scope.</aside>
+
+### HTTP Request
+
+`GET https://www.dwolla.com/oauth/rest/balance/`
