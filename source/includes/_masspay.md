@@ -1,7 +1,17 @@
 # MassPay
 
 ```always
-[some cool ascii art here!]
+$~ cowsay MOOOspay
+
+  _________
+< MOOOspay >
+  ---------
+         \   ^__^ 
+          \  (oo)\_______
+             (__)\       )\/\
+                 ||----w |
+                 ||     ||
+    
 ```
 
 The MassPay API allows you to easily send up to 10,000 payments with a single API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission. 
