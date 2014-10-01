@@ -163,6 +163,8 @@ Look up a particular funding source by its funding source ID.
 
 Withdraw funds from a user's account balance to one of the user's bank funding sources.  A new [Transaction](#transactions) of type `withdrawal` is created as a result.
 
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
+
 ### HTTP Request
 `POST https://www.dwolla.com/oauth/rest/fundingsources/{id}/withdraw`
 
@@ -213,6 +215,8 @@ pin | User account PIN
 
 Deposit funds from a user's bank funding source to the user's account balance.  A new [Transaction](#transactions) of type `deposit` is created as a result.
 
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
+
 ### HTTP Request
 `POST https://www.dwolla.com/oauth/rest/fundingsources/{id}/deposit`
 
@@ -240,6 +244,8 @@ pin | User account PIN
 ```
 
 Add a new ACH bank account as a funding source for the authenticated user.  Once created, the funding source will need to be verified before it can be used.  Two micro-deposits will be made, and their amounts must be verified using the [Verify API](#verify-a-funding-source) or manually by the user on [www.dwolla.com](https://www.dwolla.com/).
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
 
 ### HTTP Request
 `POST https://www.dwolla.com/oauth/rest/fundingsources/`
@@ -269,6 +275,8 @@ name | Arbitrary nickname for the funding source
 ```
 
 Verify the amounts of the 2 micro-deposits sent to a funding source.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
 
 ### HTTP Request
 `POST https://www.dwolla.com/oauth/rest/fundingsources/{id}/verify`
