@@ -109,3 +109,5 @@ That means every API response contains:
 ## Dates
 
 ## Errors
+
+## Facilitator Fees

@@ -1,12 +1,88 @@
 # Money Requests
 
-Dwolla's API exposes methods to view, create, and fulfill/cancel money requests. All of the methods below require the `Request` OAuth token scope.
+```always
+{
+    "Id": 1636,
+    "Source": {
+        "Id": "812-742-8722",
+        "Name": "Cafe Kubal",
+        "Type": "Dwolla",
+        "Image": "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "Destination": {
+        "Id": "812-742-3301",
+        "Name": "Gordon Zheng",
+        "Type": "Dwolla",
+        "Image": "http://uat.dwolla.com/avatars/812-742-3301"
+    },
+    "Amount": 0.01,
+    "Notes": "",
+    "DateRequested": "2014-10-01T19:50:54Z",
+    "Status": "Paid",
+    "Transaction": {
+        "RequestId": 1636,
+        "Id": 335741,
+        "Source": {
+            "Id": "812-742-3301",
+            "Name": "Gordon Zheng",
+            "Type": "Dwolla",
+            "Image": "http://uat.dwolla.com/avatars/812-742-3301"
+        },
+        "Destination": {
+            "Id": "812-742-8722",
+            "Name": "Cafe Kubal",
+            "Type": "Dwolla",
+            "Image": "http://uat.dwolla.com/avatars/812-742-8722"
+        },
+        "Amount": 0.01,
+        "SentDate": "2014-10-01T19:51:52Z",
+        "ClearingDate": "2014-10-01T19:51:52Z",
+        "Status": "processed"
+    },
+    "CancelledBy": null,
+    "DateCancelled": "",
+    "SenderAssumeFee": false,
+    "SenderAssumeAdditionalFees": false,
+    "AdditionalFees": [],
+    "Metadata": null
+}
+```
+
+Money Requests are sent from a Dwolla user to another Dwolla user, phone number or email address.  A Money Request is essentially an invoice, requesting payment from the recipient of the request.
+
+Money Requests can be fulfilled for the amount of the request or greater whenever the payer decides to do so.  When fulfilled, a RequestFulfilled webhook notification is sent.  Money Requests can also be cancelled by either the sender of the request or the recipient of the request.  When cancelled, a RequestCancelled webhook notification is sent.
+
+Money requests do not expire.
+
+### Money Request Statuses
+
+Status | Description
+-------|------------
+Pending | Intitial state upon creation.  Not yet fulfilled.
+Paid | Payer has fulfilled the request and a payment has been sent for the request amount or greater.
+Cancelled | Request was cancelled by either payer or requester.
+
+### Money Request Resource
+
+Parameter | Description
+----------|------------
+Id | Unique Request ID
+Source | JSON object describing the requester: Dwolla ID, full name, user type (will always be `Dwolla`, since only Dwolla user accounts can request money), and profile avatar URL
+Destination | JSON object describing the payer: DestinationId (a Dwolla ID, email, or phone number), full name (if Dwolla account, otherwise, the email or phone number), user type, and profile avatar URL (`null` if not a user yet)
+Amount | Amount of funds requested
+Notes | Optional notes attached to Money Request
+DateRequested | Date and time when Money Request was created
+Status | Status of Money Request.  [See statuses](#money-request-statuses).
+Transaction | If fulfilled, a JSON object representing the resulting Transaction.  Otherwise, `null`.
+CancelledBy | If cancelled, a JSON object representing the user who cancelled the request.  Otherwise, `null`.
+DateCancelled | If cancelled, the date and time when the request was cancelled.  Otherwise, empty string: `""`.
+SenderAssumeFee | Boolean.  `true` if sender will assume the $0.25 transaction fee if applicable.
+SenderAssumeAdditionalFees | Boolean.  `true` if sender will assume all facilitator fees.
+AdditionalFees | Any additional facilitator fees attached to the request.
+Metadata | An optional [metadata](#metadata) object.
+
 
 ## List Money Requests
-
-### HTTP Request
-
-> Examples with Dwolla Libraries: 
 
 ```php
 /**
@@ -44,11 +120,16 @@ Dwolla.requests(function(err, data){
 });
 ```
 
-`GET https://www.dwolla.com/oauth/rest/requests/?oauth_token={token}`
+List the authorized user's pending requests.
+
+### HTTP Request
+
+`GET https://www.dwolla.com/oauth/rest/requests/`
+
+### Request Parameters
 
 | Parameter   | Optional? | Description                                                                                          |
 |-------------|-----------|------------------------------------------------------------------------------------------------------|
-| oauth_token | no        | Valid OAuth token with the `Request` scope.                                                          |
 | startDate   | yes       | Earliest date and time for which to retrieve pending requests (defaults to 0300 UTC for current day) |
 | endDate     | yes       | Latest date and time for which to retrieve pending requests (defaults to UTC current date/time)      |
 | limit       | yes       | Number of pending requests to retrieve (defaults to 20, must be in range of 1-200)                   |
@@ -86,46 +167,14 @@ Dwolla.requests(function(err, data){
             "AdditionalFees": [],
             "Metadata": null 
         },
-        {
-            "Id": 663,
-            "Source": {
-                "Id": "812-693-9484",
-                "Name": "Spencer Hunter",
-                "Type": "Dwolla",
-                "Image": null
-            },
-            "Destination": {
-                "Id": "812-706-1396",
-                "Name": "Jane Doe",
-                "Type": "Dwolla",
-                "Image": null
-            },
-            "Amount": 10,
-            "Notes": "",
-            "DateRequested": "2014-07-25T21:58:01Z",
-            "Status": "Pending" ,
-            "Transaction": null,
-            "CancelledBy": null,
-            "DateCancelled": "",
-            "SenderAssumeFee": false,
-            "SenderAssumeAdditionalFees": false,
-            "AdditionalFees": [],
-            "Metadata": {
-                "InvoiceDate":  "12-06-2014",
-                "Priority": "High",
-                "TShirtSize": "Small",
-                "blah": "blah"
-            }
-        }
+        
+        ...
+
     ]
 }
 ```
 
-## Lookup Money Request
-
-### HTTP Request
-
-> Examples with Dwolla Libraries: 
+## Retrieve Money Request
 
 ```php
 /**
@@ -162,13 +211,9 @@ Dwolla.requestById('12345678', function(err, data) {
    console.log(data);
 });
 ```
+### HTTP Request
 
-`GET https://www.dwolla.com/oauth/rest/requests/{request_id}?oauth_token={token}`
-
-| Parameter   | Optional? | Description                                                                                          |
-|-------------|-----------|------------------------------------------------------------------------------------------------------|
-| oauth_token | no        | Valid OAuth token with the `Request` scope.                                                          |
-| request_id  | no        | Request ID of the target request to look-up.														 |
+`GET https://www.dwolla.com/oauth/rest/requests/{id}`
 
 > If successful, you'll receive this response:
 
@@ -211,7 +256,7 @@ Dwolla.requestById('12345678', function(err, data) {
 ```
 
 
-## Create
+## Create Money Request
 
 ### HTTP Request
 

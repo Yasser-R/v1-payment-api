@@ -49,7 +49,11 @@ Dwolla.send(cfg.pin, '812-626-8794', 1.00, function(err, data) {
 }
 ```
 
-The API allows users to easily send money to other users' Dwolla accounts via their Dwolla ID, phone number, or e-mail address from the account associated with an active OAuth token. In order for the transaction to successfully complete, the OAuth token must be granted with the `Send` scope. 
+Send money from an authorized user's account to any Dwolla account ID, phone number, or e-mail address. You can send money to any phone number or email address -- if the recipient doesn't yet have a Dwolla account, they'll be sent an SMS or email notifying them of the payment and prompting them to sign up to claim the funds.
+
+You can optionally have the sender cover the transaction fee, if applicable, by setting `assumeCosts` to `true`.  By default, the recipient of the payment covers the $0.25 fee.
+
+Facilitator fees allow you, as the application facilitating a payment, to take a cut up to 50% of the payment amount.  By default, the facilitator fee is sent to the application owner's account, but you can have them sent to other recipients by declaring additional facilitator fees in the optional `additionalFees` array.
 	
 ### HTTP Request
 
@@ -69,3 +73,7 @@ The API allows users to easily send money to other users' Dwolla accounts via th
 | metadata             | yes       | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)                                                                                   |
 | assumeAdditionalFees | yes       | Set to `true` if the sending user will assume all additional facilitator fees, `false` if the destination user will assume the fees. Defaults to `false`.                                          |
 | facilitatorAmount    | yes       | Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the `amount`. |
+
+### Response 
+
+If successful, the response is simply the [Sender's Transaction ID](#how-transactions-work) for the resulting payment.  Read more about [Transactions](#transactions).

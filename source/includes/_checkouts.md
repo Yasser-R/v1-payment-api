@@ -1,5 +1,18 @@
 # Checkouts
 
+```always
+ _        ,
+(_\______/________
+   \-|-|/|-|-|-|-|/
+    \==/-|-|-|-|-/
+     \/|-|-|-|,-'
+      \--|-'''
+       \_j________
+       (_)     (_)
+
+"Shopping Trolley" - hjw
+```
+
 Create a checkout on our [Off-Site Gateway](/dev/pages/gateway#ux). 
 
 Checkout sessions must be completed by the user within __15 minutes__ of their creation. 

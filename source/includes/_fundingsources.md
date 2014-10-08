@@ -1,8 +1,19 @@
 # Funding Sources
 
-```
-[some cool ascii art]
+```always
+===========================================
+#                  BANK                   #
+#=========================================#
+#   ____        ___________        ____   #
+#  |    |      |     |     |      |    |  #      
+#  |    |      |     |     |      |    |  #
+#  |____|      |   --|--   |      |____|  #
+#              |     |     |              #
+###########################################
 
+"Bank" - capablemonkey
+```
+```
 [
   {
       "Id": "Balance",
@@ -45,6 +56,16 @@ ACH funding sources can be added and verified via the API.
 | Credit | A line of credit via Dwolla Credit.  Currently, only business accounts that have undergone review may accept credit-funded payments.  | Instant
 | Sweep | A special funding source type available to accounts with Sweep functionality. | Instant
 
+### Funding Source Resource
+
+| Parameter | Description
+|-----------|------------|
+Id | Funding Source ID
+Name | Arbitrary nickname for the funding source
+Type | Possible values: `Savings`, `Checking`, or empty string for Dwolla Account Balance and Credit: `""`
+Verified | `"true"` if funding source is verified.  Funding sources must be verified before funds can be deposited or withdrawn from them.
+ProcessingType | Possible values: `ACH`, `FiSync`, or empty string: `""`
+
 ## List Funding Sources
 
 ```json
@@ -65,6 +86,13 @@ ACH funding sources can be added and verified via the API.
             "Type": "Savings",
             "Verified": "true",
             "ProcessingType": "ACH"
+        },
+        {
+            "Id": "Credit"
+            "Name": "Credit"
+            "Type": ""
+            "Verified": true
+            "ProcessingType": ""
         },
         {
             "Id": "c58bb9f7f1d51d5547e1987a2833f4fb",
