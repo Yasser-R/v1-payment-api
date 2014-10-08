@@ -217,6 +217,8 @@ Fees | Array of any facilitator fees or transaction fees incurred by this paymen
 
 Retrieve the transaction history of the authenticated user.
 
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
+
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/transactions`
 
@@ -224,8 +226,6 @@ Retrieve the transaction history of the authenticated user.
 To get the latest 200 transactions of type `money_sent`, `fee`, and `deposit`:
 
 `GET https://www.dwolla.com/oauth/rest/transactions?types=money_sent,fee,deposit&limit=200`
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
 
 ### Request Parameters
 Parameter | Description
@@ -278,6 +278,8 @@ endDate | Latest date and time for which to retrieve transactions.  Must be ISO-
 ```
 
 List the transactions which your application has created / facilitated.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
 
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/transactions?client_id={}&client_secret={}`
@@ -337,6 +339,8 @@ endDate | Latest date and time for which to retrieve transactions.  Must be ISO-
 ```
 
 Look up a particular transaction by its ID (Either Sender's or Recipient's.  Read about transaction IDs [here](#how-transactions-work).)  Either an OAuth access token can be supplied, or application key and secret.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
 
 ### HTTP Request
 To fetch a transaction which belongs to the authorized user:
