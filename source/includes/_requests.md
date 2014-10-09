@@ -96,6 +96,72 @@ SenderAssumeAdditionalFees | Boolean.  `true` if sender will assume all facilita
 AdditionalFees | Any additional facilitator fees attached to the request.
 Metadata | An optional [metadata](#metadata) object.
 
+## Create Money Request
+
+```php
+/**
+ * EXAMPLE 1: 
+ *   Request money ($1.00) to a Dwolla ID 
+ **/
+$requestId = $Dwolla->request('812-713-9234', 1.00);
+if(!$requestId) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
+else { echo("Request ID: {$requestId} \n"); }
+```
+```ruby
+# Example 1: Request 1.00 from a Dwolla ID
+pp Dwolla::requests.create({:sourceId=> '812-114-1111', :amount=> '1.00'})
+```
+```python
+'''
+    EXAMPLE 1:
+      Initiate a money request
+'''
+request = DwollaUser.request_funds('1.00', 'reflector@dwolla.com', _keys.pin, source_type='Email')
+print(request)
+```
+```js
+/***
+ * Example 1:
+ *
+ * Request $5 from Source ID '812-111-1111'
+ */
+
+Dwolla.request('812-111-1111', '5.00', function(err, data) {
+   if (err) { console.log(err); }
+   console.log(data);
+});
+```
+
+> If successful, you'll receive this response:
+
+```json
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": 996
+}
+```
+
+Send a Money Request from the authorized user to a destination Dwolla user, email address or phone number.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
+
+### HTTP Request
+
+`POST https://www.dwolla.com/oauth/rest/requests/`
+
+| Parameter                  | Optional? | Description |
+|----------------------------|-----------|-------------|
+| sourceId | no | ID of user to request funds from. Must be either a Dwolla ID, phone number, or email address.
+| amount | no | Amount of funds to request 
+| sourceType | yes | Type of source user (either `Dwolla`, `Email` or `Phone`).  Defaults to `Dwolla`.|
+| facilitatorAmount | yes | Amount of the facilitator feeto override. Only applicable if the facilitator fee feature is enabled for your API application. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the `amount`. 
+| notes | yes | Note to attach to request (250 character limit).
+| senderAssumeCosts | yes | Set to `true` if the fulfilling user is to assume the Dwolla fee. Defaults to `false`; does not include facilitator fees.
+| senderAssumeAdditionalFees | yes | Set to `true` if the fulfilling user is to assume all facilitator fees. Defaults to `false`; does not include the Dwolla transaction fee.
+| additionalFees             | yes | Array of additional facilitator fee objects.  `[{"destinationId": "", "amount": 0.01}, ...]` |
+| metadata                   | yes | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)  |
+
 
 ## List Money Requests
 
@@ -134,20 +200,6 @@ Dwolla.requests(function(err, data){
    console.log(data);
 });
 ```
-
-List the authorized user's pending requests.
-
-### HTTP Request
-
-`GET https://www.dwolla.com/oauth/rest/requests/`
-
-### Request Parameters
-
-| Parameter   | Optional? | Description                                                                                          |
-|-------------|-----------|------------------------------------------------------------------------------------------------------|
-| startDate   | yes       | Earliest date and time for which to retrieve pending requests (defaults to 0300 UTC for current day) |
-| endDate     | yes       | Latest date and time for which to retrieve pending requests (defaults to UTC current date/time)      |
-| limit       | yes       | Number of pending requests to retrieve (defaults to 20, must be in range of 1-200)                   |
 
 > If successful, you'll receive this response:
 
@@ -189,6 +241,22 @@ List the authorized user's pending requests.
 }
 ```
 
+List the authorized user's pending requests.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
+
+### HTTP Request
+
+`GET https://www.dwolla.com/oauth/rest/requests/`
+
+### Request Parameters
+
+| Parameter   | Optional? | Description|
+|-------------|-----------|------------------------------------------------------------------------------------------------------|
+| startDate   | yes       | Earliest date and time for which to retrieve pending requests (defaults to 0300 UTC for current day) |
+| endDate     | yes       | Latest date and time for which to retrieve pending requests (defaults to UTC current date/time)      |
+| limit       | yes       | Number of pending requests to retrieve (defaults to 20, must be in range of 1-200)                   |
+
 ## Retrieve Money Request
 
 ```php
@@ -226,9 +294,6 @@ Dwolla.requestById('12345678', function(err, data) {
    console.log(data);
 });
 ```
-### HTTP Request
-
-`GET https://www.dwolla.com/oauth/rest/requests/{id}`
 
 > If successful, you'll receive this response:
 
@@ -270,79 +335,15 @@ Dwolla.requestById('12345678', function(err, data) {
 }
 ```
 
+Retrieve a single Money Request by its ID.
 
-## Create Money Request
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
 
 ### HTTP Request
 
-> Examples with Dwolla Libraries:
-
-```php
-/**
- * EXAMPLE 1: 
- *   Request money ($1.00) to a Dwolla ID 
- **/
-$requestId = $Dwolla->request('812-713-9234', 1.00);
-if(!$requestId) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo("Request ID: {$requestId} \n"); }
-```
-```ruby
-# Example 1: Request 1.00 from a Dwolla ID
-pp Dwolla::requests.create({:sourceId=> '812-114-1111', :amount=> '1.00'})
-```
-```python
-'''
-    EXAMPLE 1:
-      Initiate a money request
-'''
-request = DwollaUser.request_funds('1.00', 'reflector@dwolla.com', _keys.pin, source_type='Email')
-print(request)
-```
-```js
-/***
- * Example 1:
- *
- * Request $5 from Source ID '812-111-1111'
- */
-
-Dwolla.request('812-111-1111', '5.00', function(err, data) {
-   if (err) { console.log(err); }
-   console.log(data);
-});
-```
-
-`POST https://www.dwolla.com/oauth/rest/requests/`
-
-| Parameter                  | Optional? | Description                                                                                                                                                                                       |
-|----------------------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| oauth_token                | no        | Valid OAuth token with the `Request` scope.                                                                                                                                                       |
-| sourceId                   | no        | ID of user to request funds from. Must be either a Dwolla ID, FB ID, Twitter screen-name, phone number, or e-mail address.                                                                        |
-| amount                     | no        | Amount of funds to request from user (please exclude currency symbols; this will cause your request to be rejected).                                                                              |
-| sourceType                 | yes       | Type of source user (either Dwolla, Email or Phone).                                                                                                                                              |
-| facilitatorAmount          | yes       | Amount of the facilitator feeto override. Only applicable if the facilitator fee feature is enabled. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the 'amount'. |
-| notes                      | yes       | Note to attach to request (250 character limit).                                                                                                                                                  |
-| senderAssumeCosts          | yes       | Set to `true` if the fulfilling user is to assume the Dwolla fee. Defaults to `false`; does not affect facilitator fees.                                                                          |
-| senderAssumeAdditionalFees | yes       | Set to `true` if the fulfilling user is to assume all facilitator fees. Defaults to `false`; does not affect the Dwolla transaction fee.                                                          |
-| additionalFees             | yes       | Array of additional facilitator fees                                                                                                                                                              |
-| --> destinationId          | yes       | Facilitator's Dwolla ID                                                                                                                                                                           |
-| --> amount                 | yes       | Facilitator amount.                                                                                                                                                                               |
-| metadata                   | yes       |                                                                                                                                                                                                   |
-
-> If successful, you'll receive this response:
-
-```json
-{
-    "Success": true,
-    "Message": "Success",
-    "Response": 996
-}
-```
+`GET https://www.dwolla.com/oauth/rest/requests/{id}`
 
 ## Fulfill Money Request
-
-### HTTP Request
-
-> Examples with Dwolla Libraries:
 
 ```php
 /**
@@ -379,19 +380,6 @@ Dwolla.fulfillRequest(cfg.pin, '12345678', '10.00', function(err, data) {
 });
 ```
 
-`POST https://www.dwolla.com/oauth/rest/requests/{request_id}/fulfill`
-
-| Parameter         | Optional? | Description                                                                                                         |
-|-------------------|-----------|---------------------------------------------------------------------------------------------------------------------|
-| oauth_token       | no        | Valid OAuth token with the `Request` scope.                                                                         |
-| request_id        | no        | The request ID to fulfill.                                                                                          |
-| pin               | no        | The PIN associated with the user's account.                                                                         |
-| amount            | no        | Amount to pay for request (must be greater than or equal to the request amount or the request will fail).           |
-| notes             | yes       | Note to attach to transaction (250 character limit).                                                                |
-| fundsSource       | yes       | ID of funding source to use for transaction (defaults to `Balance`).                                                |
-| assumeCosts       | yes       | Set to `true` for the fulfilling user to assume the Dwolla fee, `false` for the destination user to assume the fee. |
-| metadata          | yes       | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).      |
-
 > If successful, you'll receive this response:
 
 ```json
@@ -421,11 +409,27 @@ Dwolla.fulfillRequest(cfg.pin, '12345678', '10.00', function(err, data) {
 }
 ```
 
-## Cancel a Money Request
+Fulfill an authorized user's pending money request.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
 
 ### HTTP Request
 
-> Examples with Dwolla Libraries:
+`POST https://www.dwolla.com/oauth/rest/requests/{request_id}/fulfill`
+
+| Parameter         | Optional? | Description|
+|-------------------|-----------|---------------------------------------------------------------------------------------------------------------------|
+| pin               | no        | The authorized user's PIN.
+| amount  | no | Amount to pay for request (must be greater than or equal to the request amount).
+| notes | yes | Note to attach to transaction (250 character limit). |
+| fundsSource | yes | ID of funding source to use for transaction (defaults to `Balance`). 
+| assumeCosts | yes | Set to `true` for the fulfilling user to assume the Dwolla fee, `false` for the destination user to assume the fee. |
+| metadata | yes | An optional [metadata](#metadata) object.
+
+
+## Cancel a Money Request
+
+Cancel a money request which the authorized user created or received.
 
 ```php
 /**
@@ -462,13 +466,6 @@ Dwolla.cancelRequest('12345678', function(err, data){
 });
 ```
 
-`POST https://www.dwolla.com/oauth/rest/requests/{request_id}/cancel`
-
-| Parameter   | Optional? | Description                                                                                          |
-|-------------|-----------|------------------------------------------------------------------------------------------------------|
-| oauth_token | no        | Valid OAuth token with the `Request` scope.                                                          |
-| request_id  | no 		  | The request ID to cancel/deny.																		 |
-
 > If successful, you'll recieve this response:
 
 ```json
@@ -478,3 +475,9 @@ Dwolla.cancelRequest('12345678', function(err, data){
     "Response": ""
 }
 ```
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
+
+### HTTP Request
+
+`POST https://www.dwolla.com/oauth/rest/requests/{request_id}/cancel`
