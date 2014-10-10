@@ -409,7 +409,7 @@ Dwolla.fulfillRequest(cfg.pin, '12345678', '10.00', function(err, data) {
 }
 ```
 
-Fulfill an authorized user's pending money request.
+Fulfill an authorized user's pending money request.  Request must have a status of `Pending`.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
 
@@ -429,7 +429,7 @@ Fulfill an authorized user's pending money request.
 
 ## Cancel a Money Request
 
-Cancel a money request which the authorized user created or received.
+Cancel a money request which the authorized user created or received.  Request must have a status of `Pending`.
 
 ```php
 /**
