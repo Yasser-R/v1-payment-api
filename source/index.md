@@ -25,13 +25,14 @@ includes:
   - send
   - checkouts
   - fundingsources
-  - requests
-  - users
   - transactions
+  - scheduledtransactions
   - transactionStats
+  - users
   - balance
   - masspay
   - refund
+  - requests
   - contacts
   - accounts
  
