@@ -29,11 +29,11 @@ includes:
   - scheduledtransactions
   - transactionStats
   - users
+  - contacts
   - balance
   - masspay
   - refund
   - requests
-  - contacts
   - accounts
  
   # misc
