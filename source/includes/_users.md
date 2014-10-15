@@ -1,82 +1,23 @@
 # Users
 
-The API exposes methods for applications to look up users. Either [full](#get-full-account-info) or [basic](#get-basic-account-info) info is accessible. Full account information requires the `AccountInfoFull` scope to be set for the user's OAuth token. 
+```always
+ o   \ o /  _ o         __|    \ / 
+/|\    |     /\   ___\o   \o    |  
+/ \   / \   | \  /)  |    ( \  /o\ 
 
-## Lookup Users By Location
-
-This method helps retrieve Dwolla users near a location (lat and lon).
-
-### HTTP Request
-
-> Examples with Dwolla Libraries:
-
-```php
-/**
- * EXAMPLE 1: 
- *   Get users nearby a given geolocation
- **/
-$lat = "40.708322";
-$long = "-74.0147477";
-
-$users = $Dwolla->usersNearby($lat, $long);
-if(!$users) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($users); }
-```
-```python
-'''
-    EXAMPLE 1: 
-      Fetch users near lat 45, lon 45
-'''
-me = Dwolla.get_nearby_users('45', '45')
-print(me)
-```
-```ruby
-# EXAMPLE 1: 
-#   Fetch users near account associated with
-#   the configured OAuth token
-pp Dwolla::Users.nearby()
-```
-```js
-// Example 1: Users near lat 45, lon 45
-Dwolla.nearbyUsers('45', '45', function(err, data) {
-    if (err) { console.log(err); }
-    console.log(data);
-});
 ```
 
-`GET https://www.dwolla.com/oauth/rest/users/nearby?client_id={client_id}&client_secret={client_secret}`
+Dwolla users can be looked up via the API.
 
-| Parameter     | Optional? | Description                                              |
-|---------------|-----------|----------------------------------------------------------|
-| client_id     | no        | Consumer key for the application.                        |
-| client_secret | no        | Consumer secret for the application.                     |
-| latitude      | no        | Latitude coordinates (must be between -90.0 and 90.0)    |
-| longitude     | no        | Longitude coordinates (must be between -180.0 and 180.0) |
+### Account Types
 
-> If successful, you'll receive this response:
-
-```json
-{
-    "Success": true,
-    "Message": "Success",
-    "Response": [
-        {
-            "Id": "812-734-7288",
-            "Latitude": 40.708448,
-            "Name": "Michael Schonfeld",
-            "Longitude": -74.014429,
-            "Delta": 114.72287700000001,
-            "Image": "https://www.dwolla.com/avatars/812-734-7288"
-        }
-    ]
-}
-```
+Type | Description
+-------------|------------
+Personal | Account belonging to an individual.  Default transaction limit of $5000.
+Commercial | Merchant/business account.  Default transaction limit of $10000.
+NonProfit | Account belonging to a non-profit organization. Default transaction limit of $10000.
 
 ## Get Basic Account Info
-
-### HTTP Request
-
-> Examples with Dwolla Libraries:
 
 ```php
 /**
@@ -116,14 +57,6 @@ Dwolla.basicAccountInfo('812-546-3855', function(err, data) {
 });
 ```
 
-`GET https://www.dwolla.com/oauth/rest/users/{account_identifier}?client_id={client_id}&client_secret={client_secret}`
-
-| Parameter          | Optional? | Description                                                                  |
-|--------------------|-----------|------------------------------------------------------------------------------|
-| client_id          | no        | Consumer key for the application.                                            |
-| client_secret      | no        | Consumer secret for the application.                                         |
-| account_identifier | no        | Dwolla ID or e-mail address associated with the account desired for lookup.  |
-
 > If successful, you'll receive this response:
 
 ```json
@@ -139,11 +72,30 @@ Dwolla.basicAccountInfo('812-546-3855', function(err, data) {
 }
 ```
 
-## Get Full Account Info
+Retrieve basic information about **any** Dwolla user, given their Dwolla ID or email address.
 
 ### HTTP Request
 
-> Examples with Dwolla Libraries:
+`GET https://www.dwolla.com/oauth/rest/users/{account_identifier}?client_id={}&client_secret={}`
+
+`account_identifier` must be a Dwolla ID or email address.
+
+#### Example
+
+To lookup the user with email `gordon@dwolla.com`:
+
+`GET https://www.dwolla.com/oauth/rest/users/gordon@dwolla.com?client_id={}&client_secret={}`
+
+### Response
+
+Parameter | Description
+----------|-------------
+Id | User's Dwolla ID
+Latitude | If this is a business account, latitude of the account's location.  Otherwise, always `0` for individual accounts.
+Longitude | If this is a business account, longitude of the account's location.  Otherwise, always `0` for individual accounts.
+Name | Full account name (or business name for a business account)
+
+## Get Full Account Info
 
 ```php
 /**
@@ -187,12 +139,6 @@ Dwolla.fullAccountInfo(function(err, data) {
 });
 ```
 
-`GET https://www.dwolla.com/oauth/rest/users/?oauth_token={token}`
-
-| Parameter   | Optional? | Description                                       |
-|-------------|-----------|---------------------------------------------------|
-| oauth_token | no        | A valid OAuth token with `AccountInfoFull` scope. |
-
 > If successful, you'll receive this response:
 
 ```json
@@ -210,14 +156,148 @@ Dwolla.fullAccountInfo(function(err, data) {
     }
 }
 ```
+
+Retrieve information about the authorized user.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `AccountInfoFull` scope.</aside>
+
+### HTTP Request
+
+`GET https://www.dwolla.com/oauth/rest/users/`
+
+### Response
+
+Parameter | Description
+----------|-------------
+Id | User's Dwolla ID
+Latitude | If this is a business account, latitude of the account's location.  Otherwise, always `0` for individual accounts.
+Longitude | If this is a business account, longitude of the account's location.  Otherwise, always `0` for individual accounts.
+Name | Full account name (or business name for a business account)
+City | User's home city
+State | User's home state
+Type | `Personal` or `Commercial`
+
 ## Get Avatar
 
-User avatars can also be retrieved using the API. This requires no authentication and will return a 220px x 220px PNG file.
+```always
+GET https://www.dwolla.com/avatars/812-713-9234
+```
+
+Retrieve the avatar image for a Dwolla user, given their Dwolla ID.  This requires no authentication and will return a 220px x 220px PNG file.
 
 ### HTTP Request
 
 `GET https://www.dwolla.com/avatars/{dwolla_id}`
 
-| Parameter   | Optional? | Description                                       |
-|-------------|-----------|---------------------------------------------------|
-| dwolla_id   | no        | Target user's Dwolla ID 						  |
+## Find Nearby Businesses
+
+```json
+```
+```php
+<?php
+/**
+ * EXAMPLE 1: 
+ * Fetch contacts of businesses near lat 45, lon 45
+ **/
+$contacts = $Dwolla->nearby(45,45);
+if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
+else { print_r($contacts); } // Print contacts
+?>
+```
+```ruby
+# EXAMPLE 1: 
+#   Get a list of nearby Dwolla spots
+#   for a given set of coordinates
+pp Dwolla::Contacts.nearby({:latitude => 1, :longitude => 2})
+```
+```python
+'''
+    EXAMPLE 1: 
+      Fetch spots near  41.59 and 
+      -93.62 (default parameters in dwolla-python)
+'''
+contacts = DwollaUser.get_nearby_spots()
+print(contacts)
+```
+```js
+/**
+ * EXAMPLE 1: 
+ * Fetch all spots near lat 45 and 
+ * long 45
+ **/
+
+Dwolla.nearby(cfg.apiKey, cfg.apiSecret, 45, 45, function(err, data){
+   if (err) { console.log(err); }
+   console.log(data);
+});
+```
+
+> If successful, you'll receive this response:
+
+```json
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": [
+        {
+            "Name": "ThelmasTreats",
+            "Id": "812-608-8758",
+            "Type": "Dwolla",
+            "Image": "https://www.dwolla.com/avatars/812-608-8758",
+            "Latitude": 41.590043,
+            "Longitude": -93.62095,
+            "Address": "615 3rd Street\n",
+            "City": "Des Moines",
+            "State": "IA",
+            "PostalCode": "50309",
+            "Group": "812-608-8758",
+            "Delta": 0.0009069999999908873
+        },
+        {
+            "Name": "IKONIX Studio",
+            "Id": "812-505-4939",
+            "Type": "Dwolla",
+            "Image": "https://www.dwolla.com/avatars/812-505-4939",
+            "Latitude": 41.5887958,
+            "Longitude": -93.6215057,
+            "Address": "506 3rd St\nSuite 206",
+            "City": "Des Moines",
+            "State": "IA",
+            "PostalCode": "50309",
+            "Group": "812-505-4939",
+            "Delta": 0.0027098999999992657
+        }
+    ]
+}
+```
+
+Retrieve a list of Dwolla business accounts ([Spots](https://www.dwolla.com/spots)) near a given location.
+
+### HTTP Request
+
+`GET https://www.dwolla.com/oauth/rest/contacts/nearby?client_id={}&client_secret={}&latitude={}&longitude={}`
+
+
+| Parameter     | Optional? | Description                                                      |
+|---------------|-----------|------------------------------------------------------------------|
+| latitude      |         | Latitude coordinates (between -90.0 and 90.0)                    |
+| longitude     |         | Longitude coordinates (between -180.0 and 180.0)                 |
+| range         | yes       | Range to retrieve spots for in miles (default 10, minimum 1)     |
+| limit         | yes       | Number of spots to retrieve (default 10, minimum 1, maximum 100) |
+
+### Response
+
+| Parameter | Description
+|-----------|------------|
+Name | Business name
+Id | Dwolla ID
+Type | Will always be `Dwolla`
+Image | URL to business's account avatar
+Latitude | Business location
+Longitude | Business location
+Address | Business address.  Street address lines are separated by an escaped newline character: `\n`
+City | Business address city
+State | Business address state
+PostalCode | Business address zip code
+Group | Set to Dwolla ID of business account
+Delta | Proximity to the lat / long specified in query
