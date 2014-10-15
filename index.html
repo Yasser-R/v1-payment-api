@@ -3853,7 +3853,7 @@ else { echo("Canceled? {$canceledRequest} \n"); }
 
 <p>Currently, the only account feature you can enable or disable for a user via the API is Auto Withdrawal.  When Auto Withdrawal is enabled for a user, any payments received by the user will be automatically withdrawn to a bank funding source of their choice.</p>
 
-<h2 id="retrieve-auto-withdrawal-status">Retrieve Auto Withdrawal Status</h2>
+<h2 id="get-auto-withdrawal-status">Get Auto Withdrawal Status</h2>
 <pre class="highlight php">/**
  * Example 1:
  * Get autowithdrawal status for the 
@@ -3909,7 +3909,7 @@ else { print_r($status); } // Print status
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl</code></p>
 
-<h2 id="set-auto-withdrawal-status">Set Auto Withdrawal Status</h2>
+<h2 id="enable/disable-auto-withdrawal">Enable/Disable Auto Withdrawal</h2>
 <pre class="highlight php">/**
  * Example 1:
  * Enable autowithdraw for funding source '12345' under the
