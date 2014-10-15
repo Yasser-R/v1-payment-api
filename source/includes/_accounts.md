@@ -1,12 +1,10 @@
-# Auto Withdrawal
+# Account Settings
 
-Dwolla allows users to withdraw funds from their Dwolla balance funding sources associated with the account. The API exposes methods to toggle auto-withdrawal functionality.
+With the `ManageAccount` OAuth scope, you can set and retrieve a user's account preferences.  
 
-These endpoints require an OAuth token with the `ManageAccount` scope. 
+Currently, the only account feature you can enable or disable for a user via the API is Auto Withdrawal.  When Auto Withdrawal is enabled for a user, any payments received by the user will be automatically withdrawn to a bank funding source of their choice.
 
-## Get Auto Withdrawal Status
-
-> Examples with Dwolla Libraries:
+## Retrieve Auto Withdrawal Status
 
 ```php
 /**
@@ -49,17 +47,23 @@ Dwolla.getAutoWithdrawalStatus(function(err, data) {
 });
 ```
 
+> If disabled:
+
+```always
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": "Disabled"
+}
+```
+
+Determine whether the Auto Withdrawal is enabled for the authorized user.
+
 ### HTTP Request
 
-`GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl?oauth_token={token}`
-
-| Parameter   | Optional? | Description                                       |
-|-------------|-----------|---------------------------------------------------|
-| oauth_token | no        | A valid OAuth token with `ManageAccount` scope.   |
+`GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl`
 
 ## Set Auto Withdrawal Status
-
-> Examples with Dwolla Libraries:
 
 ```php
 /**
@@ -102,14 +106,23 @@ Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
 });
 ```
 
+> If enabled:
+
+```always
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": "Enabled"
+}
+```
+
+Enable or disable Auto Withdrawal for the authorized user.
+
 ### HTTP Request
 
-`POST https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl
-Content-Type: application/json
-`
+`POST https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl`
 
-| Parameter   | Optional? | Description                                       |
-|-------------|-----------|---------------------------------------------------|
-| oauth_token | no        | A valid OAuth token with `ManageAccount` scope.   |
-| enabled | no | Boolean value of autowithdrawal feature. |
-| fundingId | no | Funding source ID of account to autowithdraw funds to. |
+| Parameter   |  Description                                       |
+|-------------|----------------------------------------------------|
+| enabled | Boolean value of autowithdrawal feature. |
+| fundingId | [Funding source](#funding-sources) ID of account to autowithdraw funds to. |
