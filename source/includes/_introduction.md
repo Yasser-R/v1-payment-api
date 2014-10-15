@@ -108,6 +108,8 @@ That means every API response contains:
 
 <!---
 ## Errors
+
+TODO: document errors
 -->
 
 ## Facilitator Fees

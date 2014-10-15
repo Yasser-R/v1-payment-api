@@ -1,5 +1,7 @@
 <!--
 
+TODO: document scheduled transactions
+
 # Scheduled Transactions
 
 ## Create Scheduled Transaction
