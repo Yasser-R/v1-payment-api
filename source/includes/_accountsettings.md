@@ -59,6 +59,8 @@ Dwolla.getAutoWithdrawalStatus(function(err, data) {
 
 Determine whether the Auto Withdrawal is enabled for the authorized user.
 
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `ManageAccount` scope.</aside>
+
 ### HTTP Request
 
 `GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl`
@@ -117,6 +119,8 @@ Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
 ```
 
 Enable or disable Auto Withdrawal for the authorized user.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `ManageAccount` scope.</aside>
 
 ### HTTP Request
 
