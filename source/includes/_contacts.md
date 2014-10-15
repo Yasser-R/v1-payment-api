@@ -162,7 +162,7 @@ Dwolla.contacts({search: 'Ben'}, function(err, data){
 }
 ```
 
-Use the following API to fetch the authorized user's contacts.
+Use the following endpoint to fetch the authorized user's contacts.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Contacts` scope.</aside>
 

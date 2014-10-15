@@ -271,7 +271,7 @@ pin | User account PIN
 }
 ```
 
-Add a new ACH bank account as a funding source for the authenticated user.  Once created, the funding source will need to be verified before it can be used.  Two micro-deposits will be made, and their amounts must be verified using the [Verify API](#verify-a-funding-source) or manually by the user on [www.dwolla.com](https://www.dwolla.com/).
+Add a new ACH bank account as a funding source for the authenticated user.  Once created, the funding source will need to be verified before it can be used.  Two micro-deposits will be made, and their amounts must be verified using the [Verify endpoint](#verify-a-funding-source) or manually by the user on [www.dwolla.com](https://www.dwolla.com/).
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
 

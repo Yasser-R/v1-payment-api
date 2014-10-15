@@ -279,8 +279,6 @@ endDate | Latest date and time for which to retrieve transactions.  Must be ISO-
 
 List the transactions which your application has created / facilitated.
 
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/transactions?client_id={}&client_secret={}`
 
@@ -338,9 +336,9 @@ endDate | Latest date and time for which to retrieve transactions.  Must be ISO-
 }
 ```
 
-Look up a particular transaction by its ID (Either Sender's or Recipient's.  Read about transaction IDs [here](#how-transactions-work).)  Either an OAuth access token can be supplied, or application key and secret.
+Look up a particular transaction by its ID (Either Sender's or Recipient's.  Read about transaction IDs [here](#how-transactions-work).)  Either an OAuth access token can be supplied, or if your API application facilitated this transaction, you can supply an application key and secret instead.
 
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
+<aside class="reminder">This endpoint can take either an [an OAuth access token](#authentication) with the `Transactions` scope or an API application's `client_id` and `client_secret`.</aside>
 
 ### HTTP Request
 To fetch a transaction which belongs to the authorized user:
