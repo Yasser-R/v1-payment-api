@@ -18,7 +18,6 @@ includes:
   - introduction
   - authentication
   - oauth
-  - metadata
   - webhooks
 
   # resources
@@ -34,7 +33,7 @@ includes:
   - masspay
   - refund
   - requests
-  - accounts
+  - accountsettings
  
   # misc
   - bugs
