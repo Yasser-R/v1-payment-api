@@ -205,7 +205,7 @@ Finish a PayLater checkout.  This will attempt to create the payment.
 ```
 
 ### HTTP Request
-`POST https://uat.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}/complete`
+`POST https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}/complete`
 
 ### Response Parameters
 
