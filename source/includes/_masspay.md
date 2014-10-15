@@ -31,18 +31,18 @@ The alternative approach incurs an ACH deposit from the bank funding source for 
   "userJobId": "some ID",
   "assumeCosts": true,
   "items": [
-  	{
-  		"amount": 140.52,
-  		"destination": "812-713-9234"
-  	},
     {
-      "amount": 100.00,
-      "destination": "reflector@dwolla.com",
-      "destinationType": "Email",
-      "notes": "here's some money!",
-      "metadata": {
-        "foo": "bar"
-      }
+        "amount": 140.52,
+        "destination": "812-713-9234"
+    },
+    {
+        "amount": 100.00,
+        "destination": "reflector@dwolla.com",
+        "destinationType": "Email",
+        "notes": "here's some money!",
+        "metadata": {
+            "foo": "bar"
+        } 
     }
   ]
 } 
