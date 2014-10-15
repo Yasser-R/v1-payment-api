@@ -4,7 +4,7 @@ With the `ManageAccount` OAuth scope, you can set and retrieve a user's account 
 
 Currently, the only account feature you can enable or disable for a user via the API is Auto Withdrawal.  When Auto Withdrawal is enabled for a user, any payments received by the user will be automatically withdrawn to a bank funding source of their choice.
 
-## Retrieve Auto Withdrawal Status
+## Get Auto Withdrawal Status
 
 ```php
 /**
@@ -65,7 +65,7 @@ Determine whether the Auto Withdrawal is enabled for the authorized user.
 
 `GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl`
 
-## Set Auto Withdrawal Status
+## Enable/Disable Auto Withdrawal
 
 ```php
 /**
