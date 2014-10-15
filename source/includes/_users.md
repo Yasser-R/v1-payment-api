@@ -1,10 +1,13 @@
 # Users
 
 ```always
+USERS!
+
  o   \ o /  _ o         __|    \ / 
 /|\    |     /\   ___\o   \o    |  
 / \   / \   | \  /)  |    ( \  /o\ 
 
+- "Tonja Hickey"
 ```
 
 Dwolla users can be looked up via the API.
