@@ -136,13 +136,7 @@ html, body {
     display: none; // tocify will override this when needed
     background-color: $nav-subitem-bg;
     font-weight: 500;
-    @include background-image(
-      linear-gradient(top,
-                      darken($nav-subitem-bg,2%),
-                      $nav-subitem-bg 10%,
-                      $nav-subitem-bg 90%,
-                      darken($nav-subitem-bg,2%))
-    );
+    
     .tocify-item>a {
       padding-left: $nav-padding + $nav-indent;
       font-size: 12px;
@@ -162,7 +156,7 @@ html, body {
   .toc-footer {
     padding: 1em 0;
     margin-top: 1em;
-    border-top: 1px dashed $nav-footer-border-color;
+    border-top: 1px solid $nav-footer-border-color;
 
     li,a {
       color: $nav-text;
@@ -290,7 +284,7 @@ html, body {
       font-size: 30px;
       padding-top: 0.5em;
       padding-bottom: 0.5em;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #cbd0d5;
       margin-bottom: $h1-margin-bottom;
       margin-top: 0;
       border-top: 1px solid #ddd;
@@ -304,7 +298,7 @@ html, body {
       font-size: 20px;
       margin-top: 4em;
       margin-bottom: 0;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid #cbd0d5;
       padding-top: 1.2em;
       padding-bottom: 1.2em;
       @include background-image(
@@ -365,7 +359,7 @@ html, body {
       }
 
       tr:nth-child(even)>td {
-        background-color: lighten($main-bg,2.4%);
+        background-color: #f2f3f5;
       }
     }
 
@@ -397,7 +391,7 @@ html, body {
     aside {
       padding-top: 1em;
       padding-bottom: 1em;
-      text-shadow: 0 1px 0 lighten($aside-notice-bg, 15%);
+      text-shadow: 0 1px 0 #fff;
       margin-top: 1.5em;
       margin-bottom: 1.5em;
       background: $aside-notice-bg;
@@ -481,9 +475,7 @@ html, body {
       background-color: $code-annotation-bg;
       border-radius: 5px;
       padding: $code-annotation-padding;
-      color: #ccc;
-      border-top: 1px solid #000;
-      border-bottom: 1px solid #404040;
+      color: #ffff;
     }
   }
 }
