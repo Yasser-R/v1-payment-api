@@ -48,7 +48,6 @@ under the License.
   }
 
   function setupLanguages(l) {
-    var currentLanguage = l[0];
     var defaultLanguage = localStorage.getItem("language");
 
     languages = l;
