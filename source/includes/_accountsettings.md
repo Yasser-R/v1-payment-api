@@ -49,7 +49,7 @@ Dwolla.getAutoWithdrawalStatus(function(err, data) {
 
 > If disabled:
 
-```always
+```shell
 {
     "Success": true,
     "Message": "Success",
@@ -110,7 +110,7 @@ Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
 
 > If enabled:
 
-```always
+```shell
 {
     "Success": true,
     "Message": "Success",

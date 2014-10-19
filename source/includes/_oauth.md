@@ -1,5 +1,5 @@
 #OAuth
-```always
+```shell
   /$$$$$$   /$$$$$$              /$$     /$$      
  /$$__  $$ /$$__  $$            | $$    | $$      
 | $$  \ $$| $$  \ $$ /$$   /$$ /$$$$$$  | $$$$$$$ 
@@ -70,7 +70,7 @@ Funding | Access the user's funding sources (i.e. connected bank accounts)
 ManageAccount | Manage the user's account settings
 
 ## Finish Authorization
-```json
+```shell
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
@@ -82,7 +82,7 @@ ManageAccount | Manage the user's account settings
 
 > Successful Response:
 
-```always
+```shell
 {
 	"access_token": "YLAZSreh165CAD2tPhAEzFCYYIrVyFomLWUDMGFBZIw9KtIg4q",
 	"expires_in": 35,
@@ -116,7 +116,7 @@ refresh_expires_in | The lifetime of the refresh token, in seconds.  Default is 
 token_type | Always `bearer`.
 
 ## Refresh Authorization
-```json
+```shell
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
@@ -127,7 +127,7 @@ token_type | Always `bearer`.
 
 > Successful Response:
 
-```always
+```shell
 {
 	"access_token": "hr1tSJk23tOv9RxR8cQuDpUD/kpUgf0cb9WfKtRoPxTw8ymbVt",
 	"expires_in": 3600,

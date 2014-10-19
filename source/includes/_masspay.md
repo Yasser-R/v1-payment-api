@@ -1,8 +1,9 @@
 # MassPay
 
-```always
+```shell
 $~ cowsay MOOOspay
-
+```
+```always
   _________
 < MOOOspay >
   ---------

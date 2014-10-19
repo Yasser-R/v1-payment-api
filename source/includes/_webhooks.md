@@ -30,7 +30,7 @@ All webhook notifications include the `X-Dwolla-Signature` header so that you ca
 
 ## TransactionStatus
 
-```always
+```shell
 POST https://www.example.com/payments/webhook
 Content-Type: application/json
 X-Dwolla-Signature: d0a74b17a31334edc4e6698c59e460c61bb7f21a
@@ -76,7 +76,7 @@ When the status of a Transaction that your application facilitated changes (e.g.
 
 ## TransactionReturned
 
-```always
+```shell
 POST https://www.example.com/payments/webhook
 Content-Type: application/json
 X-Dwolla-Signature: d0a74b17a31334edc4e6698c59e460c61bb7f21a
@@ -95,7 +95,7 @@ Notifies your application when a bank-funded transaction facilitated by your app
 
 ## RequestFulfilled
 
-```always
+```shell
 POST https://www.example.com/requests/callback
 Content-Type: application/json
 X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
@@ -153,7 +153,7 @@ Notifies your application when a Money Request created by your application is fu
 
 Notifies your application when a Money Request created by your application is cancelled.
 
-```always
+```shell
 POST https://www.example.com/requests/callback
 Content-Type: application/json
 X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237

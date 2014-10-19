@@ -1,5 +1,5 @@
 # Transactions
-```always
+```shell
 {
     "Id": 4443952,
     "Amount": 0.01,
@@ -113,7 +113,7 @@ reclaimed | The payment was returned to the sender after being unclaimed by the 
 <aside class="notice">The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be "processed".</aside>
 
 ### Transaction Resource
-```always
+```shell
 {
   "Amount": 1,
   "Date": "2014-01-22T13:11:10Z",

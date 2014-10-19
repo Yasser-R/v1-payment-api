@@ -182,7 +182,7 @@ Type | `Personal` or `Commercial`
 
 ## Get Avatar
 
-```always
+```shell
 GET https://www.dwolla.com/avatars/812-713-9234
 ```
 

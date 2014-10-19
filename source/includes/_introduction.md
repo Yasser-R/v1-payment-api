@@ -122,7 +122,7 @@ Facilitator fees can be up to 50% of the transaction amount and must be at least
 
 Metadata can be supplied for Send, MassPay Items, Money Requests, Refunds, and Checkouts in the metadata property. The `metadata` property is a JSON object (a collection of "key": "value" pairs). A maximum of 10 key-value pairs can be stored. Keys and values must be strings of maximum length 255 characters.
 
-```always
+```shell
 {
     "Shipment ID": "d289e89ej893r3r",
     "TShirtSize": "Small",

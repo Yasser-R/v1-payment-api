@@ -1,6 +1,6 @@
 # Contacts
 
-```always
+```shell
 [
     {
         "Name": "Joe Schmoe",
