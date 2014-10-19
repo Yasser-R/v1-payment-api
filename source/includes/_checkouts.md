@@ -113,7 +113,7 @@ total | | Total checkout amount.
 tax | yes | Order tax total.  For order display purposes only, not persisted.
 discount | yes | Order discount (must be negative).  For order display purposes only, not persisted.
 shipping | yes | Order shipping total.  For order display purposes only, not persisted.
-notes | yes | A note of max 255 chars. to attach to the resulting payment.
+notes | yes | A note of max 250 chars. to attach to the resulting payment.
 facilitatorAmount | yes | Amount of the facilitator fee to override. Only applicable if the facilitator fee feature is enabled. If set to `0`, facilitator fee is disabled for transaction.
 metadata | yes | An object containing up to 10 key-value pairs of your choice which is persisted with the resulting transaction.  [Learn about Metadata](#metadata)
 orderItems | yes | An array of JSON object(s) which contain a `name`, `description`, `quantity`, and `price`.

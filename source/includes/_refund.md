@@ -43,7 +43,7 @@ The Refund API requires the [_Recipient's_ Transaction ID](#how-transactions-wor
 | fundsSource | no | ID of [funding source](#funding-sources) from which to fund the payments
 | pin | no | User account PIN
 | transactionId | no | [_Recipient's_ Transaction ID](#how-transactions-work) of the payment to be refunded.
-| notes | yes | Note to attach to the refund.  Visible to refunder and recipient of refund.  Max 255 chars.
+| notes | yes | Note to attach to the refund.  Visible to refunder and recipient of refund.  Max 250 chars.
 | metadata | yes | An optional [metadata](#metadata) object.
 
 ### Response Parameters

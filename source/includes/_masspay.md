@@ -98,7 +98,7 @@ Each payment to be created in a MassPay job is represented as a JSON object with
 | amount | no | Payment amount | 
 | destination | no | Payment destination.  Can be a Dwolla ID or email address. |
 | destinationType | yes | If the destination is an email address, set this to `Email`.  Otherwise, defaults to `Dwolla`.
-| notes | yes | A note to attach to the payment.  Max 255 characters.
+| notes | yes | A note to attach to the payment.  Max 250 characters.
 | metadata | yes | An optional [metadata](#metadata) object.
 
 ## List Jobs
