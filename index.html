@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["json","php","ruby","python","js"]);
+          setupLanguages(["json","php","ruby","python","javascript"]);
         });
       </script>
   </head>
@@ -32,7 +32,7 @@
               <a href="#" data-language-name="php">php</a>
               <a href="#" data-language-name="ruby">ruby</a>
               <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="js">node.js</a>
+              <a href="#" data-language-name="javascript">node.js</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -162,14 +162,14 @@ TODO: document errors
 <p>Facilitator fees can be up to 50% of the transaction amount and must be at least $0.01.  They do not affect the total transaction amount, and exist as a separate <a href="#transactions">Transaction</a> resource with a unique Transaction ID.</p>
 <h2 id='metadata'>Metadata</h2>
 <p>Metadata can be supplied for Send, MassPay Items, Money Requests, Refunds, and Checkouts in the metadata property. The <code class="prettyprint">metadata</code> property is a JSON object (a collection of &ldquo;key&rdquo;: &ldquo;value&rdquo; pairs). A maximum of 10 key-value pairs can be stored. Keys and values must be strings of maximum length 255 characters.</p>
-<pre class="highlight plaintext">{
-    "Shipment ID": "d289e89ej893r3r",
-    "TShirtSize": "Small",
-    "DeliveryOption": "Rush Shipping",
-    "InvoiceDate": "12-06-2014",
-    "Priority": "High",
-    "blah": "blah"
-}
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Shipment ID"</span>: <span class="s2">"d289e89ej893r3r"</span>,
+    <span class="s2">"TShirtSize"</span>: <span class="s2">"Small"</span>,
+    <span class="s2">"DeliveryOption"</span>: <span class="s2">"Rush Shipping"</span>,
+    <span class="s2">"InvoiceDate"</span>: <span class="s2">"12-06-2014"</span>,
+    <span class="s2">"Priority"</span>: <span class="s2">"High"</span>,
+    <span class="s2">"blah"</span>: <span class="s2">"blah"</span>
+<span class="o">}</span>
 </pre>
 <h3 id='visibility--access'>Visibility / Access</h3>
 <p>Metadata is intended as an expansion of the existing <code class="prettyprint">notes</code> field (a string of max length 255), in order to allow applications to store more data with resources.</p>
@@ -239,14 +239,14 @@ TODO: document errors
 Needless to say, you should replace <code class="prettyprint">&lt;T0K3N_H3R3&gt;</code> with an OAuth <code class="prettyprint">access_token</code>!
 </aside></p>
 
-          <h1 id='oauth'>OAuth</h1><pre class="highlight plaintext">  /$$$$$$   /$$$$$$              /$$     /$$      
- /$$__  $$ /$$__  $$            | $$    | $$      
-| $$  \ $$| $$  \ $$ /$$   /$$ /$$$$$$  | $$$$$$$ 
-| $$  | $$| $$$$$$$$| $$  | $$|_  $$_/  | $$__  $$
-| $$  | $$| $$__  $$| $$  | $$  | $$    | $$  \ $$
-| $$  | $$| $$  | $$| $$  | $$  | $$ /$$| $$  | $$
-|  $$$$$$/| $$  | $$|  $$$$$$/  |  $$$$/| $$  | $$
- \______/ |__/  |__/ \______/    \___/  |__/  |__/                                                          
+          <h1 id='oauth'>OAuth</h1><pre class="highlight shell">  /<span class="nv">$$$$$$</span>   /<span class="nv">$$$$$$</span>              /<span class="nv">$$</span>     /<span class="nv">$$</span>      
+ /<span class="nv">$$</span>__  <span class="nv">$$</span> /<span class="nv">$$</span>__  <span class="nv">$$</span>            | <span class="nv">$$</span>    | <span class="nv">$$</span>      
+| <span class="nv">$$</span>  <span class="se">\ </span><span class="nv">$$</span>| <span class="nv">$$</span>  <span class="se">\ </span><span class="nv">$$</span> /<span class="nv">$$</span>   /<span class="nv">$$</span> /<span class="nv">$$$$$$</span>  | <span class="nv">$$$$$$$ </span>
+| <span class="nv">$$</span>  | <span class="nv">$$</span>| <span class="nv">$$$$$$$$</span>| <span class="nv">$$</span>  | <span class="nv">$$</span>|_  <span class="nv">$$</span>_/  | <span class="nv">$$</span>__  <span class="nv">$$</span>
+| <span class="nv">$$</span>  | <span class="nv">$$</span>| <span class="nv">$$</span>__  <span class="nv">$$</span>| <span class="nv">$$</span>  | <span class="nv">$$</span>  | <span class="nv">$$</span>    | <span class="nv">$$</span>  <span class="se">\ </span><span class="nv">$$</span>
+| <span class="nv">$$</span>  | <span class="nv">$$</span>| <span class="nv">$$</span>  | <span class="nv">$$</span>| <span class="nv">$$</span>  | <span class="nv">$$</span>  | <span class="nv">$$</span> /<span class="nv">$$</span>| <span class="nv">$$</span>  | <span class="nv">$$</span>
+|  <span class="nv">$$$$$$</span>/| <span class="nv">$$</span>  | <span class="nv">$$</span>|  <span class="nv">$$$$$$</span>/  |  <span class="nv">$$$$</span>/| <span class="nv">$$</span>  | <span class="nv">$$</span>
+ <span class="se">\_</span>_____/ |__/  |__/ <span class="se">\_</span>_____/    <span class="se">\_</span>__/  |__/  |__/                                                          
 
 </pre>
 
@@ -343,25 +343,25 @@ Remember to url-encode all querystring parameters!
 <td>Manage the user&rsquo;s account settings</td>
 </tr>
 </tbody></table>
-<h2 id='finish-authorization'>Finish Authorization</h2><pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"h6TvQZH+5BsV//O43uOJ0uRkBLk="</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"authorization_code"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.myredirect.com/redirect"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
+<h2 id='finish-authorization'>Finish Authorization</h2><pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"client_id"</span>: <span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span>,
+  <span class="s2">"client_secret"</span>: <span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span>,
+  <span class="s2">"code"</span>: <span class="s2">"h6TvQZH+5BsV//O43uOJ0uRkBLk="</span>,
+  <span class="s2">"grant_type"</span>: <span class="s2">"authorization_code"</span>,
+  <span class="s2">"redirect_uri"</span>: <span class="s2">"https://www.myredirect.com/redirect"</span>
+<span class="o">}</span>
+</pre>
 
 <blockquote>
 <p>Successful Response:</p>
 </blockquote>
-<pre class="highlight plaintext">{
-    "access_token": "YLAZSreh165CAD2tPhAEzFCYYIrVyFomLWUDMGFBZIw9KtIg4q",
-    "expires_in": 35,
-    "refresh_token": "Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY",
-    "refresh_expires_in": 5184000,
-    "token_type": "bearer"
-}
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"access_token"</span>: <span class="s2">"YLAZSreh165CAD2tPhAEzFCYYIrVyFomLWUDMGFBZIw9KtIg4q"</span>,
+    <span class="s2">"expires_in"</span>: 35,
+    <span class="s2">"refresh_token"</span>: <span class="s2">"Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY"</span>,
+    <span class="s2">"refresh_expires_in"</span>: 5184000,
+    <span class="s2">"token_type"</span>: <span class="s2">"bearer"</span>
+<span class="o">}</span>
 </pre>
 
 <p>Once the user returns to your application via the <code class="prettyprint">redirect_uri</code> you specified, there will be a <code class="prettyprint">code</code> querystring parameter appended to that URL.  Exchange the authorization <code class="prettyprint">code</code> for an <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
@@ -423,24 +423,24 @@ Remember to url-encode all querystring parameters!
 <td>Always <code class="prettyprint">bearer</code>.</td>
 </tr>
 </tbody></table>
-<h2 id='refresh-authorization'>Refresh Authorization</h2><pre class="highlight json"><span class="p">{</span><span class="w">
-  </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"refresh_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"refresh_token"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
+<h2 id='refresh-authorization'>Refresh Authorization</h2><pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"client_id"</span>: <span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span>,
+  <span class="s2">"client_secret"</span>: <span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span>,
+  <span class="s2">"refresh_token"</span>: <span class="s2">"Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY"</span>,
+  <span class="s2">"grant_type"</span>: <span class="s2">"refresh_token"</span>
+<span class="o">}</span>
+</pre>
 
 <blockquote>
 <p>Successful Response:</p>
 </blockquote>
-<pre class="highlight plaintext">{
-    "access_token": "hr1tSJk23tOv9RxR8cQuDpUD/kpUgf0cb9WfKtRoPxTw8ymbVt",
-    "expires_in": 3600,
-    "refresh_token": "lqopeyjq5AJln5fpMedElUULz+XBNNw9nAkIinxE0g4aEzxmDc",
-    "refresh_expires_in": 5184000,
-    "token_type": "bearer"
-}
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"access_token"</span>: <span class="s2">"hr1tSJk23tOv9RxR8cQuDpUD/kpUgf0cb9WfKtRoPxTw8ymbVt"</span>,
+    <span class="s2">"expires_in"</span>: 3600,
+    <span class="s2">"refresh_token"</span>: <span class="s2">"lqopeyjq5AJln5fpMedElUULz+XBNNw9nAkIinxE0g4aEzxmDc"</span>,
+    <span class="s2">"refresh_expires_in"</span>: 5184000,
+    <span class="s2">"token_type"</span>: <span class="s2">"bearer"</span>
+<span class="o">}</span>
 </pre>
 
 <p>Use a valid <code class="prettyprint">refresh_token</code> to generate a new <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
@@ -525,149 +525,149 @@ Remember to url-encode all querystring parameters!
 </pre>
 
 <p>All webhook notifications include the <code class="prettyprint">X-Dwolla-Signature</code> header so that you can verify that it originated from Dwolla.  The signature is a SHA-1 HMAC hash of the request body, with the secret key being the application secret (<code class="prettyprint">client_secret</code>). </p>
-<h2 id='transactionstatus'>TransactionStatus</h2><pre class="highlight plaintext">POST https://www.example.com/payments/webhook
+<h2 id='transactionstatus'>TransactionStatus</h2><pre class="highlight shell">POST https://www.example.com/payments/webhook
 Content-Type: application/json
 X-Dwolla-Signature: d0a74b17a31334edc4e6698c59e460c61bb7f21a
 
-{
-    "Id": "4444962",
-    "Type": "Transaction",
-    "Subtype": "Status",
-    "Created": "2014-01-22T16:55:04Z",
-    "Triggered": "2014-01-22T16:55:04Z",
-    "Value": "processed",
-    "Transaction": {
-        "Type": "money_sent",
-        "Notes": "",
-        "Fees": [],
-        "Id": 4444962,
-        "Source": {
-            "Id": "812-687-7049",
-            "Name": "Gordon Zheng",
-            "Type": "Dwolla"
-        },
-        "Destination": {
-            "Id": "812-713-9234",
-            "Name": "Reflector by Dwolla",
-            "Type": "Dwolla"
-        },
-        "Amount": 0.01,
-        "SentDate": "2014-01-22T16:55:04Z",
-        "ClearingDate": "2014-01-22T16:55:04Z",
-        "Status": "processed"
-    },
-    "Metadata": {
-        "InvoiceDate": "12-06-2014",
-        "Priority": "High",
-        "TShirtSize": "Small",
-        "blah": "blah"
-    }
+<span class="o">{</span>
+    <span class="s2">"Id"</span>: <span class="s2">"4444962"</span>,
+    <span class="s2">"Type"</span>: <span class="s2">"Transaction"</span>,
+    <span class="s2">"Subtype"</span>: <span class="s2">"Status"</span>,
+    <span class="s2">"Created"</span>: <span class="s2">"2014-01-22T16:55:04Z"</span>,
+    <span class="s2">"Triggered"</span>: <span class="s2">"2014-01-22T16:55:04Z"</span>,
+    <span class="s2">"Value"</span>: <span class="s2">"processed"</span>,
+    <span class="s2">"Transaction"</span>: <span class="o">{</span>
+        <span class="s2">"Type"</span>: <span class="s2">"money_sent"</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">""</span>,
+        <span class="s2">"Fees"</span>: <span class="o">[]</span>,
+        <span class="s2">"Id"</span>: 4444962,
+        <span class="s2">"Source"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-687-7049"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-713-9234"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Reflector by Dwolla"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Amount"</span>: 0.01,
+        <span class="s2">"SentDate"</span>: <span class="s2">"2014-01-22T16:55:04Z"</span>,
+        <span class="s2">"ClearingDate"</span>: <span class="s2">"2014-01-22T16:55:04Z"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"processed"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Metadata"</span>: <span class="o">{</span>
+        <span class="s2">"InvoiceDate"</span>: <span class="s2">"12-06-2014"</span>,
+        <span class="s2">"Priority"</span>: <span class="s2">"High"</span>,
+        <span class="s2">"TShirtSize"</span>: <span class="s2">"Small"</span>,
+        <span class="s2">"blah"</span>: <span class="s2">"blah"</span>
+    <span class="o">}</span>
 
-}
+<span class="o">}</span>
 </pre>
 
 <p>When the status of a Transaction that your application facilitated changes (e.g. transaction clears successfully, or fails, or is cancelled), Dwolla will send a TransactionStatus webhook.</p>
-<h2 id='transactionreturned'>TransactionReturned</h2><pre class="highlight plaintext">POST https://www.example.com/payments/webhook
+<h2 id='transactionreturned'>TransactionReturned</h2><pre class="highlight shell">POST https://www.example.com/payments/webhook
 Content-Type: application/json
 X-Dwolla-Signature: d0a74b17a31334edc4e6698c59e460c61bb7f21a
 
-{
-    "Type": "Transaction",
-    "Subtype": "Returned",
-    "SenderTransactionId": "489977",
-    "ReceiverTransactionId": "489978",
-    "ReturnCode": "01",
-    "ReturnDescription": "Insufficient Funds"
-}
+<span class="o">{</span>
+    <span class="s2">"Type"</span>: <span class="s2">"Transaction"</span>,
+    <span class="s2">"Subtype"</span>: <span class="s2">"Returned"</span>,
+    <span class="s2">"SenderTransactionId"</span>: <span class="s2">"489977"</span>,
+    <span class="s2">"ReceiverTransactionId"</span>: <span class="s2">"489978"</span>,
+    <span class="s2">"ReturnCode"</span>: <span class="s2">"01"</span>,
+    <span class="s2">"ReturnDescription"</span>: <span class="s2">"Insufficient Funds"</span>
+<span class="o">}</span>
 </pre>
 
 <p>Notifies your application when a bank-funded transaction facilitated by your application is returned by the financial institution.</p>
-<h2 id='requestfulfilled'>RequestFulfilled</h2><pre class="highlight plaintext">POST https://www.example.com/requests/callback
+<h2 id='requestfulfilled'>RequestFulfilled</h2><pre class="highlight shell">POST https://www.example.com/requests/callback
 Content-Type: application/json
 X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 
-{
-    "Id": 2254043,
-    "Source": {
-        "Id": "812-552-5953",
-        "Name": "Gordon Zheng",
-        "Type": "Dwolla"
-    },
-    "Destination": {
-        "Id": "812-687-7049",
-        "Name": "Gordon Zheng",
-        "Type": "Dwolla"
-    },
-    "Amount": 0.0100,
-    "Notes": "",
-    "DateRequested": "2014-01-21T19:07:12Z",
-    "Status": "Paid",
-    "Transaction": {
-        "RequestId": 2254043,
-        "Id": 4439897,
-        "Source": {
-            "Id": "812-687-7049",
-            "Name": "Gordon Zheng",
-            "Type": "Dwolla"
-        },
-        "Destination": {
-            "Id": "812-552-5953",
-            "Name": "Ben Milne",
-            "Type": "Dwolla"
-        },
-        "Amount": 0.01,
-        "SentDate": "2014-01-21T19:07:44Z",
-        "ClearingDate": "2014-01-21T19:07:44Z",
-        "Status": "processed"
-    },
-    "DateCancelled": "",
-    "SenderAssumeFee": false,
-    "SenderAssumeAdditionalFees": false,
-    "AdditionalFees": [],
-    "Metadata": {
-        "InvoiceDate": "12-06-2014",
-        "Priority": "High",
-        "TShirtSize": "Small",
-        "blah": "blah"
-    }
-}
+<span class="o">{</span>
+    <span class="s2">"Id"</span>: 2254043,
+    <span class="s2">"Source"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-552-5953"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Destination"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-687-7049"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Amount"</span>: 0.0100,
+    <span class="s2">"Notes"</span>: <span class="s2">""</span>,
+    <span class="s2">"DateRequested"</span>: <span class="s2">"2014-01-21T19:07:12Z"</span>,
+    <span class="s2">"Status"</span>: <span class="s2">"Paid"</span>,
+    <span class="s2">"Transaction"</span>: <span class="o">{</span>
+        <span class="s2">"RequestId"</span>: 2254043,
+        <span class="s2">"Id"</span>: 4439897,
+        <span class="s2">"Source"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-687-7049"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-552-5953"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Ben Milne"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Amount"</span>: 0.01,
+        <span class="s2">"SentDate"</span>: <span class="s2">"2014-01-21T19:07:44Z"</span>,
+        <span class="s2">"ClearingDate"</span>: <span class="s2">"2014-01-21T19:07:44Z"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"processed"</span>
+    <span class="o">}</span>,
+    <span class="s2">"DateCancelled"</span>: <span class="s2">""</span>,
+    <span class="s2">"SenderAssumeFee"</span>: <span class="nb">false</span>,
+    <span class="s2">"SenderAssumeAdditionalFees"</span>: <span class="nb">false</span>,
+    <span class="s2">"AdditionalFees"</span>: <span class="o">[]</span>,
+    <span class="s2">"Metadata"</span>: <span class="o">{</span>
+        <span class="s2">"InvoiceDate"</span>: <span class="s2">"12-06-2014"</span>,
+        <span class="s2">"Priority"</span>: <span class="s2">"High"</span>,
+        <span class="s2">"TShirtSize"</span>: <span class="s2">"Small"</span>,
+        <span class="s2">"blah"</span>: <span class="s2">"blah"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre>
 
 <p>Notifies your application when a Money Request created by your application is fulfilled.</p>
 <h2 id='requestcancelled'>RequestCancelled</h2>
 <p>Notifies your application when a Money Request created by your application is cancelled.</p>
-<pre class="highlight plaintext">POST https://www.example.com/requests/callback
+<pre class="highlight shell">POST https://www.example.com/requests/callback
 Content-Type: application/json
 X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 
-{
-    "Id": 2254042,
-    "Source": {
-        "Id": "812-552-5953",
-        "Name": "Gordon Zheng",
-        "Type": "Dwolla"
-    },
-    "Destination": {
-        "Id": "812-687-7049",
-        "Name": "Ben Milne",
-        "Type": "Dwolla"
-    },
-    "Amount": 0.0100,
-    "Notes": "",
-    "DateRequested": "2014-01-21T19:06:51Z",
-    "Status": "Cancelled",
-    "CancelledBy": "812-687-7049",
-    "DateCancelled": "2014-01-21T19:07:30Z",
-    "SenderAssumeFee": false,
-    "SenderAssumeAdditionalFees": false,
-    "AdditionalFees": [],
-    "Metadata": {
-        "InvoiceDate": "12-06-2014",
-        "Priority": "High",
-        "TShirtSize": "Small",
-        "blah": "blah"
-    }
-}
+<span class="o">{</span>
+    <span class="s2">"Id"</span>: 2254042,
+    <span class="s2">"Source"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-552-5953"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Destination"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-687-7049"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Ben Milne"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Amount"</span>: 0.0100,
+    <span class="s2">"Notes"</span>: <span class="s2">""</span>,
+    <span class="s2">"DateRequested"</span>: <span class="s2">"2014-01-21T19:06:51Z"</span>,
+    <span class="s2">"Status"</span>: <span class="s2">"Cancelled"</span>,
+    <span class="s2">"CancelledBy"</span>: <span class="s2">"812-687-7049"</span>,
+    <span class="s2">"DateCancelled"</span>: <span class="s2">"2014-01-21T19:07:30Z"</span>,
+    <span class="s2">"SenderAssumeFee"</span>: <span class="nb">false</span>,
+    <span class="s2">"SenderAssumeAdditionalFees"</span>: <span class="nb">false</span>,
+    <span class="s2">"AdditionalFees"</span>: <span class="o">[]</span>,
+    <span class="s2">"Metadata"</span>: <span class="o">{</span>
+        <span class="s2">"InvoiceDate"</span>: <span class="s2">"12-06-2014"</span>,
+        <span class="s2">"Priority"</span>: <span class="s2">"High"</span>,
+        <span class="s2">"TShirtSize"</span>: <span class="s2">"Small"</span>,
+        <span class="s2">"blah"</span>: <span class="s2">"blah"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre>
 
           <h1 id='send-money'>Send Money</h1><pre class="highlight php">/**
@@ -757,6 +757,11 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <td>ID of <a href="#funding-sources">funding source</a> to use for transaction (defaults to <code class="prettyprint">Balance</code>).</td>
 </tr>
 <tr>
+<td>notes</td>
+<td>yes</td>
+<td>Note to attach to the resulting transaction.  Will be visible from dwolla.com dashboard to both sender and recipient.  Max 250 characters.</td>
+</tr>
+<tr>
 <td>assumeCosts</td>
 <td>yes</td>
 <td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
@@ -785,16 +790,16 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <h3 id='response'>Response</h3>
 <p>If successful, the response is simply the <a href="#how-transactions-work">Sender&rsquo;s Transaction ID</a> for the resulting payment.  Read more about <a href="#transactions">Transactions</a>.</p>
 
-          <h1 id='checkouts'>Checkouts</h1><pre class="highlight plaintext"> _        ,
-(_\______/________
-   \-|-|/|-|-|-|-|/
-    \==/-|-|-|-|-/
-     \/|-|-|-|,-'
-      \--|-'''
-       \_j________
-       (_)     (_)
+          <h1 id='checkouts'>Checkouts</h1><pre class="highlight shell"> _        ,
+<span class="o">(</span>_<span class="se">\_</span>_____/________
+   <span class="se">\-</span>|-|/|-|-|-|-|/
+    <span class="se">\=</span><span class="o">=</span>/-|-|-|-|-/
+     <span class="se">\/</span>|-|-|-|,-<span class="s1">'
+      \--|-'''</span>
+       <span class="se">\_</span>j________
+       <span class="o">(</span>_<span class="o">)</span>     <span class="o">(</span>_<span class="o">)</span>
 
-"Shopping Trolley" - hjw
+<span class="s2">"Shopping Trolley"</span> - hjw
 </pre>
 
 <p>Create a checkout on our <a href="/dev/pages/gateway#ux">Off-Site Gateway</a>. </p>
@@ -963,7 +968,7 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <tr>
 <td>notes</td>
 <td>yes</td>
-<td>A note of max 255 chars. to attach to the resulting payment.</td>
+<td>A note of max 250 chars. to attach to the resulting payment.</td>
 </tr>
 <tr>
 <td>facilitatorAmount</td>
@@ -1108,41 +1113,41 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 </tr>
 </tbody></table>
 
-          <h1 id='funding-sources'>Funding Sources</h1><pre class="highlight plaintext">===========================================
-#                  BANK                   #
-#=========================================#
-#   ____        ___________        ____   #
-#  |    |      |     |     |      |    |  #      
-#  |    |      |     |     |      |    |  #
-#  |____|      |   --|--   |      |____|  #
-#              |     |     |              #
-###########################################
+          <h1 id='funding-sources'>Funding Sources</h1><pre class="highlight shell"><span class="o">===========================================</span>
+<span class="c">#                  BANK                   #</span>
+<span class="c">#=========================================#</span>
+<span class="c">#   ____        ___________        ____   #</span>
+<span class="c">#  |    |      |     |     |      |    |  #      </span>
+<span class="c">#  |    |      |     |     |      |    |  #</span>
+<span class="c">#  |____|      |   --|--   |      |____|  #</span>
+<span class="c">#              |     |     |              #</span>
+<span class="c">###########################################</span>
 
-"Bank" - capablemonkey
+<span class="s2">"Bank"</span> - capablemonkey
 </pre>
-<pre class="highlight plaintext">[
-  {
-      "Id": "Balance",
-      "Name": "My Dwolla Balance",
-      "Type": "",
-      "Verified": "true",
-      "ProcessingType": ""
-  },
-  {
-      "Id": "c58bb9f7f1d51d5547e1987a2833f4fa",
-      "Name": "Donations Collection Fund - Savings",
-      "Type": "Savings",
-      "Verified": "true",
-      "ProcessingType": "ACH"
-  },
-  {
-      "Id": "c58bb9f7f1d51d5547e1987a2833f4fb",
-      "Name": "Donations Payout Account - Checking",
-      "Type": "Checking",
-      "Verified": "true",
-      "ProcessingType": "FiSync"
-  }
-]
+<pre class="highlight shell"><span class="o">[</span>
+  <span class="o">{</span>
+      <span class="s2">"Id"</span>: <span class="s2">"Balance"</span>,
+      <span class="s2">"Name"</span>: <span class="s2">"My Dwolla Balance"</span>,
+      <span class="s2">"Type"</span>: <span class="s2">""</span>,
+      <span class="s2">"Verified"</span>: <span class="s2">"true"</span>,
+      <span class="s2">"ProcessingType"</span>: <span class="s2">""</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+      <span class="s2">"Id"</span>: <span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fa"</span>,
+      <span class="s2">"Name"</span>: <span class="s2">"Donations Collection Fund - Savings"</span>,
+      <span class="s2">"Type"</span>: <span class="s2">"Savings"</span>,
+      <span class="s2">"Verified"</span>: <span class="s2">"true"</span>,
+      <span class="s2">"ProcessingType"</span>: <span class="s2">"ACH"</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+      <span class="s2">"Id"</span>: <span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span>,
+      <span class="s2">"Name"</span>: <span class="s2">"Donations Payout Account - Checking"</span>,
+      <span class="s2">"Type"</span>: <span class="s2">"Checking"</span>,
+      <span class="s2">"Verified"</span>: <span class="s2">"true"</span>,
+      <span class="s2">"ProcessingType"</span>: <span class="s2">"FiSync"</span>
+  <span class="o">}</span>
+<span class="o">]</span>
 
 </pre>
 
@@ -1489,35 +1494,35 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 </tr>
 </tbody></table>
 
-          <h1 id='transactions'>Transactions</h1><pre class="highlight plaintext">{
-    "Id": 4443952,
-    "Amount": 0.01,
-    "Date": "2014-01-22T13:09:38Z",
-    "Type": "money_sent",
-    "UserType": "Dwolla",
-    "DestinationId": "812-713-9234",
-    "DestinationName": "Peter Douglas",
-    "Destination": {
-        "Id": "812-713-9234",
-        "Name": "Peter Douglas",
-        "Type": "Dwolla",
-        "Image": "http://uat.dwolla.com/avatars/812-713-9234"
-    },
-    "SourceId": "812-629-2658",
-    "SourceName": "Tom Walker",
-    "Source": {
-        "Id": "812-713-9234",
-        "Name": "Tom Walker",
-        "Type": "Dwolla",
-        "Image": "http://uat.dwolla.com/avatars/812-713-9234"
-    },
-    "ClearingDate": "",
-    "Status": "processed" ,
-    "Notes": "don't spend it all in one place!",
-    "OriginalTransactionId": null,
-    "Metadata": null ,
-    "Fees": null
-}
+          <h1 id='transactions'>Transactions</h1><pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Id"</span>: 4443952,
+    <span class="s2">"Amount"</span>: 0.01,
+    <span class="s2">"Date"</span>: <span class="s2">"2014-01-22T13:09:38Z"</span>,
+    <span class="s2">"Type"</span>: <span class="s2">"money_sent"</span>,
+    <span class="s2">"UserType"</span>: <span class="s2">"Dwolla"</span>,
+    <span class="s2">"DestinationId"</span>: <span class="s2">"812-713-9234"</span>,
+    <span class="s2">"DestinationName"</span>: <span class="s2">"Peter Douglas"</span>,
+    <span class="s2">"Destination"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-713-9234"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Peter Douglas"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-713-9234"</span>
+    <span class="o">}</span>,
+    <span class="s2">"SourceId"</span>: <span class="s2">"812-629-2658"</span>,
+    <span class="s2">"SourceName"</span>: <span class="s2">"Tom Walker"</span>,
+    <span class="s2">"Source"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-713-9234"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Tom Walker"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-713-9234"</span>
+    <span class="o">}</span>,
+    <span class="s2">"ClearingDate"</span>: <span class="s2">""</span>,
+    <span class="s2">"Status"</span>: <span class="s2">"processed"</span> ,
+    <span class="s2">"Notes"</span>: <span class="s2">"don't spend it all in one place!"</span>,
+    <span class="s2">"OriginalTransactionId"</span>: null,
+    <span class="s2">"Metadata"</span>: null ,
+    <span class="s2">"Fees"</span>: null
+<span class="o">}</span>
 </pre>
 <pre class="highlight plaintext">$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -1637,45 +1642,45 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tbody></table>
 
 <p><aside class="notice">The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be &ldquo;processed&rdquo;.</aside></p>
-<h3 id='transaction-resource'>Transaction Resource</h3><pre class="highlight plaintext">{
-  "Amount": 1,
-  "Date": "2014-01-22T13:11:10Z",
-  "UserType": "Email",
-  "DestinationId": "bob@dwolla.com",
-  "DestinationName": "bob@dwolla.com,
-  "Destination": {
-      "Id": "bob@dwolla.com",
-      "Name": "bob@dwolla.com",
-      "Type": "Email",
-      "Image": ""
+<h3 id='transaction-resource'>Transaction Resource</h3><pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Amount"</span>: 1,
+  <span class="s2">"Date"</span>: <span class="s2">"2014-01-22T13:11:10Z"</span>,
+  <span class="s2">"UserType"</span>: <span class="s2">"Email"</span>,
+  <span class="s2">"DestinationId"</span>: <span class="s2">"bob@dwolla.com"</span>,
+  <span class="s2">"DestinationName"</span>: <span class="s2">"bob@dwolla.com,
+  "</span>Destination<span class="s2">": {
+      "</span>Id<span class="s2">": "</span>bob@dwolla.com<span class="s2">",
+      "</span>Name<span class="s2">": "</span>bob@dwolla.com<span class="s2">",
+      "</span>Type<span class="s2">": "</span>Email<span class="s2">",
+      "</span>Image<span class="s2">": ""
   },
-  "Id": 12345,
-  "SourceId": "812-111-2222",
-  "SourceName": "Alice",
-  "Source": {
-      "Id": "812-111-2222",
-      "Name": "Alice",
-      "Type": "Dwolla",
-      "Image": "http://uat.dwolla.com/avatars/812-111-2222"
+  "</span>Id<span class="s2">": 12345,
+  "</span>SourceId<span class="s2">": "</span>812-111-2222<span class="s2">",
+  "</span>SourceName<span class="s2">": "</span>Alice<span class="s2">",
+  "</span>Source<span class="s2">": {
+      "</span>Id<span class="s2">": "</span>812-111-2222<span class="s2">",
+      "</span>Name<span class="s2">": "</span>Alice<span class="s2">",
+      "</span>Type<span class="s2">": "</span>Dwolla<span class="s2">",
+      "</span>Image<span class="s2">": "</span>http://uat.dwolla.com/avatars/812-111-2222<span class="s2">"
   },
-  "Type": "money_sent",
-  "Status": "processed" ,
-  "ClearingDate": "",
-  "Notes": "Thank you for lunch!",
-  "OriginalTransactionId": null,
-  "Metadata": {
-      "some meta info":  "foobar",
-      "aProfoundRealization": "pretzels"
+  "</span>Type<span class="s2">": "</span>money_sent<span class="s2">",
+  "</span>Status<span class="s2">": "</span>processed<span class="s2">" ,
+  "</span>ClearingDate<span class="s2">": "",
+  "</span>Notes<span class="s2">": "</span>Thank you <span class="k">for </span>lunch!<span class="s2">",
+  "</span>OriginalTransactionId<span class="s2">": null,
+  "</span>Metadata<span class="s2">": {
+      "</span>some meta info<span class="s2">":  "</span>foobar<span class="s2">",
+      "</span>aProfoundRealization<span class="s2">": "</span>pretzels<span class="s2">"
   },
-  "Fees": [
+  "</span>Fees<span class="s2">": [
       {
-          "Id": 1646163,
-          "Amount": 0.1,
-          "Type": "Facilitator Fee"
+          "</span>Id<span class="s2">": 1646163,
+          "</span>Amount<span class="s2">": 0.1,
+          "</span>Type<span class="s2">": "</span>Facilitator Fee<span class="s2">"
       }
   ]
 }
-</pre>
+</span></pre>
 
 <table><thead>
 <tr>
@@ -1955,25 +1960,440 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/{id}?client_id={}&amp;client_secret={}</code></p>
 
-          <!--
+          <h1 id='scheduled-transactions'>Scheduled Transactions</h1><pre class="highlight plaintext">        _____
+     _.'_____`._
+   .'.-'  12 `-.`.
+  /,' 11      1 `.\
+ // 10      /   2 \\
+;;         /       ::
+|| 9  ----O      3 ||
+::                 ;;
+ \\ 8           4 //
+  \`. 7       5 ,'/
+   '.`-.__6__.-'.'
+    ((-._____.-))
+    _))       ((_
+   '--'SSt    '--'
 
-TODO: document scheduled transactions
+</pre>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Id"</span>: <span class="s2">"3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef"</span>,
+  <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-13"</span>,
+  <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-18"</span>,
+  <span class="s2">"TransactionId"</span>: null,
+  <span class="s2">"Amount"</span>: 10,
+  <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+  <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+  <span class="s2">"Destination"</span>: <span class="o">{</span>
+      <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+      <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+      <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+      <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+  <span class="o">}</span>,
+  <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled transaction"</span>,
+  <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+  <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>
+<span class="o">}</span>
+</pre>
 
-# Scheduled Transactions
+<p>Payments can be scheduled to be created at a future date, up to 3 years into the future.  Only bank-sourced payments are supported at this time.  When a Scheduled Transaction is created, no transaction is created (and thus, no funds are transferred) until the <code class="prettyprint">ScheduledDate</code>.  If there is an error creating the transaction, the Scheduled Transaction will have a <code class="prettyprint">Status</code> of <code class="prettyprint">failed</code>.</p>
+<h3 id='scheduled-transaction-resource'>Scheduled Transaction Resource</h3>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Id</td>
+<td>A unique ID for the scheduled transaction</td>
+</tr>
+<tr>
+<td>ScheduledDate</td>
+<td>Date when transaction will be created.  Must be within 3 years from when the scheduled transaction was created.  Format: <code class="prettyprint">YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td>ExpectedClearingDate</td>
+<td>Estimated date when the funds will be available to the recipient.  Typically 1-3 business days after the <code class="prettyprint">ScheduledDate</code>.</td>
+</tr>
+<tr>
+<td>TransactionId</td>
+<td>Transaction ID of resulting Transaction.  <code class="prettyprint">null</code> until the transaction is successfully created.</td>
+</tr>
+<tr>
+<td>Amount</td>
+<td>Amount of the transaction to be created.</td>
+</tr>
+<tr>
+<td>FundingSource</td>
+<td>ID of the bank funding source which will fund the transaction</td>
+</tr>
+<tr>
+<td>AssumeCosts</td>
+<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+</tr>
+<tr>
+<td>Destination</td>
+<td>JSON object describing the recipient.  <code class="prettyprint">Id</code> is the recipient&rsquo;s Dwolla ID or email address, <code class="prettyprint">Name</code> is the recipient&rsquo;s full name, <code class="prettyprint">Type</code> is either <code class="prettyprint">Dwolla</code> or <code class="prettyprint">Email</code> and <code class="prettyprint">Image</code> is a URL to the recipient&rsquo;s avatar, if the recipient is an existing Dwolla user.</td>
+</tr>
+<tr>
+<td>Notes</td>
+<td>Optional notes field.  Max 250 chars.</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Possible values: &lsquo;scheduled&rsquo;, &lsquo;processed&rsquo;, &lsquo;failed&rsquo;</td>
+</tr>
+</tbody></table>
+<h2 id='create-scheduled-transaction'>Create Scheduled Transaction</h2><pre class="highlight json"><span class="p">{</span><span class="w">
+  </span><span class="s2">"pin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"destinationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gordon@dwolla.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"destinationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">300.00</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"scheduleDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-13"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"assumeCosts"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"fundsSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5da016f7769bcc1de9998a30d194d5a7"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"here's this month's rent!"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"foo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bar"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
-## Create Scheduled Transaction
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ScheduledDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-13"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ExpectedClearingDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2015-09-18"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"TransactionId"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">300.00</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"FundingSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5da016f7769bcc1de9998a30d194d5a7"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"AssumeCosts"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Destination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-111-1111"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane Doe"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dwolla"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.dwolla.com/avatars/812-111-1111"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"Notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"here's this month's rent!"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"scheduled"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"CreatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-09-12T20:37:37Z"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
 
-## List Scheduled Transactions
+<p>Create a new Scheduled Transaction on behalf of the authorized user.  Initial <code class="prettyprint">Status</code> will be <code class="prettyprint">scheduled</code>.  Must fund payment with a bank-funding source.</p>
 
-## Retrieve Scheduled Transaction
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Send</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/scheduled</code></p>
 
-## Edit Scheduled Transaction
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td></td>
+<td>Amount of transaction.  Must be within the sender&rsquo;s account transaction limit.</td>
+</tr>
+<tr>
+<td>destinationId</td>
+<td></td>
+<td>Recipient&rsquo;s Dwolla ID or email address.</td>
+</tr>
+<tr>
+<td>destinationType</td>
+<td>yes</td>
+<td>Recipient type: <code class="prettyprint">Dwolla</code> or <code class="prettyprint">Email</code>.  Must set this to <code class="prettyprint">Email</code> if you provided an email as the <code class="prettyprint">destinationId</code>.</td>
+</tr>
+<tr>
+<td>pin</td>
+<td></td>
+<td>Sender&rsquo;s account PIN</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td></td>
+<td>ID of the <a href="#funding-sources">Funding Source</a> to fund this payment.</td>
+</tr>
+<tr>
+<td>scheduleDate</td>
+<td></td>
+<td>Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.</td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td></td>
+<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>yes</td>
+<td>Optional note to attach to transaction.  Max 250 chars.</td>
+</tr>
+</tbody></table>
+<h2 id='list-scheduled-transactions'>List Scheduled Transactions</h2><pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Total"</span>: 2,
+        <span class="s2">"Count"</span>: 2,
+        <span class="s2">"Results"</span>: <span class="o">[</span>
+            <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"59be7670-343b-46a1-bbb0-7070c2ba1806"</span>,
+                <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-10"</span>,
+                <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-15"</span>,
+                <span class="s2">"TransactionId"</span>: 329870,
+                <span class="s2">"Amount"</span>: 12,
+                <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+                <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+                <span class="s2">"Destination"</span>: <span class="o">{</span>
+                    <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+                    <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+                    <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                    <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+                <span class="o">}</span>,
+                <span class="s2">"Notes"</span>: <span class="s2">"scheduled 1"</span>,
+                <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
+                <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-09T22:00:03Z"</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"1d7c80c6-8dcd-4219-8ddc-440909eccc0d"</span>,
+                <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-10"</span>,
+                <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-15"</span>,
+                <span class="s2">"TransactionId"</span>: 329867,
+                <span class="s2">"Amount"</span>: 1,
+                <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+                <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+                <span class="s2">"Destination"</span>: <span class="o">{</span>
+                    <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+                    <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+                    <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                    <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+                <span class="o">}</span>,
+                <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled"</span>,
+                <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
+                <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-09T21:58:14Z"</span>
+            <span class="o">}</span>
+        <span class="o">]</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
 
-## Delete Scheduled Transaction
+<p>List the authorized user&rsquo;s scheduled transactions.</p>
 
-## Delete all Scheduled Transactions
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled/?limit=10</code></p>
+<h3 id='optional-parameters'>Optional Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>Filter scheduled transactions by their status.  Possible values: <code class="prettyprint">scheduled</code>, <code class="prettyprint">processed</code>, <code class="prettyprint">failed</code>.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Pagination: number of results to return.</td>
+</tr>
+<tr>
+<td>skip</td>
+<td>Pagination: number of results to skip.</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Total</td>
+<td>Total number of query results</td>
+</tr>
+<tr>
+<td>Count</td>
+<td>Number of query results included in response.  Can be less than <code class="prettyprint">Total</code>, if paginating with <code class="prettyprint">limit</code> set in query.</td>
+</tr>
+<tr>
+<td>Results</td>
+<td>JSON array of <a href="#scheduled-transaction-resource">Scheduled Transactions</a></td>
+</tr>
+</tbody></table>
+<h2 id='retrieve-scheduled-transaction'>Retrieve Scheduled Transaction</h2><pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"d72b9f82-307e-4a35-9559-7889ea929db7"</span>,
+        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-11"</span>,
+        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-16"</span>,
+        <span class="s2">"TransactionId"</span>: 330295,
+        <span class="s2">"Amount"</span>: 100,
+        <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+        <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-10T21:05:39Z"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
 
--->
+<p>Retrieve a scheduled transaction by its ID.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
+<h2 id='edit-scheduled-transaction'>Edit Scheduled Transaction</h2>
+<blockquote>
+<p>Edit the amount:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"pin"</span>: 9999,
+  <span class="s2">"amount"</span>: 16
+<span class="o">}</span>
+</pre>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"08f9b638-0f8e-4e00-abe5-41c8fd24fbe8"</span>,
+        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-11"</span>,
+        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-16"</span>,
+        <span class="s2">"TransactionId"</span>: null,
+        <span class="s2">"Amount"</span>: 16,
+        <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+        <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled test update"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-10T18:28:20Z"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Edit an existing scheduled transaction. Partial editing is allowed: just supply the field(s) to change, along with the sender&rsquo;s PIN.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">PUT https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pin</td>
+<td>required</td>
+<td>Sender&rsquo;s account PIN</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>yes</td>
+<td>Amount of transaction.  Must be within the sender&rsquo;s account transaction limit.</td>
+</tr>
+<tr>
+<td>destinationId</td>
+<td>yes</td>
+<td>Recipient&rsquo;s Dwolla ID or email address.</td>
+</tr>
+<tr>
+<td>destinationType</td>
+<td>yes</td>
+<td>Recipient type: <code class="prettyprint">Dwolla</code> or <code class="prettyprint">Email</code>.  Must set this to <code class="prettyprint">Email</code> if you provided an email as the <code class="prettyprint">destinationId</code>.</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td>yes</td>
+<td>ID of the <a href="#funding-sources">Funding Source</a> to fund this payment.</td>
+</tr>
+<tr>
+<td>scheduleDate</td>
+<td>yes</td>
+<td>Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.</td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td>yes</td>
+<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>yes</td>
+<td>Optional note to attach to transaction.  Max 250 chars.</td>
+</tr>
+</tbody></table>
+<h2 id='delete-scheduled-transaction'>Delete Scheduled Transaction</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/d856d2ec-4098-4b3b-b20f-b2561ec85871
+</pre>
+
+<blockquote>
+<p>If successful, response contains the ID of the deleted scheduled transaction:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="s2">"d856d2ec-4098-4b3b-b20f-b2561ec85871"</span>
+<span class="o">}</span>
+</pre>
+
+<p>Delete a <em>pending</em> scheduled transaction created by the authorized user.  Status must be <code class="prettyprint">scheduled</code>.  Cannot delete a <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled transaction.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
+<h2 id='delete-all-scheduled-transactions'>Delete all Scheduled Transactions</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled
+</pre>
+
+<blockquote>
+<p>If successful, response contains JSON array of IDs of scheduled transactions deleted:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Success"</span>: <span class="nb">true</span>,
+  <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+  <span class="s2">"Response"</span>: <span class="o">[</span>
+    <span class="s2">"09e66fa3-1542-40b0-8143-67f72c75ae77"</span>,
+    <span class="s2">"1646c924-c6e0-46f1-b33d-5b999b408cab"</span>,
+    <span class="s2">"48c93710-5cb0-424b-b0b0-3a692a0ba840"</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</pre>
+
+<p>Delete <strong>all</strong> of an authorized user&rsquo;s <em>pending</em> scheduled transactions.  Will not delete any <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled transactions.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled</code></p>
 
           <h1 id='transaction-stats'>Transaction Stats</h1><pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -2219,7 +2639,7 @@ else { print_r($me); } // Print user information
 <td><code class="prettyprint">Personal</code> or <code class="prettyprint">Commercial</code></td>
 </tr>
 </tbody></table>
-<h2 id='get-avatar'>Get Avatar</h2><pre class="highlight plaintext">GET https://www.dwolla.com/avatars/812-713-9234
+<h2 id='get-avatar'>Get Avatar</h2><pre class="highlight shell">GET https://www.dwolla.com/avatars/812-713-9234
 </pre>
 
 <p>Retrieve the avatar image for a Dwolla user, given their Dwolla ID.  This requires no authentication and will return a 220px x 220px PNG file.</p>
@@ -2389,24 +2809,24 @@ else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // 
 </tr>
 </tbody></table>
 
-          <h1 id='contacts'>Contacts</h1><pre class="highlight plaintext">[
-    {
-        "Name": "Joe Schmoe",
-        "Id": "812-999-0090",
-        "Type": "Dwolla",
-        "Image": "https://www.dwolla.com/avatars/812-999-0090",
-        "City": "St Louis",
-        "State": "MO"
-    },
-    {
-        "Name": "Sam Schmoe Super Foods",
-        "Id": "812-999-0091",
-        "Type": "Dwolla",
-        "Image": "https://www.dwolla.com/avatars/812-999-0091",
-        "City": "Des Moines",
-        "State": "IA"
-    }
-]
+          <h1 id='contacts'>Contacts</h1><pre class="highlight shell"><span class="o">[</span>
+    <span class="o">{</span>
+        <span class="s2">"Name"</span>: <span class="s2">"Joe Schmoe"</span>,
+        <span class="s2">"Id"</span>: <span class="s2">"812-999-0090"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"Image"</span>: <span class="s2">"https://www.dwolla.com/avatars/812-999-0090"</span>,
+        <span class="s2">"City"</span>: <span class="s2">"St Louis"</span>,
+        <span class="s2">"State"</span>: <span class="s2">"MO"</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+        <span class="s2">"Name"</span>: <span class="s2">"Sam Schmoe Super Foods"</span>,
+        <span class="s2">"Id"</span>: <span class="s2">"812-999-0091"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"Image"</span>: <span class="s2">"https://www.dwolla.com/avatars/812-999-0091"</span>,
+        <span class="s2">"City"</span>: <span class="s2">"Des Moines"</span>,
+        <span class="s2">"State"</span>: <span class="s2">"IA"</span>
+    <span class="o">}</span>
+<span class="o">]</span>
 </pre>
 
 <p>Any Dwolla user which a user sends money to or receives money from becomes a <code class="prettyprint">Contact</code> of that user.</p>
@@ -2627,9 +3047,9 @@ else { echo $balance; } // Print user's balance
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/balance/</code></p>
 
-          <h1 id='masspay'>MassPay</h1><pre class="highlight plaintext">$~ cowsay MOOOspay
-
-  _________
+          <h1 id='masspay'>MassPay</h1><pre class="highlight shell"><span class="nv">$~</span> cowsay MOOOspay
+</pre>
+<pre class="highlight plaintext">  _________
 &lt; MOOOspay &gt;
   ---------
          \   ^__^ 
@@ -2761,7 +3181,7 @@ else { echo $balance; } // Print user's balance
 <tr>
 <td>notes</td>
 <td>yes</td>
-<td>A note to attach to the payment.  Max 255 characters.</td>
+<td>A note to attach to the payment.  Max 250 characters.</td>
 </tr>
 <tr>
 <td>metadata</td>
@@ -3004,7 +3424,7 @@ else { echo $balance; } // Print user's balance
 <tr>
 <td>notes</td>
 <td>yes</td>
-<td>Note to attach to the refund.  Visible to refunder and recipient of refund.  Max 255 chars.</td>
+<td>Note to attach to the refund.  Visible to refunder and recipient of refund.  Max 250 chars.</td>
 </tr>
 <tr>
 <td>metadata</td>
@@ -3033,64 +3453,64 @@ else { echo $balance; } // Print user's balance
 </tr>
 </tbody></table>
 
-          <h1 id='money-requests'>Money Requests</h1><pre class="highlight plaintext">    __  ___                      
+          <h1 id='money-requests'>Money Requests</h1><pre class="highlight shell">    __  ___                      
    /  |/  /___  ____  ___  __  __
-  / /|_/ / __ \/ __ \/ _ \/ / / /
+  / /|_/ / __ <span class="se">\/</span> __ <span class="se">\/</span> _ <span class="se">\/</span> / / /
  / /  / / /_/ / / / /  __/ /_/ / 
-/_/  /_/\____/_/ /_/\___/\__, /  
+/_/  /_/<span class="se">\_</span>___/_/ /_/<span class="se">\_</span>__/<span class="se">\_</span>_, /  
                         /____/   
     ____                             __      
-   / __ \___  ____ ___  _____  _____/ /______
-  / /_/ / _ \/ __ `/ / / / _ \/ ___/ __/ ___/
- / _, _/  __/ /_/ / /_/ /  __(__  ) /_(__  ) 
-/_/ |_|\___/\__, /\__,_/\___/____/\__/____/  
+   / __ <span class="se">\_</span>__  ____ ___  _____  _____/ /______
+  / /_/ / _ <span class="se">\/</span> __ <span class="sb">`</span>/ / / / _ <span class="se">\/</span> ___/ __/ ___/
+ / _, _/  __/ /_/ / /_/ /  __<span class="o">(</span>__  <span class="o">)</span> /_<span class="o">(</span>__  <span class="o">)</span> 
+/_/ |_|<span class="se">\_</span>__/<span class="se">\_</span>_, /<span class="se">\_</span>_,_/<span class="se">\_</span>__/____/<span class="se">\_</span>_/____/  
               /_/      
 </pre>
-<pre class="highlight plaintext">{
-    "Id": 1636,
-    "Source": {
-        "Id": "812-742-8722",
-        "Name": "Cafe Kubal",
-        "Type": "Dwolla",
-        "Image": "http://uat.dwolla.com/avatars/812-742-8722"
-    },
-    "Destination": {
-        "Id": "812-742-3301",
-        "Name": "Gordon Zheng",
-        "Type": "Dwolla",
-        "Image": "http://uat.dwolla.com/avatars/812-742-3301"
-    },
-    "Amount": 0.01,
-    "Notes": "",
-    "DateRequested": "2014-10-01T19:50:54Z",
-    "Status": "Paid",
-    "Transaction": {
-        "RequestId": 1636,
-        "Id": 335741,
-        "Source": {
-            "Id": "812-742-3301",
-            "Name": "Gordon Zheng",
-            "Type": "Dwolla",
-            "Image": "http://uat.dwolla.com/avatars/812-742-3301"
-        },
-        "Destination": {
-            "Id": "812-742-8722",
-            "Name": "Cafe Kubal",
-            "Type": "Dwolla",
-            "Image": "http://uat.dwolla.com/avatars/812-742-8722"
-        },
-        "Amount": 0.01,
-        "SentDate": "2014-10-01T19:51:52Z",
-        "ClearingDate": "2014-10-01T19:51:52Z",
-        "Status": "processed"
-    },
-    "CancelledBy": null,
-    "DateCancelled": "",
-    "SenderAssumeFee": false,
-    "SenderAssumeAdditionalFees": false,
-    "AdditionalFees": [],
-    "Metadata": null
-}
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Id"</span>: 1636,
+    <span class="s2">"Source"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-742-8722"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Cafe Kubal"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-742-8722"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Destination"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"812-742-3301"</span>,
+        <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-742-3301"</span>
+    <span class="o">}</span>,
+    <span class="s2">"Amount"</span>: 0.01,
+    <span class="s2">"Notes"</span>: <span class="s2">""</span>,
+    <span class="s2">"DateRequested"</span>: <span class="s2">"2014-10-01T19:50:54Z"</span>,
+    <span class="s2">"Status"</span>: <span class="s2">"Paid"</span>,
+    <span class="s2">"Transaction"</span>: <span class="o">{</span>
+        <span class="s2">"RequestId"</span>: 1636,
+        <span class="s2">"Id"</span>: 335741,
+        <span class="s2">"Source"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-742-3301"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Gordon Zheng"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-742-3301"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-742-8722"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Cafe Kubal"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-742-8722"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Amount"</span>: 0.01,
+        <span class="s2">"SentDate"</span>: <span class="s2">"2014-10-01T19:51:52Z"</span>,
+        <span class="s2">"ClearingDate"</span>: <span class="s2">"2014-10-01T19:51:52Z"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"processed"</span>
+    <span class="o">}</span>,
+    <span class="s2">"CancelledBy"</span>: null,
+    <span class="s2">"DateCancelled"</span>: <span class="s2">""</span>,
+    <span class="s2">"SenderAssumeFee"</span>: <span class="nb">false</span>,
+    <span class="s2">"SenderAssumeAdditionalFees"</span>: <span class="nb">false</span>,
+    <span class="s2">"AdditionalFees"</span>: <span class="o">[]</span>,
+    <span class="s2">"Metadata"</span>: null
+<span class="o">}</span>
 </pre>
 
 <p>Money Requests are sent from a Dwolla user to another Dwolla user, phone number or email address.  A Money Request is essentially an invoice, requesting payment from the recipient of the request.</p>
@@ -3654,11 +4074,11 @@ else { print_r($status); } // Print status
 <blockquote>
 <p>If disabled:</p>
 </blockquote>
-<pre class="highlight plaintext">{
-    "Success": true,
-    "Message": "Success",
-    "Response": "Disabled"
-}
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="s2">"Disabled"</span>
+<span class="o">}</span>
 </pre>
 
 <p>Determine whether the Auto Withdrawal is enabled for the authorized user.</p>
@@ -3706,11 +4126,11 @@ else { print_r($status); } // Print status
 <blockquote>
 <p>If enabled:</p>
 </blockquote>
-<pre class="highlight plaintext">{
-    "Success": true,
-    "Message": "Success",
-    "Response": "Enabled"
-}
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="s2">"Enabled"</span>
+<span class="o">}</span>
 </pre>
 
 <p>Enable or disable Auto Withdrawal for the authorized user.</p>
@@ -3767,7 +4187,7 @@ In an effort to remain transparent, here's a list of bugs we know about.
                 <a href="#" data-language-name="php">php</a>
                 <a href="#" data-language-name="ruby">ruby</a>
                 <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="js">node.js</a>
+                <a href="#" data-language-name="javascript">node.js</a>
           </div>
       </div>
     </div>
