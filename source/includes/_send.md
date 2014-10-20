@@ -9,7 +9,7 @@
 \ \___,_\ \___x___/'\ \____//\____\/\____\ \__/.\_\
  \/__,_ /\/__//__/   \/___/ \/____/\/____/\/__/\/_/
                                                    
-    
+
 ```
 
 ```php
@@ -22,8 +22,13 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 ```
 ```ruby
 #   Send money ($1.00) to a Dwolla ID 812-626-8794
-transactionId = Dwolla::Transactions.send({:destinationId => '812-626-8794', :amount => 1.00, :pin => @pin})
-pp transactionId
+
+transactionId = Dwolla::Transactions.send({
+  :destinationId => '812-626-8794', 
+  :amount => 1.00, 
+  :pin => "9999"})
+
+puts transactionId
 ```
 ```python
 '''
@@ -66,6 +71,10 @@ Dwolla.send(pin, 'gordon@dwolla.com', 1.00, params, function(err, data) {
     "Message": "Success",
     "Response": 12345
 }
+```
+
+```ruby
+341523   # resulting transaction ID
 ```
 
 ```js

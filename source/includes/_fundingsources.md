@@ -71,13 +71,19 @@ ProcessingType | Possible values: `ACH`, `FiSync`, or empty string: `""`
 ```js
 /**
  *   Fetch all funding sources for the
- *   account associated with the provided
- *   OAuth access token
+ *   authorized user
  **/
 
 Dwolla.fundingSources(function(err, data) {
    console.log(data);
 });
+```
+
+```ruby
+#   Fetch all funding sources for the
+#   authorized user
+
+pp Dwolla::FundingSources.get
 ```
 
 > Response:
@@ -139,6 +145,25 @@ Dwolla.fundingSources(function(err, data) {
 ]
 ```
 
+```ruby
+[
+  {
+    "Id"             => "Balance",
+    "Name"           => "My Dwolla Balance",
+    "Type"           => "",
+    "Verified"       => true,
+    "ProcessingType" => ""
+  },
+  {
+    "Id"             => "5da016f7769bcb1de9938a30d194d5a7",
+    "Name"           => "Blah - Checking",
+    "Type"           => "Checking",
+    "Verified"       => true,
+    "ProcessingType" => "ACH"
+  }
+]
+```
+
 Enumerate a user's funding sources.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
@@ -175,7 +200,23 @@ dwolla.fundingSourceById(fundingSource, function(err, res) {
 })
 ```
 
+```ruby
+# Retrieve a funding source by its ID
+
+pp Dwolla::FundingSources.get("5da016f7769bcb1de9938a30d194d5a7")
+```
+
 > Response:
+
+```ruby
+{
+  "Id"             => "5da016f7769bcb1de9938a30d194d5a7",
+  "Name"           => "Blah - Checking",
+  "Type"           => "Checking",
+  "Verified"       => true,
+  "ProcessingType" => "ACH"
+}
+```
 
 ```json
 {
@@ -223,7 +264,46 @@ dwolla.withdrawToFundingSource(pin, 5.00, fundingSource, function(err, res) {
 }
 ```
 
+```ruby
+puts Dwolla::FundingSources.withdraw('funding_source_id', {
+  :amount => 12.95, 
+  :pin => @pin
+})
+```
+
 > Response: 
+
+```ruby
+{
+  "Id"                    => 341600,
+  "Amount"                => 12.95,
+  "Date"                  => "2014-10-20T03:10:56Z",
+  "Type"                  => "withdrawal",
+  "UserType"              => "Dwolla",
+  "DestinationId"         => "XXX9999",
+  "DestinationName"       => "Blah",
+  "Destination"           => {
+    "Id"    => "XXX9999",
+    "Name"  => "Blah",
+    "Type"  => "Dwolla",
+    "Image" => ""
+  },
+  "SourceId"              => "812-742-8722",
+  "SourceName"            => "Cafe Kubal",
+  "Source"                => {
+    "Id"    => "812-742-8722",
+    "Name"  => "Cafe Kubal",
+    "Type"  => "Dwolla",
+    "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+  },
+  "ClearingDate"          => "2014-10-21T00:00:00Z",
+  "Status"                => "pending",
+  "Notes"                 => nil,
+  "Fees"                  => nil,
+  "OriginalTransactionId" => nil,
+  "Metadata"              => nil
+}
+```
 
 ```json
 {
@@ -316,6 +396,13 @@ pin | User account PIN
 }
 ```
 
+```ruby
+puts Dwolla::FundingSources.deposit('5da016f7769bcb1de9938a30d194d5a7', {
+  :amount => 12.95, 
+  :pin => '9999'
+})
+```
+
 ```js
 var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
 
@@ -325,6 +412,38 @@ dwolla.depositFromFundingSource(pin, 5.00, fundingSource, function(err, res) {
 ```
 
 > Response: 
+
+```ruby
+{
+  "Id"                    => 341601,
+  "Amount"                => 12.95,
+  "Date"                  => "2014-10-20T03:12:36Z",
+  "Type"                  => "deposit",
+  "UserType"              => "Dwolla",
+  "DestinationId"         => "812-742-8722",
+  "DestinationName"       => "Cafe Kubal",
+  "Destination"           => {
+    "Id"    => "812-742-8722",
+    "Name"  => "Cafe Kubal",
+    "Type"  => "Dwolla",
+    "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+  },
+  "SourceId"              => "XXX9999",
+  "SourceName"            => "Blah",
+  "Source"                => {
+    "Id"    => "XXX9999",
+    "Name"  => "Blah",
+    "Type"  => "Dwolla",
+    "Image" => ""
+  },
+  "ClearingDate"          => "2014-10-23T00:00:00Z",
+  "Status"                => "pending",
+  "Notes"                 => nil,
+  "Fees"                  => nil,
+  "OriginalTransactionId" => nil,
+  "Metadata"              => nil
+}
+```
 
 ```js
 { 
@@ -426,6 +545,17 @@ Dwolla.addFundingSource(account, routing, 'Checking', 'My Bank', function(err, d
 });
 ```
 
+```ruby
+#   Add a new funding source (bank account).
+puts Dwolla::FundingSources.add({
+  :routing_number => 113024915, 
+  :account_number => 99999999, 
+  :account_type => "Checking", 
+  :name => "Some Nickname"
+})
+
+```
+
 ```json
 {
     "account_number": "12345678",
@@ -436,6 +566,16 @@ Dwolla.addFundingSource(account, routing, 'Checking', 'My Bank', function(err, d
 ```
 
 > Response: 
+
+```ruby
+{
+  "Id"             => "7bf971a12543f560119318e67aa76035",
+  "Name"           => "Some Nickname - Checking",
+  "Type"           => "Checking",
+  "Verified"       => false,
+  "ProcessingType" => "ACH"
+}
+```
 
 ```js
 { 
@@ -478,6 +618,13 @@ name | Arbitrary nickname for the funding source
 
 ## Verify a Funding Source
 
+```ruby
+puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
+  :deposit1 => 0.01, 
+  :deposit2 => 0.04, 
+})
+```
+
 ```json
 {
     "deposit1": "0.01",
@@ -496,10 +643,19 @@ var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
 Dwolla.verifyFundingSource('0.02', '0.05', fundingSource, function(err, data) {
     console.log(data);
 });
-
 ```
 
 > Response:
+
+```ruby
+{
+  "Id"             => "7bf971a12543f560119318e67aa76035",
+  "Name"           => "Some Nickname - Checking",
+  "Type"           => "Checking",
+  "Verified"       => true,
+  "ProcessingType" => "ACH"
+}
+```
 
 ```js
 { 

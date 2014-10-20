@@ -21,7 +21,24 @@ Dwolla.refund(pin, '12345', '7654321', 10.00, function(err, data) {
 });
 ```
 
+```ruby
+puts Dwolla::Transactions.refund({
+  :transactionId => "341617",
+  :fundsSource => "Balance",
+  :pin => "9999",
+  :amount => 20
+})
+```
+
 > Response: 
+
+```ruby
+{
+  "TransactionId" => 341621,
+  "RefundDate"    => "10/20/2014 05:51:43",
+  "Amount"        => 20
+}
+```
 
 ```js
 {

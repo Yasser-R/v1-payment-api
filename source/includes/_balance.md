@@ -12,9 +12,8 @@ if($balance == NULL) { echo "Error: {$Dwolla->getError()} \n"; } // Check for er
 else { echo $balance; } // Print user's balance
 ```
 ```ruby
-# EXAMPLE 1: 
 #   Get the balance of the authenticated user
-pp Dwolla::Balance.get
+puts Dwolla::Balance.get
 ```
 ```python
 balance = DwollaUser.get_balance()
@@ -32,6 +31,10 @@ Dwolla.balance(function(err, data){
 ```
 
 > Response:
+
+```ruby
+55.76
+```
 
 ```js
 55.76

@@ -18,17 +18,16 @@ if(!$status) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { print_r($status); } // Print status
 ```
 ```ruby
-# EXAMPLE 1:
-# 	Get autowithdrawal status of the user
-#	associated with the current OAuth token
+#   Get autowithdrawal status of the user
+#   associated with the current OAuth token
 
-pp Dwolla.get_autowithdrawal_status
+puts Dwolla::Accounts.get_auto_withdrawal_status
 ```
 ```python
 '''
     EXAMPLE 1: 
-    	Fetch autowithdraw status for the account
-    	associated with the current OAuth token.
+        Fetch autowithdraw status for the account
+        associated with the current OAuth token.
 '''
 status = DwollaUser.get_autowithdraw_status
 print(status)
@@ -44,17 +43,57 @@ Dwolla.getAutoWithdrawalStatus(function(err, data) {
 });
 ```
 
-> If disabled, you'll get this response:
+> If enabled, you'll get:
+
+```ruby
+{
+  "Enabled"   => true,
+  "FundingId" => "5da016f7769bcb1de9938a30d194d5a7"
+}
+```
 
 ```js
-"Disabled"
+{
+    "Enabled": true,
+    "FundingId": "5da016f7769bcb1de9938a30d194d5a7"
+}
 ```
 
 ```json
 {
-    "Success": true,
-    "Message": "Success",
-    "Response": "Disabled"
+  "Success": true,
+  "Message": "Success",
+  "Response": {
+    "Enabled": true,
+    "FundingId": "5da016f7769bcb1de9938a30d194d5a7"
+  }
+}
+```
+
+> If disabled, you'll get this response:
+
+```ruby
+{
+  "Enabled"   => false,
+  "FundingId" => ""
+}
+```
+
+```js
+{
+  "Enabled": false,
+  "FundingId": ""
+}
+```
+
+```json
+{
+  "Success": true,
+  "Message": "Success",
+  "Response": {
+    "Enabled": false,
+    "FundingId": ""
+  }
 }
 ```
 
@@ -81,16 +120,16 @@ else { print_r($status); } // Print status
 ```
 ```ruby
 # EXAMPLE 1:
-# 	Enable autowithdraw for funding source '12345' under the
-#	associated with the current OAuth token
+#   Enable autowithdraw for funding source '12345' under the
+#   associated with the current OAuth token
 
-pp Dwolla.auto_withdrawal(true, '12345')
+puts Dwolla::Accounts.toggle_auto_withdrawl(true, '12345')
 ```
 ```python
 '''
     EXAMPLE 1: 
-    	nable autowithdraw for funding source '12345' under the
-    	associated with the current OAuth token.
+        nable autowithdraw for funding source '12345' under the
+        associated with the current OAuth token.
 '''
 status = DwollaUser.set_autowithdraw_status(true, '12345')
 print(status)
@@ -107,6 +146,10 @@ Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
 ```
 
 > If enabled, you'll get this response:
+
+```ruby
+"Enabled"
+```
 
 ```js
 "Enabled"

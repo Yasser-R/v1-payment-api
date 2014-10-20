@@ -187,7 +187,48 @@ Dwolla.transactions(function(err, data) {
 });
 ```
 
+```ruby
+#   Get 10 most recent transactions
+puts Dwolla::Transactions.get
+```
+
 > Response: 
+
+```ruby
+[
+  {
+    "Id"                    => 331506,
+    "Amount"                => 15.25,
+    "Date"                  => "2014-09-17T18:18:46Z",
+    "Type"                  => "withdrawal",
+    "UserType"              => "Dwolla",
+    "DestinationId"         => "XXX9999",
+    "DestinationName"       => "Blah",
+    "Destination"           => {
+      "Id"    => "XXX9999",
+      "Name"  => "Blah",
+      "Type"  => "Dwolla",
+      "Image" => ""
+    },
+    "SourceId"              => "812-742-8722",
+    "SourceName"            => "Cafe Kubal",
+    "Source"                => {
+      "Id"    => "812-742-8722",
+      "Name"  => "Cafe Kubal",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "ClearingDate"          => "2014-09-19T00:00:00Z",
+    "Status"                => "pending",
+    "Notes"                 => nil,
+    "Fees"                  => nil,
+    "OriginalTransactionId" => nil,
+    "Metadata"              => nil
+  },
+  { ... },
+  { ... }
+]
+```
 
 ```js
 [
@@ -302,7 +343,47 @@ Dwolla.transactionsByApp(function(err, data) {
 });
 ```
 
+```ruby
+puts Dwolla::Transactions.get(nil, {}, false)
+```
+
 > Response:
+
+```ruby
+[
+  {
+    "Id"                    => 331506,
+    "Amount"                => 15.25,
+    "Date"                  => "2014-09-17T18:18:46Z",
+    "Type"                  => "withdrawal",
+    "UserType"              => "Dwolla",
+    "DestinationId"         => "XXX9999",
+    "DestinationName"       => "Blah",
+    "Destination"           => {
+      "Id"    => "XXX9999",
+      "Name"  => "Blah",
+      "Type"  => "Dwolla",
+      "Image" => ""
+    },
+    "SourceId"              => "812-742-8722",
+    "SourceName"            => "Cafe Kubal",
+    "Source"                => {
+      "Id"    => "812-742-8722",
+      "Name"  => "Cafe Kubal",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "ClearingDate"          => "2014-09-19T00:00:00Z",
+    "Status"                => "pending",
+    "Notes"                 => nil,
+    "Fees"                  => nil,
+    "OriginalTransactionId" => nil,
+    "Metadata"              => nil
+  },
+  { ... },
+  { ... }
+]
+```
 
 ```js
 [
@@ -416,7 +497,44 @@ Dwolla.transactionById('12345', function(err, data) {
 });
 ```
 
+```ruby
+#   Retrieve a transaction by ID
+puts Dwolla::Transactions.get(331506)
+```
+
 > Response:
+
+```ruby
+{
+    "Id"                    => 331506,
+    "Amount"                => 15.25,
+    "Date"                  => "2014-09-17T18:18:46Z",
+    "Type"                  => "withdrawal",
+    "UserType"              => "Dwolla",
+    "DestinationId"         => "XXX9999",
+    "DestinationName"       => "Blah",
+    "Destination"           => {
+      "Id"    => "XXX9999",
+      "Name"  => "Blah",
+      "Type"  => "Dwolla",
+      "Image" => ""
+    },
+    "SourceId"              => "812-742-8722",
+    "SourceName"            => "Cafe Kubal",
+    "Source"                => {
+      "Id"    => "812-742-8722",
+      "Name"  => "Cafe Kubal",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "ClearingDate"          => "2014-09-19T00:00:00Z",
+    "Status"                => "pending",
+    "Notes"                 => nil,
+    "Fees"                  => nil,
+    "OriginalTransactionId" => nil,
+    "Metadata"              => nil
+  }
+```
 
 ```js
 {

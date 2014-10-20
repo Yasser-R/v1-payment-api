@@ -83,6 +83,18 @@ dwolla.createCheckout(redirect_uri, purchaseOrder, params, function(err, checkou
 });
 ```
 
+```ruby
+# Set redirect URL, callback URL
+Dwolla::OffsiteGateway.redirect = 'http://dwolla.com/payment_redirect'
+Dwolla::OffsiteGateway.callback = 'http://dwolla.com/payment_callback'
+
+# Add products
+Dwolla::OffsiteGateway.add_product('Macbook Air', '13" Macbook Air; Model #0001', 499.99, 1)
+
+# Generate a checkout sesssion
+pp Dwolla::OffsiteGateway.get_checkout_url('812-734-7288')
+```
+
 > If successful, you'll get this back:
 
 ```json
@@ -96,6 +108,10 @@ dwolla.createCheckout(redirect_uri, purchaseOrder, params, function(err, checkou
 ```
 
 ```js
+https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
+```
+
+```ruby
 https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 ```
 
@@ -150,6 +166,10 @@ dwolla.getCheckout(checkoutId, function(err, response) {
 });
 ```
 
+```ruby
+This method is not yet supported in dwolla-ruby.
+```
+
 > Response: 
 
 ```json
@@ -198,6 +218,10 @@ dwolla.getCheckout(checkoutId, function(err, response) {
 }
 ```
 
+```ruby
+This method is not yet supported in dwolla-ruby.
+```
+
 Fetch an existing checkout by its `checkoutId` to get its status and details.
 
 ### HTTP Request
@@ -230,7 +254,15 @@ dwolla.completeCheckout(checkoutId, function(err, response) {
 });
 ```
 
+```ruby
+This method is not yet supported in dwolla-ruby.
+```
+
 > If successful, you'll get back:
+
+```ruby
+This method is not yet supported in dwolla-ruby.
+```
 
 ```json
 {
@@ -272,6 +304,10 @@ dwolla.completeCheckout(checkoutId, function(err, response) {
 
 ```js
 "There are insufficient funds for this transaction."
+```
+
+```ruby
+This method is not yet supported in dwolla-ruby.
 ```
 
 Finish a PayLater checkout.  This will attempt to create the payment.

@@ -33,10 +33,9 @@ if(!$user) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { print_r($user); } // Print user information
 ```
 ```ruby
-# EXAMPLE 1: 
 #   Fetch basic account information
-#   for a given Dwolla ID
-pp Dwolla::Users.get('812-626-8794')
+#   for a given email address
+puts Dwolla::Users.get('gordon@dwolla.com')
 ```
 ```python
 '''
@@ -59,6 +58,15 @@ Dwolla.basicAccountInfo('812-546-3855', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+{
+  "Id"        => "812-742-3301",
+  "Name"      => "Gordon Zheng",
+  "Latitude"  => 0,
+  "Longitude" => 0
+}
+```
 
 ```js
 {
@@ -119,11 +127,9 @@ if(!$me) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { print_r($me); } // Print user information
 ```
 ```ruby
-# EXAMPLE 1:
 #   Fetch account information for the
-#   account associated with the provided
-#   OAuth token
-pp Dwolla::Users.get
+#   authorized user
+puts Dwolla::Users.get
 ```
 ```python
 '''
@@ -147,6 +153,18 @@ Dwolla.fullAccountInfo(function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+{
+  "City"      => "Test",
+  "State"     => "NY",
+  "Type"      => "Commercial",
+  "Id"        => "812-742-8722",
+  "Name"      => "Cafe Kubal",
+  "Latitude"  => 41.58975983,
+  "Longitude" => -93.61564636
+}
+```
 
 ```js
 {
@@ -222,10 +240,9 @@ else { print_r($contacts); } // Print contacts
 ?>
 ```
 ```ruby
-# EXAMPLE 1: 
 #   Get a list of nearby Dwolla spots
-#   for a given set of coordinates
-pp Dwolla::Contacts.nearby({:latitude => 1, :longitude => 2})
+#   for a given set of coordinates (lat, long)
+pp Dwolla::Contacts.nearby(41.58975983, -93.61564636)
 ```
 ```python
 '''
@@ -248,6 +265,40 @@ Dwolla.nearby('41.585', '-93.624', function(err, data){
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+[
+  {
+    "Name"       => "Rocket Gear",
+    "Id"         => "812-742-6826",
+    "Type"       => "Dwolla",
+    "Image"      => "http://uat.dwolla.com/avatars/812-742-6826",
+    "Latitude"   => 41.58975983,
+    "Longitude"  => -93.61564636,
+    "Address"    => "123 Test Ave\n",
+    "City"       => "Des Moines",
+    "State"      => "IA",
+    "PostalCode" => "50169",
+    "Group"      => "812-742-6826",
+    "Delta"      => 0.0045938100000100235
+  },
+  {
+    "Name"       => "Alan's Brew",
+    "Id"         => "812-198-4099",
+    "Type"       => "Dwolla",
+    "Image"      => "http://uat.dwolla.com/avatars/812-198-4099",
+    "Latitude"   => 41.582947,
+    "Longitude"  => -93.622444,
+    "Address"    => "120 SW 5th st\n",
+    "City"       => "Des Moines",
+    "State"      => "IA",
+    "PostalCode" => "50309",
+    "Group"      => "812-198-4099",
+    "Delta"      => 0.009497000000003197
+  },
+  { ... }
+]
+```
 
 ```js
 [

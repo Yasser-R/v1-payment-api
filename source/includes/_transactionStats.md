@@ -11,7 +11,18 @@ Dwolla.transactionsStats(function(err, data){
 });
 ```
 
+```ruby
+puts Dwolla::Transactions.stats()
+```
+
 > Response:
+
+```ruby
+{
+  "TransactionsCount" => 10,
+  "TransactionsTotal" => 134.22
+}
+```
 
 ```js
 {

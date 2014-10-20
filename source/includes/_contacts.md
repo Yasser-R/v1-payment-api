@@ -127,6 +127,21 @@ Dwolla.contacts({search: 'Ben'}, function(err, data){
 
 > If successful, you'll receive this response:
 
+```ruby
+[
+  {
+    "Name"  => "Gordon Zheng",
+    "Id"    => "812-742-3301",
+    "Type"  => "Dwolla",
+    "Image" => "http://uat.dwolla.com/avatars/812-742-3301",
+    "City"  => "Elmhurst",
+    "State" => "NY"
+  },
+  { ... },
+  { ... }
+]
+```
+
 ```js
 [
     {

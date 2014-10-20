@@ -1,5 +1,5 @@
 #OAuth
-```shell
+```always
   /$$$$$$   /$$$$$$              /$$     /$$      
  /$$__  $$ /$$__  $$            | $$    | $$      
 | $$  \ $$| $$  \ $$ /$$   /$$ /$$$$$$  | $$$$$$$ 
@@ -32,6 +32,11 @@ var redirect_uri = "https://www.myredirect.com/redirect";
 
 // generate OAuth initiation URL
 var authUrl = Dwolla.authUrl(redirect_uri);
+```
+
+```ruby
+redirect_uri = "https://www.myredirect.com/redirect"
+authUrl = Dwolla::OAuth.get_auth_url(redirect_uri)
 ```
 
 > Example initiation URL:
@@ -95,6 +100,12 @@ Dwolla.finishAuth(authorizationCode, redirect_uri, function(error, auth) {
 });
 ```
 
+```ruby
+info = Dwolla::OAuth.get_token(code, redirect_uri)
+token = info['access_token']
+refresh_token = info['refresh_token']
+```
+
 > Successful Response:
 
 ```shell
@@ -145,6 +156,12 @@ Dwolla.refreshAuth(refreshToken, function(error, auth) {
   var new_access_token = auth.access_token;
   var new_refresh_token = auth.refresh_token;
 });
+```
+
+```ruby
+info = Dwolla::OAuth.refresh_auth(refresh_token)
+token = info['access_token']
+refresh_token = info['refresh_token']
 ```
 
 > Successful Response:

@@ -108,8 +108,8 @@ if(!$requestId) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { echo("Request ID: {$requestId} \n"); }
 ```
 ```ruby
-# Example 1: Request 1.00 from a Dwolla ID
-pp Dwolla::requests.create({:sourceId=> '812-114-1111', :amount=> '1.00'})
+# Request 1.00 from a Dwolla ID
+puts Dwolla::Requests.create({:sourceId=> '812-742-8722', :amount=> '1.00'})
 ```
 ```python
 '''
@@ -130,6 +130,10 @@ Dwolla.request('812-111-1111', '5.00', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+1652      # request ID
+```
 
 ```js
 1288        // Request ID
@@ -176,8 +180,8 @@ if(!$requests) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
 else { print_r($requests); }
 ```
 ```ruby
-# Example 1: Get all pending requests
-pp Dwolla::requests.get
+# Get all pending requests
+puts Dwolla::requests.get
 ```
 ```python
 '''
@@ -199,6 +203,38 @@ Dwolla.requests(function(err, data){
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+[
+  {
+    "Id"                         => 1452,
+    "Source"                     => {
+      "Id"    => "812-742-8722",
+      "Name"  => "Cafe Kubal",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "Destination"                => {
+      "Id"    => "812-443-2936",
+      "Name"  => " ",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-443-2936"
+    },
+    "Amount"                     => 1.0,
+    "Notes"                      => "",
+    "DateRequested"              => "2014-08-27T03:47:39Z",
+    "Status"                     => "Pending",
+    "Transaction"                => nil,
+    "CancelledBy"                => nil,
+    "DateCancelled"              => "",
+    "SenderAssumeFee"            => false,
+    "SenderAssumeAdditionalFees" => false,
+    "AdditionalFees"             => [],
+    "Metadata"                   => nil
+  },
+  { ... }
+]
+```
 
 ```js
 [
@@ -304,7 +340,7 @@ else { print_r($request); }
 ```
 ```ruby
 # Example 1: Get request details for request '12345'
-pp Dwolla::requests.get('12345')
+puts Dwolla::requests.get('12345')
 ```
 ```python
 '''
@@ -327,6 +363,35 @@ Dwolla.requestById('12345678', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+{
+    "Id"                         => 12345,
+    "Source"                     => {
+      "Id"    => "812-742-8722",
+      "Name"  => "Cafe Kubal",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+    },
+    "Destination"                => {
+      "Id"    => "812-443-2936",
+      "Name"  => " ",
+      "Type"  => "Dwolla",
+      "Image" => "http://uat.dwolla.com/avatars/812-443-2936"
+    },
+    "Amount"                     => 1.0,
+    "Notes"                      => "",
+    "DateRequested"              => "2014-08-27T03:47:39Z",
+    "Status"                     => "Pending",
+    "Transaction"                => nil,
+    "CancelledBy"                => nil,
+    "DateCancelled"              => "",
+    "SenderAssumeFee"            => false,
+    "SenderAssumeAdditionalFees" => false,
+    "AdditionalFees"             => [],
+    "Metadata"                   => nil
+  }
+```
 
 ```js
 {
@@ -420,8 +485,11 @@ if(!$fulfilledRequest) { echo "Error: {$Dwolla->getError()} \n"; } // Check for 
 else { print_r($fulfilledRequest); }
 ```
 ```ruby
-# Example 1: Fulfill a request to ID 12345 of amount 1.00
-pp Dwolla::requests.fulfill('12345', {:pin =>: '1234', :amount => '1.00'})
+# Example 1: Fulfill a request, ID 1653, of amount 20.00
+puts Dwolla::Requests.fulfill('1653', {
+  :pin => 9999,
+  :amount => 20.00,
+})
 ```
 ```python
 '''
@@ -443,6 +511,29 @@ Dwolla.fulfillRequest(pin, '12345678', '10.00', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```ruby
+{
+  "RequestId"    => 1653,
+  "Id"           => 341624,
+  "Source"       => {
+    "Id"    => "812-742-8722",
+    "Name"  => "Cafe Kubal",
+    "Type"  => "Dwolla",
+    "Image" => "http://uat.dwolla.com/avatars/812-742-8722"
+  },
+  "Destination"  => {
+    "Id"    => "812-742-3301",
+    "Name"  => "Gordon Zheng",
+    "Type"  => "Dwolla",
+    "Image" => "http://uat.dwolla.com/avatars/812-742-3301"
+  },
+  "Amount"       => 20.0,
+  "SentDate"     => "2014-10-20T06:00:02Z",
+  "ClearingDate" => "2014-10-20T06:00:02Z",
+  "Status"       => "processed"
+}
+```
 
 ```js
 { 
@@ -526,8 +617,8 @@ if(!$canceledRequest) { echo "Error: {$Dwolla->getError()} \n"; } // Check for e
 else { echo("Canceled? {$canceledRequest} \n"); }
 ```
 ```ruby
-# Example 1: Cancel request with ID '12345'
-pp Dwolla::requests.cancel('12345')
+# Cancel request with ID '12345'
+puts Dwolla::Requests.delete('1652')
 ```
 ```python
 '''
@@ -552,6 +643,10 @@ Dwolla.cancelRequest('12345678', function(err, data){
 
 ```js
 true    // boolean.
+```
+
+```ruby
+""      // empty string
 ```
 
 ```json

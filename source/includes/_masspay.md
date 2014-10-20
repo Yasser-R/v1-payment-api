@@ -49,6 +49,30 @@ The alternative approach incurs an ACH deposit from the bank funding source for 
 } 
 ```
 
+```ruby
+items = [
+  {
+    :amount => 9.99,
+    :destination => 'gordon@dwolla.com',
+    :destinationType => 'Email'
+  },
+  {
+    :amount => 30,
+    :destination => '812-742-3301',
+    :notes => 'money!!!',
+    :metadata => {
+      'something_optional' => 'foobar'
+    }
+  }
+]
+
+puts Dwolla::MassPay.create({
+  :fundsSource => "Balance",
+  :pin => 9999,
+  :items => items
+})
+```
+
 ```js
 items = [
   {
@@ -83,6 +107,24 @@ dwolla.createMassPayJob('Balance', '2908', items, {
 ```
 
 > Response: 
+
+```ruby
+{
+  "Id"            => "d18a2589-409c-4d0d-8404-a3ca005d3bf2",
+  "UserJobId"     => nil,
+  "AssumeCosts"   => false,
+  "FundingSource" => "Balance",
+  "Total"         => 39.99,
+  "Fees"          => 0,
+  "CreatedDate"   => "2014-10-20T05:39:27Z",
+  "Status"        => "queued",
+  "ItemSummary"   => {
+    "Count"      => 2,
+    "Completed"  => 0,
+    "Successful" => 0
+  }
+}
+```
 
 ```js
 { 
@@ -160,7 +202,32 @@ dwolla.getMassPayJobs(function(err, response) {
 });
 ```
 
+```ruby
+puts Dwolla::MassPay.get
+```
+
 > Response: 
+
+```ruby
+[
+  {
+    "Id"            => "256f7554-9bcb-4399-97d8-a34c00bb20b1",
+    "UserJobId"     => "efnwjkefnkwjnknkjnk",
+    "AssumeCosts"   => true,
+    "FundingSource" => "Balance",
+    "Total"         => 0.02,
+    "Fees"          => 0.0,
+    "CreatedDate"   => "2014-06-16T18:21:18Z",
+    "Status"        => "complete",
+    "ItemSummary"   => {
+      "Count"      => 2,
+      "Completed"  => 2,
+      "Successful" => 1
+    }
+  },
+  { ... }
+]
+```
 
 ```js
 [
@@ -255,6 +322,10 @@ You can optionally provide the `skip` and `limit` querystring parameters to limi
 
 ## Retrieve Job
 
+```ruby
+puts Dwolla::MassPay.getJob('68e22e63-c3cb-45e6-bf04-a37201717e5d')
+```
+
 ```js
 var jobId = '68e22e63-c3cb-45e6-bf04-a37201717e5d';
 
@@ -264,6 +335,24 @@ dwolla.getMassPayJob(jobId, function(err,result) {
 ```
 
 > Response:
+
+```ruby
+{
+  "Id"            => "256f7554-9bcb-4399-97d8-a34c00bb20b1",
+  "UserJobId"     => "efnwjkefnkwjnknkjnk",
+  "AssumeCosts"   => true,
+  "FundingSource" => "Balance",
+  "Total"         => 0.02,
+  "Fees"          => 0.0,
+  "CreatedDate"   => "2014-06-16T18:21:18Z",
+  "Status"        => "complete",
+  "ItemSummary"   => {
+    "Count"      => 2,
+    "Completed"  => 2,
+    "Successful" => 1
+  }
+}
+```
 
 ```js
 {
@@ -322,7 +411,43 @@ dwolla.getMassPayJobItems(jobId, function(err,result) {
 });
 ```
 
+```ruby
+puts Dwolla::MassPay.getItems('256f7554-9bcb-4399-97d8-a34c00bb20b1')
+```
+
 > Response:
+
+```ruby
+[
+  {
+    "JobId"           => "256f7554-9bcb-4399-97d8-a34c00bb20b1",
+    "ItemId"          => 17053,
+    "Destination"     => "reflector@dwolla.com",
+    "DestinationType" => "email",
+    "Amount"          => 0.01,
+    "Status"          => "success",
+    "TransactionId"   => 61966,
+    "Error"           => nil,
+    "CreatedDate"     => "2014-06-16T18:21:18Z",
+    "Metadata"        => {
+      "lol" => "foo",
+      "bar" => "qux"
+    }
+  },
+  {
+    "JobId"           => "256f7554-9bcb-4399-97d8-a34c00bb20b1",
+    "ItemId"          => 17054,
+    "Destination"     => "812-713-9234",
+    "DestinationType" => "dwolla",
+    "Amount"          => 0.01,
+    "Status"          => "failed",
+    "TransactionId"   => nil,
+    "Error"           => "The user to send to could not be found.",
+    "CreatedDate"     => "2014-06-16T18:21:18Z",
+    "Metadata"        => nil
+  }
+]
+```
 
 ```js
 {
@@ -415,6 +540,12 @@ var itemId = '424792';
 dwolla.getMassPayJobItem(jobId, itemId, function(err, result) {
   console.log(result);
 });
+```
+
+```ruby
+# Retrieve item 17054 from Job 256f7554-9bcb-4399-97d8-a34c00bb20b1: 
+
+puts Dwolla::MassPay.getItem('256f7554-9bcb-4399-97d8-a34c00bb20b1', '17054')
 ```
 
 > Response:
