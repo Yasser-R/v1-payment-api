@@ -49,18 +49,25 @@ print(me)
 ```
 ```js
 /**
- * EXAMPLE 1: 
  *   Fetch basic account information
- *   for a given Dwolla ID
+ *   for a given Dwolla ID (or email)
  **/
 
 Dwolla.basicAccountInfo('812-546-3855', function(err, data) {
-    if (err) { console.log(err); }
     console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+{
+    "Id": "812-111-1111",
+    "Latitude": 0,
+    "Longitude": 0,
+    "Name": "Joe Schmoe"
+}
+```
 
 ```json
 {
@@ -130,19 +137,28 @@ print(me)
 ```
 ```js
 /**
- * EXAMPLE 1: 
  *   Fetch account information for the
- *   account associated with the provided
- *   OAuth token
+ *   authorized user
  **/
 
 Dwolla.fullAccountInfo(function(err, data) {
-    if (err) { console.log(err); }
     console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+{
+    "City": "Des Moines",
+    "Id": "812-111-1111",
+    "Latitude": 41.584546,
+    "Longitude": -93.634167,
+    "Name": "Test User",
+    "State": "IA",
+    "Type": "Personal"
+}
+```
 
 ```json
 {
@@ -194,8 +210,6 @@ Retrieve the avatar image for a Dwolla user, given their Dwolla ID.  This requir
 
 ## Find Nearby Businesses
 
-```json
-```
 ```php
 <?php
 /**
@@ -224,18 +238,49 @@ print(contacts)
 ```
 ```js
 /**
- * EXAMPLE 1: 
- * Fetch all spots near lat 45 and 
- * long 45
+ * Fetch all spots near lat 41.585 and 
+ * long -93.624
  **/
 
-Dwolla.nearby(cfg.apiKey, cfg.apiSecret, 45, 45, function(err, data){
-   if (err) { console.log(err); }
+Dwolla.nearby('41.585', '-93.624', function(err, data){
    console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+[
+  {
+    "Name": "ThelmasTreats",
+    "Id": "812-608-8758",
+    "Type": "Dwolla",
+    "Image": "https://www.dwolla.com/avatars/812-608-8758",
+    "Latitude": 41.590043,
+    "Longitude": -93.62095,
+    "Address": "615 3rd Street\n",
+    "City": "Des Moines",
+    "State": "IA",
+    "PostalCode": "50309",
+    "Group": "812-608-8758",
+    "Delta": 0.0009069999999908873
+  },
+  {
+    "Name": "IKONIX Studio",
+    "Id": "812-505-4939",
+    "Type": "Dwolla",
+    "Image": "https://www.dwolla.com/avatars/812-505-4939",
+    "Latitude": 41.5887958,
+    "Longitude": -93.6215057,
+    "Address": "506 3rd St\nSuite 206",
+    "City": "Des Moines",
+    "State": "IA",
+    "PostalCode": "50309",
+    "Group": "812-505-4939",
+    "Delta": 0.0027098999999992657
+  }
+]
+```
 
 ```json
 {

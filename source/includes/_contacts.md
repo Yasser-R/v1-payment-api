@@ -109,7 +109,6 @@ print(contacts)
  **/
 
 Dwolla.contacts(function(err, data){
-   if (err) { console.log(err); }
    console.log(data);
 });
 
@@ -121,13 +120,33 @@ Dwolla.contacts(function(err, data){
  **/
 
 Dwolla.contacts({search: 'Ben'}, function(err, data){
-   if (err) { console.log(err); }
    console.log(data);
 });
 
 ```
 
 > If successful, you'll receive this response:
+
+```js
+[
+    {
+        "Name": "Joe Schmoe",
+        "Id": "812-999-0090",
+        "Type": "Dwolla",
+        "Image": "https://www.dwolla.com/avatars/812-999-0090",
+        "City": "St Louis",
+        "State": "MO"
+    },
+    {
+        "Name": "Sam Schmoe Super Foods",
+        "Id": "812-999-0091",
+        "Type": "Dwolla",
+        "Image": "https://www.dwolla.com/avatars/812-999-0091",
+        "City": "Des Moines",
+        "State": "IA"
+    }
+]
+```
 
 ```json
 {

@@ -1,5 +1,17 @@
 # Send Money
 
+```always
+  __                      ___    ___               
+ /\ \                    /\_ \  /\_ \              
+ \_\ \  __  __  __    ___\//\ \ \//\ \      __     
+ /'_` \/\ \/\ \/\ \  / __`\\ \ \  \ \ \   /'__`\   
+/\ \L\ \ \ \_/ \_/ \/\ \L\ \\_\ \_ \_\ \_/\ \L\.\_ 
+\ \___,_\ \___x___/'\ \____//\____\/\____\ \__/.\_\
+ \/__,_ /\/__//__/   \/___/ \/____/\/____/\/__/\/_/
+                                                   
+    
+```
+
 ```php
 /**
  *   Send money ($1.00) to Dwolla ID 812-734-7288
@@ -22,13 +34,20 @@ print(transaction)
 ```
 ```js
 /**
- *   Send money ($1.00) to a Dwolla ID 812-626-8794
+ *   Send money ($1.00) to an email address, with a note
  **/
 
-Dwolla.send(cfg.pin, '812-626-8794', 1.00, function(err, data) {
+// optional params:
+var params = {
+  destinationType: 'Email', 
+  notes: 'Thanks for the coffee!'
+};
+
+Dwolla.send(pin, 'gordon@dwolla.com', 1.00, params, function(err, data) {
    if (err) { console.log(err); }
    console.log(data);
 });
+
 ```
 ```json
 {
@@ -49,12 +68,16 @@ Dwolla.send(cfg.pin, '812-626-8794', 1.00, function(err, data) {
 }
 ```
 
+```js
+341523   // resulting transaction ID
+```
+
 Send money from an authorized user's account to any Dwolla account ID, phone number, or e-mail address. You can send money to any phone number or email address -- if the recipient doesn't yet have a Dwolla account, they'll be sent an SMS or email notifying them of the payment and prompting them to sign up to claim the funds.
 
 You can optionally have the sender cover the transaction fee, if applicable, by setting `assumeCosts` to `true`.  By default, the recipient of the payment covers the $0.25 fee.
 
 Facilitator fees allow you, as the application facilitating a payment, to take a cut up to 50% of the payment amount.  By default, the facilitator fee is sent to the application owner's account, but you can have them sent to other recipients by declaring additional facilitator fees in the optional `additionalFees` array.
-	
+  
 ### HTTP Request
 
 `POST https://www.dwolla.com/oauth/rest/transactions/send`

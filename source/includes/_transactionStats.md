@@ -1,5 +1,25 @@
 # Transaction Stats
 
+```js
+/**
+ * Retrieve transaction statistics for the 
+ * authorized user.
+ */
+
+Dwolla.transactionsStats(function(err, data){
+  console.log(data);
+});
+```
+
+> Response:
+
+```js
+{
+  "TransactionsCount": 5,
+  "TransactionsTotal": 116.92
+}
+```
+
 ```json
 {
     "Success": true,

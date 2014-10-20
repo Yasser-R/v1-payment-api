@@ -49,7 +49,58 @@ The alternative approach incurs an ACH deposit from the bank funding source for 
 } 
 ```
 
+```js
+items = [
+  {
+    amount: 0.01,
+    destination: 'a@example.com',
+    destinationType: 'Email',
+    notes: 'for your good work',
+    metadata: {
+      'arbitrary_info': 'the house tasted good'
+    }
+  },
+  {
+    amount: 0.01,
+    destination: '812-740-4294',
+    destinationType: 'Dwolla',
+    notes: 'cause Im jenerus',
+    metadata: {
+      'anything_you_want': 'blahhhhh'
+    }
+  },
+  {
+    amount: 0.01,
+    destination: 'a@example.com',
+    destinationType: 'email'
+  }
+];
+
+dwolla.createMassPayJob('Balance', '2908', items, {
+  userJobId: 'Some arbitrary id you can specify',
+  assumeCosts: true
+}, console.log);
+```
+
 > Response: 
+
+```js
+{ 
+  Id: '9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e',
+  UserJobId: 'Some arbitrary id you can specify',
+  AssumeCosts: true,
+  FundingSource: 'Balance',
+  Total: 0.03,
+  Fees: 0,
+  CreatedDate: '2014-08-05T00:01:06Z',
+  Status: 'queued',
+  ItemSummary: { 
+    Count: 3, 
+    Completed: 0, 
+    Successful: 0 
+  } 
+}
+```
 
 ```json
 {
@@ -102,6 +153,50 @@ Each payment to be created in a MassPay job is represented as a JSON object with
 | metadata | yes | An optional [metadata](#metadata) object.
 
 ## List Jobs
+
+```js
+dwolla.getMassPayJobs(function(err, response) {
+  console.log(response);
+});
+```
+
+> Response: 
+
+```js
+[
+   {
+      Id: '9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e',
+      UserJobId: 'Some arbitrary id you can specify',
+      AssumeCosts: true,
+      FundingSource: 'Balance',
+      Total: 0.03,
+      Fees: 0,
+      CreatedDate: '2014-08-05T00:01:06Z',
+      Status: 'complete',
+      ItemSummary: {
+         Count: 3,
+         Completed: 3,
+         Successful: 3
+      }
+   },
+   {
+      Id: '68e22e63-c3cb-45e6-bf04-a37201717e5d',
+      UserJobId: null,
+      AssumeCosts: true,
+      FundingSource: '76fe6c3ff2417eb02a9019c25c9a259d',
+      Total: 10080000,
+      Fees: 504,
+      CreatedDate: '2014-07-24T22:25:18Z',
+      Status: 'complete',
+      ItemSummary: {
+         Count: 2016,
+         Completed: 2016,
+         Successful: 1832
+      }
+   }
+]
+```
+
 ```json
 {
     "Success": true,
@@ -160,6 +255,34 @@ You can optionally provide the `skip` and `limit` querystring parameters to limi
 
 ## Retrieve Job
 
+```js
+var jobId = '68e22e63-c3cb-45e6-bf04-a37201717e5d';
+
+dwolla.getMassPayJob(jobId, function(err,result) {
+  console.log(result);
+});
+```
+
+> Response:
+
+```js
+{
+  Id: '68e22e63-c3cb-45e6-bf04-a37201717e5d',
+  UserJobId: null,
+  AssumeCosts: true,
+  FundingSource: '76fe6c3ff2417eb02a9019c25c9a259d',
+  Total: 10080000,
+  Fees: 504,
+  CreatedDate: '2014-07-24T22:25:18Z',
+  Status: 'complete',
+  ItemSummary: {
+     Count: 2016,
+     Completed: 2016,
+     Successful: 1832
+  }
+}
+```
+
 ```json
 {
     "Success": true,
@@ -190,6 +313,46 @@ Look up a particular MassPay job by its ID.
 `GET https://www.dwolla.com/oauth/rest/masspay/{id}`
 
 ## List a Job's Items
+
+```js
+var jobId = '643f2db9-5b45-4755-a881-a3100178b6d7';
+
+dwolla.getMassPayJobItems(jobId, function(err,result) {
+  console.log(result);
+});
+```
+
+> Response:
+
+```js
+{
+  "JobId": "643f2db9-5b45-4755-a881-a3100178b6d7",
+  "ItemId": 13,
+  "Destination": "reflector@dwolla.com",
+  "DestinationType": "email",
+  "Amount": 0.01,
+  "Status": "success",
+  "TransactionId": 4938766,
+  "Error": null,
+  "CreatedDate": "2014-04-18T05:51:34Z",
+  "Metadata": {
+      "some meta data":  "hello world!",
+      "profound realization": "cats"
+  }
+},
+{
+  "JobId": "643f2db9-5b45-4755-a881-a3100178b6d7",
+  "ItemId": 14,
+  "Destination": "812-713-9234",
+  "DestinationType": "dwolla",
+  "Amount": 0.01,
+  "Status": "success",
+  "TransactionId": 4938768,
+  "Error": null,
+  "CreatedDate": "2014-04-18T05:51:34Z",
+  "Metadata": null 
+}
+```
 
 ```json
 {
@@ -244,6 +407,32 @@ You can optionally provide the `skip` and `limit` querystring parameters to limi
 `GET https://www.dwolla.com/oauth/rest/masspay/{id}/items?limit=20&skip=5`
 
 ## Retrieve a Job's Item
+
+```js
+var jobId = '9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e';
+var itemId = '424792';
+
+dwolla.getMassPayJobItem(jobId, itemId, function(err, result) {
+  console.log(result);
+});
+```
+
+> Response:
+
+```js
+{ 
+  JobId: '9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e',
+  ItemId: 424792,
+  Destination: 'a@example.com',
+  DestinationType: 'email',
+  Amount: 0.01,
+  Status: 'success',
+  TransactionId: 290128,
+  Error: null,
+  CreatedDate: '2014-08-05T00:06:26Z',
+  Metadata: null 
+}
+```
 
 ```json
 {

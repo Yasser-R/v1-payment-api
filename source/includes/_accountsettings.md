@@ -35,21 +35,22 @@ print(status)
 ```
 ```js
 /***
- * Example 1:
- *
- * Find out whether or not auto-withdrawal is enabled for the user
- * associated with the OAuth token
+ * Find out whether or not auto-withdrawal is enabled for the 
+ * authorized user
  */
 
 Dwolla.getAutoWithdrawalStatus(function(err, data) {
-    if (err) { console.log(err); }
     console.log(data);
 });
 ```
 
-> If disabled:
+> If disabled, you'll get this response:
 
-```shell
+```js
+"Disabled"
+```
+
+```json
 {
     "Success": true,
     "Message": "Success",
@@ -96,21 +97,22 @@ print(status)
 ```
 ```js
 /***
- * Example 1:
- *
  * Enable auto-withdraw for the user associated with the OAuth token,
- * for the funding ID '1234567'.
+ * for the funding source ID '1234567'.
  */
 
 Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
-    if (err) { console.log(err); }
     console.log(data);
 });
 ```
 
-> If enabled:
+> If enabled, you'll get this response:
 
-```shell
+```js
+"Enabled"
+```
+
+```json
 {
     "Success": true,
     "Message": "Success",

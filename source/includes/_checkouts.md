@@ -65,6 +65,24 @@ To create a PayLater Checkout, set `checkoutWithApi` to `true`.
 }
 ```
 
+```js
+var purchaseOrder = {
+ destinationId: '812-740-4294',
+ total: '5.00'
+};
+
+var params = {
+ allowFundingSources: true,
+ orderId: 'blah',
+};
+
+dwolla.createCheckout(redirect_uri, purchaseOrder, params, function(err, checkout) {
+ if (err) console.log(err);
+
+ console.log(checkout.checkoutURL);
+});
+```
+
 > If successful, you'll get this back:
 
 ```json
@@ -75,6 +93,10 @@ To create a PayLater Checkout, set `checkoutWithApi` to `true`.
         "CheckoutId": "684862bc-8d94-4e53-9c41-26398b4b7fac"
     }
 }
+```
+
+```js
+https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 ```
 
 > Simply append the resulting `CheckoutId` to this URI: `https://www.dwolla.com/payment/checkout/`
@@ -121,7 +143,14 @@ orderItems | yes | An array of JSON object(s) which contain a `name`, `descripti
 
 ## Retrieve a Checkout
 
-Fetch an existing checkout by its `checkoutId` to get its status and details.
+```js
+var checkoutId = 'a9d7c86a-0d0d-4466-b228-e15584a1315a';
+dwolla.getCheckout(checkoutId, function(err, response) {
+  console.log(response);
+});
+```
+
+> Response: 
 
 ```json
 {
@@ -152,8 +181,27 @@ Fetch an existing checkout by its `checkoutId` to get its status and details.
 }
 ```
 
+```js
+{ 
+  CheckoutId: 'd0429a55-c338-4139-b273-48d2f8c45693',
+  Discount: null,
+  Shipping: null,
+  Tax: null,
+  Total: 5,
+  Status: 'Completed',
+  FundingSource: 'Balance',
+  TransactionId: 290142,
+  ProfileId: null,
+  DestinationTransactionId: 290141,
+  OrderItems: [],
+  Metadata: null 
+}
+```
+
+Fetch an existing checkout by its `checkoutId` to get its status and details.
+
 ### HTTP Request
-`GET https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}? client_id={key}&client_secret={secret}`
+`GET https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}?client_id={key}&client_secret={secret}`
 
 ### Response Parameters
 This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems`, `ProfileId`, `Metadata` of the checkout and some additional information:
@@ -167,8 +215,6 @@ DestinationTransactionId | For the resulting payment, this is the [_Recipient's_
 
 ## Complete a PayLater Checkout
 
-Finish a PayLater checkout.  This will attempt to create the payment.
-
 ```json
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
@@ -176,9 +222,17 @@ Finish a PayLater checkout.  This will attempt to create the payment.
 }
 ```
 
+```js
+var checkoutId = 'a9d7c86a-0d0d-4466-b228-e15584a1315a';
+
+dwolla.completeCheckout(checkoutId, function(err, response) {
+  console.log(response);
+});
+```
+
 > If successful, you'll get back:
 
-```
+```json
 {
     "Success": true,
     "Message": "Success",
@@ -194,6 +248,18 @@ Finish a PayLater checkout.  This will attempt to create the payment.
 }
 ```
 
+```js
+{ 
+  Amount: 5,
+  CheckoutId: 'a9d7c86a-0d0d-4466-b228-e15584a1315a',
+  ClearingDate: '',
+  OrderId: 'blah',
+  TestMode: false,
+  TransactionId: 290144,
+  DestinationTransactionId: 290143 
+}
+```
+
 > Otherwise, you might get an error like this one:
 
 ```
@@ -204,8 +270,14 @@ Finish a PayLater checkout.  This will attempt to create the payment.
 }
 ```
 
+```js
+"There are insufficient funds for this transaction."
+```
+
+Finish a PayLater checkout.  This will attempt to create the payment.
+
 ### HTTP Request
-`POST https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}/complete`
+`POST https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{id}/complete`
 
 ### Response Parameters
 

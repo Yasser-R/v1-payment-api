@@ -1,8 +1,6 @@
 # Refund
 
 ```json
-POST /oauth/rest/transactions/refund
-
 {
   "amount": 11.25,
   "fundsSource": "Balance",
@@ -11,7 +9,27 @@ POST /oauth/rest/transactions/refund
 }
 ```
 
+```js
+/**
+ * Process a refund for transaction '123456',
+ * funding the refund from funding source ID '7654321'
+ * for amount $10.00
+ */
+
+Dwolla.refund(pin, '12345', '7654321', 10.00, function(err, data) {
+  console.log(data);
+});
+```
+
 > Response: 
+
+```js
+{
+  "TransactionId": 123458,
+  "RefundDate": "2014-01-22T17:47:04Z",
+  "Amount": 10
+}
+```
 
 ```json
 {

@@ -68,6 +68,20 @@ ProcessingType | Possible values: `ACH`, `FiSync`, or empty string: `""`
 
 ## List Funding Sources
 
+```js
+/**
+ *   Fetch all funding sources for the
+ *   account associated with the provided
+ *   OAuth access token
+ **/
+
+Dwolla.fundingSources(function(err, data) {
+   console.log(data);
+});
+```
+
+> Response:
+
 ```json
 {
     "Success": true,
@@ -105,6 +119,26 @@ ProcessingType | Possible values: `ACH`, `FiSync`, or empty string: `""`
 }
 ```
 
+```js
+[ 
+    { 
+        Id: 'Balance',
+        Name: 'My Dwolla Balance',
+        Type: '',
+        Verified: true,
+        ProcessingType: '' 
+    },
+        
+    { 
+        Id: '5da016f7769bcb1de9938a30d194d5a7',
+        Name: 'Blah - Checking',
+        Type: 'Checking',
+        Verified: true,
+        ProcessingType: 'ACH' 
+    } 
+]
+```
+
 Enumerate a user's funding sources.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
@@ -129,6 +163,20 @@ To do so, provide the `destinationId` and `destinationType` params in your reque
 
 ## Get a Funding Source
 
+```js
+/**
+ *   Retrieve a funding source by its ID
+ **/
+
+var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
+
+dwolla.fundingSourceById(fundingSource, function(err, res) {
+    console.log(res);
+})
+```
+
+> Response:
+
 ```json
 {
     "Success": true,
@@ -143,6 +191,16 @@ To do so, provide the `destinationId` and `destinationType` params in your reque
 }
 ```
 
+```js
+{ 
+    Id: '5da016f7769bcb1de9938a30d194d5a7',
+    Name: 'Blah - Checking',
+    Type: 'Checking',
+    Verified: true,
+    ProcessingType: 'ACH' 
+} 
+```
+
 Look up a particular funding source by its funding source ID.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
@@ -151,8 +209,23 @@ Look up a particular funding source by its funding source ID.
 `GET https://www.dwolla.com/oauth/rest/fundingsources/{id}`
 
 ## Withdraw to a funding source
-```json
+```js
+var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
+dwolla.withdrawToFundingSource(pin, 5.00, fundingSource, function(err, res) {
+  console.log(res);
+})
+```
 
+```json
+{
+    amount: 300.52,
+    pin: 9999
+}
+```
+
+> Response: 
+
+```json
 {
     "Success": true,
     "Message": "Success",
@@ -189,6 +262,38 @@ Look up a particular funding source by its funding source ID.
 
 ```
 
+```js
+{ 
+    Id: 327843,
+    Amount: 5,
+    Date: '2014-09-05T06:40:56Z',
+    Type: 'withdrawal',
+    UserType: 'Dwolla',
+    DestinationId: 'XXX9999',
+    DestinationName: 'Blah',
+    Destination: { 
+        Id: 'XXX9999', 
+        Name: 'Blah', 
+        Type: 'Dwolla', 
+        Image: '' 
+    },
+    SourceId: '812-742-8722',
+    SourceName: 'Cafe Kubal',
+    Source: { 
+        Id: '812-742-8722',
+        Name: 'Cafe Kubal',
+        Type: 'Dwolla',
+        Image: 'http://uat.dwolla.com/avatars/812-742-8722' 
+    },
+    ClearingDate: '2014-09-08T00:00:00Z',
+    Status: 'pending',
+    Notes: null,
+    Fees: null,
+    OriginalTransactionId: null,
+    Metadata: null 
+}
+```
+
 Withdraw funds from a user's account balance to one of the user's bank funding sources.  A new [Transaction](#transactions) of type `withdrawal` is created as a result.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
@@ -203,8 +308,57 @@ amount | Amount to withdraw from balance to funding source
 pin | User account PIN
 
 ## Deposit from a funding source
-```json
 
+```json
+{
+  amount: 5,
+  pin: 9999
+}
+```
+
+```js
+var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
+
+dwolla.depositFromFundingSource(pin, 5.00, fundingSource, function(err, res) {
+  console.log(res);
+})
+```
+
+> Response: 
+
+```js
+{ 
+  Id: 327844,
+  Amount: 5,
+  Date: '2014-09-05T06:40:57Z',
+  Type: 'deposit',
+  UserType: 'Dwolla',
+  DestinationId: '812-742-8722',
+  DestinationName: 'Cafe Kubal',
+  Destination: { 
+    Id: '812-742-8722',
+    Name: 'Cafe Kubal',
+    Type: 'Dwolla',
+    Image: 'http://uat.dwolla.com/avatars/812-742-8722'
+  },
+  SourceId: 'XXX9999',
+  SourceName: 'Blah',
+  Source: { 
+    Id: 'XXX9999', 
+    Name: 'Blah', 
+    Type: 'Dwolla', 
+    Image: '' 
+  },
+  ClearingDate: '2014-09-10T00:00:00Z',
+  Status: 'pending',
+  Notes: null,
+  Fees: null,
+  OriginalTransactionId: null,
+  Metadata: null 
+}
+```
+
+```json
 {
     "Success": true,
     "Message": "Success",
@@ -257,13 +411,49 @@ pin | User account PIN
 
 ## Add new Funding Source
 
+```js
+/**
+ * Add a funding source with account number '12345678',
+ * routing number '87654321', of type 'Checking' and with
+ * name 'My Bank'
+ */
+
+var account = '12345678';
+var routing = '87654321';
+
+Dwolla.addFundingSource(account, routing, 'Checking', 'My Bank', function(err, data) {
+    console.log(data);
+});
+```
+
+```json
+{
+    "account_number": "12345678",
+    "routing_number": "87654321",
+    "account_type": "Checking",
+    "name": "My Bank"
+}
+```
+
+> Response: 
+
+```js
+{ 
+  Id: '5da016f7769bcb1de9938a30d194d5a7',
+  Name: 'My Bank',
+  Type: 'Checking',
+  Verified: false,
+  ProcessingType: 'ACH' 
+} 
+```
+
 ```json
 {
     "Success": true,
     "Message": "Success",
     "Response": {
         "Id": "34da835f235cd25302ef0c5c1cb1d4b9",
-        "Name": "My Checking Account - Checking",
+        "Name": "My Bank",
         "Type": "Checking",
         "Verified": false,
         "ProcessingType": "ACH"
@@ -287,6 +477,39 @@ account_type | Type of bank account: `Checking` or `Savings`.
 name | Arbitrary nickname for the funding source
 
 ## Verify a Funding Source
+
+```json
+{
+    "deposit1": "0.01",
+    "deposit2": "0.04"
+}
+```
+
+```js
+/**
+ * Verify funding source ID '12345678' 
+ * with micro-deposits of 0.02 and 0.05
+ */
+
+var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
+
+Dwolla.verifyFundingSource('0.02', '0.05', fundingSource, function(err, data) {
+    console.log(data);
+});
+
+```
+
+> Response:
+
+```js
+{ 
+  Id: '5da016f7769bcb1de9938a30d194d5a7',
+  Name: 'My Bank',
+  Type: 'Checking',
+  Verified: true,
+  ProcessingType: 'ACH' 
+} 
+```
 
 ```json
 {

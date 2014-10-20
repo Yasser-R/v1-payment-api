@@ -113,7 +113,7 @@ reclaimed | The payment was returned to the sender after being unclaimed by the 
 <aside class="notice">The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be "processed".</aside>
 
 ### Transaction Resource
-```shell
+```always
 {
   "Amount": 1,
   "Date": "2014-01-22T13:11:10Z",
@@ -176,42 +176,95 @@ Fees | Array of any facilitator fees or transaction fees incurred by this paymen
 
 ## List a user's transactions
 
+```js
+/**
+ * Retrieve the 10 most recent transactions for
+ * the authorized user
+ */
+
+Dwolla.transactions(function(err, data) {
+  console.log(data);
+});
+```
+
+> Response: 
+
+```js
+[
+   {
+      "Id":328979,
+      "Amount":10.01,
+      "Date":"2014-09-09T04:49:41Z",
+      "Type":"money_sent",
+      "UserType":"Dwolla",
+      "DestinationId":"812-232-2342",
+      "DestinationName":"Joe Schmoe",
+      "Destination":{
+         "Id":"812-232-2342",
+         "Name":"Joe Schmoe",
+         "Type":"Dwolla",
+         "Image":"http://uat.dwolla.com/avatars/812-232-2342"
+      },
+      "SourceId":"812-742-8722",
+      "SourceName":"Cafe Kubal",
+      "Source":{
+         "Id":"812-742-8722",
+         "Name":"Cafe Kubal",
+         "Type":"Dwolla",
+         "Image":"http://uat.dwolla.com/avatars/812-742-8722"
+      },
+      "ClearingDate":"",
+      "Status":"processed",
+      "Notes":"",
+      "Fees":null,
+      "OriginalTransactionId":null,
+      "Metadata":null
+  },
+  { 
+    ... 
+  },
+  { 
+    ... 
+  }
+]
+```
+
 ```json
 {
-    "Success": true,
-    "Message": "Success",
-    "Response": [
-        {
-            "Id": 5569196,
-            "Amount": 0.01,
-            "Date": "2014-08-13T05:17:15Z",
-            "Type": "money_sent",
-            "UserType": "Email",
-            "DestinationId": "ejfwefjwfk02022@gmail.com",
-            "DestinationName": "ejfwefjwfk02022@gmail.com",
-            "Destination": {
-                "Id": "ejfwefjwfk02022@gmail.com",
-                "Name": "ejfwefjwfk02022@gmail.com",
-                "Type": "Email",
-                "Image": ""
-            },
-            "SourceId": "812-687-7049",
-            "SourceName": "Gordon Zheng",
-            "Source": {
-                "Id": "812-687-7049",
-                "Name": "Gordon Zheng",
-                "Type": "Dwolla",
-                "Image": "https://dwolla-avatars.s3.amazonaws.com/812-687-7049/ac044552"
-            },
-            "ClearingDate": "",
-            "Status": "cancelled",
-            "Notes": "",
-            "Fees": null,
-            "OriginalTransactionId": null,
-            "Metadata": null
-        },
-        ...
-    ]
+  "Success": true,
+  "Message": "Success",
+  "Response": [
+    {
+      "Id": 5569196,
+      "Amount": 0.01,
+      "Date": "2014-08-13T05:17:15Z",
+      "Type": "money_sent",
+      "UserType": "Email",
+      "DestinationId": "ejfwefjwfk02022@gmail.com",
+      "DestinationName": "ejfwefjwfk02022@gmail.com",
+      "Destination": {
+        "Id": "ejfwefjwfk02022@gmail.com",
+        "Name": "ejfwefjwfk02022@gmail.com",
+        "Type": "Email",
+        "Image": ""
+      },
+      "SourceId": "812-687-7049",
+      "SourceName": "Gordon Zheng",
+      "Source": {
+        "Id": "812-687-7049",
+        "Name": "Gordon Zheng",
+        "Type": "Dwolla",
+        "Image": "https://dwolla-avatars.s3.amazonaws.com/812-687-7049/ac044552"
+      },
+      "ClearingDate": "",
+      "Status": "cancelled",
+      "Notes": "",
+      "Fees": null,
+      "OriginalTransactionId": null,
+      "Metadata": null
+    },
+    ...
+  ]
 }
 ```
 
@@ -237,6 +290,59 @@ sinceDate | Earliest date and time for which to retrieve transactions.  Must be 
 endDate | Latest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
 
 ## List an app's transactions 
+
+```js
+/**
+ * Retrieve the 10 recentmost transactions which
+ * have been facilitated by this application.
+ */
+
+Dwolla.transactionsByApp(function(err, data) {
+  console.log(data);
+});
+```
+
+> Response:
+
+```js
+[
+   {
+      "Id":328979,
+      "Amount":10.01,
+      "Date":"2014-09-09T04:49:41Z",
+      "Type":"money_sent",
+      "UserType":"Dwolla",
+      "DestinationId":"812-232-2342",
+      "DestinationName":"Joe Schmoe",
+      "Destination":{
+         "Id":"812-232-2342",
+         "Name":"Joe Schmoe",
+         "Type":"Dwolla",
+         "Image":"http://uat.dwolla.com/avatars/812-232-2342"
+      },
+      "SourceId":"812-742-8722",
+      "SourceName":"Cafe Kubal",
+      "Source":{
+         "Id":"812-742-8722",
+         "Name":"Cafe Kubal",
+         "Type":"Dwolla",
+         "Image":"http://uat.dwolla.com/avatars/812-742-8722"
+      },
+      "ClearingDate":"",
+      "Status":"processed",
+      "Notes":"",
+      "Fees":null,
+      "OriginalTransactionId":null,
+      "Metadata":null
+  },
+  { 
+    ... 
+  },
+  { 
+    ... 
+  }
+]
+```
 
 ```json
 {
@@ -299,6 +405,50 @@ sinceDate | Earliest date and time for which to retrieve transactions.  Must be 
 endDate | Latest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
 
 ## Get a specific transaction
+
+```js
+/**
+ * Retrieve transaction ID '12345'
+ */
+
+Dwolla.transactionById('12345', function(err, data) {
+  console.log(data);
+});
+```
+
+> Response:
+
+```js
+{
+      "Id":328979,
+      "Amount":10.01,
+      "Date":"2014-09-09T04:49:41Z",
+      "Type":"money_sent",
+      "UserType":"Dwolla",
+      "DestinationId":"812-232-2342",
+      "DestinationName":"Joe Schmoe",
+      "Destination":{
+         "Id":"812-232-2342",
+         "Name":"Joe Schmoe",
+         "Type":"Dwolla",
+         "Image":"http://uat.dwolla.com/avatars/812-232-2342"
+      },
+      "SourceId":"812-742-8722",
+      "SourceName":"Cafe Kubal",
+      "Source":{
+         "Id":"812-742-8722",
+         "Name":"Cafe Kubal",
+         "Type":"Dwolla",
+         "Image":"http://uat.dwolla.com/avatars/812-742-8722"
+      },
+      "ClearingDate":"",
+      "Status":"processed",
+      "Notes":"",
+      "Fees":null,
+      "OriginalTransactionId":null,
+      "Metadata":null
+  }
+```
 
 ```json
 {

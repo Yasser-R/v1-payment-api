@@ -26,9 +26,17 @@ A refresh token can be used within 60 days to generate a new access_token and re
 
 ## Request Authorization
 
+```js
+// where to send the user after they grant permission:
+var redirect_uri = "https://www.myredirect.com/redirect";  
+
+// generate OAuth initiation URL
+var authUrl = Dwolla.authUrl(redirect_uri);
+```
+
 > Example initiation URL:
 
-```url
+```shell
 https://www.dwolla.com/oauth/v2/authenticate?client_id=abcdefg&response_type=code&redirect_uri=https%3A%2F%2Fwww.myredirect.com%2Fredirect&scope=send|transactions
 ```
 
@@ -70,7 +78,7 @@ Funding | Access the user's funding sources (i.e. connected bank accounts)
 ManageAccount | Manage the user's account settings
 
 ## Finish Authorization
-```shell
+```json
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
@@ -78,6 +86,13 @@ ManageAccount | Manage the user's account settings
   "grant_type": "authorization_code",
   "redirect_uri": "https://www.myredirect.com/redirect"
 }
+```
+
+```js
+Dwolla.finishAuth(authorizationCode, redirect_uri, function(error, auth) {
+  var access_token = auth.access_token;
+  var refresh_token = auth.refresh_token;
+});
 ```
 
 > Successful Response:
@@ -116,13 +131,20 @@ refresh_expires_in | The lifetime of the refresh token, in seconds.  Default is 
 token_type | Always `bearer`.
 
 ## Refresh Authorization
-```shell
+```json
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr",
   "refresh_token": "Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY",
   "grant_type": "refresh_token"
 }
+```
+
+```js
+Dwolla.refreshAuth(refreshToken, function(error, auth) {
+  var new_access_token = auth.access_token;
+  var new_refresh_token = auth.refresh_token;
+});
 ```
 
 > Successful Response:

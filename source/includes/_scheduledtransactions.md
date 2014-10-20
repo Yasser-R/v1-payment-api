@@ -59,7 +59,7 @@ Status | Possible values: 'scheduled', 'processed', 'failed'
 
 ## Create Scheduled Transaction
 
-```json
+```shell
 {
   "pin": "9999",
   "destinationId": "gordon@dwolla.com",
@@ -77,7 +77,7 @@ Status | Possible values: 'scheduled', 'processed', 'failed'
 
 > Response:
 
-```json
+```shell
 {
     "Success": true,
     "Message": "Success",

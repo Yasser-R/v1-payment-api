@@ -22,8 +22,6 @@ print(balance)
 ```
 ```js
 /***
- * Example 1:
- *
  * Get balance of the user associated with the OAuth token.
  */
 
@@ -31,6 +29,12 @@ Dwolla.balance(function(err, data){
    if (err) { console.log(err); }
    console.log(data);
 });
+```
+
+> Response:
+
+```js
+55.76
 ```
 
 ```json

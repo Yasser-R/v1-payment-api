@@ -1,6 +1,6 @@
 # Money Requests
 
-```shell
+```always
     __  ___                      
    /  |/  /___  ____  ___  __  __
   / /|_/ / __ \/ __ \/ _ \/ / / /
@@ -121,18 +121,19 @@ print(request)
 ```
 ```js
 /***
- * Example 1:
- *
  * Request $5 from Source ID '812-111-1111'
  */
 
 Dwolla.request('812-111-1111', '5.00', function(err, data) {
-   if (err) { console.log(err); }
    console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+1288        // Request ID
+```
 
 ```json
 {
@@ -189,19 +190,52 @@ print(pending_requests)
 ```
 ```js
 /***
- * Example 1:
- *
- * List pending money requests for the user associated with the
- * OAuth token
+ * List pending money requests for the authorized user
  */
 
 Dwolla.requests(function(err, data){
-   if (err) { console.log(err); }
    console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+[
+  {
+    "Id": 640,
+    "Source": {
+      "Id": "812-693-9484",
+      "Name": "Spencer Hunter",
+      "Type": "Dwolla",
+      "Image": null
+    },
+    "Destination": {
+      "Id": "812-706-1396",
+      "Name": "Jane Doe",
+      "Type": "Dwolla",
+      "Image": null
+    },
+    "Amount": 0.1,
+    "Notes": "",
+    "DateRequested": "2014-07-23T21:49:06Z",
+    "Status": "Pending" ,
+    "Transaction": null,
+    "CancelledBy": null,
+    "DateCancelled": "",
+    "SenderAssumeFee": false,
+    "SenderAssumeAdditionalFees": false,
+    "AdditionalFees": [],
+    "Metadata": null 
+  },
+  {
+    ...
+  },
+  {
+    ...
+  }
+]
+```
 
 ```json
 {
@@ -284,18 +318,49 @@ print(request)
 ```
 ```js
 /***
- * Example 1:
- *
- * Fetch detailed information about a money request by specific id '12345678'
+ * Fetch a money request by id '12345678'
  */
 
 Dwolla.requestById('12345678', function(err, data) {
-   if (err) { console.log(err); }
    console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+{
+  "Id": 660,
+  "Source": {
+    "Id": "812-693-9484",
+    "Name": "Spencer Hunter",
+    "Type": "Dwolla",
+    "Image": null
+  },
+  "Destination": {
+    "Id": "812-706-1396",
+    "Name": "Jane Doe",
+    "Type": "Dwolla",
+    "Image": null
+  },
+  "Amount": 10,
+  "Notes": "",
+  "DateRequested": "2014-07-25T17:38:26Z",
+  "Status": "Pending" ,
+  "Transaction": null,
+  "CancelledBy": null,
+  "DateCancelled": "",
+  "SenderAssumeFee": false,
+  "SenderAssumeAdditionalFees": false,
+  "AdditionalFees": [],
+  "Metadata": {
+    "InvoiceDate": "12-06-2014",
+    "Priority": "High",
+    "TShirtSize": "Small",
+    "blah": "blah"
+  }
+}
+```
 
 ```json
 {
@@ -369,18 +434,38 @@ print(fulfilled)
 ```
 ```js
 /***
- * Example 1:
- *
- * Fulfill money request '12345678' of amount '10.00'
+ * Fulfill money request ID '12345678'.  Pay '10.00'
  */
 
-Dwolla.fulfillRequest(cfg.pin, '12345678', '10.00', function(err, data) {
-   if (err) { console.log(err); }
+Dwolla.fulfillRequest(pin, '12345678', '10.00', function(err, data) {
    console.log(data);
 });
 ```
 
 > If successful, you'll receive this response:
+
+```js
+{ 
+  RequestId: 12345678,
+  Id: 328969,
+  Source: { 
+    Id: '812-740-4294',
+    Name: 'GORDCORP',
+    Type: 'Dwolla',
+    Image: 'http://uat.dwolla.com/avatars/812-740-4294' 
+  },
+  Destination: { 
+    Id: '812-742-8722',
+    Name: 'Cafe Kubal',
+    Type: 'Dwolla',
+    Image: 'http://uat.dwolla.com/avatars/812-742-8722'
+  },
+  Amount: 10,
+  SentDate: '2014-09-09T04:30:46Z',
+  ClearingDate: '2014-09-09T04:30:46Z',
+  Status: 'processed' 
+}
+```
 
 ```json
 {
@@ -455,18 +540,19 @@ print(canceled_request)
 ```
 ```js
 /***
- * Example 1:
- *
  * Cancel money request with ID '12345678'
  */
 
 Dwolla.cancelRequest('12345678', function(err, data){
-   if (err) { console.log(err); }
    console.log(data);
 });
 ```
 
 > If successful, you'll recieve this response:
+
+```js
+true    // boolean.
+```
 
 ```json
 {

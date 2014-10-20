@@ -47,7 +47,7 @@ A handful of libraries are officially maintained, and others are community maint
 
 ## Making Requests
 
-```
+```shell
 POST https://www.dwolla.com/oauth/rest/transactions/send
 Content-Type: application/json
 
@@ -59,7 +59,7 @@ Content-Type: application/json
 }
 ```
 
-```
+```shell
 ...
 
 GET https://www.dwolla.com/oauth/rest/transactions?client_id=XYZ&client_secret=JJJ&limit=10
@@ -80,7 +80,7 @@ Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET 
 
 > Happy response
 
-```
+```shell
 {
     "Success": true,
     "Message": "Success",
@@ -90,7 +90,7 @@ Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET 
 
 > Unsuccessful response
 
-```
+```shell
 {
 	"Success": false,
 	"Message": "Invalid access token.",
