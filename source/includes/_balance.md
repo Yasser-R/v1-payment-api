@@ -1,3 +1,0 @@
-# Balance
-
-## Get Balance
