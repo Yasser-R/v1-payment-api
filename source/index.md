@@ -40,4 +40,6 @@ includes:
   - changelog
 
 search: true
+
+google_analytics_id: UA-55964336-1
 ---
