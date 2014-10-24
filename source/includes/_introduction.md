@@ -18,7 +18,7 @@ Sample code is available in PHP, Ruby, Python, and Node.JS in the dark area to t
 
 ## Helper Libraries
 ```
-We'll you show sample code on this pane!
+We'll show you sample code on this pane!
 ```
 ```
 Quote of the day:
