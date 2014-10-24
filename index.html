@@ -272,7 +272,17 @@ Needless to say, you should replace <code class="prettyprint">&lt;T0K3N_H3R3&gt;
 <p><strong>Refresh tokens</strong> are <em>long lived</em>: 60 days.</p>
 
 <p>A refresh token can be used within 60 days to generate a new access_token and refresh_token pair.  So long as you <a href="#refresh-authorization">refresh your authorization</a> at least every 60 days, your application can maintain authorization indefinitely without requiring the user to re-authorize.</p>
-<h2 id='request-authorization'>Request Authorization</h2><pre class="highlight javascript"><span class="c1">// where to send the user after they grant permission:
+<h2 id='request-authorization'>Request Authorization</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$OAuth</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\OAuth</span><span class="p">();</span>
+<span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$url</span> <span class="o">=</span> <span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">genAuthUrl</span><span class="p">(</span><span class="s2">"https://myredirect.com/redirect"</span><span class="p">);</span>
+
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight javascript"><span class="c1">// where to send the user after they grant permission:
 </span><span class="kd">var</span> <span class="nx">redirect_uri</span> <span class="o">=</span> <span class="s2">"https://www.myredirect.com/redirect"</span><span class="p">;</span>  
 
 <span class="c1">// generate OAuth initiation URL
@@ -363,7 +373,20 @@ Remember to url-encode all querystring parameters!
 <td>Manage the user&rsquo;s account settings</td>
 </tr>
 </tbody></table>
-<h2 id='finish-authorization'>Finish Authorization</h2><pre class="highlight json"><span class="p">{</span><span class="w">
+<h2 id='finish-authorization'>Finish Authorization</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$OAuth</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\OAuth</span><span class="p">();</span>
+<span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$authorizationCode</span> <span class="o">=</span> <span class="s2">"J9kkk2JbX7Yjl4L28fM13il46QI="</span><span class="p">;</span>
+<span class="nv">$redirect_uri</span> <span class="o">=</span> <span class="s2">"https://www.myredirect.com/redirect"</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="nv">$authorizationCode</span><span class="p">,</span> <span class="nv">$redirect_uri</span><span class="p">);</span>
+
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"h6TvQZH+5BsV//O43uOJ0uRkBLk="</span><span class="p">,</span><span class="w">
@@ -386,7 +409,7 @@ Remember to url-encode all querystring parameters!
 </blockquote>
 <pre class="highlight shell"><span class="o">{</span>
     <span class="s2">"access_token"</span>: <span class="s2">"YLAZSreh165CAD2tPhAEzFCYYIrVyFomLWUDMGFBZIw9KtIg4q"</span>,
-    <span class="s2">"expires_in"</span>: 35,
+    <span class="s2">"expires_in"</span>: 3600,
     <span class="s2">"refresh_token"</span>: <span class="s2">"Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY"</span>,
     <span class="s2">"refresh_expires_in"</span>: 5184000,
     <span class="s2">"token_type"</span>: <span class="s2">"bearer"</span>
@@ -467,6 +490,17 @@ Remember to url-encode all querystring parameters!
 <pre class="highlight ruby"><span class="n">info</span> <span class="o">=</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">OAuth</span><span class="p">.</span><span class="nf">refresh_auth</span><span class="p">(</span><span class="n">refresh_token</span><span class="p">)</span>
 <span class="n">token</span> <span class="o">=</span> <span class="n">info</span><span class="o">[</span><span class="s1">'access_token'</span><span class="o">]</span>
 <span class="n">refresh_token</span> <span class="o">=</span> <span class="n">info</span><span class="o">[</span><span class="s1">'refresh_token'</span><span class="o">]</span>
+</pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$OAuth</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\OAuth</span><span class="p">();</span>
+<span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$refreshToken</span> <span class="o">=</span> <span class="s2">"Cr72k48ogBXh+PLwZ/gq2hAtRYSTQl+NW9W0fTxYjaYKRdEsKI"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">refresh</span><span class="p">(</span><span class="nv">$refreshToken</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 
 <blockquote>
@@ -719,11 +753,21 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 
 </pre>
 <pre class="highlight php">/**
- *   Send money ($1.00) to Dwolla ID 812-734-7288
+ *   Send money ($5.50) to email address gordon@dwolla.com
  **/
-$transactionId = $Dwolla-&gt;send($pin, '812-734-7288', 1.00);
-if(!$transactionId) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction ID
+
+<span class="cp">&lt;?php</span>
+<span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">pin</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="s1">'gordon@dwolla.com'</span><span class="p">,</span> <span class="mf">5.50</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">'destinationType'</span> <span class="o">=&gt;</span> <span class="s1">'Email'</span>
+<span class="p">]);</span>
+
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1">#   Send money ($1.00) to a Dwolla ID 812-626-8794</span>
 
@@ -767,6 +811,8 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">343947    // resulting Transacton ID
+</pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
@@ -879,7 +925,26 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <p>You will have 15 minutes to <a href="#complete-a-paylater-checkout">complete the Checkout</a> in order to place the payment.</p>
 
 <p>To create a PayLater Checkout, set <code class="prettyprint">checkoutWithApi</code> to <code class="prettyprint">true</code>.</p>
-<h2 id='create-a-checkout'>Create a Checkout</h2><pre class="highlight json"><span class="p">{</span><span class="w">
+<h2 id='create-a-checkout'>Create a Checkout</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$Checkouts</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Checkouts</span><span class="p">();</span>
+<span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$purchaseOrder</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'destinationId'</span> <span class="o">=&gt;</span> <span class="s1">'812-742-3301'</span><span class="p">,</span>
+  <span class="s1">'total'</span> <span class="o">=&gt;</span> <span class="s1">'33.99'</span>
+<span class="p">];</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="nv">$purchaseOrder</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">'redirect'</span> <span class="o">=&gt;</span> <span class="s1">'https://myredirect.com/redirect'</span>
+<span class="p">]);</span>
+
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"callback"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.something.com/callback"</span><span class="p">,</span><span class="w">
@@ -948,6 +1013,11 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 </span></pre>
 <pre class="highlight javascript"><span class="nx">https</span><span class="err">:</span><span class="c1">//www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 </span></pre>
+<pre class="highlight php">array (
+  'CheckoutId' =&gt; 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+  'URL' =&gt; 'https://uat.dwolla.com/payment/checkout/f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+)
+</pre>
 <pre class="highlight ruby"><span class="n">https</span><span class="ss">:/</span><span class="o">/</span><span class="n">www</span><span class="p">.</span><span class="nf">dwolla</span><span class="p">.</span><span class="nf">com</span><span class="sr">/payment/</span><span class="n">checkout</span><span class="o">/</span><span class="mi">684862</span><span class="n">bc</span><span class="o">-</span><span class="mi">8</span><span class="n">d94</span><span class="o">-</span><span class="mi">4</span><span class="n">e53</span><span class="o">-</span><span class="mi">9</span><span class="n">c41</span><span class="o">-</span><span class="mi">26398</span><span class="n">b4b7fac</span>
 </pre>
 
@@ -1080,7 +1150,17 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <td>An array of JSON object(s) which contain a <code class="prettyprint">name</code>, <code class="prettyprint">description</code>, <code class="prettyprint">quantity</code>, and <code class="prettyprint">price</code>.</td>
 </tr>
 </tbody></table>
-<h2 id='retrieve-a-checkout'>Retrieve a Checkout</h2><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">checkoutId</span> <span class="o">=</span> <span class="s1">'a9d7c86a-0d0d-4466-b228-e15584a1315a'</span><span class="p">;</span>
+<h2 id='retrieve-a-checkout'>Retrieve a Checkout</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Checkouts</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Checkouts</span><span class="p">();</span>
+<span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s2">"19bca7f7-d92a-4a98-b685-7f0e4a372994"</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">checkoutId</span> <span class="o">=</span> <span class="s1">'a9d7c86a-0d0d-4466-b228-e15584a1315a'</span><span class="p">;</span>
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">getCheckout</span><span class="p">(</span><span class="nx">checkoutId</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
 <span class="p">});</span>
@@ -1133,6 +1213,23 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
   <span class="na">Metadata</span><span class="p">:</span> <span class="kc">null</span> 
 <span class="p">}</span>
 </pre>
+<pre class="highlight php">array (
+  'CheckoutId' =&gt; 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+  'Discount' =&gt; NULL,
+  'Shipping' =&gt; NULL,
+  'Tax' =&gt; NULL,
+  'Total' =&gt; 33.99,
+  'Status' =&gt; 'Created',
+  'FundingSource' =&gt; NULL,
+  'TransactionId' =&gt; NULL,
+  'ProfileId' =&gt; NULL,
+  'DestinationTransactionId' =&gt; NULL,
+  'OrderItems' =&gt;
+  array (
+  ),
+  'Metadata' =&gt; NULL,
+)
+</pre>
 <pre class="highlight ruby"><span class="no">This</span> <span class="nb">method</span> <span class="n">is</span> <span class="n">not</span> <span class="n">yet</span> <span class="n">supported</span> <span class="k">in</span> <span class="n">dwolla</span><span class="o">-</span><span class="n">ruby</span><span class="o">.</span>
 </pre>
 
@@ -1176,6 +1273,17 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$Checkouts</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Checkouts</span><span class="p">();</span>
+<span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Checkouts</span><span class="o">-&gt;</span><span class="na">complete</span><span class="p">(</span><span class="s2">"19bca7f7-d92a-4a98-b685-7f0e4a372994"</span><span class="p">);</span>
+
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 <pre class="highlight ruby"><span class="no">This</span> <span class="nb">method</span> <span class="n">is</span> <span class="n">not</span> <span class="n">yet</span> <span class="n">supported</span> <span class="k">in</span> <span class="n">dwolla</span><span class="o">-</span><span class="n">ruby</span><span class="o">.</span>
 </pre>
 
@@ -1198,6 +1306,16 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight php">array (
+  'CheckoutId' =&gt; 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+  'ClearingDate' =&gt; NULL,
+  'Amount' =&gt; 33.99,
+  'OrderId' =&gt; NULL,
+  'TransactionId' =&gt; 290144,
+  'DestinationTransactionId' =&gt; 290143,
+  'TestMode' =&gt; false
+)
+</pre>
 <pre class="highlight javascript"><span class="p">{</span> 
   <span class="na">Amount</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
   <span class="na">CheckoutId</span><span class="p">:</span> <span class="s1">'a9d7c86a-0d0d-4466-b228-e15584a1315a'</span><span class="p">,</span>
@@ -1218,6 +1336,11 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
     </span><span class="s2">"Response"</span><span class="p">:</span><span class="err">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight php">DwollaPHP: An API error was encountered.
+Server Message:
+
+Invalid purchase order.
+</pre>
 <pre class="highlight javascript"><span class="s2">"There are insufficient funds for this transaction."</span>
 </pre>
 <pre class="highlight ruby"><span class="no">This</span> <span class="nb">method</span> <span class="n">is</span> <span class="n">not</span> <span class="n">yet</span> <span class="n">supported</span> <span class="k">in</span> <span class="n">dwolla</span><span class="o">-</span><span class="n">ruby</span><span class="o">.</span>
@@ -1378,10 +1501,47 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">get</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Id' =&gt; 'Balance',
+    'Name' =&gt; 'My Dwolla Balance',
+    'Type' =&gt; '',
+    'Verified' =&gt; true,
+    'ProcessingType' =&gt; '',
+  ),
+  1 =&gt;
+  array (
+    'Id' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
+    'Name' =&gt; 'Blah - Checking',
+    'Type' =&gt; 'Checking',
+    'Verified' =&gt; true,
+    'ProcessingType' =&gt; 'ACH',
+  ),
+  2 =&gt;
+  array (
+    'Id' =&gt; '7bf971a12543f560119318e67aa76035',
+    'Name' =&gt; 'Some Nickname - Checking',
+    'Type' =&gt; 'Checking',
+    'Verified' =&gt; false,
+    'ProcessingType' =&gt; 'ACH',
+  ),
+)
+</pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
@@ -1496,10 +1656,29 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"5da016f7769bcb1de9938a30d194d5a7"</span><span class="p">)</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span> 
+
+<span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">info</span><span class="p">(</span><span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Balance' =&gt; NULL,
+  'Id' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
+  'Name' =&gt; 'Blah - Checking',
+  'Type' =&gt; 'Checking',
+  'Verified' =&gt; true,
+  'ProcessingType' =&gt; 'ACH',
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>             <span class="o">=&gt;</span> <span class="s2">"5da016f7769bcb1de9938a30d194d5a7"</span><span class="p">,</span>
   <span class="s2">"Name"</span>           <span class="o">=&gt;</span> <span class="s2">"Blah - Checking"</span><span class="p">,</span>
@@ -1549,10 +1728,54 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
   <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span>
 <span class="p">})</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">pin</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">withdraw</span><span class="p">(</span><span class="mf">5.00</span><span class="p">,</span> <span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
-<p>Response: </p>
+<p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; 346098,
+  'Amount' =&gt; 5,
+  'Date' =&gt; '2014-10-22T19:49:45Z',
+  'Type' =&gt; 'withdrawal',
+  'UserType' =&gt; 'Dwolla',
+  'DestinationId' =&gt; 'XXX9999',
+  'DestinationName' =&gt; 'Blah',
+  'Destination' =&gt;
+  array (
+    'Id' =&gt; 'XXX9999',
+    'Name' =&gt; 'Blah',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; '',
+  ),
+  'SourceId' =&gt; '812-742-8722',
+  'SourceName' =&gt; 'Cafe Kubal',
+  'Source' =&gt;
+  array (
+    'Id' =&gt; '812-742-8722',
+    'Name' =&gt; 'Cafe Kubal',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'ClearingDate' =&gt; '2014-10-24T00:00:00Z',
+  'Status' =&gt; 'pending',
+  'Notes' =&gt; NULL,
+  'Fees' =&gt; NULL,
+  'OriginalTransactionId' =&gt; NULL,
+  'Metadata' =&gt; NULL,
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">341600</span><span class="p">,</span>
   <span class="s2">"Amount"</span>                <span class="o">=&gt;</span> <span class="mi">12</span><span class="o">.</span><span class="mi">95</span><span class="p">,</span>
@@ -1686,10 +1909,52 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
 <span class="p">})</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">pin</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">deposit</span><span class="p">(</span><span class="mf">5.00</span><span class="p">,</span> <span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response: </p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; 346099,
+  'Amount' =&gt; 5,
+  'Date' =&gt; '2014-10-22T19:51:01Z',
+  'Type' =&gt; 'deposit',
+  'UserType' =&gt; 'Dwolla',
+  'DestinationId' =&gt; '812-742-8722',
+  'DestinationName' =&gt; 'Cafe Kubal',
+  'Destination' =&gt;
+  array (
+    'Id' =&gt; '812-742-8722',
+    'Name' =&gt; 'Cafe Kubal',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'SourceId' =&gt; 'XXX9999',
+  'SourceName' =&gt; 'Blah',
+  'Source' =&gt;
+  array (
+    'Id' =&gt; 'XXX9999',
+    'Name' =&gt; 'Blah',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; '',
+  ),
+  'ClearingDate' =&gt; '2014-10-28T00:00:00Z',
+  'Status' =&gt; 'pending',
+  'Notes' =&gt; NULL,
+  'Fees' =&gt; NULL,
+  'OriginalTransactionId' =&gt; NULL,
+  'Metadata' =&gt; NULL,
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">341601</span><span class="p">,</span>
   <span class="s2">"Amount"</span>                <span class="o">=&gt;</span> <span class="mi">12</span><span class="o">.</span><span class="mi">95</span><span class="p">,</span>
@@ -1807,7 +2072,20 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <td>User account PIN</td>
 </tr>
 </tbody></table>
-<h2 id='add-new-funding-source'>Add new Funding Source</h2><pre class="highlight javascript"><span class="cm">/**
+<h2 id='add-new-funding-source'>Add new Funding Source</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$routingNo</span> <span class="o">=</span> <span class="s2">"113024915"</span><span class="p">;</span>
+<span class="nv">$accountNo</span> <span class="o">=</span> <span class="s2">"9999999999"</span><span class="p">;</span>
+<span class="nv">$accountType</span> <span class="o">=</span> <span class="s2">"Checking"</span><span class="p">;</span>
+<span class="nv">$nickname</span> <span class="o">=</span> <span class="s2">"My Bank Account"</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$accountNo</span><span class="p">,</span> <span class="nv">$routingNo</span><span class="p">,</span> <span class="nv">$accountType</span><span class="p">,</span> <span class="nv">$nickname</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
  * Add a funding source with account number '12345678',
  * routing number '87654321', of type 'Checking' and with
  * name 'My Bank'
@@ -1840,6 +2118,14 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <blockquote>
 <p>Response: </p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; '377d8ed651c2b799784aa2aa10762c37',
+  'Name' =&gt; 'My Bank Account - Checking',
+  'Type' =&gt; 'Checking',
+  'Verified' =&gt; false,
+  'ProcessingType' =&gt; 'ACH',
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>             <span class="o">=&gt;</span> <span class="s2">"7bf971a12543f560119318e67aa76035"</span><span class="p">,</span>
   <span class="s2">"Name"</span>           <span class="o">=&gt;</span> <span class="s2">"Some Nickname - Checking"</span><span class="p">,</span>
@@ -1898,10 +2184,23 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <td>Arbitrary nickname for the funding source</td>
 </tr>
 </tbody></table>
-<h2 id='verify-a-funding-source'>Verify a Funding Source</h2><pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">verify</span><span class="p">(</span><span class="s2">"7bf971a12543f560119318e67aa76035"</span><span class="p">,</span> <span class="p">{</span>
-  <span class="ss">:deposit1</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="mo">01</span><span class="p">,</span> 
-  <span class="ss">:deposit2</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="mo">04</span><span class="p">,</span> 
-<span class="p">})</span>
+<h2 id='verify-a-funding-source'>Verify a Funding Source</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
+<span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$deposit1</span> <span class="o">=</span> <span class="mf">0.04</span><span class="p">;</span>
+<span class="nv">$deposit2</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">verify</span><span class="p">(</span><span class="nv">$deposit1</span><span class="p">,</span> <span class="nv">$deposit2</span><span class="p">,</span> <span class="s2">"377d8ed651c2b799784aa2aa10762c37"</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+
+```ruby
+puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
+  :deposit1 =&gt; 0.01, 
+  :deposit2 =&gt; 0.04, 
+})
 </pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"deposit1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
@@ -1923,6 +2222,14 @@ else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction I
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; '377d8ed651c2b799784aa2aa10762c37',
+  'Name' =&gt; 'My Bank Account - Checking',
+  'Type' =&gt; 'Checking',
+  'Verified' =&gt; true,
+  'ProcessingType' =&gt; 'ACH',
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>             <span class="o">=&gt;</span> <span class="s2">"7bf971a12543f560119318e67aa76035"</span><span class="p">,</span>
   <span class="s2">"Name"</span>           <span class="o">=&gt;</span> <span class="s2">"Some Nickname - Checking"</span><span class="p">,</span>
@@ -2249,10 +2556,58 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <pre class="highlight ruby"><span class="c1">#   Get 10 most recent transactions</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">get</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response: </p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Id' =&gt; 346099,
+    'Amount' =&gt; 5,
+    'Date' =&gt; '2014-10-22T19:51:01Z',
+    'Type' =&gt; 'deposit',
+    'UserType' =&gt; 'Dwolla',
+    'DestinationId' =&gt; '812-742-8722',
+    'DestinationName' =&gt; 'Cafe Kubal',
+    'Destination' =&gt;
+    array (
+      'Id' =&gt; '812-742-8722',
+      'Name' =&gt; 'Cafe Kubal',
+      'Type' =&gt; 'Dwolla',
+      'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+    ),
+    'SourceId' =&gt; 'XXX9999',
+    'SourceName' =&gt; 'Blah',
+    'Source' =&gt;
+    array (
+      'Id' =&gt; 'XXX9999',
+      'Name' =&gt; 'Blah',
+      'Type' =&gt; 'Dwolla',
+      'Image' =&gt; '',
+    ),
+    'ClearingDate' =&gt; '2014-10-28T00:00:00Z',
+    'Status' =&gt; 'pending',
+    'Notes' =&gt; NULL,
+    'Fees' =&gt; NULL,
+    'OriginalTransactionId' =&gt; NULL,
+    'Metadata' =&gt; NULL,
+  ),
+  1 =&gt;
+  array (
+  ...
+  ),
+)
+</pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
     <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">331506</span><span class="p">,</span>
@@ -2409,12 +2764,64 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="c1">// set access token to null and get() will use key and secret
+</span><span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="p">{},</span> <span class="kp">false</span><span class="p">)</span>
 </pre>
 
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Id' =&gt; 346099,
+    'Amount' =&gt; 5,
+    'Date' =&gt; '2014-10-22T19:51:01Z',
+    'Type' =&gt; 'deposit',
+    'UserType' =&gt; 'Dwolla',
+    'DestinationId' =&gt; '812-742-8722',
+    'DestinationName' =&gt; 'Cafe Kubal',
+    'Destination' =&gt;
+    array (
+      'Id' =&gt; '812-742-8722',
+      'Name' =&gt; 'Cafe Kubal',
+      'Type' =&gt; 'Dwolla',
+      'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+    ),
+    'SourceId' =&gt; 'XXX9999',
+    'SourceName' =&gt; 'Blah',
+    'Source' =&gt;
+    array (
+      'Id' =&gt; 'XXX9999',
+      'Name' =&gt; 'Blah',
+      'Type' =&gt; 'Dwolla',
+      'Image' =&gt; '',
+    ),
+    'ClearingDate' =&gt; '2014-10-28T00:00:00Z',
+    'Status' =&gt; 'pending',
+    'Notes' =&gt; NULL,
+    'Fees' =&gt; NULL,
+    'OriginalTransactionId' =&gt; NULL,
+    'Metadata' =&gt; NULL,
+  ),
+  1 =&gt;
+  array (
+  ...
+  ),
+)
+</pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
     <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">331506</span><span class="p">,</span>
@@ -2579,10 +2986,58 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <pre class="highlight ruby"><span class="c1">#   Retrieve a transaction by ID</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">331506</span><span class="p">)</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
+
+<span class="c1">// you may provide key and secret...
+</span><span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="c1">// OR an access token... 
+</span><span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">info</span><span class="p">(</span><span class="s1">'346099'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+
+</pre>
 
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; 346099,
+  'Amount' =&gt; 5,
+  'Date' =&gt; '2014-10-22T19:51:01Z',
+  'Type' =&gt; 'deposit',
+  'UserType' =&gt; 'Dwolla',
+  'DestinationId' =&gt; '812-742-8722',
+  'DestinationName' =&gt; 'Cafe Kubal',
+  'Destination' =&gt;
+  array (
+    'Id' =&gt; '812-742-8722',
+    'Name' =&gt; 'Cafe Kubal',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'SourceId' =&gt; 'XXX9999',
+  'SourceName' =&gt; 'Blah',
+  'Source' =&gt;
+  array (
+    'Id' =&gt; 'XXX9999',
+    'Name' =&gt; 'Blah',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; '',
+  ),
+  'ClearingDate' =&gt; '2014-10-28T00:00:00Z',
+  'Status' =&gt; 'pending',
+  'Notes' =&gt; NULL,
+  'Fees' =&gt; NULL,
+  'OriginalTransactionId' =&gt; NULL,
+  'Metadata' =&gt; NULL,
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
     <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">331506</span><span class="p">,</span>
     <span class="s2">"Amount"</span>                <span class="o">=&gt;</span> <span class="mi">15</span><span class="o">.</span><span class="mi">25</span><span class="p">,</span>
@@ -3136,6 +3591,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">stats</span><span class="p">()</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">stats</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response:</p>
@@ -3159,6 +3623,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight php">array (
+  'TransactionsCount' =&gt; 5,
+  'TransactionsTotal' =&gt; 116.21,
+)
+</pre>
 
 <p>Transaction statistics can be retrieved for the authenticated user.   Currently, the report contains a count of transactions and sum of transactions over a given period of time.</p>
 
@@ -3216,13 +3685,19 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tr>
 </tbody></table>
 <h2 id='get-basic-account-info'>Get Basic Account Info</h2><pre class="highlight php">/**
- * EXAMPLE 1: 
  *   Fetch basic account information
  *   for a given Dwolla ID
  **/
-$user = $Dwolla-&gt;getUser('812-546-3855');
-if(!$user) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($user); } // Print user information
+
+<span class="cp">&lt;?php</span>
+
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">basic</span><span class="p">(</span><span class="s1">'812-121-7199'</span><span class="p">);</span>
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1">#   Fetch basic account information</span>
 <span class="c1">#   for a given email address</span>
@@ -3249,6 +3724,13 @@ else { print_r($user); } // Print user information
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; '812-121-7199',
+  'Name' =&gt; 'David Stancu',
+  'Latitude' =&gt; 0,
+  'Longitude' =&gt; 0,
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>        <span class="o">=&gt;</span> <span class="s2">"812-742-3301"</span><span class="p">,</span>
   <span class="s2">"Name"</span>      <span class="o">=&gt;</span> <span class="s2">"Gordon Zheng"</span><span class="p">,</span>
@@ -3309,14 +3791,18 @@ else { print_r($user); } // Print user information
 </tr>
 </tbody></table>
 <h2 id='get-full-account-info'>Get Full Account Info</h2><pre class="highlight php">/**
- * EXAMPLE 1: 
  *   Fetch account information for the
  *   account associated with the provided
- *   OAuth token
+ *   OAuth access token
  **/
-$me = $Dwolla-&gt;me();
-if(!$me) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($me); } // Print user information
+<span class="cp">&lt;?php</span>
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">full</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1">#   Fetch account information for the</span>
 <span class="c1">#   authorized user</span>
@@ -3363,6 +3849,16 @@ else { print_r($me); } // Print user information
     <span class="s2">"State"</span><span class="p">:</span> <span class="s2">"IA"</span><span class="p">,</span>
     <span class="s2">"Type"</span><span class="p">:</span> <span class="s2">"Personal"</span>
 <span class="p">}</span>
+</pre>
+<pre class="highlight php">array (
+  'City' =&gt; 'Test',
+  'State' =&gt; 'NY',
+  'Type' =&gt; 'Commercial',
+  'Id' =&gt; '812-742-8722',
+  'Name' =&gt; 'Cafe Kubal',
+  'Latitude' =&gt; -1,
+  'Longitude' =&gt; -1,
+)
 </pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -3427,15 +3923,18 @@ else { print_r($me); } // Print user information
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/avatars/{dwolla_id}</code></p>
 <h2 id='find-nearby-businesses'>Find Nearby Businesses</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
-<span class="sd">/**
- * EXAMPLE 1: 
- * Fetch contacts of businesses near lat 45, lon 45
- **/</span>
-<span class="nv">$contacts</span> <span class="o">=</span> <span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">nearby</span><span class="p">(</span><span class="mi">45</span><span class="p">,</span><span class="mi">45</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$contacts</span><span class="p">)</span> <span class="p">{</span> <span class="k">echo</span> <span class="s2">"Error: </span><span class="si">{</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()}</span> <span class="nx">\n</span><span class="s2">"; } // Check for errors
-else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // Print contacts
-?&gt;
-</span></pre>
+<span class="nv">$Contacts</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Contacts</span><span class="p">();</span>
+<span class="nv">$Contacts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Contacts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$lat</span> <span class="o">=</span> <span class="s2">"41.585"</span><span class="p">;</span>
+<span class="nv">$long</span> <span class="o">=</span> <span class="s2">"-93.624"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Contacts</span><span class="o">-&gt;</span><span class="na">nearby</span><span class="p">(</span><span class="nv">$lat</span><span class="p">,</span> <span class="nv">$long</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 <pre class="highlight ruby"><span class="c1">#   Get a list of nearby Dwolla spots</span>
 <span class="c1">#   for a given set of coordinates (lat, long)</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Contacts</span><span class="p">.</span><span class="nf">nearby</span><span class="p">(</span><span class="mi">41</span><span class="o">.</span><span class="mi">58975983</span><span class="p">,</span> <span class="o">-</span><span class="mi">93</span><span class="o">.</span><span class="mi">61564636</span><span class="p">)</span>
@@ -3461,6 +3960,39 @@ else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // 
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Name' =&gt; 'Alan\'s Brew',
+    'Id' =&gt; '812-198-4099',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-198-4099',
+    'Latitude' =&gt; 41.582946999999997,
+    'Longitude' =&gt; -93.622444000000002,
+    'Address' =&gt; '333 SW 5th st',
+    'City' =&gt; 'Des Moines\n',
+    'State' =&gt; 'IA',
+    'PostalCode' =&gt; '50309',
+    'Group' =&gt; '812-198-4099',
+    'Delta' =&gt; 0.0036089999999973088,
+  ),
+  1 =&gt;
+  array (
+    'Name' =&gt; 'Rocket Gear',
+    'Id' =&gt; '812-742-6826',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-6826',
+    'Latitude' =&gt; 41.589759829999998,
+    'Longitude' =&gt; -93.61564636,
+    'Address' =&gt; '123 Test Ave\n',
+    'City' =&gt; 'Des Moines',
+    'State' =&gt; 'IA',
+    'PostalCode' =&gt; '50169',
+    'Group' =&gt; '812-742-6826',
+    'Delta' =&gt; 0.013113469999993299,
+  )
+)
+</pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
     <span class="s2">"Name"</span>       <span class="o">=&gt;</span> <span class="s2">"Rocket Gear"</span><span class="p">,</span>
@@ -3702,31 +4234,15 @@ else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // 
 <td>User&rsquo;s resident state</td>
 </tr>
 </tbody></table>
-<h2 id='get-a-user39s-contacts'>Get a user&rsquo;s contacts</h2><pre class="highlight json"></pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
-<span class="sd">/**
- * EXAMPLE 1: 
- *   Fetch last 10 contacts from the 
- *   account associated with the provided
- *   OAuth token
- **/</span>
-<span class="nv">$contacts</span> <span class="o">=</span> <span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">contacts</span><span class="p">(</span><span class="s1">'Ben'</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$contacts</span><span class="p">)</span> <span class="p">{</span> <span class="k">echo</span> <span class="s2">"Error: </span><span class="si">{</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()}</span> <span class="nx">\n</span><span class="s2">"; } // Check for errors
-else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // Print contacts
+<h2 id='get-a-user39s-contacts'>Get a user&rsquo;s contacts</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Contacts</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Contacts</span><span class="p">();</span>
+<span class="nv">$Contacts</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
 
-/**
- * EXAMPLE 2: 
- *   Search through the contacts of the
- *   account associated with the provided
- *   OAuth token for 'David', return 20 
- *   "</span><span class="nx">Dwolla</span><span class="s2">" type results. 
- **/
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Contacts</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
 
-</span><span class="nv">$contacts</span><span class="s2"> = </span><span class="nv">$Dwolla-&gt;contacts</span><span class="s2">('David', array('dwolla'), 20);
-if(!</span><span class="nv">$contacts</span><span class="s2">) { echo "</span><span class="nx">Error</span><span class="o">:</span> <span class="p">{</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">getError</span><span class="p">()}</span> <span class="nx">\n</span><span class="s2">"; } // Check for errors
-else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // Print contacts
-?&gt;
-</span></pre>
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 <pre class="highlight ruby"><span class="c1"># EXAMPLE 1: </span>
 <span class="c1">#   Fetch last 10 contacts from the </span>
 <span class="c1">#   account associated with the provided</span>
@@ -3798,6 +4314,36 @@ else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // 
   <span class="p">{</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span> <span class="p">},</span>
   <span class="p">{</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span> <span class="p">}</span>
 <span class="o">]</span>
+</pre>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Name' =&gt; 'GORDCORP',
+    'Id' =&gt; '812-740-4294',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-740-4294',
+    'City' =&gt; 'Test',
+    'State' =&gt; 'NY',
+  ),
+  1 =&gt;
+  array (
+    'Name' =&gt; 'Gordon Zheng',
+    'Id' =&gt; '812-742-3301',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-3301',
+    'City' =&gt; 'Elmhurst',
+    'State' =&gt; 'NY',
+  ),
+  2 =&gt;
+  array (
+    'Name' =&gt; 'Joe Schmoe',
+    'Id' =&gt; '812-741-3440',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-741-3440',
+    'City' =&gt; 'Test',
+    'State' =&gt; 'NY',
+  ),
+)
 </pre>
 <pre class="highlight javascript"><span class="p">[</span>
     <span class="p">{</span>
@@ -3876,15 +4422,14 @@ else { print_r(</span><span class="nv">$contacts</span><span class="s2">); } // 
 </tr>
 </tbody></table>
 
-          <h1 id='balance'>Balance</h1><pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Fetch account balance for the 
- *   account associated with the provided
- *   OAuth token
- **/
-$balance = $Dwolla-&gt;balance();
-if($balance == NULL) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { echo $balance; } // Print user's balance
+          <h1 id='balance'>Balance</h1><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">balance</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1">#   Get the balance of the authenticated user</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Balance</span><span class="p">.</span><span class="nf">get</span>
@@ -3905,6 +4450,8 @@ else { echo $balance; } // Print user's balance
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">55.76
+</pre>
 <pre class="highlight ruby"><span class="mi">55</span><span class="o">.</span><span class="mi">76</span>
 </pre>
 <pre class="highlight javascript"><span class="mf">55.76</span>
