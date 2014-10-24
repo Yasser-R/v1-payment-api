@@ -30,7 +30,35 @@ puts Dwolla::Transactions.refund({
 })
 ```
 
+```php
+<?php
+
+/*
+ * Refund transaction ID 347940 for the amount of $20.00,
+ * and fund the refund with the merchant's account balance.
+ */
+
+$Transactions = new Dwolla\Transactions();
+$Transactions->settings->oauth_token = "foo";
+$Transactions->settings->pin = 9999;
+
+$transactionId = '347940';
+$fundingSource = 'Balance';
+$result = $Transactions->refund($transactionId, $fundingSource, 20.00);
+
+var_export($result);
+?>
+```
+
 > Response: 
+
+```php
+array (
+  'TransactionId' => 347944,
+  'RefundDate' => '10/24/2014 23:23:20',
+  'Amount' => 20,
+)
+```
 
 ```ruby
 {

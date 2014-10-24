@@ -99,13 +99,20 @@ Metadata | An optional [metadata](#metadata) object.
 ## Create Money Request
 
 ```php
-/**
- * EXAMPLE 1: 
- *   Request money ($1.00) to a Dwolla ID 
- **/
-$requestId = $Dwolla->request('812-713-9234', 1.00);
-if(!$requestId) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo("Request ID: {$requestId} \n"); }
+<?php
+
+// Request $20 from email gordon@dwolla.com
+
+$Requests = new Dwolla\Requests();
+$Requests->settings->oauth_token = "foo";
+
+$result = $Requests->create('gordon@dwolla.com', 20.00, [
+  'sourceType' => 'Email',
+  'notes' => 'You owe me money!'
+]);
+
+var_export($result);
+?>
 ```
 ```ruby
 # Request 1.00 from a Dwolla ID
@@ -130,6 +137,10 @@ Dwolla.request('812-111-1111', '5.00', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```php
+1670        // request ID
+```
 
 ```ruby
 1652      # request ID
@@ -202,7 +213,58 @@ Dwolla.requests(function(err, data){
 });
 ```
 
+```php
+<?php
+$Requests = new Dwolla\Requests();
+$Requests->settings->oauth_token = "foo";
+
+$result = $Requests->get();
+
+var_export($result);
+?>
+```
+
 > If successful, you'll receive this response:
+
+
+```php
+array (
+  0 =>
+  array (
+    'Id' => 1452,
+    'Source' =>
+    array (
+      'Id' => '812-742-8722',
+      'Name' => 'Cafe Kubal',
+      'Type' => 'Dwolla',
+      'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+    ),
+    'Destination' =>
+    array (
+      'Id' => '812-443-2936',
+      'Name' => ' ',
+      'Type' => 'Dwolla',
+      'Image' => 'http://uat.dwolla.com/avatars/812-443-2936',
+    ),
+    'Amount' => 1,
+    'Notes' => '',
+    'DateRequested' => '2014-08-27T03:47:39Z',
+    'Status' => 'Pending',
+    'Transaction' => NULL,
+    'CancelledBy' => NULL,
+    'DateCancelled' => '',
+    'SenderAssumeFee' => false,
+    'SenderAssumeAdditionalFees' => false,
+    'AdditionalFees' =>
+    array (
+    ),
+    'Metadata' => NULL,
+  ),
+  1 => array ( ... ),
+  2 => array ( ... ),
+  ...
+)
+```
 
 ```ruby
 [
@@ -330,13 +392,15 @@ List the authorized user's pending requests.
 ## Retrieve Money Request
 
 ```php
-/**
- * EXAMPLE 1: 
- *   Get request by ID
- **/
-$request = $Dwolla->requestById($requestId);
-if(!$request) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($request); }
+<?php
+$Requests = new Dwolla\Requests();
+$Requests->settings->oauth_token = "foo";
+
+$requestId = '1452';
+$result = $Requests->info($requestId);
+
+var_export($result);
+?>
 ```
 ```ruby
 # Example 1: Get request details for request '12345'
@@ -363,6 +427,39 @@ Dwolla.requestById('12345678', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```php
+array (
+  'Id' => 1452,
+  'Source' =>
+  array (
+    'Id' => '812-742-8722',
+    'Name' => 'Cafe Kubal',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'Destination' =>
+  array (
+    'Id' => '812-443-2936',
+    'Name' => ' ',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-443-2936',
+  ),
+  'Amount' => 1,
+  'Notes' => '',
+  'DateRequested' => '2014-08-27T03:47:39Z',
+  'Status' => 'Pending',
+  'Transaction' => NULL,
+  'CancelledBy' => NULL,
+  'DateCancelled' => '',
+  'SenderAssumeFee' => false,
+  'SenderAssumeAdditionalFees' => false,
+  'AdditionalFees' =>
+  array (
+  ),
+  'Metadata' => NULL,
+)
+```
 
 ```ruby
 {
@@ -477,12 +574,18 @@ Retrieve a single Money Request by its ID.
 
 ```php
 /**
- * EXAMPLE 1: 
- *   Fulfill request with ID
+ *   Fulfill request ID 1671 for $29.99
  **/
-$fulfilledRequest = $Dwolla->fulfillRequest($requestId, $pin);
-if(!$fulfilledRequest) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($fulfilledRequest); }
+<?php
+$Requests = new Dwolla\Requests();
+$Requests->settings->oauth_token = "foo";
+$Requests->settings->pin = 9999;
+
+$requestId = '1671';
+$result = $Requests->fulfill($requestId, '29.99');
+
+var_export($result);
+?>
 ```
 ```ruby
 # Example 1: Fulfill a request, ID 1653, of amount 20.00
@@ -511,6 +614,31 @@ Dwolla.fulfillRequest(pin, '12345678', '10.00', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```php
+array (
+  'RequestId' => 1671,
+  'Id' => 347947,
+  'Source' =>
+  array (
+    'Id' => '812-742-8722',
+    'Name' => 'Cafe Kubal',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'Destination' =>
+  array (
+    'Id' => '812-742-3301',
+    'Name' => 'Gordon Zheng',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-3301',
+  ),
+  'Amount' => 29.989999999999998,
+  'SentDate' => '2014-10-24T23:37:18Z',
+  'ClearingDate' => '2014-10-24T23:37:18Z',
+  'Status' => 'processed',
+)
+```
 
 ```ruby
 {
@@ -609,12 +737,17 @@ Cancel a money request which the authorized user created or received.  Request m
 
 ```php
 /**
- * EXAMPLE 1: 
- *   Cancel request with ID
+ *   Cancel request with ID 1672
  **/
-$canceledRequest = $Dwolla->cancelRequest($requestId);
-if(!$canceledRequest) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo("Canceled? {$canceledRequest} \n"); }
+<?php
+$Requests = new Dwolla\Requests();
+$Requests->settings->oauth_token = "foo";
+
+$requestId = '1672';
+$result = $Requests->cancel($requestId);
+
+var_export($result);
+?>
 ```
 ```ruby
 # Cancel request with ID '12345'
@@ -640,6 +773,10 @@ Dwolla.cancelRequest('12345678', function(err, data){
 ```
 
 > If successful, you'll recieve this response:
+
+```
+''      // empty string
+```
 
 ```js
 true    // boolean.

@@ -106,7 +106,62 @@ dwolla.createMassPayJob('Balance', '2908', items, {
 }, console.log);
 ```
 
+```php
+<?php
+
+/*
+ * Send $3.40 to an email address and $12.40 to a Dwolla ID.
+ * Assume transaction fees.
+ */
+
+$MassPay = new Dwolla\MassPay();
+$MassPay->settings->oauth_token = "foo";
+$MassPay->settings->pin = 9999;
+
+$items = [
+  [
+    'destination' => 'gordon@dwolla.com',
+    'destinationType' => 'Email',
+    'amount' => 3.40,
+    'notes' => 'enjoy this money!'
+  ],
+  [
+    'destination' => '812-742-3301',
+    'destinationType' => 'Dwolla',
+    'amount' => 12.40
+  ]
+];
+
+$fundsSource = '5da016f7769bcb1de9938a30d194d5a7';
+
+$result = $MassPay->create($fundsSource, $items, [
+  'assumeCosts' => true
+]);
+
+var_export($result);
+?>
+```
+
 > Response: 
+
+```php
+array (
+  'Id' => '8b116429-95c8-428f-be0f-a3ce017cba53',
+  'UserJobId' => NULL,
+  'AssumeCosts' => true,
+  'FundingSource' => '5da016f7769bcb1de9938a30d194d5a7',
+  'Total' => 15.80,
+  'Fees' => 0.25,
+  'CreatedDate' => '2014-10-24T23:06:08Z',
+  'Status' => 'queued',
+  'ItemSummary' =>
+  array (
+    'Count' => 2,
+    'Completed' => 0,
+    'Successful' => 0,
+  ),
+)
+```
 
 ```ruby
 {
@@ -196,6 +251,17 @@ Each payment to be created in a MassPay job is represented as a JSON object with
 
 ## List Jobs
 
+```php
+<?php
+$MassPay = new Dwolla\MassPay();
+$MassPay->settings->oauth_token = "foo";
+
+$result = $MassPay->listJobs();
+
+var_export($result);
+?>
+```
+
 ```js
 dwolla.getMassPayJobs(function(err, response) {
   console.log(response);
@@ -207,6 +273,31 @@ puts Dwolla::MassPay.get
 ```
 
 > Response: 
+
+```php
+array (
+  0 => array (
+    'Id' => '8b116429-95c8-428f-be0f-a3ce017cba53',
+    'UserJobId' => NULL,
+    'AssumeCosts' => true,
+    'FundingSource' => '5da016f7769bcb1de9938a30d194d5a7',
+    'Total' => 15.80,
+    'Fees' => 0.25,
+    'CreatedDate' => '2014-10-24T23:06:08Z',
+    'Status' => 'queued',
+    'ItemSummary' =>
+    array (
+      'Count' => 2,
+      'Completed' => 0,
+      'Successful' => 0,
+    ),
+  ),
+
+  1 => array ( ... ),
+  2 => array ( ... ),
+  ...
+)
+```
 
 ```ruby
 [
@@ -322,6 +413,18 @@ You can optionally provide the `skip` and `limit` querystring parameters to limi
 
 ## Retrieve Job
 
+```php
+<?php
+$MassPay = new Dwolla\MassPay();
+$MassPay->settings->oauth_token = "foo";
+
+$result = $MassPay->getJob('8b116429-95c8-428f-be0f-a3ce017cba53');
+
+var_export($result);
+?>
+```
+
+
 ```ruby
 puts Dwolla::MassPay.getJob('68e22e63-c3cb-45e6-bf04-a37201717e5d')
 ```
@@ -335,6 +438,25 @@ dwolla.getMassPayJob(jobId, function(err,result) {
 ```
 
 > Response:
+
+```php
+array (
+  'Id' => '8b116429-95c8-428f-be0f-a3ce017cba53',
+  'UserJobId' => NULL,
+  'AssumeCosts' => true,
+  'FundingSource' => '5da016f7769bcb1de9938a30d194d5a7',
+  'Total' => 15.80,
+  'Fees' => 0.25,
+  'CreatedDate' => '2014-10-24T23:06:08Z',
+  'Status' => 'complete',
+  'ItemSummary' =>
+  array (
+    'Count' => 2,
+    'Completed' => 2,
+    'Successful' => 2,
+  ),
+)
+```
 
 ```ruby
 {
@@ -403,6 +525,17 @@ Look up a particular MassPay job by its ID.
 
 ## List a Job's Items
 
+```php
+<?php
+$MassPay = new Dwolla\MassPay();
+$MassPay->settings->oauth_token = "foo";
+
+$result = $MassPay->getJobItems('8b116429-95c8-428f-be0f-a3ce017cba53');
+
+var_export($result);
+?>
+```
+
 ```js
 var jobId = '643f2db9-5b45-4755-a881-a3100178b6d7';
 
@@ -416,6 +549,37 @@ puts Dwolla::MassPay.getItems('256f7554-9bcb-4399-97d8-a34c00bb20b1')
 ```
 
 > Response:
+
+```php
+array (
+  0 =>
+  array (
+    'JobId' => '8b116429-95c8-428f-be0f-a3ce017cba53',
+    'ItemId' => 482764,
+    'Destination' => 'gordon@dwolla.com',
+    'DestinationType' => 'email',
+    'Amount' => 3.4,
+    'Status' => 'success',
+    'TransactionId' => 347927,
+    'Error' => NULL,
+    'CreatedDate' => '2014-10-24T23:06:08Z',
+    'Metadata' => NULL,
+  ),
+  1 =>
+  array (
+    'JobId' => '8b116429-95c8-428f-be0f-a3ce017cba53',
+    'ItemId' => 482765,
+    'Destination' => '812-742-3301',
+    'DestinationType' => 'dwolla',
+    'Amount' => 12.4,
+    'Status' => 'success',
+    'TransactionId' => 347929,
+    'Error' => NULL,
+    'CreatedDate' => '2014-10-24T23:06:08Z',
+    'Metadata' => NULL,
+  ),
+)
+```
 
 ```ruby
 [
@@ -548,7 +712,33 @@ dwolla.getMassPayJobItem(jobId, itemId, function(err, result) {
 puts Dwolla::MassPay.getItem('256f7554-9bcb-4399-97d8-a34c00bb20b1', '17054')
 ```
 
+```php
+<?php
+$MassPay = new Dwolla\MassPay();
+$MassPay->settings->oauth_token = "foo";
+
+$result = $MassPay->getItem('8b116429-95c8-428f-be0f-a3ce017cba53', '482765');
+
+var_export($result);
+?>
+```
+
 > Response:
+
+```php
+array (
+  'JobId' => '8b116429-95c8-428f-be0f-a3ce017cba53',
+  'ItemId' => 482765,
+  'Destination' => '812-742-3301',
+  'DestinationType' => 'dwolla',
+  'Amount' => 12.4,
+  'Status' => 'success',
+  'TransactionId' => 347929,
+  'Error' => NULL,
+  'CreatedDate' => '2014-10-24T23:06:08Z',
+  'Metadata' => NULL,
+)
+```
 
 ```js
 { 

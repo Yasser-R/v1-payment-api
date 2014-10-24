@@ -13,9 +13,14 @@ Currently, the only account feature you can enable or disable for a user via the
  * account associted with the OAuth token
  */
 
-$status = $Dwolla->getAutoWithdrawalStatus();
-if(!$status) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($status); } // Print status
+<?php
+$Account = new Dwolla\Account();
+$Account->settings->oauth_token = "foo";
+
+$result = $Account->getAutoWithdrawalStatus();
+
+var_export($result);
+?>
 ```
 ```ruby
 #   Get autowithdrawal status of the user
@@ -70,7 +75,21 @@ Dwolla.getAutoWithdrawalStatus(function(err, data) {
 }
 ```
 
+```php
+array (
+  'Enabled' => true,
+  'FundingId' => '5da016f7769bcb1de9938a30d194d5a7',
+)
+```
+
 > If disabled, you'll get this response:
+
+```php
+array (
+  'Enabled' => false,
+  'FundingId' => '',
+)
+```
 
 ```ruby
 {
@@ -114,9 +133,15 @@ Determine whether the Auto Withdrawal is enabled for the authorized user.
  * account associted with the OAuth token
  */
 
-$status = $Dwolla->toggleAutoWithdrawalStatus('true', '12345');
-if(!$status) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($status); } // Print status
+<?php
+$Account = new Dwolla\Account();
+$Account->settings->oauth_token = "foo";
+
+$fundingSource = '5da016f7769bcb1de9938a30d194d5a7';
+$result = $Account->toggleAutoWithdrawalStatus(true, $fundingSource);
+
+var_export($result);
+?>
 ```
 ```ruby
 # EXAMPLE 1:
@@ -146,6 +171,10 @@ Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
 ```
 
 > If enabled, you'll get this response:
+
+```php
+'Enabled'
+```
 
 ```ruby
 "Enabled"
