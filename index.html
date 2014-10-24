@@ -4680,10 +4680,61 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="na">assumeCosts</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">},</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">);</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="cm">/*
+ * Send $3.40 to an email address and $12.40 to a Dwolla ID.
+ * Assume transaction fees.
+ */</span>
+
+<span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
+<span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+<span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">pin</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+
+<span class="nv">$items</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span>
+    <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="s1">'gordon@dwolla.com'</span><span class="p">,</span>
+    <span class="s1">'destinationType'</span> <span class="o">=&gt;</span> <span class="s1">'Email'</span><span class="p">,</span>
+    <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="mf">3.40</span><span class="p">,</span>
+    <span class="s1">'notes'</span> <span class="o">=&gt;</span> <span class="s1">'enjoy this money!'</span>
+  <span class="p">],</span>
+  <span class="p">[</span>
+    <span class="s1">'destination'</span> <span class="o">=&gt;</span> <span class="s1">'812-742-3301'</span><span class="p">,</span>
+    <span class="s1">'destinationType'</span> <span class="o">=&gt;</span> <span class="s1">'Dwolla'</span><span class="p">,</span>
+    <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="mf">12.40</span>
+  <span class="p">]</span>
+<span class="p">];</span>
+
+<span class="nv">$fundsSource</span> <span class="o">=</span> <span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="nv">$fundsSource</span><span class="p">,</span> <span class="nv">$items</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">'assumeCosts'</span> <span class="o">=&gt;</span> <span class="kc">true</span>
+<span class="p">]);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response: </p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; '8b116429-95c8-428f-be0f-a3ce017cba53',
+  'UserJobId' =&gt; NULL,
+  'AssumeCosts' =&gt; true,
+  'FundingSource' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
+  'Total' =&gt; 15.80,
+  'Fees' =&gt; 0.25,
+  'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
+  'Status' =&gt; 'queued',
+  'ItemSummary' =&gt;
+  array (
+    'Count' =&gt; 2,
+    'Completed' =&gt; 0,
+    'Successful' =&gt; 0,
+  ),
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>            <span class="o">=&gt;</span> <span class="s2">"d18a2589-409c-4d0d-8404-a3ca005d3bf2"</span><span class="p">,</span>
   <span class="s2">"UserJobId"</span>     <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
@@ -4812,7 +4863,16 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>An optional <a href="#metadata">metadata</a> object.</td>
 </tr>
 </tbody></table>
-<h2 id='list-jobs'>List Jobs</h2><pre class="highlight javascript"><span class="nx">dwolla</span><span class="p">.</span><span class="nx">getMassPayJobs</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+<h2 id='list-jobs'>List Jobs</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
+<span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">listJobs</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight javascript"><span class="nx">dwolla</span><span class="p">.</span><span class="nx">getMassPayJobs</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
@@ -4822,6 +4882,29 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <blockquote>
 <p>Response: </p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt; array (
+    'Id' =&gt; '8b116429-95c8-428f-be0f-a3ce017cba53',
+    'UserJobId' =&gt; NULL,
+    'AssumeCosts' =&gt; true,
+    'FundingSource' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
+    'Total' =&gt; 15.80,
+    'Fees' =&gt; 0.25,
+    'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
+    'Status' =&gt; 'queued',
+    'ItemSummary' =&gt;
+    array (
+      'Count' =&gt; 2,
+      'Completed' =&gt; 0,
+      'Successful' =&gt; 0,
+    ),
+  ),
+
+  1 =&gt; array ( ... ),
+  2 =&gt; array ( ... ),
+  ...
+)
+</pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
     <span class="s2">"Id"</span>            <span class="o">=&gt;</span> <span class="s2">"256f7554-9bcb-4399-97d8-a34c00bb20b1"</span><span class="p">,</span>
@@ -4937,7 +5020,16 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p>You can optionally provide the <code class="prettyprint">skip</code> and <code class="prettyprint">limit</code> querystring parameters to limit the number of results returned, and to offset the results by <code class="prettyprint">skip</code> number of items.  For example, to retrieve the first 20 results after the first 5 in the set of results:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/?limit=20&amp;skip=5</code></p>
-<h2 id='retrieve-job'>Retrieve Job</h2><pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">getJob</span><span class="p">(</span><span class="s1">'68e22e63-c3cb-45e6-bf04-a37201717e5d'</span><span class="p">)</span>
+<h2 id='retrieve-job'>Retrieve Job</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
+<span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">getJob</span><span class="p">(</span><span class="s1">'8b116429-95c8-428f-be0f-a3ce017cba53'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">getJob</span><span class="p">(</span><span class="s1">'68e22e63-c3cb-45e6-bf04-a37201717e5d'</span><span class="p">)</span>
 </pre>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">jobId</span> <span class="o">=</span> <span class="s1">'68e22e63-c3cb-45e6-bf04-a37201717e5d'</span><span class="p">;</span>
 
@@ -4949,6 +5041,23 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; '8b116429-95c8-428f-be0f-a3ce017cba53',
+  'UserJobId' =&gt; NULL,
+  'AssumeCosts' =&gt; true,
+  'FundingSource' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
+  'Total' =&gt; 15.80,
+  'Fees' =&gt; 0.25,
+  'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
+  'Status' =&gt; 'complete',
+  'ItemSummary' =&gt;
+  array (
+    'Count' =&gt; 2,
+    'Completed' =&gt; 2,
+    'Successful' =&gt; 2,
+  ),
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>            <span class="o">=&gt;</span> <span class="s2">"256f7554-9bcb-4399-97d8-a34c00bb20b1"</span><span class="p">,</span>
   <span class="s2">"UserJobId"</span>     <span class="o">=&gt;</span> <span class="s2">"efnwjkefnkwjnknkjnk"</span><span class="p">,</span>
@@ -5007,7 +5116,16 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{id}</code></p>
-<h2 id='list-a-job39s-items'>List a Job&rsquo;s Items</h2><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">jobId</span> <span class="o">=</span> <span class="s1">'643f2db9-5b45-4755-a881-a3100178b6d7'</span><span class="p">;</span>
+<h2 id='list-a-job39s-items'>List a Job&rsquo;s Items</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
+<span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">getJobItems</span><span class="p">(</span><span class="s1">'8b116429-95c8-428f-be0f-a3ce017cba53'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight javascript"><span class="kd">var</span> <span class="nx">jobId</span> <span class="o">=</span> <span class="s1">'643f2db9-5b45-4755-a881-a3100178b6d7'</span><span class="p">;</span>
 
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">getMassPayJobItems</span><span class="p">(</span><span class="nx">jobId</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
@@ -5019,6 +5137,35 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'JobId' =&gt; '8b116429-95c8-428f-be0f-a3ce017cba53',
+    'ItemId' =&gt; 482764,
+    'Destination' =&gt; 'gordon@dwolla.com',
+    'DestinationType' =&gt; 'email',
+    'Amount' =&gt; 3.4,
+    'Status' =&gt; 'success',
+    'TransactionId' =&gt; 347927,
+    'Error' =&gt; NULL,
+    'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
+    'Metadata' =&gt; NULL,
+  ),
+  1 =&gt;
+  array (
+    'JobId' =&gt; '8b116429-95c8-428f-be0f-a3ce017cba53',
+    'ItemId' =&gt; 482765,
+    'Destination' =&gt; '812-742-3301',
+    'DestinationType' =&gt; 'dwolla',
+    'Amount' =&gt; 12.4,
+    'Status' =&gt; 'success',
+    'TransactionId' =&gt; 347929,
+    'Error' =&gt; NULL,
+    'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
+    'Metadata' =&gt; NULL,
+  ),
+)
+</pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
     <span class="s2">"JobId"</span>           <span class="o">=&gt;</span> <span class="s2">"256f7554-9bcb-4399-97d8-a34c00bb20b1"</span><span class="p">,</span>
@@ -5148,10 +5295,32 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">getItem</span><span class="p">(</span><span class="s1">'256f7554-9bcb-4399-97d8-a34c00bb20b1'</span><span class="p">,</span> <span class="s1">'17054'</span><span class="p">)</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
+<span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">getItem</span><span class="p">(</span><span class="s1">'8b116429-95c8-428f-be0f-a3ce017cba53'</span><span class="p">,</span> <span class="s1">'482765'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'JobId' =&gt; '8b116429-95c8-428f-be0f-a3ce017cba53',
+  'ItemId' =&gt; 482765,
+  'Destination' =&gt; '812-742-3301',
+  'DestinationType' =&gt; 'dwolla',
+  'Amount' =&gt; 12.4,
+  'Status' =&gt; 'success',
+  'TransactionId' =&gt; 347929,
+  'Error' =&gt; NULL,
+  'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
+  'Metadata' =&gt; NULL,
+)
+</pre>
 <pre class="highlight javascript"><span class="p">{</span> 
   <span class="na">JobId</span><span class="p">:</span> <span class="s1">'9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e'</span><span class="p">,</span>
   <span class="na">ItemId</span><span class="p">:</span> <span class="mi">424792</span><span class="p">,</span>
@@ -5216,10 +5385,34 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">20</span>
 <span class="p">})</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="cm">/*
+ * Refund transaction ID 347940 for the amount of $20.00,
+ * and fund the refund with the merchant's account balance.
+ */</span>
+
+<span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+<span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">pin</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s1">'347940'</span><span class="p">;</span>
+<span class="nv">$fundingSource</span> <span class="o">=</span> <span class="s1">'Balance'</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Transactions</span><span class="o">-&gt;</span><span class="na">refund</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$fundingSource</span><span class="p">,</span> <span class="mf">20.00</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>Response: </p>
 </blockquote>
+<pre class="highlight php">array (
+  'TransactionId' =&gt; 347944,
+  'RefundDate' =&gt; '10/24/2014 23:23:20',
+  'Amount' =&gt; 20,
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"TransactionId"</span> <span class="o">=&gt;</span> <span class="mi">341621</span><span class="p">,</span>
   <span class="s2">"RefundDate"</span>    <span class="o">=&gt;</span> <span class="s2">"10/20/2014 05:51:43"</span><span class="p">,</span>
@@ -5456,13 +5649,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>An optional <a href="#metadata">metadata</a> object.</td>
 </tr>
 </tbody></table>
-<h2 id='create-money-request'>Create Money Request</h2><pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Request money ($1.00) to a Dwolla ID 
- **/
-$requestId = $Dwolla-&gt;request('812-713-9234', 1.00);
-if(!$requestId) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { echo("Request ID: {$requestId} \n"); }
+<h2 id='create-money-request'>Create Money Request</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+
+<span class="c1">// Request $20 from email gordon@dwolla.com
+</span>
+<span class="nv">$Requests</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Requests</span><span class="p">();</span>
+<span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="s1">'gordon@dwolla.com'</span><span class="p">,</span> <span class="mf">20.00</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">'sourceType'</span> <span class="o">=&gt;</span> <span class="s1">'Email'</span><span class="p">,</span>
+  <span class="s1">'notes'</span> <span class="o">=&gt;</span> <span class="s1">'You owe me money!'</span>
+<span class="p">]);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1"># Request 1.00 from a Dwolla ID</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Requests</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span><span class="ss">:sourceId</span><span class="o">=&gt;</span> <span class="s1">'812-742-8722'</span><span class="p">,</span> <span class="ss">:amount</span><span class="o">=&gt;</span> <span class="s1">'1.00'</span><span class="p">})</span>
@@ -5486,6 +5686,8 @@ else { echo("Request ID: {$requestId} \n"); }
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">1670        // request ID
+</pre>
 <pre class="highlight ruby"><span class="mi">1652</span>      <span class="c1"># request ID</span>
 </pre>
 <pre class="highlight javascript"><span class="mi">1288</span>        <span class="c1">// Request ID
@@ -5583,10 +5785,56 @@ else { print_r($requests); }
    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Requests</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Requests</span><span class="p">();</span>
+<span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
 
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Id' =&gt; 1452,
+    'Source' =&gt;
+    array (
+      'Id' =&gt; '812-742-8722',
+      'Name' =&gt; 'Cafe Kubal',
+      'Type' =&gt; 'Dwolla',
+      'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+    ),
+    'Destination' =&gt;
+    array (
+      'Id' =&gt; '812-443-2936',
+      'Name' =&gt; ' ',
+      'Type' =&gt; 'Dwolla',
+      'Image' =&gt; 'http://uat.dwolla.com/avatars/812-443-2936',
+    ),
+    'Amount' =&gt; 1,
+    'Notes' =&gt; '',
+    'DateRequested' =&gt; '2014-08-27T03:47:39Z',
+    'Status' =&gt; 'Pending',
+    'Transaction' =&gt; NULL,
+    'CancelledBy' =&gt; NULL,
+    'DateCancelled' =&gt; '',
+    'SenderAssumeFee' =&gt; false,
+    'SenderAssumeAdditionalFees' =&gt; false,
+    'AdditionalFees' =&gt;
+    array (
+    ),
+    'Metadata' =&gt; NULL,
+  ),
+  1 =&gt; array ( ... ),
+  2 =&gt; array ( ... ),
+  ...
+)
+</pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
     <span class="s2">"Id"</span>                         <span class="o">=&gt;</span> <span class="mi">1452</span><span class="p">,</span>
@@ -5718,13 +5966,15 @@ else { print_r($requests); }
 <td>Number of pending requests to retrieve (defaults to 20, must be in range of 1-200)</td>
 </tr>
 </tbody></table>
-<h2 id='retrieve-money-request'>Retrieve Money Request</h2><pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Get request by ID
- **/
-$request = $Dwolla-&gt;requestById($requestId);
-if(!$request) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($request); }
+<h2 id='retrieve-money-request'>Retrieve Money Request</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Requests</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Requests</span><span class="p">();</span>
+<span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$requestId</span> <span class="o">=</span> <span class="s1">'1452'</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">info</span><span class="p">(</span><span class="nv">$requestId</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1"># Example 1: Get request details for request '12345'</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'12345'</span><span class="p">)</span>
@@ -5750,6 +6000,37 @@ else { print_r($request); }
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Id' =&gt; 1452,
+  'Source' =&gt;
+  array (
+    'Id' =&gt; '812-742-8722',
+    'Name' =&gt; 'Cafe Kubal',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'Destination' =&gt;
+  array (
+    'Id' =&gt; '812-443-2936',
+    'Name' =&gt; ' ',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-443-2936',
+  ),
+  'Amount' =&gt; 1,
+  'Notes' =&gt; '',
+  'DateRequested' =&gt; '2014-08-27T03:47:39Z',
+  'Status' =&gt; 'Pending',
+  'Transaction' =&gt; NULL,
+  'CancelledBy' =&gt; NULL,
+  'DateCancelled' =&gt; '',
+  'SenderAssumeFee' =&gt; false,
+  'SenderAssumeAdditionalFees' =&gt; false,
+  'AdditionalFees' =&gt;
+  array (
+  ),
+  'Metadata' =&gt; NULL,
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
     <span class="s2">"Id"</span>                         <span class="o">=&gt;</span> <span class="mi">12345</span><span class="p">,</span>
     <span class="s2">"Source"</span>                     <span class="o">=&gt;</span> <span class="p">{</span>
@@ -5852,12 +6133,18 @@ else { print_r($request); }
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/requests/{id}</code></p>
 <h2 id='fulfill-money-request'>Fulfill Money Request</h2><pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Fulfill request with ID
+ *   Fulfill request ID 1671 for $29.99
  **/
-$fulfilledRequest = $Dwolla-&gt;fulfillRequest($requestId, $pin);
-if(!$fulfilledRequest) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($fulfilledRequest); }
+<span class="cp">&lt;?php</span>
+<span class="nv">$Requests</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Requests</span><span class="p">();</span>
+<span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+<span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">pin</span> <span class="o">=</span> <span class="mi">9999</span><span class="p">;</span>
+
+<span class="nv">$requestId</span> <span class="o">=</span> <span class="s1">'1671'</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">fulfill</span><span class="p">(</span><span class="nv">$requestId</span><span class="p">,</span> <span class="s1">'29.99'</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1"># Example 1: Fulfill a request, ID 1653, of amount 20.00</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Requests</span><span class="p">.</span><span class="nf">fulfill</span><span class="p">(</span><span class="s1">'1653'</span><span class="p">,</span> <span class="p">{</span>
@@ -5885,6 +6172,29 @@ else { print_r($fulfilledRequest); }
 <blockquote>
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'RequestId' =&gt; 1671,
+  'Id' =&gt; 347947,
+  'Source' =&gt;
+  array (
+    'Id' =&gt; '812-742-8722',
+    'Name' =&gt; 'Cafe Kubal',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'Destination' =&gt;
+  array (
+    'Id' =&gt; '812-742-3301',
+    'Name' =&gt; 'Gordon Zheng',
+    'Type' =&gt; 'Dwolla',
+    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-3301',
+  ),
+  'Amount' =&gt; 29.989999999999998,
+  'SentDate' =&gt; '2014-10-24T23:37:18Z',
+  'ClearingDate' =&gt; '2014-10-24T23:37:18Z',
+  'Status' =&gt; 'processed',
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"RequestId"</span>    <span class="o">=&gt;</span> <span class="mi">1653</span><span class="p">,</span>
   <span class="s2">"Id"</span>           <span class="o">=&gt;</span> <span class="mi">341624</span><span class="p">,</span>
@@ -6000,12 +6310,17 @@ else { print_r($fulfilledRequest); }
 <h2 id='cancel-a-money-request'>Cancel a Money Request</h2>
 <p>Cancel a money request which the authorized user created or received.  Request must have a status of <code class="prettyprint">Pending</code>.</p>
 <pre class="highlight php">/**
- * EXAMPLE 1: 
- *   Cancel request with ID
+ *   Cancel request with ID 1672
  **/
-$canceledRequest = $Dwolla-&gt;cancelRequest($requestId);
-if(!$canceledRequest) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { echo("Canceled? {$canceledRequest} \n"); }
+<span class="cp">&lt;?php</span>
+<span class="nv">$Requests</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Requests</span><span class="p">();</span>
+<span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$requestId</span> <span class="o">=</span> <span class="s1">'1672'</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Requests</span><span class="o">-&gt;</span><span class="na">cancel</span><span class="p">(</span><span class="nv">$requestId</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1"># Cancel request with ID '12345'</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Requests</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="s1">'1652'</span><span class="p">)</span>
@@ -6030,6 +6345,8 @@ else { echo("Canceled? {$canceledRequest} \n"); }
 <blockquote>
 <p>If successful, you&rsquo;ll recieve this response:</p>
 </blockquote>
+<pre class="highlight plaintext">''      // empty string
+</pre>
 <pre class="highlight javascript"><span class="kc">true</span>    <span class="c1">// boolean.
 </span></pre>
 <pre class="highlight ruby"><span class="s2">""</span>      <span class="o">/</span><span class="sr">/ empty string
@@ -6055,9 +6372,14 @@ else { echo("Canceled? {$canceledRequest} \n"); }
  * account associted with the OAuth token
  */
 
-$status = $Dwolla-&gt;getAutoWithdrawalStatus();
-if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($status); } // Print status
+<span class="cp">&lt;?php</span>
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">getAutoWithdrawalStatus</span><span class="p">();</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1">#   Get autowithdrawal status of the user</span>
 <span class="c1">#   associated with the current OAuth token</span>
@@ -6104,10 +6426,20 @@ else { print_r($status); } // Print status
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight php">array (
+  'Enabled' =&gt; true,
+  'FundingId' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
+)
+</pre>
 
 <blockquote>
 <p>If disabled, you&rsquo;ll get this response:</p>
 </blockquote>
+<pre class="highlight php">array (
+  'Enabled' =&gt; false,
+  'FundingId' =&gt; '',
+)
+</pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Enabled"</span>   <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
   <span class="s2">"FundingId"</span> <span class="o">=&gt;</span> <span class="s2">""</span>
@@ -6139,9 +6471,15 @@ else { print_r($status); } // Print status
  * account associted with the OAuth token
  */
 
-$status = $Dwolla-&gt;toggleAutoWithdrawalStatus('true', '12345');
-if(!$status) { echo "Error: {$Dwolla-&gt;getError()} \n"; } // Check for errors
-else { print_r($status); } // Print status
+<span class="cp">&lt;?php</span>
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
+
+<span class="nv">$fundingSource</span> <span class="o">=</span> <span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">;</span>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">toggleAutoWithdrawalStatus</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="nv">$fundingSource</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="c1"># EXAMPLE 1:</span>
 <span class="c1">#   Enable autowithdraw for funding source '12345' under the</span>
@@ -6170,6 +6508,8 @@ else { print_r($status); } // Print status
 <blockquote>
 <p>If enabled, you&rsquo;ll get this response:</p>
 </blockquote>
+<pre class="highlight php">'Enabled'
+</pre>
 <pre class="highlight ruby"><span class="s2">"Enabled"</span>
 </pre>
 <pre class="highlight javascript"><span class="s2">"Enabled"</span>
