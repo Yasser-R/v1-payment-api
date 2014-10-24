@@ -3145,6 +3145,121 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p>or to fetch a transaction which belongs to an application:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/{id}?client_id={}&amp;client_secret={}</code></p>
+<h2 id='search-transactions'>Search transactions</h2><pre class="highlight shell">GET https://www.dwolla.com/oauth/rest/transactions/search?limit<span class="o">=</span>20
+</pre>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Success"</span>: <span class="nb">true</span>,
+  <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+  <span class="s2">"Response"</span>: <span class="o">{</span>
+    <span class="s2">"TotalHits"</span>: 13502,
+    <span class="s2">"Results"</span>: <span class="o">[</span>
+      <span class="o">{</span>
+        <span class="s2">"Id"</span>: 346099,
+        <span class="s2">"Amount"</span>: 5,
+        <span class="s2">"Date"</span>: <span class="s2">"2014-10-22T19:51:01Z"</span>,
+        <span class="s2">"Type"</span>: <span class="s2">"deposit"</span>,
+        <span class="s2">"UserType"</span>: <span class="s2">"Dwolla"</span>,
+        <span class="s2">"DestinationId"</span>: <span class="s2">"812-742-8722"</span>,
+        <span class="s2">"DestinationName"</span>: <span class="s2">"Cafe Kubal"</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+          <span class="s2">"Id"</span>: <span class="s2">"812-742-8722"</span>,
+          <span class="s2">"Name"</span>: <span class="s2">"Cafe Kubal"</span>,
+          <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+          <span class="s2">"Image"</span>: <span class="s2">"http://www.dwolla.com/avatars/812-742-8722"</span>
+        <span class="o">}</span>,
+        <span class="s2">"SourceId"</span>: <span class="s2">"XXX9999"</span>,
+        <span class="s2">"SourceName"</span>: <span class="s2">"Blah"</span>,
+        <span class="s2">"Source"</span>: <span class="o">{</span>
+          <span class="s2">"Id"</span>: <span class="s2">"XXX9999"</span>,
+          <span class="s2">"Name"</span>: <span class="s2">"Blah"</span>,
+          <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+          <span class="s2">"Image"</span>: <span class="s2">""</span>
+        <span class="o">}</span>,
+        <span class="s2">"ClearingDate"</span>: <span class="s2">"2014-10-28T00:00:00Z"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"pending"</span>,
+        <span class="s2">"Notes"</span>: null,
+        <span class="s2">"Fees"</span>: null,
+        <span class="s2">"OriginalTransactionId"</span>: null,
+        <span class="s2">"Metadata"</span>: null
+      <span class="o">}</span>,
+
+      <span class="o">{</span> ... <span class="o">}</span>
+    <span class="o">]</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Search a user&rsquo;s transactions, filtering results based on an amount range, date range, transaction type, transaction status, individual&rsquo;s name, business name, Dwolla ID, email address, or phone number.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p>To fetch a transaction which belongs to the authorized user:</p>
+
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/search?limit={}</code></p>
+<h3 id='optional-querystring-parameters'>Optional Querystring Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>searchTerm</td>
+<td>A string to be matched with recipient/sender names (individual or business/organizaton), Dwolla ID, email address, or phone number.</td>
+</tr>
+<tr>
+<td>startAmount</td>
+<td>Only include transactions with an amount equal to or greater than <code class="prettyprint">startAmount</code>.  Can optionally be used with <code class="prettyprint">endAmount</code> to specify an amount range.</td>
+</tr>
+<tr>
+<td>endAmount</td>
+<td>Only include transactions with an amount equal to or less than <code class="prettyprint">endAmount</code>.  Can optionally be used with <code class="prettyprint">startAmount</code> to specify an amount range.</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>Only include transactions created after this date.  ISO-8601 format: <code class="prettyprint">YYYY-MM-DD</code>.  Can optionally be used with <code class="prettyprint">endDate</code> to specify a date range.</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>Only include transactions created before than this date.  ISO-8601 format: <code class="prettyprint">YYYY-MM-DD</code>.  Can optionally be used with <code class="prettyprint">startDate</code> to specify a date range.</td>
+</tr>
+<tr>
+<td>type</td>
+<td>Filter results on <a href="#transaction-types">Transaction type</a>.  Possible values: <code class="prettyprint">money_sent</code>, <code class="prettyprint">money_received</code>, <code class="prettyprint">deposit</code>, <code class="prettyprint">withdraw</code></td>
+</tr>
+<tr>
+<td>status</td>
+<td>Filter results on <a href="#transaction-statuses">Transaction status</a>. Possible values: <code class="prettyprint">pending</code>, <code class="prettyprint">processed</code>, <code class="prettyprint">failed</code>, <code class="prettyprint">reclaimed</code>, <code class="prettyprint">cancelled</code></td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Number of search results to return.  Defaults to <code class="prettyprint">50</code>.</td>
+</tr>
+<tr>
+<td>offset</td>
+<td>Number of search results to skip.  Used for pagination.</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>TotalHits</td>
+<td>Total number of search results.  Does not necessarily equal the number of results contained in the response <code class="prettyprint">Results</code>.</td>
+</tr>
+<tr>
+<td>Results</td>
+<td>JSON array of <a href="#transaction-resource">Transaction</a> resources.</td>
+</tr>
+</tbody></table>
 
           <h1 id='scheduled-transactions'>Scheduled Transactions</h1><pre class="highlight plaintext">        _____
      _.'_____`._
