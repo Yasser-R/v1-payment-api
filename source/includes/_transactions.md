@@ -192,7 +192,59 @@ Dwolla.transactions(function(err, data) {
 puts Dwolla::Transactions.get
 ```
 
+```php
+<?php
+$Transactions = new Dwolla\Transactions();
+$Transactions->settings->oauth_token = "foo";
+
+$result = $Transactions->get();
+
+var_export($result);
+?>
+```
+
 > Response: 
+
+```php
+array (
+  0 =>
+  array (
+    'Id' => 346099,
+    'Amount' => 5,
+    'Date' => '2014-10-22T19:51:01Z',
+    'Type' => 'deposit',
+    'UserType' => 'Dwolla',
+    'DestinationId' => '812-742-8722',
+    'DestinationName' => 'Cafe Kubal',
+    'Destination' =>
+    array (
+      'Id' => '812-742-8722',
+      'Name' => 'Cafe Kubal',
+      'Type' => 'Dwolla',
+      'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+    ),
+    'SourceId' => 'XXX9999',
+    'SourceName' => 'Blah',
+    'Source' =>
+    array (
+      'Id' => 'XXX9999',
+      'Name' => 'Blah',
+      'Type' => 'Dwolla',
+      'Image' => '',
+    ),
+    'ClearingDate' => '2014-10-28T00:00:00Z',
+    'Status' => 'pending',
+    'Notes' => NULL,
+    'Fees' => NULL,
+    'OriginalTransactionId' => NULL,
+    'Metadata' => NULL,
+  ),
+  1 =>
+  array (
+  ...
+  ),
+)
+```
 
 ```ruby
 [
@@ -343,11 +395,67 @@ Dwolla.transactionsByApp(function(err, data) {
 });
 ```
 
+```php
+<?php
+$Transactions = new Dwolla\Transactions();
+$Transactions->settings->client_id = $apiKey;
+$Transactions->settings->client_secret = $apiSecret;
+
+// set access token to null and get() will use key and secret
+$Transactions->settings->oauth_token = null;
+
+$result = $Transactions->get();
+
+var_export($result);
+?>
+```
+
 ```ruby
 puts Dwolla::Transactions.get(nil, {}, false)
 ```
 
 > Response:
+
+```php
+array (
+  0 =>
+  array (
+    'Id' => 346099,
+    'Amount' => 5,
+    'Date' => '2014-10-22T19:51:01Z',
+    'Type' => 'deposit',
+    'UserType' => 'Dwolla',
+    'DestinationId' => '812-742-8722',
+    'DestinationName' => 'Cafe Kubal',
+    'Destination' =>
+    array (
+      'Id' => '812-742-8722',
+      'Name' => 'Cafe Kubal',
+      'Type' => 'Dwolla',
+      'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+    ),
+    'SourceId' => 'XXX9999',
+    'SourceName' => 'Blah',
+    'Source' =>
+    array (
+      'Id' => 'XXX9999',
+      'Name' => 'Blah',
+      'Type' => 'Dwolla',
+      'Image' => '',
+    ),
+    'ClearingDate' => '2014-10-28T00:00:00Z',
+    'Status' => 'pending',
+    'Notes' => NULL,
+    'Fees' => NULL,
+    'OriginalTransactionId' => NULL,
+    'Metadata' => NULL,
+  ),
+  1 =>
+  array (
+  ...
+  ),
+)
+```
 
 ```ruby
 [
@@ -502,7 +610,59 @@ Dwolla.transactionById('12345', function(err, data) {
 puts Dwolla::Transactions.get(331506)
 ```
 
+```php
+<?php
+$Transactions = new Dwolla\Transactions();
+
+// you may provide key and secret...
+$Transactions->settings->client_id = $apiKey;
+$Transactions->settings->client_secret = $apiSecret;
+
+// OR an access token... 
+$Transactions->settings->oauth_token = "foo";
+
+$result = $Transactions->info('346099');
+
+var_export($result);
+?>
+
+```
+
 > Response:
+
+```php
+array (
+  'Id' => 346099,
+  'Amount' => 5,
+  'Date' => '2014-10-22T19:51:01Z',
+  'Type' => 'deposit',
+  'UserType' => 'Dwolla',
+  'DestinationId' => '812-742-8722',
+  'DestinationName' => 'Cafe Kubal',
+  'Destination' =>
+  array (
+    'Id' => '812-742-8722',
+    'Name' => 'Cafe Kubal',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'SourceId' => 'XXX9999',
+  'SourceName' => 'Blah',
+  'Source' =>
+  array (
+    'Id' => 'XXX9999',
+    'Name' => 'Blah',
+    'Type' => 'Dwolla',
+    'Image' => '',
+  ),
+  'ClearingDate' => '2014-10-28T00:00:00Z',
+  'Status' => 'pending',
+  'Notes' => NULL,
+  'Fees' => NULL,
+  'OriginalTransactionId' => NULL,
+  'Metadata' => NULL,
+)
+```
 
 ```ruby
 {

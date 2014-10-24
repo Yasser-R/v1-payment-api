@@ -1,15 +1,14 @@
 # Balance
 
 ```php
-/**
- * EXAMPLE 1: 
- *   Fetch account balance for the 
- *   account associated with the provided
- *   OAuth token
- **/
-$balance = $Dwolla->balance();
-if($balance == NULL) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo $balance; } // Print user's balance
+<?php
+$Account = new Dwolla\Account();
+$Account->settings->oauth_token = "foo";
+
+$result = $Account->balance();
+
+var_export($result);
+?>
 ```
 ```ruby
 #   Get the balance of the authenticated user
@@ -31,6 +30,10 @@ Dwolla.balance(function(err, data){
 ```
 
 > Response:
+
+```php
+55.76
+```
 
 ```ruby
 55.76

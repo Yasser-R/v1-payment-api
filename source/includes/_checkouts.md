@@ -33,6 +33,27 @@ To create a PayLater Checkout, set `checkoutWithApi` to `true`.
 
 ## Create a Checkout
 
+```php
+<?php
+
+$Checkouts = new Dwolla\Checkouts();
+$Checkouts->settings->client_id = $apiKey;
+$Checkouts->settings->client_secret = $apiSecret;
+
+$purchaseOrder = [
+  'destinationId' => '812-742-3301',
+  'total' => '33.99'
+];
+
+$result = $Checkouts->create($purchaseOrder, [
+  'redirect' => 'https://myredirect.com/redirect'
+]);
+
+print_r($result);
+
+?>
+```
+
 
 ```json
 {
@@ -111,6 +132,13 @@ pp Dwolla::OffsiteGateway.get_checkout_url('812-734-7288')
 https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 ```
 
+```php
+array (
+  'CheckoutId' => 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+  'URL' => 'https://uat.dwolla.com/payment/checkout/f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+)
+```
+
 ```ruby
 https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 ```
@@ -158,6 +186,18 @@ orderItems | yes | An array of JSON object(s) which contain a `name`, `descripti
 
 
 ## Retrieve a Checkout
+
+```php
+<?php
+$Checkouts = new Dwolla\Checkouts();
+$Checkouts->settings->client_id = $apiKey;
+$Checkouts->settings->client_secret = $apiSecret;
+
+$result = $Checkouts->get("19bca7f7-d92a-4a98-b685-7f0e4a372994");
+
+var_export($result);
+?>
+```
 
 ```js
 var checkoutId = 'a9d7c86a-0d0d-4466-b228-e15584a1315a';
@@ -218,6 +258,25 @@ This method is not yet supported in dwolla-ruby.
 }
 ```
 
+```php
+array (
+  'CheckoutId' => 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+  'Discount' => NULL,
+  'Shipping' => NULL,
+  'Tax' => NULL,
+  'Total' => 33.99,
+  'Status' => 'Created',
+  'FundingSource' => NULL,
+  'TransactionId' => NULL,
+  'ProfileId' => NULL,
+  'DestinationTransactionId' => NULL,
+  'OrderItems' =>
+  array (
+  ),
+  'Metadata' => NULL,
+)
+```
+
 ```ruby
 This method is not yet supported in dwolla-ruby.
 ```
@@ -254,6 +313,19 @@ dwolla.completeCheckout(checkoutId, function(err, response) {
 });
 ```
 
+```php
+<?php
+
+$Checkouts = new Dwolla\Checkouts();
+$Checkouts->settings->client_id = $apiKey;
+$Checkouts->settings->client_secret = $apiSecret;
+
+$result = $Checkouts->complete("19bca7f7-d92a-4a98-b685-7f0e4a372994");
+
+print_r($result);
+?>
+```
+
 ```ruby
 This method is not yet supported in dwolla-ruby.
 ```
@@ -280,6 +352,18 @@ This method is not yet supported in dwolla-ruby.
 }
 ```
 
+```php
+array (
+  'CheckoutId' => 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',
+  'ClearingDate' => NULL,
+  'Amount' => 33.99,
+  'OrderId' => NULL,
+  'TransactionId' => 290144,
+  'DestinationTransactionId' => 290143,
+  'TestMode' => false
+)
+```
+
 ```js
 { 
   Amount: 5,
@@ -300,6 +384,13 @@ This method is not yet supported in dwolla-ruby.
 	"Message":"There are insufficient funds for this transaction.",
 	"Response":null
 }
+```
+
+```php
+DwollaPHP: An API error was encountered.
+Server Message:
+
+Invalid purchase order.
 ```
 
 ```js

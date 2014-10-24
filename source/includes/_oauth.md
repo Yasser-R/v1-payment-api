@@ -26,6 +26,18 @@ A refresh token can be used within 60 days to generate a new access_token and re
 
 ## Request Authorization
 
+```php
+<?php
+
+$OAuth = new Dwolla\OAuth();
+$OAuth->settings->client_id = $apiKey;
+$OAuth->settings->client_secret = $apiSecret;
+
+$url = $OAuth->genAuthUrl("https://myredirect.com/redirect");
+
+?>
+```
+
 ```js
 // where to send the user after they grant permission:
 var redirect_uri = "https://www.myredirect.com/redirect";  
@@ -83,6 +95,22 @@ Funding | Access the user's funding sources (i.e. connected bank accounts)
 ManageAccount | Manage the user's account settings
 
 ## Finish Authorization
+
+```php
+<?php
+
+$OAuth = new Dwolla\OAuth();
+$OAuth->settings->client_id = $apiKey;
+$OAuth->settings->client_secret = $apiSecret;
+
+$authorizationCode = "J9kkk2JbX7Yjl4L28fM13il46QI=";
+$redirect_uri = "https://www.myredirect.com/redirect";
+$result = $OAuth->get($authorizationCode, $redirect_uri);
+
+print_r($result);
+?>
+```
+
 ```json
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
@@ -111,7 +139,7 @@ refresh_token = info['refresh_token']
 ```shell
 {
 	"access_token": "YLAZSreh165CAD2tPhAEzFCYYIrVyFomLWUDMGFBZIw9KtIg4q",
-	"expires_in": 35,
+	"expires_in": 3600,
 	"refresh_token": "Pgk+l9okjwTCfsvIvEDPrsomE1er1txeyoaAkTIBAuXza8WvZY",
 	"refresh_expires_in": 5184000,
 	"token_type": "bearer"
@@ -162,6 +190,19 @@ Dwolla.refreshAuth(refreshToken, function(error, auth) {
 info = Dwolla::OAuth.refresh_auth(refresh_token)
 token = info['access_token']
 refresh_token = info['refresh_token']
+```
+
+```php
+<?php
+
+$OAuth = new Dwolla\OAuth();
+$OAuth->settings->client_id = $apiKey;
+$OAuth->settings->client_secret = $apiSecret;
+
+$refreshToken = "Cr72k48ogBXh+PLwZ/gq2hAtRYSTQl+NW9W0fTxYjaYKRdEsKI";
+
+$result = $OAuth->refresh($refreshToken);
+?>
 ```
 
 > Successful Response:

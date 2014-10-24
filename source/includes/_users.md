@@ -24,13 +24,19 @@ NonProfit | Account belonging to a non-profit organization. Default transaction 
 
 ```php
 /**
- * EXAMPLE 1: 
  *   Fetch basic account information
  *   for a given Dwolla ID
  **/
-$user = $Dwolla->getUser('812-546-3855');
-if(!$user) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($user); } // Print user information
+
+<?php
+
+$Account = new Dwolla\Account();
+$Account->settings->client_id = $apiKey;
+$Account->settings->client_secret = $apiSecret;
+
+$result = $Account->basic('812-121-7199');
+var_export($result);
+?>
 ```
 ```ruby
 #   Fetch basic account information
@@ -58,6 +64,15 @@ Dwolla.basicAccountInfo('812-546-3855', function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```php
+array (
+  'Id' => '812-121-7199',
+  'Name' => 'David Stancu',
+  'Latitude' => 0,
+  'Longitude' => 0,
+)
+```
 
 ```ruby
 {
@@ -117,14 +132,18 @@ Name | Full account name (or business name for a business account)
 
 ```php
 /**
- * EXAMPLE 1: 
  *   Fetch account information for the
  *   account associated with the provided
- *   OAuth token
+ *   OAuth access token
  **/
-$me = $Dwolla->me();
-if(!$me) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($me); } // Print user information
+<?php
+$Account = new Dwolla\Account();
+$Account->settings->oauth_token = "foo";
+
+$result = $Account->full();
+
+var_export($result);
+?>
 ```
 ```ruby
 #   Fetch account information for the
@@ -176,6 +195,18 @@ Dwolla.fullAccountInfo(function(err, data) {
     "State": "IA",
     "Type": "Personal"
 }
+```
+
+```php
+array (
+  'City' => 'Test',
+  'State' => 'NY',
+  'Type' => 'Commercial',
+  'Id' => '812-742-8722',
+  'Name' => 'Cafe Kubal',
+  'Latitude' => -1,
+  'Longitude' => -1,
+)
 ```
 
 ```json
@@ -230,13 +261,16 @@ Retrieve the avatar image for a Dwolla user, given their Dwolla ID.  This requir
 
 ```php
 <?php
-/**
- * EXAMPLE 1: 
- * Fetch contacts of businesses near lat 45, lon 45
- **/
-$contacts = $Dwolla->nearby(45,45);
-if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($contacts); } // Print contacts
+$Contacts = new Dwolla\Contacts();
+$Contacts->settings->client_id = $apiKey;
+$Contacts->settings->client_secret = $apiSecret;
+
+$lat = "41.585";
+$long = "-93.624";
+
+$result = $Contacts->nearby($lat, $long);
+
+var_export($result);
 ?>
 ```
 ```ruby
@@ -265,6 +299,41 @@ Dwolla.nearby('41.585', '-93.624', function(err, data){
 ```
 
 > If successful, you'll receive this response:
+
+```php
+array (
+  0 =>
+  array (
+    'Name' => 'Alan\'s Brew',
+    'Id' => '812-198-4099',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-198-4099',
+    'Latitude' => 41.582946999999997,
+    'Longitude' => -93.622444000000002,
+    'Address' => '333 SW 5th st',
+    'City' => 'Des Moines\n',
+    'State' => 'IA',
+    'PostalCode' => '50309',
+    'Group' => '812-198-4099',
+    'Delta' => 0.0036089999999973088,
+  ),
+  1 =>
+  array (
+    'Name' => 'Rocket Gear',
+    'Id' => '812-742-6826',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-6826',
+    'Latitude' => 41.589759829999998,
+    'Longitude' => -93.61564636,
+    'Address' => '123 Test Ave\n',
+    'City' => 'Des Moines',
+    'State' => 'IA',
+    'PostalCode' => '50169',
+    'Group' => '812-742-6826',
+    'Delta' => 0.013113469999993299,
+  )
+)
+```
 
 ```ruby
 [

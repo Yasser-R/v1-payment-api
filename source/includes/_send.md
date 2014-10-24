@@ -14,12 +14,23 @@
 
 ```php
 /**
- *   Send money ($1.00) to Dwolla ID 812-734-7288
+ *   Send money ($5.50) to email address gordon@dwolla.com
  **/
-$transactionId = $Dwolla->send($pin, '812-734-7288', 1.00);
-if(!$transactionId) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { echo "Send transaction ID: {$transactionId} \n"; } // Print Transaction ID
+
+<?php
+$Transactions = new Dwolla\Transactions();
+$Transactions->settings->oauth_token = "foo";
+$Transactions->settings->pin = 9999;
+
+$result = $Transactions->send('gordon@dwolla.com', 5.50, [
+  'destinationType' => 'Email'
+]);
+
+print_r($result);
+
+?>
 ```
+
 ```ruby
 #   Send money ($1.00) to a Dwolla ID 812-626-8794
 
@@ -64,6 +75,10 @@ Dwolla.send(pin, 'gordon@dwolla.com', 1.00, params, function(err, data) {
 ```
 
 > If successful, you'll receive this response:
+
+```php
+343947    // resulting Transacton ID
+```
 
 ```json
 {

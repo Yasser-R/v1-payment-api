@@ -37,32 +37,14 @@ State | User's resident state
 ## Get a user's contacts
 
 
-```json
-```
-
 ```php
 <?php
-/**
- * EXAMPLE 1: 
- *   Fetch last 10 contacts from the 
- *   account associated with the provided
- *   OAuth token
- **/
-$contacts = $Dwolla->contacts('Ben');
-if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($contacts); } // Print contacts
+$Contacts = new Dwolla\Contacts();
+$Contacts->settings->oauth_token = "foo";
 
-/**
- * EXAMPLE 2: 
- *   Search through the contacts of the
- *   account associated with the provided
- *   OAuth token for 'David', return 20 
- *   "Dwolla" type results. 
- **/
+$result = $Contacts->get();
 
-$contacts = $Dwolla->contacts('David', array('dwolla'), 20);
-if(!$contacts) { echo "Error: {$Dwolla->getError()} \n"; } // Check for errors
-else { print_r($contacts); } // Print contacts
+var_export($result);
 ?>
 ```
 
@@ -140,6 +122,38 @@ Dwolla.contacts({search: 'Ben'}, function(err, data){
   { ... },
   { ... }
 ]
+```
+
+```php
+array (
+  0 =>
+  array (
+    'Name' => 'GORDCORP',
+    'Id' => '812-740-4294',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-740-4294',
+    'City' => 'Test',
+    'State' => 'NY',
+  ),
+  1 =>
+  array (
+    'Name' => 'Gordon Zheng',
+    'Id' => '812-742-3301',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-3301',
+    'City' => 'Elmhurst',
+    'State' => 'NY',
+  ),
+  2 =>
+  array (
+    'Name' => 'Joe Schmoe',
+    'Id' => '812-741-3440',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-741-3440',
+    'City' => 'Test',
+    'State' => 'NY',
+  ),
+)
 ```
 
 ```js

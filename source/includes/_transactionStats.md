@@ -15,6 +15,17 @@ Dwolla.transactionsStats(function(err, data){
 puts Dwolla::Transactions.stats()
 ```
 
+```php
+<?php
+$Transactions = new Dwolla\Transactions();
+$Transactions->settings->oauth_token = "foo";
+
+$result = $Transactions->stats();
+
+var_export($result);
+?>
+```
+
 > Response:
 
 ```ruby
@@ -40,6 +51,13 @@ puts Dwolla::Transactions.stats()
         "TransactionsTotal": 116.92
     }
 }
+```
+
+```php
+array (
+  'TransactionsCount' => 5,
+  'TransactionsTotal' => 116.21,
+)
 ```
 
 Transaction statistics can be retrieved for the authenticated user.   Currently, the report contains a count of transactions and sum of transactions over a given period of time.

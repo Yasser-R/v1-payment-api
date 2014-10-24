@@ -86,7 +86,48 @@ Dwolla.fundingSources(function(err, data) {
 pp Dwolla::FundingSources.get
 ```
 
+```php
+<?php
+$fundingSources = new Dwolla\fundingSources();
+$fundingSources->settings->oauth_token = "foo";
+
+$result = $fundingSources->get();
+
+print_r($result);
+
+?>
+```
+
 > Response:
+
+```php
+array (
+  0 =>
+  array (
+    'Id' => 'Balance',
+    'Name' => 'My Dwolla Balance',
+    'Type' => '',
+    'Verified' => true,
+    'ProcessingType' => '',
+  ),
+  1 =>
+  array (
+    'Id' => '5da016f7769bcb1de9938a30d194d5a7',
+    'Name' => 'Blah - Checking',
+    'Type' => 'Checking',
+    'Verified' => true,
+    'ProcessingType' => 'ACH',
+  ),
+  2 =>
+  array (
+    'Id' => '7bf971a12543f560119318e67aa76035',
+    'Name' => 'Some Nickname - Checking',
+    'Type' => 'Checking',
+    'Verified' => false,
+    'ProcessingType' => 'ACH',
+  ),
+)
+```
 
 ```json
 {
@@ -206,7 +247,30 @@ dwolla.fundingSourceById(fundingSource, function(err, res) {
 pp Dwolla::FundingSources.get("5da016f7769bcb1de9938a30d194d5a7")
 ```
 
+```php
+<?php 
+
+$fundingSources = new Dwolla\fundingSources();
+$fundingSources->settings->oauth_token = "foo";
+
+$result = $fundingSources->info('5da016f7769bcb1de9938a30d194d5a7');
+
+var_export($result);
+?>
+```
+
 > Response:
+
+```php
+array (
+  'Balance' => NULL,
+  'Id' => '5da016f7769bcb1de9938a30d194d5a7',
+  'Name' => 'Blah - Checking',
+  'Type' => 'Checking',
+  'Verified' => true,
+  'ProcessingType' => 'ACH',
+)
+```
 
 ```ruby
 {
@@ -271,7 +335,55 @@ puts Dwolla::FundingSources.withdraw('funding_source_id', {
 })
 ```
 
-> Response: 
+```php
+<?php
+
+$fundingSources = new Dwolla\fundingSources();
+$fundingSources->settings->oauth_token = "foo";
+$fundingSources->settings->pin = 9999;
+
+$result = $fundingSources->withdraw(5.00, '5da016f7769bcb1de9938a30d194d5a7');
+
+var_export($result);
+
+?>
+```
+
+> Response:
+
+```php
+array (
+  'Id' => 346098,
+  'Amount' => 5,
+  'Date' => '2014-10-22T19:49:45Z',
+  'Type' => 'withdrawal',
+  'UserType' => 'Dwolla',
+  'DestinationId' => 'XXX9999',
+  'DestinationName' => 'Blah',
+  'Destination' =>
+  array (
+    'Id' => 'XXX9999',
+    'Name' => 'Blah',
+    'Type' => 'Dwolla',
+    'Image' => '',
+  ),
+  'SourceId' => '812-742-8722',
+  'SourceName' => 'Cafe Kubal',
+  'Source' =>
+  array (
+    'Id' => '812-742-8722',
+    'Name' => 'Cafe Kubal',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'ClearingDate' => '2014-10-24T00:00:00Z',
+  'Status' => 'pending',
+  'Notes' => NULL,
+  'Fees' => NULL,
+  'OriginalTransactionId' => NULL,
+  'Metadata' => NULL,
+)
+``` 
 
 ```ruby
 {
@@ -411,7 +523,53 @@ dwolla.depositFromFundingSource(pin, 5.00, fundingSource, function(err, res) {
 })
 ```
 
+```php
+<?php
+$fundingSources = new Dwolla\fundingSources();
+$fundingSources->settings->oauth_token = "foo";
+$fundingSources->settings->pin = 9999;
+
+$result = $fundingSources->deposit(5.00, '5da016f7769bcb1de9938a30d194d5a7');
+
+var_export($result);
+?>
+```
+
 > Response: 
+
+```php
+array (
+  'Id' => 346099,
+  'Amount' => 5,
+  'Date' => '2014-10-22T19:51:01Z',
+  'Type' => 'deposit',
+  'UserType' => 'Dwolla',
+  'DestinationId' => '812-742-8722',
+  'DestinationName' => 'Cafe Kubal',
+  'Destination' =>
+  array (
+    'Id' => '812-742-8722',
+    'Name' => 'Cafe Kubal',
+    'Type' => 'Dwolla',
+    'Image' => 'http://uat.dwolla.com/avatars/812-742-8722',
+  ),
+  'SourceId' => 'XXX9999',
+  'SourceName' => 'Blah',
+  'Source' =>
+  array (
+    'Id' => 'XXX9999',
+    'Name' => 'Blah',
+    'Type' => 'Dwolla',
+    'Image' => '',
+  ),
+  'ClearingDate' => '2014-10-28T00:00:00Z',
+  'Status' => 'pending',
+  'Notes' => NULL,
+  'Fees' => NULL,
+  'OriginalTransactionId' => NULL,
+  'Metadata' => NULL,
+)
+```
 
 ```ruby
 {
@@ -530,6 +688,21 @@ pin | User account PIN
 
 ## Add new Funding Source
 
+```php
+<?php
+$fundingSources = new Dwolla\fundingSources();
+$fundingSources->settings->oauth_token = "foo";
+
+$routingNo = "113024915";
+$accountNo = "9999999999";
+$accountType = "Checking";
+$nickname = "My Bank Account";
+$result = $fundingSources->add($accountNo, $routingNo, $accountType, $nickname);
+
+var_export($result);
+?>
+```
+
 ```js
 /**
  * Add a funding source with account number '12345678',
@@ -566,6 +739,16 @@ puts Dwolla::FundingSources.add({
 ```
 
 > Response: 
+
+```php
+array (
+  'Id' => '377d8ed651c2b799784aa2aa10762c37',
+  'Name' => 'My Bank Account - Checking',
+  'Type' => 'Checking',
+  'Verified' => false,
+  'ProcessingType' => 'ACH',
+)
+```
 
 ```ruby
 {
@@ -618,6 +801,19 @@ name | Arbitrary nickname for the funding source
 
 ## Verify a Funding Source
 
+```php
+<?php
+$fundingSources = new Dwolla\fundingSources();
+$fundingSources->settings->oauth_token = "foo";
+
+$deposit1 = 0.04;
+$deposit2 = 0.02;
+
+$result = $fundingSources->verify($deposit1, $deposit2, "377d8ed651c2b799784aa2aa10762c37");
+
+var_export($result);
+?>
+
 ```ruby
 puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
   :deposit1 => 0.01, 
@@ -646,6 +842,16 @@ Dwolla.verifyFundingSource('0.02', '0.05', fundingSource, function(err, data) {
 ```
 
 > Response:
+
+```php
+array (
+  'Id' => '377d8ed651c2b799784aa2aa10762c37',
+  'Name' => 'My Bank Account - Checking',
+  'Type' => 'Checking',
+  'Verified' => true,
+  'ProcessingType' => 'ACH',
+)
+```
 
 ```ruby
 {
