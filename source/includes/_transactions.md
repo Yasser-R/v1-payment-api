@@ -776,3 +776,83 @@ To fetch a transaction which belongs to the authorized user:
 or to fetch a transaction which belongs to an application:
 
 `GET https://www.dwolla.com/oauth/rest/transactions/{id}?client_id={}&client_secret={}`
+
+## Search transactions
+
+```shell
+GET https://www.dwolla.com/oauth/rest/transactions/search?limit=20
+```
+
+> Response:
+
+```shell
+{
+  "Success": true,
+  "Message": "Success",
+  "Response": {
+    "TotalHits": 13502,
+    "Results": [
+      {
+        "Id": 346099,
+        "Amount": 5,
+        "Date": "2014-10-22T19:51:01Z",
+        "Type": "deposit",
+        "UserType": "Dwolla",
+        "DestinationId": "812-742-8722",
+        "DestinationName": "Cafe Kubal",
+        "Destination": {
+          "Id": "812-742-8722",
+          "Name": "Cafe Kubal",
+          "Type": "Dwolla",
+          "Image": "http://www.dwolla.com/avatars/812-742-8722"
+        },
+        "SourceId": "XXX9999",
+        "SourceName": "Blah",
+        "Source": {
+          "Id": "XXX9999",
+          "Name": "Blah",
+          "Type": "Dwolla",
+          "Image": ""
+        },
+        "ClearingDate": "2014-10-28T00:00:00Z",
+        "Status": "pending",
+        "Notes": null,
+        "Fees": null,
+        "OriginalTransactionId": null,
+        "Metadata": null
+      },
+
+      { ... }
+    ]
+  }
+}
+```
+
+Search a user's transactions, filtering results based on an amount range, date range, transaction type, transaction status, individual's name, business name, Dwolla ID, email address, or phone number.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
+
+### HTTP Request
+To fetch a transaction which belongs to the authorized user:
+
+`GET https://www.dwolla.com/oauth/rest/transactions/search?limit={}`
+
+### Optional Querystring Parameters
+Parameter | Description
+----------|------------
+searchTerm | A string to be matched with recipient/sender names (individual or business/organizaton), Dwolla ID, email address, or phone number. 
+startAmount | Only include transactions with an amount equal to or greater than `startAmount`.  Can optionally be used with `endAmount` to specify an amount range.
+endAmount | Only include transactions with an amount equal to or less than `endAmount`.  Can optionally be used with `startAmount` to specify an amount range.
+startDate | Only include transactions created after this date.  ISO-8601 format: `YYYY-MM-DD`.  Can optionally be used with `endDate` to specify a date range.
+endDate | Only include transactions created before than this date.  ISO-8601 format: `YYYY-MM-DD`.  Can optionally be used with `startDate` to specify a date range.
+type | Filter results on [Transaction type](#transaction-types).  Possible values: `money_sent`, `money_received`, `deposit`, `withdraw`
+status | Filter results on [Transaction status](#transaction-statuses). Possible values: `pending`, `processed`, `failed`, `reclaimed`, `cancelled`
+limit | Number of search results to return.  Defaults to `50`.
+offset | Number of search results to skip.  Used for pagination.
+
+### Response
+
+Parameter | Description
+----------|------------
+TotalHits | Total number of search results.  Does not necessarily equal the number of results contained in the response `Results`.
+Results | JSON array of [Transaction](#transaction-resource) resources.
