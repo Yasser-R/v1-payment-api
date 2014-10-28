@@ -15,7 +15,7 @@ $~ cowsay MOOOspay
     
 ```
 
-MassPay allows you to easily send up to 10,000 payments with a single API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission. 
+MassPay allows you to easily send up to 5,000 payments with a single API request. The payments are funded from a single user's specified funding source and processed asynchronously upon submission. 
 
 Your MassPay `Job` will then be queued and processed.  As the service processes a `Job`, each `Item` is processed one ofter the other, at an average rate of about 0.5 sec. / item.  Therefore, you can expect a 1000-item MassPay Job to be completed in about 8 minutes.
 
