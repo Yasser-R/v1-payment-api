@@ -1191,8 +1191,7 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
                 </span><span class="s2">"Description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A somewhat tasty non-vegetarian sandwich"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Prime Rib Sandwich"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"Price"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"Total"</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="w">
+                </span><span class="s2">"Quantity"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">],</span><span class="w">
         </span><span class="s2">"Metadata"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w">
@@ -1562,11 +1561,11 @@ Invalid purchase order.
             </span><span class="s2">"ProcessingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACH"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Credit"</span><span class="w">
-            </span><span class="s2">"Name"</span><span class="err">:</span><span class="w"> </span><span class="s2">"Credit"</span><span class="w">
-            </span><span class="s2">"Type"</span><span class="err">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
-            </span><span class="s2">"Verified"</span><span class="err">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-            </span><span class="s2">"ProcessingType"</span><span class="err">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Credit"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Credit"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Verified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ProcessingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
             </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">,</span><span class="w">
@@ -1695,7 +1694,7 @@ Invalid purchase order.
         </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Donations Payout Account - Checking"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Checking"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"Verified"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"Verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
         </span><span class="s2">"ProcessingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FiSync"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -3383,7 +3382,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
         <span class="o">}</span>,
         <span class="s2">"Notes"</span>: <span class="s2">"here's this month's rent!"</span>,
         <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
-        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>,
+        <span class="s2">"Metadata"</span>: <span class="o">{</span>
+          <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
+      <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre>
@@ -3440,6 +3442,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>notes</td>
 <td>yes</td>
 <td>Optional note to attach to transaction.  Max 250 chars.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  <a href="#metadata">Read more</a></td>
 </tr>
 </tbody></table>
 <h2 id='list-scheduled-transactions'>List Scheduled Transactions</h2><pre class="highlight shell"><span class="o">{</span>
@@ -4220,6 +4227,16 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tr>
 </thead><tbody>
 <tr>
+<td>client_id</td>
+<td></td>
+<td>Your Application Key</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td></td>
+<td>Your Application Secret</td>
+</tr>
+<tr>
 <td>latitude</td>
 <td></td>
 <td>Latitude coordinates (between -90.0 and 90.0)</td>
@@ -4290,6 +4307,159 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <tr>
 <td>Group</td>
 <td>Set to Dwolla ID of business account</td>
+</tr>
+<tr>
+<td>Delta</td>
+<td>Proximity to the lat / long specified in query</td>
+</tr>
+</tbody></table>
+<h2 id='find-users-nearby'>Find Users Nearby</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="nv">$apiSecret</span><span class="p">;</span>
+
+<span class="nv">$lat</span> <span class="o">=</span> <span class="s2">"40.7820"</span><span class="p">;</span>
+<span class="nv">$long</span> <span class="o">=</span> <span class="s2">"-73.8317"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">nearby</span><span class="p">(</span><span class="nv">$lat</span><span class="p">,</span> <span class="nv">$long</span><span class="p">);</span>
+
+<span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#   Get a list of nearby Dwolla users</span>
+<span class="c1">#   for a given set of coordinates (lat, long)</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">nearby</span><span class="p">(</span><span class="ss">:latitude</span> <span class="o">=&gt;</span> <span class="mi">40</span><span class="o">.</span><span class="mi">7820</span><span class="p">,</span> <span class="ss">:longitude</span> <span class="o">=&gt;</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">8317</span><span class="p">)</span>
+</pre>
+<pre class="highlight python"><span class="s">'''
+    EXAMPLE 1: 
+      Fetch users near  40.78 and 
+      -73.83 (default parameters in dwolla-python)
+'''</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_nearby_users</span><span class="p">(</span><span class="s">'40.7820'</span><span class="p">,</span> <span class="s">'-73.8317'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Fetch all spots near lat 40.7820 and 
+ * long -73.8317
+ **/</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">nearbyUsers</span><span class="p">(</span><span class="s1">'40.7820'</span><span class="p">,</span> <span class="s1">'-73.8317'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight php">array (
+  0 =&gt;
+  array (
+    'Id' =&gt; '812-687-7049',
+    'Image' =&gt; 'https://www.dwolla.com/avatars/812-687-7049',
+    'Name' =&gt; 'Gordon Zheng',
+    'Latitude' =&gt; 40.708448,
+    'Longitude' =&gt; -74.014429,
+    'Delta' =&gt; 114.72287700000001
+  )
+)
+</pre>
+<pre class="highlight ruby"><span class="o">[</span>
+  <span class="p">{</span>
+    <span class="s2">"Id"</span>         <span class="o">=&gt;</span> <span class="s2">"812-687-7049"</span><span class="p">,</span>
+    <span class="s2">"Image"</span>      <span class="o">=&gt;</span> <span class="s2">"https://www.dwolla.com/avatars/812-687-7049"</span><span class="p">,</span>
+    <span class="s2">"Name"</span>       <span class="o">=&gt;</span> <span class="s2">"Gordon Zheng"</span><span class="p">,</span>
+    <span class="s2">"Latitude"</span>   <span class="o">=&gt;</span> <span class="mi">40</span><span class="o">.</span><span class="mi">708448</span><span class="p">,</span>
+    <span class="s2">"Longitude"</span>  <span class="o">=&gt;</span> <span class="o">-</span><span class="mi">74</span><span class="o">.</span><span class="mo">01442</span><span class="mi">9</span><span class="p">,</span>
+    <span class="s2">"Delta"</span>      <span class="o">=&gt;</span> <span class="mi">114</span><span class="o">.</span><span class="mi">72287700000001</span>
+  <span class="p">},</span>
+  <span class="p">{</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span> <span class="p">}</span>
+<span class="o">]</span>
+</pre>
+<pre class="highlight javascript"><span class="p">[</span>
+  <span class="p">{</span>
+    <span class="s2">"Id"</span><span class="p">:</span> <span class="s2">"812-687-7049"</span><span class="p">,</span>
+    <span class="s2">"Image"</span><span class="p">:</span> <span class="s2">"https://www.dwolla.com/avatars/812-687-7049"</span><span class="p">,</span>
+    <span class="s2">"Name"</span><span class="p">:</span> <span class="s2">"Gordon Zheng"</span><span class="p">,</span>
+    <span class="s2">"Latitude"</span><span class="p">:</span> <span class="mf">40.708448</span><span class="p">,</span>
+    <span class="s2">"Longitude"</span><span class="p">:</span> <span class="o">-</span><span class="mf">74.014429</span><span class="p">,</span>
+    <span class="s2">"Delta"</span><span class="p">:</span> <span class="mf">114.72287700000001</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre>
+<pre class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"812-687-7049"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.dwolla.com/avatars/812-687-7049"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Gordon Zheng"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Latitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">40.708448</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Longitude"</span><span class="p">:</span><span class="w"> </span><span class="mf">-74.014429</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"Delta"</span><span class="p">:</span><span class="w"> </span><span class="mf">114.72287700000001</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre>
+
+<p>Retrieve a list of Dwolla users near a given location. Users must opt into allowing their location to be seen by enabling this setting in the Dwolla mobile app. Example on the (<a href="https://mobile.dwollalabs.com/location">web app</a>).</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET http://www.dwolla.com/oauth/rest/users/nearby?client_id={}&amp;client_secret={}&amp;latitude={}&amp;longitude={}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>client_id</td>
+<td></td>
+<td>Your Application Key</td>
+</tr>
+<tr>
+<td>client_secret</td>
+<td></td>
+<td>Your Application Secret</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td></td>
+<td>Latitude coordinates (between -90.0 and 90.0)</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td></td>
+<td>Longitude coordinates (between -180.0 and 180.0)</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Id</td>
+<td>Dwolla ID</td>
+</tr>
+<tr>
+<td>Image</td>
+<td>URL to user&rsquo;s account avatar</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>User&rsquo;s name</td>
+</tr>
+<tr>
+<td>Latitude</td>
+<td>User&rsquo;s location</td>
+</tr>
+<tr>
+<td>Longitude</td>
+<td>User&rsquo;s location</td>
 </tr>
 <tr>
 <td>Delta</td>
