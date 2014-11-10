@@ -149,10 +149,10 @@ array (
             "ProcessingType": "ACH"
         },
         {
-            "Id": "Credit"
-            "Name": "Credit"
-            "Type": ""
-            "Verified": true
+            "Id": "Credit",
+            "Name": "Credit",
+            "Type": "",
+            "Verified": "true",
             "ProcessingType": ""
         },
         {
@@ -290,7 +290,7 @@ array (
         "Id": "c58bb9f7f1d51d5547e1987a2833f4fb",
         "Name": "Donations Payout Account - Checking",
         "Type": "Checking",
-        "Verified": "true",
+        "Verified": true,
         "ProcessingType": "FiSync"
     }
 }

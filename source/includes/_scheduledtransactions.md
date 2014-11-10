@@ -97,7 +97,10 @@ Status | Possible values: 'scheduled', 'processed', 'failed'
         },
         "Notes": "here's this month's rent!",
         "Status": "scheduled",
-        "CreatedDate": "2014-09-12T20:37:37Z"
+        "CreatedDate": "2014-09-12T20:37:37Z",
+        "Metadata": {
+          "foo": "bar"
+      }
     }
 }
 ```
@@ -119,6 +122,7 @@ fundsSource | | ID of the [Funding Source](#funding-sources) to fund this paymen
 scheduleDate | | Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.
 assumeCosts | | Boolean.  Set to `true` if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).
 notes | yes | Optional note to attach to transaction.  Max 250 chars.
+metadata | yes | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)  
 
 ## List Scheduled Transactions
 ```shell

@@ -232,8 +232,7 @@ This method is not yet supported in dwolla-ruby.
                 "Description": "A somewhat tasty non-vegetarian sandwich",
                 "Name": "Prime Rib Sandwich",
                 "Price": 15,
-                "Quantity": 1,
-                "Total": 15
+                "Quantity": 1
             }
         ],
         "Metadata": null

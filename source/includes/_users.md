@@ -448,8 +448,10 @@ Retrieve a list of Dwolla business accounts ([Spots](https://www.dwolla.com/spot
 
 | Parameter     | Optional? | Description                                                      |
 |---------------|-----------|------------------------------------------------------------------|
-| latitude      |         | Latitude coordinates (between -90.0 and 90.0)                    |
-| longitude     |         | Longitude coordinates (between -180.0 and 180.0)                 |
+| client_id     |           | Your Application Key                                             |
+| client_secret |           | Your Application Secret                                          |
+| latitude      |           | Latitude coordinates (between -90.0 and 90.0)                    |
+| longitude     |           | Longitude coordinates (between -180.0 and 180.0)                 |
 | range         | yes       | Range to retrieve spots for in miles (default 10, minimum 1)     |
 | limit         | yes       | Number of spots to retrieve (default 10, minimum 1, maximum 100) |
 
@@ -468,4 +470,130 @@ City | Business address city
 State | Business address state
 PostalCode | Business address zip code
 Group | Set to Dwolla ID of business account
+Delta | Proximity to the lat / long specified in query
+
+## Find Users Nearby
+
+```php
+<?php
+$Account = new Dwolla\Account();
+$Account->settings->client_id = $apiKey;
+$Account->settings->client_secret = $apiSecret;
+
+$lat = "40.7820";
+$long = "-73.8317";
+
+$result = $Account->nearby($lat, $long);
+
+var_export($result);
+?>
+```
+```ruby
+#   Get a list of nearby Dwolla users
+#   for a given set of coordinates (lat, long)
+pp Dwolla::Users.nearby(:latitude => 40.7820, :longitude => -73.8317)
+```
+```python
+'''
+    EXAMPLE 1: 
+      Fetch users near  40.78 and 
+      -73.83 (default parameters in dwolla-python)
+'''
+users = DwollaUser.get_nearby_users('40.7820', '-73.8317')
+print(users)
+```
+```js
+/**
+ * Fetch all spots near lat 40.7820 and 
+ * long -73.8317
+ **/
+
+Dwolla.nearbyUsers('40.7820', '-73.8317', function(err, data){
+   console.log(data);
+});
+```
+
+> If successful, you'll receive this response:
+
+```php
+array (
+  0 =>
+  array (
+    'Id' => '812-687-7049',
+    'Image' => 'https://www.dwolla.com/avatars/812-687-7049',
+    'Name' => 'Gordon Zheng',
+    'Latitude' => 40.708448,
+    'Longitude' => -74.014429,
+    'Delta' => 114.72287700000001
+  )
+)
+```
+
+```ruby
+[
+  {
+    "Id"         => "812-687-7049",
+    "Image"      => "https://www.dwolla.com/avatars/812-687-7049",
+    "Name"       => "Gordon Zheng",
+    "Latitude"   => 40.708448,
+    "Longitude"  => -74.014429,
+    "Delta"      => 114.72287700000001
+  },
+  { ... }
+]
+```
+
+```js
+[
+  {
+    "Id": "812-687-7049",
+    "Image": "https://www.dwolla.com/avatars/812-687-7049",
+    "Name": "Gordon Zheng",
+    "Latitude": 40.708448,
+    "Longitude": -74.014429,
+    "Delta": 114.72287700000001
+  }
+]
+```
+
+```json
+{
+    "Success": true,
+    "Message": "Success",
+    "Response": [
+        {
+            "Id": "812-687-7049",
+            "Image": "https://www.dwolla.com/avatars/812-687-7049",
+            "Name": "Gordon Zheng",
+            "Latitude": 40.708448,
+            "Longitude": -74.014429,
+            "Delta": 114.72287700000001
+        }
+    ]
+}
+```
+
+Retrieve a list of Dwolla users near a given location. Users must opt into allowing their location to be seen by enabling this setting in the Dwolla mobile app. Example on the ([web app](https://mobile.dwollalabs.com/location)).
+
+### HTTP Request
+
+`GET http://www.dwolla.com/oauth/rest/users/nearby?client_id={}&client_secret={}&latitude={}&longitude={}`
+
+
+| Parameter     | Optional? | Description                                                      |
+|---------------|-----------|------------------------------------------------------------------|
+| client_id     |           | Your Application Key                                             |
+| client_secret |           | Your Application Secret                                          |
+| latitude      |           | Latitude coordinates (between -90.0 and 90.0)                    |
+| longitude     |           | Longitude coordinates (between -180.0 and 180.0)                 |
+
+### Response
+
+| Parameter | Description
+|-----------|------------|
+Id | Dwolla ID
+Image | URL to user's account avatar
+Name | User's name
+Latitude | User's location
+Longitude | User's location
 Delta | Proximity to the lat / long specified in query
