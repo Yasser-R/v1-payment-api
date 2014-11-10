@@ -35,7 +35,10 @@
   },
   "Notes": "This is a scheduled transaction",
   "Status": "scheduled",
-  "CreatedDate": "2014-09-12T20:37:37Z"
+  "CreatedDate": "2014-09-12T20:37:37Z",
+  "Metadata": {
+    "foo": "bar"
+  }
 }
 ```
 
@@ -55,7 +58,7 @@ AssumeCosts | Boolean.  Set to `true` if the sender of the funds will assume the
 Destination | JSON object describing the recipient.  `Id` is the recipient's Dwolla ID or email address, `Name` is the recipient's full name, `Type` is either `Dwolla` or `Email` and `Image` is a URL to the recipient's avatar, if the recipient is an existing Dwolla user.
 Notes | Optional notes field.  Max 250 chars.
 Status | Possible values: 'scheduled', 'processed', 'failed'
-
+Metadata | JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. `null` if not provided or visible to application.  [Read more](#metadata)
 
 ## Create Scheduled Transaction
 
