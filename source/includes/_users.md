@@ -128,6 +128,11 @@ Latitude | If this is a business account, latitude of the account's location.  O
 Longitude | If this is a business account, longitude of the account's location.  Otherwise, always `0` for individual accounts.
 Name | Full account name (or business name for a business account)
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid account identifier. | Could not find an account with the specified ID. |
+
 ## Get Full Account Info
 
 ```php
@@ -472,6 +477,12 @@ PostalCode | Business address zip code
 Group | Set to Dwolla ID of business account
 Delta | Proximity to the lat / long specified in query
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Latitude must be between -90.0 and 90.0. | Invalid latitude. |
+| Longitude must be between -180.0 and 180.0. | Invalid longitude. |
+
 ## Find Users Nearby
 
 ```php
@@ -597,3 +608,9 @@ Name | User's name
 Latitude | User's location
 Longitude | User's location
 Delta | Proximity to the lat / long specified in query
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Latitude must be between -90.0 and 90.0. | Invalid latitude. |
+| Longitude must be between -180.0 and 180.0. | Invalid longitude. |

@@ -184,6 +184,19 @@ facilitatorAmount | yes | Amount of the facilitator fee to override. Only applic
 metadata | yes | An object containing up to 10 key-value pairs of your choice which is persisted with the resulting transaction.  [Learn about Metadata](#metadata)
 orderItems | yes | An array of JSON object(s) which contain a `name`, `description`, `quantity`, and `price`.
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Shipping rate cannot be less than $0. | Specified shipping must be greater than $0 |
+| Tax cannot be less than $0. | Specified tax must be greater than $0 |
+| Discount cannot be greater than $0. | Specified discount must be less than $0 |
+| Total cannot be less than $.01. | Total amount of PO must be greater than $0.01 |
+| Invalid total. | Invalid total in reference to the orderItems in the PO |
+| Notes length is too long. Maximum of 250 character is allowed. | Specified notes is greater than the allowed 250 character limit |
+| Price on all order items cannot be less than $0. |  |
+| Quantity on all order items cannot be less than 1. | OrderItems specified must contain a quantity greater than 1 |
+| Order item name length must be between 1 and 100 characters. | Order item name must be greater than 1 & less than 100 characters |
+| Order item description length must not exceed 200 characters. | Order item description must be greater than 1 & less than 200 characters |
 
 ## Retrieve a Checkout
 

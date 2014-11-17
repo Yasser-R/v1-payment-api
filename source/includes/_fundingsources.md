@@ -227,6 +227,11 @@ To do so, provide the `destinationId` and `destinationType` params in your reque
 
 `GET https://www.dwolla.com/oauth/rest/fundingsources/?destinationId=812-713-9234&destinationType=Dwolla`
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| No verified funding sources. | Could not find any funding sources for the given OAuth token. |
+
 ## Get a Funding Source
 
 ```js
@@ -312,6 +317,11 @@ Look up a particular funding source by its funding source ID.
 
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/fundingsources/{id}`
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| No verified funding source matching Id {...} | Could not find a funding source with the given ID for the given OAuth token. |
 
 ## Withdraw to a funding source
 ```js
@@ -499,6 +509,15 @@ Parameter | Description
 amount | Amount to withdraw from balance to funding source
 pin | User account PIN
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid funding source. | The funding source specified is either empty or invalid. |
+| Invalid financial institution. | Could not find a funding source with the given ID. |
+| The amount supplied is invalid. | The amount parameter is either missing, empty, or invalid (contains illegal characters). |
+| The amount is too small. Please send at least $1.00. | The minimum withdraw amount is $1.00. Please adjust the withdraw amount. |
+| Not enough funds in the Dwolla balance to complete the withdrawal. | There are not enough funds in the account's Dwolla balance to complete the withdrawl. |
+
 ## Deposit from a funding source
 
 ```json
@@ -685,6 +704,14 @@ Parameter | Description
 amount | Amount to withdraw from balance to funding source
 pin | User account PIN
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid funding source. | The funding source specified is either empty or invalid. |
+| Invalid financial institution. | Could not find a funding source with the given ID. |
+| The amount supplied is invalid. | The amount parameter is either missing, empty, or invalid (contains illegal characters). |
+| The amount is too small. Please send at least $1.00. | The minimum deposit amount is $1.00. Please adjust the deposit amount. |
+| The account is limited to {...} per transaction | The maximum amount per deposit for this account is {…}. Please adjust the deposit amount. |
 
 ## Add new Funding Source
 
@@ -799,6 +826,20 @@ routing_number | The bank account's routing number.
 account_type | Type of bank account: `Checking` or `Savings`.
 name | Arbitrary nickname for the funding source
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Maximum number of bank accounts reached. | Users can only have 2 linked funding sources at once. |
+| User must be verified. | The user account associated with the given OAuth token is not currently verified. Please verify the user before adding a funding source. |
+| Invalid account type. | Invalid bank account type. See request parameters for valid account types. |
+| Invalid account name. | Invalid bank account name. See request parameters for valid account names. |
+| Please verify the routing number. It appears invalid. | Invalid bank routing number. |
+| Please verify the account number. It appears invalid. | Invalid bank account number. |
+| Please verify the SSN of the token holder. It appears invalid. | The SSN number of the user associated with the given OAuth token is invalid, or missing. |
+| You have already added this account. | This funding source is already linked to the user with the given OAuth token. |
+| There have been too many invalid attempts made with this account. Please wait 30 minutes and try again. | There have been too many invalid attempts made with this account. Please wait 30 minutes and try again. |
+| It looks like we're having problems connecting to your bank. We will automatically process your transaction as soon as we are able to connect. | It looks like we're having problems connecting to your bank. We will automatically process your transaction as soon as we are able to connect. |
+
 ## Verify a Funding Source
 
 ```php
@@ -899,3 +940,16 @@ Parameter | Description
 ----------|------------
 deposit1 | First amount
 deposit2 | Second amount
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid funding source ID. | The funding source specified is either empty or invalid. |
+| Bank has already been verified. | The bank account has already been verified. |
+| Maximum number of verification attempts already reached. | Maximum number of verification attempts for this bank account already reached. Please contact customer support. |
+| deposit1 amount isn't a valid or positive number. | The amount specified for 'deposit1' isn't a valid or positive number. |
+| deposit2 amount isn't a valid or positive number. | The amount specified for 'deposit2' isn't a valid or positive number. |
+| deposit1 amount should be less than $.15 (ie: enter $.05 for 5 cents) | The amount specified for 'deposit1' should be less than 15 cents. |
+| deposit2 amount should be less than $.15 (ie: enter $.05 for 5 cents) | The amount specified for 'deposit2' should be less than 15 cents. |
+| The verification deposits have not had enough time to clear the system. Please allow 2-3 days from when the bank was added before attempting to verify the account. | Please allow 2-3 business days before attempting to verify this funding source. |
+| One or both of the amounts do not match our records. | The specified deposit amounts are incorrect. |

@@ -115,3 +115,10 @@ The Refund API requires the [_Recipient's_ Transaction ID](#how-transactions-wor
 TransactionId | Transaction ID of the newly created refund payment
 RefundDate | Timestamp when refund was created
 Amount | Amount refunded
+
+### Errors
+| Error String | Description |
+|------------------|-------------|
+| Invalid access token. | Access token not valid. |
+| Transaction ineligible for refund. | Cannot refund the transaction, for one of the following reasons: user is not recipient of a transaction, user is not a Commercial or Non-Profit type account |
+| Invalid refund amount. | Refund amount is either less than 0.01 or not equal to or less than the original transaction amount. |

@@ -125,3 +125,13 @@ Facilitator fees allow you, as the application facilitating a payment, to take a
 ### Response 
 
 If successful, the response is simply the [Sender's Transaction ID](#how-transactions-work) for the resulting payment.  Read more about [Transactions](#transactions).
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Insufficient balance. | The source account does not have sufficient balance in the selected funding source. |
+| The account is limited to $x per transaction. on: | The source account has exceeded it's sending transaction limit |
+| Amount must be at least $0.01. on: | The amount to send must be greater than $0.01 |
+| Invalid account PIN | The supplied PIN is invalid or incorrect. |
+| Invalid SSN for this account. | The source account is pending SSN validation. |
+| Invalid funding source provided: {...} | The specified funding source doesn't exist or is invalid. |

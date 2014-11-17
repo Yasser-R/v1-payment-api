@@ -72,3 +72,9 @@ Parameter | Optional? | Description
 ----------|-----------|------------
 startDate | yes | Starting date and time for which to select transactions for report. Defaults to 0300 UTC, today.
 endDate | yes | Ending date and time for which to select transactions for report.  Defaults to current date and time.
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid start date format. | Should follow format of yyyy-mm-dd |
+| Invalid end date format. | Should follow format of yyyy-mm-dd |

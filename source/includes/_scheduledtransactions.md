@@ -127,6 +127,16 @@ assumeCosts | | Boolean.  Set to `true` if the sender of the funds will assume t
 notes | yes | Optional note to attach to transaction.  Max 250 chars.
 metadata | yes | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)  
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid account PIN | The supplied PIN is invalid or incorrect. |
+| There was an error scheduling the transaction at this time. | There was an error scheduling this transaction |
+| Invalid funding source. | The specified funding source doesn't exist or is invalid. |
+| Funding source must be a bank. | The specified funding source must be a bank |
+| Notes length is too long. Maximum of 250 character is allowed. | The 'notes' length is too long. |
+| This user is unable to receive transactions from provided funding source. | The destination user is unable to receive funds from specified funding source |
+
 ## List Scheduled Transactions
 ```shell
 {
@@ -290,6 +300,12 @@ scheduleDate | yes | Date to initiate payment.  If the transaction is funded by 
 assumeCosts | yes | Boolean.  Set to `true` if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).
 notes | yes | Optional note to attach to transaction.  Max 250 chars.
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Transaction has already been processed. | Unable to edit a transaction that has alredy been processed |
+| There was an error updating the scheduled transaction. | Error occured when updating the scheduled transaction |
+
 ## Delete Scheduled Transaction
 
 ```shell
@@ -312,6 +328,12 @@ Delete a *pending* scheduled transaction created by the authorized user.  Status
 
 ### HTTP Request
 `DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}`
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Scheduled transaction must not have been processed to delete. | The scheduled transaction must be processed before deleting |
+| There was an error deleting the scheduled transaction. | There was an error deleting the scheduled transaction |
 
 ## Delete all Scheduled Transactions
 

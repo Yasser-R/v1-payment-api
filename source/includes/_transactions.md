@@ -382,6 +382,14 @@ skip | Number of transactions to skip.
 sinceDate | Earliest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
 endDate | Latest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: `2014-08-13T21:05:23.797Z`
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid since date. | Date specified to retrieve transactions is invalid |
+| Invalid end date. | Date specified to retrieve transactions is invalid |
+| Invalid limit. | Invalid number of transactions to return |
+| Invalid skip. | Invalid number of transactions to skip |
+
 ## List an app's transactions 
 
 ```js
@@ -776,6 +784,12 @@ To fetch a transaction which belongs to the authorized user:
 or to fetch a transaction which belongs to an application:
 
 `GET https://www.dwolla.com/oauth/rest/transactions/{id}?client_id={}&client_secret={}`
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid transaction ID. | The specified transaction ID is empty, missing, or invalid. |
+| Transaction not found for account. | Could not find a transaction with the specified ID for the given OAuth token. |
 
 ## Search transactions
 

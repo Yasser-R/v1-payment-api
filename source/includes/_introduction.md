@@ -154,7 +154,7 @@ Currently, there are 2 bugs we are aware of:
 
 ## Errors
 
-When an error has occured, Dwolla responds with a standard HTTP 200 JSON response. In addition, an occasional HTTP 500 XML response will occur which results from a syntax error.
+When an error has occured, Dwolla responds with a standard HTTP 200 JSON response. Errors are communicated to you in the actual payload of the response. In addition, an occasional HTTP 500 XML response will occur which results from a syntax error.
 
 ```shell
 Standard HTTP 200 JSON response:
@@ -188,3 +188,15 @@ HTTP 500 XML response:
 200 | JSON | Results from an invalid request |
 500 | XML | Results from a syntax error / bad JSON payload |
 
+### General Errors
+The following errors are common across all API endpoints.
+
+| Error String | Description |
+|--------------|-------------|
+| Access token is empty. | No OAuth access token has been supplied. |
+| Invalid access token. | No OAuth access token has been supplied. |
+| Token does not have access to requested resource. Token must have {...} scope access. | The given OAuth token does not have access to the requested scope used. Please review the scopes list. |
+| Invalid account status for user of this access token. | The account associated with the given OAuth token is in an invalid status. |
+| Application is either not verified or suspended. | The application used to generate the OAuth token has been unverified or suspended. |
+| Account temporarily locked | Too many failed attempts have been made to access this account. The account has been temporarily locked for 30 minutes. |
+| Unexpected error has occurred. | Something unexpected happened. It has been logged on our end and will be reviewed shortly. |

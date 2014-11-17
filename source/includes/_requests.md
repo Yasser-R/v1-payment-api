@@ -178,6 +178,16 @@ Send a Money Request from the authorized user to a destination Dwolla user, emai
 | additionalFees             | yes | Array of additional facilitator fee objects.  `[{"destinationId": "", "amount": 0.01}, ...]` |
 | metadata                   | yes | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)  |
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Notes length is too long. Maximum of 250 character is allowed. | The 'notes' parameter is too long. See requests parameters for further details. |
+| The user to send to could not be found. | Could not find the speicified source user + source type combination. |
+| You can only send money to one of your Twitter followers. | You can only request money from one of your Twitter followers. |
+| Invalid facilitator user. |  |
+| Facilitator fee too large. | Facilitator fee cannot exceed 50% of the amount. |
+| Facilitator fee too small. |  |
+| Money request failed. {..} | An unexpecetd error occured while trying to request funds. See additional response message. |
 
 ## List Money Requests
 
@@ -570,6 +580,11 @@ Retrieve a single Money Request by its ID.
 
 `GET https://www.dwolla.com/oauth/rest/requests/{id}`
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| No verified funding sources. | Could not find any funding sources for the given OAuth token. |
+
 ## Fulfill Money Request
 
 ```php
@@ -730,6 +745,17 @@ Fulfill an authorized user's pending money request.  Request must have a status 
 | assumeCosts | yes | Set to `true` for the fulfilling user to assume the Dwolla fee, `false` for the destination user to assume the fee. |
 | metadata | yes | An optional [metadata](#metadata) object.
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid request ID. | The specific request ID is either empty or invalid. |
+| Request not found for account. | Could not find a request with the specified ID for the given OAuth token. |
+| Account can not pay their own request. | Account can not pay their own request. |
+| Request has already been paid | Request has already been paid |
+| Amount may not be less than request amount of {0} | The fulfilled amount cannot be less than the requested amount. |
+| Notes length is too long. Maximum of 250 character is allowed. | The 'notes' parameter is too long. See requests parameters for further details. |
+| Invalid funding source provided: {..} | The specified funding source is missing, empty, or invalid. |
+| Insufficient funds. | The are not enough funds in the specified funding source to fulfill this transaction. |
 
 ## Cancel a Money Request
 
@@ -799,3 +825,9 @@ true    // boolean.
 ### HTTP Request
 
 `POST https://www.dwolla.com/oauth/rest/requests/{request_id}/cancel`
+
+| Error String | Description |
+|--------------|-------------|
+| Invalid request ID. | The specific request ID is either empty or invalid. |
+| Request not found for account. | Could not find a request with the specified ID for the given OAuth token. |
+| Request is not in Pending status. | You may only cancel requests that are in the 'pending' state. |
