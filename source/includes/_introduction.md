@@ -151,3 +151,40 @@ Currently, there are 2 bugs we are aware of:
 
 1. If an metadata collection contains two duplicate keys, a HTTP 500 XML response will be thrown instead of a proper error response.
 2. Keys which start with a number or symbol (ex. "10", "10abc", "$abc") are rejected.
+
+## Errors
+
+When an error has occured, Dwolla responds with a standard HTTP 200 JSON response. In addition, an occasional HTTP 500 XML response will occur which results from a syntax error.
+
+```shell
+Standard HTTP 200 JSON response:
+{
+    "Success": false,
+    "Message": "Access token is empty.",
+    "Response": null
+}
+
+
+HTTP 500 XML response:
+<Fault>
+    xmlns="http://schemas.microsoft.com/ws/2005/05/envelope/none">
+    <Code>
+        <Value>Receiver</Value>
+        <Subcode>
+            <Value 
+                xmlns:a="http://schemas.microsoft.com/net/2005/12/windowscommunicationfoundation/dispatcher">a:InternalServiceFault
+            </Value>
+        </Subcode>
+    </Code>
+    <Reason>
+        <Text xml:lang="en-US">The server was unable to process the request due to an internal error.  For more information about the error, either turn on IncludeExceptionDetailInFaults (either from ServiceBehaviorAttribute or from the &lt;serviceDebug&gt; configuration behavior) on the server in order to send the exception information back to the client, or turn on tracing as per the Microsoft .NET Framework 3.0 SDK documentation and inspect the server trace logs.</Text>
+    </Reason>
+</Fault>
+```
+
+
+| HTTP Status | Response Type | Meaning |
+|----------|------------|---------------|
+200 | JSON | Results from an invalid request |
+500 | XML | Results from a syntax error / bad JSON payload |
+
