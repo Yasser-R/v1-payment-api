@@ -154,7 +154,9 @@ Currently, there are 2 bugs we are aware of:
 
 ## Errors
 
-When an error has occured, Dwolla responds with a standard HTTP 200 JSON response. Errors are communicated to you in the actual payload of the response. In addition, an occasional HTTP 500 XML response will occur which results from a syntax error.
+When an API request results in an error, Dwolla *typically* responds with a HTTP status code of `200` and response body containing a JSON object containing an error `Message`, with `Success` set to `false` and `Response` being `null`. 
+
+However, in special cases, where there is an uncaught exception on our system, or when the API request is malformed (JSON syntax error, duplicated keys) Dwolla will return an HTTP `500` with an XML response body.  We realize that having two different response formats for errors is far from ideal, and is something we aim to fix in future versions of the API.
 
 ```shell
 Standard HTTP 200 JSON response:
@@ -163,9 +165,13 @@ Standard HTTP 200 JSON response:
     "Message": "Access token is empty.",
     "Response": null
 }
+```
 
 
+```shell
 HTTP 500 XML response:
+```
+```xml
 <Fault>
     xmlns="http://schemas.microsoft.com/ws/2005/05/envelope/none">
     <Code>
@@ -185,8 +191,8 @@ HTTP 500 XML response:
 
 | HTTP Status | Response Type | Meaning |
 |----------|------------|---------------|
-200 | JSON | Results from an invalid request |
-500 | XML | Results from a syntax error / bad JSON payload |
+200 | JSON | Normal errors |
+500 | XML | Results from an invalid request or uncaught server exception |
 
 ### General Errors
 The following errors are common across all API endpoints.
