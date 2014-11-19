@@ -202,6 +202,91 @@ TODO: document errors
 <li>If an metadata collection contains two duplicate keys, a HTTP 500 XML response will be thrown instead of a proper error response.</li>
 <li>Keys which start with a number or symbol (ex. &ldquo;10&rdquo;, &ldquo;10abc&rdquo;, &ldquo;$abc&rdquo;) are rejected.</li>
 </ol>
+<h2 id='errors'>Errors</h2>
+<p>When an API request results in an error, Dwolla <em>typically</em> responds with a HTTP status code of <code class="prettyprint">200</code> and response body containing a JSON object containing an error <code class="prettyprint">Message</code>, with <code class="prettyprint">Success</code> set to <code class="prettyprint">false</code> and <code class="prettyprint">Response</code> being <code class="prettyprint">null</code>. </p>
+
+<p>However, in special cases, where there is an uncaught exception on our system, or when the API request is malformed (JSON syntax error, duplicated keys) Dwolla will return an HTTP <code class="prettyprint">500</code> with an XML response body.  We realize that having two different response formats for errors is far from ideal, and is something we aim to fix in future versions of the API.</p>
+<pre class="highlight shell">Standard HTTP 200 JSON response:
+<span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">false</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Access token is empty."</span>,
+    <span class="s2">"Response"</span>: null
+<span class="o">}</span>
+</pre>
+<pre class="highlight shell">HTTP 500 XML response:
+</pre>
+<pre class="highlight xml"><span class="nt">&lt;Fault&gt;</span>
+    xmlns="http://schemas.microsoft.com/ws/2005/05/envelope/none"&gt;
+    <span class="nt">&lt;Code&gt;</span>
+        <span class="nt">&lt;Value&gt;</span>Receiver<span class="nt">&lt;/Value&gt;</span>
+        <span class="nt">&lt;Subcode&gt;</span>
+            <span class="nt">&lt;Value</span> 
+                <span class="na">xmlns:a=</span><span class="s">"http://schemas.microsoft.com/net/2005/12/windowscommunicationfoundation/dispatcher"</span><span class="nt">&gt;</span>a:InternalServiceFault
+            <span class="nt">&lt;/Value&gt;</span>
+        <span class="nt">&lt;/Subcode&gt;</span>
+    <span class="nt">&lt;/Code&gt;</span>
+    <span class="nt">&lt;Reason&gt;</span>
+        <span class="nt">&lt;Text</span> <span class="na">xml:lang=</span><span class="s">"en-US"</span><span class="nt">&gt;</span>The server was unable to process the request due to an internal error.  For more information about the error, either turn on IncludeExceptionDetailInFaults (either from ServiceBehaviorAttribute or from the <span class="ni">&amp;lt;</span>serviceDebug<span class="ni">&amp;gt;</span> configuration behavior) on the server in order to send the exception information back to the client, or turn on tracing as per the Microsoft .NET Framework 3.0 SDK documentation and inspect the server trace logs.<span class="nt">&lt;/Text&gt;</span>
+    <span class="nt">&lt;/Reason&gt;</span>
+<span class="nt">&lt;/Fault&gt;</span>
+</pre>
+
+<table><thead>
+<tr>
+<th>HTTP Status</th>
+<th>Response Type</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>JSON</td>
+<td>Normal errors</td>
+</tr>
+<tr>
+<td>500</td>
+<td>XML</td>
+<td>Results from an invalid request or uncaught server exception</td>
+</tr>
+</tbody></table>
+<h3 id='general-errors'>General Errors</h3>
+<p>The following errors are common across all API endpoints.</p>
+
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Access token is empty.</td>
+<td>No OAuth access token has been supplied.</td>
+</tr>
+<tr>
+<td>Invalid access token.</td>
+<td>No OAuth access token has been supplied.</td>
+</tr>
+<tr>
+<td>Token does not have access to requested resource. Token must have {&hellip;} scope access.</td>
+<td>The given OAuth token does not have access to the requested scope used. Please review the scopes list.</td>
+</tr>
+<tr>
+<td>Invalid account status for user of this access token.</td>
+<td>The account associated with the given OAuth token is in an invalid status.</td>
+</tr>
+<tr>
+<td>Application is either not verified or suspended.</td>
+<td>The application used to generate the OAuth token has been unverified or suspended.</td>
+</tr>
+<tr>
+<td>Account temporarily locked</td>
+<td>Too many failed attempts have been made to access this account. The account has been temporarily locked for 30 minutes.</td>
+</tr>
+<tr>
+<td>Unexpected error has occurred.</td>
+<td>Something unexpected happened. It has been logged on our end and will be reviewed shortly.</td>
+</tr>
+</tbody></table>
 
           <h1 id='authentication'>Authentication</h1>
 <blockquote>
@@ -900,6 +985,38 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 </tbody></table>
 <h3 id='response'>Response</h3>
 <p>If successful, the response is simply the <a href="#how-transactions-work">Sender&rsquo;s Transaction ID</a> for the resulting payment.  Read more about <a href="#transactions">Transactions</a>.</p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Insufficient balance.</td>
+<td>The source account does not have sufficient balance in the selected funding source.</td>
+</tr>
+<tr>
+<td>The account is limited to $x per transaction. on:</td>
+<td>The source account has exceeded it&rsquo;s sending transaction limit</td>
+</tr>
+<tr>
+<td>Amount must be at least $0.01. on:</td>
+<td>The amount to send must be greater than $0.01</td>
+</tr>
+<tr>
+<td>Invalid account PIN</td>
+<td>The supplied PIN is invalid or incorrect.</td>
+</tr>
+<tr>
+<td>Invalid SSN for this account.</td>
+<td>The source account is pending SSN validation.</td>
+</tr>
+<tr>
+<td>Invalid funding source provided: {&hellip;}</td>
+<td>The specified funding source doesn&rsquo;t exist or is invalid.</td>
+</tr>
+</tbody></table>
 
           <h1 id='checkouts'>Checkouts</h1><pre class="highlight shell"> _        ,
 <span class="o">(</span>_<span class="se">\_</span>_____/________
@@ -1149,6 +1266,54 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 <td>orderItems</td>
 <td>yes</td>
 <td>An array of JSON object(s) which contain a <code class="prettyprint">name</code>, <code class="prettyprint">description</code>, <code class="prettyprint">quantity</code>, and <code class="prettyprint">price</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Shipping rate cannot be less than $0.</td>
+<td>Specified shipping must be greater than $0</td>
+</tr>
+<tr>
+<td>Tax cannot be less than $0.</td>
+<td>Specified tax must be greater than $0</td>
+</tr>
+<tr>
+<td>Discount cannot be greater than $0.</td>
+<td>Specified discount must be less than $0</td>
+</tr>
+<tr>
+<td>Total cannot be less than $.01.</td>
+<td>Total amount of PO must be greater than $0.01</td>
+</tr>
+<tr>
+<td>Invalid total.</td>
+<td>Invalid total in reference to the orderItems in the PO</td>
+</tr>
+<tr>
+<td>Notes length is too long. Maximum of 250 character is allowed.</td>
+<td>Specified notes is greater than the allowed 250 character limit</td>
+</tr>
+<tr>
+<td>Price on all order items cannot be less than $0.</td>
+<td></td>
+</tr>
+<tr>
+<td>Quantity on all order items cannot be less than 1.</td>
+<td>OrderItems specified must contain a quantity greater than 1</td>
+</tr>
+<tr>
+<td>Order item name length must be between 1 and 100 characters.</td>
+<td>Order item name must be greater than 1 &amp; less than 100 characters</td>
+</tr>
+<tr>
+<td>Order item description length must not exceed 200 characters.</td>
+<td>Order item description must be greater than 1 &amp; less than 200 characters</td>
 </tr>
 </tbody></table>
 <h2 id='retrieve-a-checkout'>Retrieve a Checkout</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -1642,6 +1807,18 @@ Invalid purchase order.
 <p>To do so, provide the <code class="prettyprint">destinationId</code> and <code class="prettyprint">destinationType</code> params in your request.  For example, if I only want to see funding sources that the user account ID 812-713-9234 can accept:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/fundingsources/?destinationId=812-713-9234&amp;destinationType=Dwolla</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>No verified funding sources.</td>
+<td>Could not find any funding sources for the given OAuth token.</td>
+</tr>
+</tbody></table>
 <h2 id='get-a-funding-source'>Get a Funding Source</h2><pre class="highlight javascript"><span class="cm">/**
  *   Retrieve a funding source by its ID
  **/</span>
@@ -1713,6 +1890,18 @@ Invalid purchase order.
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Funding</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/fundingsources/{id}</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>No verified funding source matching Id {&hellip;}</td>
+<td>Could not find a funding source with the given ID for the given OAuth token.</td>
+</tr>
+</tbody></table>
 <h2 id='withdraw-to-a-funding-source'>Withdraw to a funding source</h2><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">fundingSource</span> <span class="o">=</span> <span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">;</span>
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">withdrawToFundingSource</span><span class="p">(</span><span class="nx">pin</span><span class="p">,</span> <span class="mf">5.00</span><span class="p">,</span> <span class="nx">fundingSource</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
@@ -1891,6 +2080,34 @@ Invalid purchase order.
 <tr>
 <td>pin</td>
 <td>User account PIN</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid funding source.</td>
+<td>The funding source specified is either empty or invalid.</td>
+</tr>
+<tr>
+<td>Invalid financial institution.</td>
+<td>Could not find a funding source with the given ID.</td>
+</tr>
+<tr>
+<td>The amount supplied is invalid.</td>
+<td>The amount parameter is either missing, empty, or invalid (contains illegal characters).</td>
+</tr>
+<tr>
+<td>The amount is too small. Please send at least $1.00.</td>
+<td>The minimum withdraw amount is $1.00. Please adjust the withdraw amount.</td>
+</tr>
+<tr>
+<td>Not enough funds in the Dwolla balance to complete the withdrawal.</td>
+<td>There are not enough funds in the account&rsquo;s Dwolla balance to complete the withdrawl.</td>
 </tr>
 </tbody></table>
 <h2 id='deposit-from-a-funding-source'>Deposit from a funding source</h2><pre class="highlight json"><span class="p">{</span><span class="w">
@@ -2072,6 +2289,34 @@ Invalid purchase order.
 <td>User account PIN</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid funding source.</td>
+<td>The funding source specified is either empty or invalid.</td>
+</tr>
+<tr>
+<td>Invalid financial institution.</td>
+<td>Could not find a funding source with the given ID.</td>
+</tr>
+<tr>
+<td>The amount supplied is invalid.</td>
+<td>The amount parameter is either missing, empty, or invalid (contains illegal characters).</td>
+</tr>
+<tr>
+<td>The amount is too small. Please send at least $1.00.</td>
+<td>The minimum deposit amount is $1.00. Please adjust the deposit amount.</td>
+</tr>
+<tr>
+<td>The account is limited to {&hellip;} per transaction</td>
+<td>The maximum amount per deposit for this account is {…}. Please adjust the deposit amount.</td>
+</tr>
+</tbody></table>
 <h2 id='add-new-funding-source'>Add new Funding Source</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
 <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
@@ -2184,6 +2429,54 @@ Invalid purchase order.
 <td>Arbitrary nickname for the funding source</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Maximum number of bank accounts reached.</td>
+<td>Users can only have 2 linked funding sources at once.</td>
+</tr>
+<tr>
+<td>User must be verified.</td>
+<td>The user account associated with the given OAuth token is not currently verified. Please verify the user before adding a funding source.</td>
+</tr>
+<tr>
+<td>Invalid account type.</td>
+<td>Invalid bank account type. See request parameters for valid account types.</td>
+</tr>
+<tr>
+<td>Invalid account name.</td>
+<td>Invalid bank account name. See request parameters for valid account names.</td>
+</tr>
+<tr>
+<td>Please verify the routing number. It appears invalid.</td>
+<td>Invalid bank routing number.</td>
+</tr>
+<tr>
+<td>Please verify the account number. It appears invalid.</td>
+<td>Invalid bank account number.</td>
+</tr>
+<tr>
+<td>Please verify the SSN of the token holder. It appears invalid.</td>
+<td>The SSN number of the user associated with the given OAuth token is invalid, or missing.</td>
+</tr>
+<tr>
+<td>You have already added this account.</td>
+<td>This funding source is already linked to the user with the given OAuth token.</td>
+</tr>
+<tr>
+<td>There have been too many invalid attempts made with this account. Please wait 30 minutes and try again.</td>
+<td>There have been too many invalid attempts made with this account. Please wait 30 minutes and try again.</td>
+</tr>
+<tr>
+<td>It looks like we&rsquo;re having problems connecting to your bank. We will automatically process your transaction as soon as we are able to connect.</td>
+<td>It looks like we&rsquo;re having problems connecting to your bank. We will automatically process your transaction as soon as we are able to connect.</td>
+</tr>
+</tbody></table>
 <h2 id='verify-a-funding-source'>Verify a Funding Source</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$fundingSources</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\fundingSources</span><span class="p">();</span>
 <span class="nv">$fundingSources</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
@@ -2278,6 +2571,50 @@ puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
 <tr>
 <td>deposit2</td>
 <td>Second amount</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid funding source ID.</td>
+<td>The funding source specified is either empty or invalid.</td>
+</tr>
+<tr>
+<td>Bank has already been verified.</td>
+<td>The bank account has already been verified.</td>
+</tr>
+<tr>
+<td>Maximum number of verification attempts already reached.</td>
+<td>Maximum number of verification attempts for this bank account already reached. Please contact customer support.</td>
+</tr>
+<tr>
+<td>deposit1 amount isn&rsquo;t a valid or positive number.</td>
+<td>The amount specified for &lsquo;deposit1&rsquo; isn&rsquo;t a valid or positive number.</td>
+</tr>
+<tr>
+<td>deposit2 amount isn&rsquo;t a valid or positive number.</td>
+<td>The amount specified for &lsquo;deposit2&rsquo; isn&rsquo;t a valid or positive number.</td>
+</tr>
+<tr>
+<td>deposit1 amount should be less than $.15 (ie: enter $.05 for 5 cents)</td>
+<td>The amount specified for &lsquo;deposit1&rsquo; should be less than 15 cents.</td>
+</tr>
+<tr>
+<td>deposit2 amount should be less than $.15 (ie: enter $.05 for 5 cents)</td>
+<td>The amount specified for &lsquo;deposit2&rsquo; should be less than 15 cents.</td>
+</tr>
+<tr>
+<td>The verification deposits have not had enough time to clear the system. Please allow 2-3 days from when the bank was added before attempting to verify the account.</td>
+<td>Please allow 2-3 business days before attempting to verify this funding source.</td>
+</tr>
+<tr>
+<td>One or both of the amounts do not match our records.</td>
+<td>The specified deposit amounts are incorrect.</td>
 </tr>
 </tbody></table>
 
@@ -2755,6 +3092,30 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>Latest date and time for which to retrieve transactions.  Must be ISO-8601 formatted.  Example: <code class="prettyprint">2014-08-13T21:05:23.797Z</code></td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid since date.</td>
+<td>Date specified to retrieve transactions is invalid</td>
+</tr>
+<tr>
+<td>Invalid end date.</td>
+<td>Date specified to retrieve transactions is invalid</td>
+</tr>
+<tr>
+<td>Invalid limit.</td>
+<td>Invalid number of transactions to return</td>
+</tr>
+<tr>
+<td>Invalid skip.</td>
+<td>Invalid number of transactions to skip</td>
+</tr>
+</tbody></table>
 <h2 id='list-an-app39s-transactions'>List an app&rsquo;s transactions</h2><pre class="highlight javascript"><span class="cm">/**
  * Retrieve the 10 recentmost transactions which
  * have been facilitated by this application.
@@ -3144,6 +3505,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p>or to fetch a transaction which belongs to an application:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/{id}?client_id={}&amp;client_secret={}</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid transaction ID.</td>
+<td>The specified transaction ID is empty, missing, or invalid.</td>
+</tr>
+<tr>
+<td>Transaction not found for account.</td>
+<td>Could not find a transaction with the specified ID for the given OAuth token.</td>
+</tr>
+</tbody></table>
 <h2 id='search-transactions'>Search transactions</h2><pre class="highlight shell">GET https://www.dwolla.com/oauth/rest/transactions/search?limit<span class="o">=</span>20
 </pre>
 
@@ -3292,7 +3669,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="o">}</span>,
   <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled transaction"</span>,
   <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
-  <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>
+  <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>,
+  <span class="s2">"Metadata"</span>: <span class="o">{</span>
+    <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
+  <span class="o">}</span>
 <span class="o">}</span>
 </pre>
 
@@ -3343,6 +3723,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <tr>
 <td>Status</td>
 <td>Possible values: &lsquo;scheduled&rsquo;, &lsquo;processed&rsquo;, &lsquo;failed&rsquo;</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td>JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. <code class="prettyprint">null</code> if not provided or visible to application.  <a href="#metadata">Read more</a></td>
 </tr>
 </tbody></table>
 <h2 id='create-scheduled-transaction'>Create Scheduled Transaction</h2><pre class="highlight shell"><span class="o">{</span>
@@ -3447,6 +3831,38 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>metadata</td>
 <td>yes</td>
 <td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  <a href="#metadata">Read more</a></td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid account PIN</td>
+<td>The supplied PIN is invalid or incorrect.</td>
+</tr>
+<tr>
+<td>There was an error scheduling the transaction at this time.</td>
+<td>There was an error scheduling this transaction</td>
+</tr>
+<tr>
+<td>Invalid funding source.</td>
+<td>The specified funding source doesn&rsquo;t exist or is invalid.</td>
+</tr>
+<tr>
+<td>Funding source must be a bank.</td>
+<td>The specified funding source must be a bank</td>
+</tr>
+<tr>
+<td>Notes length is too long. Maximum of 250 character is allowed.</td>
+<td>The &lsquo;notes&rsquo; length is too long.</td>
+</tr>
+<tr>
+<td>This user is unable to receive transactions from provided funding source.</td>
+<td>The destination user is unable to receive funds from specified funding source</td>
 </tr>
 </tbody></table>
 <h2 id='list-scheduled-transactions'>List Scheduled Transactions</h2><pre class="highlight shell"><span class="o">{</span>
@@ -3662,6 +4078,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>Optional note to attach to transaction.  Max 250 chars.</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Transaction has already been processed.</td>
+<td>Unable to edit a transaction that has alredy been processed</td>
+</tr>
+<tr>
+<td>There was an error updating the scheduled transaction.</td>
+<td>Error occured when updating the scheduled transaction</td>
+</tr>
+</tbody></table>
 <h2 id='delete-scheduled-transaction'>Delete Scheduled Transaction</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/d856d2ec-4098-4b3b-b20f-b2561ec85871
 </pre>
 
@@ -3680,6 +4112,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Scheduled transaction must not have been processed to delete.</td>
+<td>The scheduled transaction must be processed before deleting</td>
+</tr>
+<tr>
+<td>There was an error deleting the scheduled transaction.</td>
+<td>There was an error deleting the scheduled transaction</td>
+</tr>
+</tbody></table>
 <h2 id='delete-all-scheduled-transactions'>Delete all Scheduled Transactions</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled
 </pre>
 
@@ -3774,6 +4222,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>endDate</td>
 <td>yes</td>
 <td>Ending date and time for which to select transactions for report.  Defaults to current date and time.</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid start date format.</td>
+<td>Should follow format of yyyy-mm-dd</td>
+</tr>
+<tr>
+<td>Invalid end date format.</td>
+<td>Should follow format of yyyy-mm-dd</td>
 </tr>
 </tbody></table>
 
@@ -3911,6 +4375,18 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <tr>
 <td>Name</td>
 <td>Full account name (or business name for a business account)</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid account identifier.</td>
+<td>Could not find an account with the specified ID.</td>
 </tr>
 </tbody></table>
 <h2 id='get-full-account-info'>Get Full Account Info</h2><pre class="highlight php">/**
@@ -4313,6 +4789,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>Proximity to the lat / long specified in query</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Latitude must be between -90.0 and 90.0.</td>
+<td>Invalid latitude.</td>
+</tr>
+<tr>
+<td>Longitude must be between -180.0 and 180.0.</td>
+<td>Invalid longitude.</td>
+</tr>
+</tbody></table>
 <h2 id='find-users-nearby'>Find Users Nearby</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
 <span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="nv">$apiKey</span><span class="p">;</span>
@@ -4464,6 +4956,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <tr>
 <td>Delta</td>
 <td>Proximity to the lat / long specified in query</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Latitude must be between -90.0 and 90.0.</td>
+<td>Invalid latitude.</td>
+</tr>
+<tr>
+<td>Longitude must be between -180.0 and 180.0.</td>
+<td>Invalid longitude.</td>
 </tr>
 </tbody></table>
 
@@ -5669,6 +6177,26 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>Amount refunded</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid access token.</td>
+<td>Access token not valid.</td>
+</tr>
+<tr>
+<td>Transaction ineligible for refund.</td>
+<td>Cannot refund the transaction, for one of the following reasons: user is not recipient of a transaction, user is not a Commercial or Non-Profit type account</td>
+</tr>
+<tr>
+<td>Invalid refund amount.</td>
+<td>Refund amount is either less than 0.01 or not equal to or less than the original transaction amount.</td>
+</tr>
+</tbody></table>
 
           <h1 id='money-requests'>Money Requests</h1><pre class="highlight plaintext">    __  ___                      
    /  |/  /___  ____  ___  __  __
@@ -5926,6 +6454,42 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>metadata</td>
 <td>yes</td>
 <td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  <a href="#metadata">Read more</a></td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Notes length is too long. Maximum of 250 character is allowed.</td>
+<td>The &lsquo;notes&rsquo; parameter is too long. See requests parameters for further details.</td>
+</tr>
+<tr>
+<td>The user to send to could not be found.</td>
+<td>Could not find the speicified source user + source type combination.</td>
+</tr>
+<tr>
+<td>You can only send money to one of your Twitter followers.</td>
+<td>You can only request money from one of your Twitter followers.</td>
+</tr>
+<tr>
+<td>Invalid facilitator user.</td>
+<td></td>
+</tr>
+<tr>
+<td>Facilitator fee too large.</td>
+<td>Facilitator fee cannot exceed 50% of the amount.</td>
+</tr>
+<tr>
+<td>Facilitator fee too small.</td>
+<td></td>
+</tr>
+<tr>
+<td>Money request failed. {..}</td>
+<td>An unexpecetd error occured while trying to request funds. See additional response message.</td>
 </tr>
 </tbody></table>
 <h2 id='list-money-requests'>List Money Requests</h2><pre class="highlight php">/**
@@ -6302,6 +6866,18 @@ else { print_r($requests); }
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Request</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/requests/{id}</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>No verified funding sources.</td>
+<td>Could not find any funding sources for the given OAuth token.</td>
+</tr>
+</tbody></table>
 <h2 id='fulfill-money-request'>Fulfill Money Request</h2><pre class="highlight php">/**
  *   Fulfill request ID 1671 for $29.99
  **/
@@ -6477,6 +7053,46 @@ else { print_r($requests); }
 <td>An optional <a href="#metadata">metadata</a> object.</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid request ID.</td>
+<td>The specific request ID is either empty or invalid.</td>
+</tr>
+<tr>
+<td>Request not found for account.</td>
+<td>Could not find a request with the specified ID for the given OAuth token.</td>
+</tr>
+<tr>
+<td>Account can not pay their own request.</td>
+<td>Account can not pay their own request.</td>
+</tr>
+<tr>
+<td>Request has already been paid</td>
+<td>Request has already been paid</td>
+</tr>
+<tr>
+<td>Amount may not be less than request amount of {0}</td>
+<td>The fulfilled amount cannot be less than the requested amount.</td>
+</tr>
+<tr>
+<td>Notes length is too long. Maximum of 250 character is allowed.</td>
+<td>The &lsquo;notes&rsquo; parameter is too long. See requests parameters for further details.</td>
+</tr>
+<tr>
+<td>Invalid funding source provided: {..}</td>
+<td>The specified funding source is missing, empty, or invalid.</td>
+</tr>
+<tr>
+<td>Insufficient funds.</td>
+<td>The are not enough funds in the specified funding source to fulfill this transaction.</td>
+</tr>
+</tbody></table>
 <h2 id='cancel-a-money-request'>Cancel a Money Request</h2>
 <p>Cancel a money request which the authorized user created or received.  Request must have a status of <code class="prettyprint">Pending</code>.</p>
 <pre class="highlight php">/**
@@ -6531,6 +7147,26 @@ else { print_r($requests); }
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Request</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/{request_id}/cancel</code></p>
+
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid request ID.</td>
+<td>The specific request ID is either empty or invalid.</td>
+</tr>
+<tr>
+<td>Request not found for account.</td>
+<td>Could not find a request with the specified ID for the given OAuth token.</td>
+</tr>
+<tr>
+<td>Request is not in Pending status.</td>
+<td>You may only cancel requests that are in the &lsquo;pending&rsquo; state.</td>
+</tr>
+</tbody></table>
 
           <h1 id='account-settings'>Account Settings</h1>
 <p>With the <code class="prettyprint">ManageAccount</code> OAuth scope, you can set and retrieve a user&rsquo;s account preferences.  </p>
