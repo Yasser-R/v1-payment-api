@@ -13,7 +13,7 @@
 "Shopping Trolley" - hjw
 ```
 
-Create a checkout on our [Off-Site Gateway](/dev/pages/gateway#ux). 
+Create a checkout on our [Off-Site Gateway](https://developers.dwolla.com/dev/pages/gateway). 
 
 Checkout sessions must be completed by the user within __15 minutes__ of their creation. 
 
