@@ -90,6 +90,8 @@ For a particular payment, additional transactions are created:
  - if the payment is over $10 it will incur a $0.25 _Dwolla Fee_
  - if there is a facilitator fee
 
+Learn how to correlate the sender's and recipient's transaction ID with [this guide](https://developers.dwolla.com/dev/pages/guides/correlate_transactions).
+
 ### Transaction Types
 
 Type | Description
