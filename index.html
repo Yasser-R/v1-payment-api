@@ -1590,6 +1590,8 @@ Invalid purchase order.
 <p>Payments funded by a real-time funding source such as the user&rsquo;s account balance, a Fi-Sync enabled bank account, or line of <code class="prettyprint">Credit</code> clear instantly.  On the other hand, transactions funded by ACH bank funding sources require 2-5 business days before the funds will be made available to the recipient.</p>
 
 <p>ACH funding sources can be added and verified via the API.  </p>
+
+<p>It&rsquo;s important to note that the ID of a funding source is an arbitrary string identifer, not a bank account number, which means you don&rsquo;t need to worry about protecting it to the same standard as you would for sensitive information like a bank account number.</p>
 <h3 id='funding-source-types'>Funding Source Types</h3>
 <table><thead>
 <tr>
@@ -1633,7 +1635,7 @@ Invalid purchase order.
 </thead><tbody>
 <tr>
 <td>Id</td>
-<td>Funding Source ID</td>
+<td>Funding Source ID (this is an arbitrary, generated ID)</td>
 </tr>
 <tr>
 <td>Name</td>
@@ -2708,6 +2710,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <li>if the payment is over $10 it will incur a $0.25 <em>Dwolla Fee</em></li>
 <li>if there is a facilitator fee</li>
 </ul>
+
+<p>Learn how to correlate the sender&rsquo;s and recipient&rsquo;s transaction ID with <a href="https://developers.dwolla.com/dev/pages/guides/correlate_transactions">this guide</a>.</p>
 <h3 id='transaction-types'>Transaction Types</h3>
 <table><thead>
 <tr>
