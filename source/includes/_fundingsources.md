@@ -46,6 +46,8 @@ Payments funded by a real-time funding source such as the user's account balance
 
 ACH funding sources can be added and verified via the API.  
 
+It's important to note that the ID of a funding source is an arbitrary string identifer, not a bank account number, which means you don't need to worry about protecting it to the same standard as you would for sensitive information like a bank account number.
+
 ### Funding Source Types
 
 | Type | Description | Clearing time |
@@ -60,7 +62,7 @@ ACH funding sources can be added and verified via the API.
 
 | Parameter | Description
 |-----------|------------|
-Id | Funding Source ID
+Id | Funding Source ID (this is an arbitrary, generated ID)
 Name | Arbitrary nickname for the funding source
 Type | Possible values: `Savings`, `Checking`, or empty string for Dwolla Account Balance and Credit: `""`
 Verified | `"true"` if funding source is verified.  Funding sources must be verified before funds can be deposited or withdrawn from them.
