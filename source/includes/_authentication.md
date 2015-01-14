@@ -2,7 +2,6 @@
 
 > You'll need to provide your Application key and secret when you initialize our libraries.
 
-
 ```js
 var Dwolla = require('dwolla')("key here", "secret here");
 
@@ -38,6 +37,20 @@ Dwolla = DwollaClientApp("key goes here", "secret goes here")
 
 # set an OAuth access token
 DwollaUser = DwollaUser("token goes here")
+```
+> Invalid or Expired Access Token Response:
+
+```shell
+{
+  "Success": false,
+  "Message": "Invalid access token.",
+  "Response": null
+}
+{
+  "Success": false,
+  "Message": "Expired access token.",
+  "Response": null
+}
 ```
 
 To interact with the API, you will need API keys.  [Create a consumer application](https://www.dwolla.com/applications/create) in order to get an Application `key` and `secret`.

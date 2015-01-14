@@ -695,6 +695,9 @@ You can optionally provide the `skip` and `limit` querystring parameters to limi
 
 `GET https://www.dwolla.com/oauth/rest/masspay/{id}/items?limit=20&skip=5`
 
+### Item Statuses
+In the response, each `Item` will contain an item `Status` that corresponds to the success or fail of that particular transaction. A MassPay Job Item can contain a status of either `notrun`, `success`, or `failed`.
+
 ## Retrieve a Job's Item
 
 ```js
