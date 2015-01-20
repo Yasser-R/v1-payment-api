@@ -324,6 +324,21 @@ TODO: document errors
 <span class="n">DwollaUser</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="p">(</span><span class="s">"token goes here"</span><span class="p">)</span>
 </pre>
 
+<blockquote>
+<p>Invalid or Expired Access Token Response:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Success"</span>: <span class="nb">false</span>,
+  <span class="s2">"Message"</span>: <span class="s2">"Invalid access token."</span>,
+  <span class="s2">"Response"</span>: null
+<span class="o">}</span>
+<span class="o">{</span>
+  <span class="s2">"Success"</span>: <span class="nb">false</span>,
+  <span class="s2">"Message"</span>: <span class="s2">"Expired access token."</span>,
+  <span class="s2">"Response"</span>: null
+<span class="o">}</span>
+</pre>
+
 <p>To interact with the API, you will need API keys.  <a href="https://www.dwolla.com/applications/create">Create a consumer application</a> in order to get an Application <code class="prettyprint">key</code> and <code class="prettyprint">secret</code>.</p>
 
 <p>Some API endpoints only require your application <code class="prettyprint">key</code> and <code class="prettyprint">secret</code> (for instance, <a href="#create-a-checkout">creating a checkout</a> or <a href="#lookup-user">looking up a user</a>), but most require an OAuth <code class="prettyprint">access_token</code>.</p>
@@ -598,6 +613,19 @@ Remember to url-encode all querystring parameters!
     <span class="s2">"refresh_token"</span>: <span class="s2">"lqopeyjq5AJln5fpMedElUULz+XBNNw9nAkIinxE0g4aEzxmDc"</span>,
     <span class="s2">"refresh_expires_in"</span>: 5184000,
     <span class="s2">"token_type"</span>: <span class="s2">"bearer"</span>
+<span class="o">}</span>
+</pre>
+
+<blockquote>
+<p>Invalid or Expired Refresh Token Response:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"error"</span>: <span class="s2">"access_denied"</span>,
+  <span class="s2">"error_description"</span>: <span class="s2">"Invalid refresh token."</span>
+<span class="o">}</span>
+<span class="o">{</span>
+  <span class="s2">"error"</span>: <span class="s2">"access_denied"</span>,
+  <span class="s2">"error_description"</span>: <span class="s2">"Expired refresh token."</span>
 <span class="o">}</span>
 </pre>
 
@@ -5031,6 +5059,18 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>An optional <a href="#metadata">metadata</a> object.</td>
 </tr>
 </tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>The selected funding source doesn&rsquo;t have enough funds to cover this job&rsquo;s payout.</td>
+<td>Insufficient funds to cover total job payout. Select alternative funding source.</td>
+</tr>
+</tbody></table>
 <h2 id='list-jobs'>List Jobs</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
 <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
@@ -5188,6 +5228,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p>You can optionally provide the <code class="prettyprint">skip</code> and <code class="prettyprint">limit</code> querystring parameters to limit the number of results returned, and to offset the results by <code class="prettyprint">skip</code> number of items.  For example, to retrieve the first 20 results after the first 5 in the set of results:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/?limit=20&amp;skip=5</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid limit.</td>
+<td>The value for limit is invalid.</td>
+</tr>
+<tr>
+<td>Invalid skip.</td>
+<td>The value for skip is invalid.</td>
+</tr>
+</tbody></table>
 <h2 id='retrieve-job'>Retrieve Job</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
 <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
@@ -5284,6 +5340,18 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{id}</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid job id.</td>
+<td>The value for job id is invalid.</td>
+</tr>
+</tbody></table>
 <h2 id='list-a-job39s-items'>List a Job&rsquo;s Items</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
 <span class="nv">$MassPay</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"foo"</span><span class="p">;</span>
@@ -5447,11 +5515,37 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>skip</td>
 <td>Pagination marker.  Start retrieving results after <code class="prettyprint">skip</code> number of elements in the set of results.</td>
 </tr>
+<tr>
+<td>status</td>
+<td>Filter results on <a href="#item-statuses">Item status</a>. Possible values: <code class="prettyprint">notrun</code>, <code class="prettyprint">success</code>, <code class="prettyprint">failed</code></td>
+</tr>
 </tbody></table>
 
 <p>You can optionally provide the <code class="prettyprint">skip</code> and <code class="prettyprint">limit</code> querystring parameters to limit the number of results returned, and to offset the results by <code class="prettyprint">skip</code> number of items.  For example, to retrieve the first 20 results after the first 5 in the set of results:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{id}/items?limit=20&amp;skip=5</code></p>
+<h3 id='item-statuses'>Item Statuses</h3>
+<p>In the response, each <code class="prettyprint">Item</code> will contain an item <code class="prettyprint">Status</code> that corresponds to the success or fail of that particular transaction. A MassPay Job Item can contain a status of either <code class="prettyprint">notrun</code>, <code class="prettyprint">success</code>, or <code class="prettyprint">failed</code>.</p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid limit.</td>
+<td>The value for limit is invalid.</td>
+</tr>
+<tr>
+<td>Invalid skip.</td>
+<td>The value for skip is invalid.</td>
+</tr>
+<tr>
+<td>Invalid status.</td>
+<td>The value for status is invalid.</td>
+</tr>
+</tbody></table>
 <h2 id='retrieve-a-job39s-item'>Retrieve a Job&rsquo;s Item</h2><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">jobId</span> <span class="o">=</span> <span class="s1">'9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">itemId</span> <span class="o">=</span> <span class="s1">'424792'</span><span class="p">;</span>
 
@@ -5528,6 +5622,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Transactions</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{job_id}/items/{item_id}</code></p>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid job id.</td>
+<td>The value for job id is invalid.</td>
+</tr>
+<tr>
+<td>Invalid job item id.</td>
+<td>The value for item id is invalid.</td>
+</tr>
+</tbody></table>
 
           <h1 id='refund'>Refund</h1><pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mf">11.25</span><span class="p">,</span><span class="w">
