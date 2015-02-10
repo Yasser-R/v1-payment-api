@@ -116,7 +116,7 @@ TODO: document errors
 
 By [enabling](https://developers.dwolla.com/dev/pages/guides/facilitator_fee) the Facilitator Fee application feature, your application can take a cut of any transactions that it facilitates.  Transactions created via the Send endpoint and  transactions resulting from an [Off-Site Gateway](#checkouts) checkout can have a facilitator fee attached to it.  Facilitator fees can also be attached to [Money Requests](#money-requests) created by your application.  When the Money Request is fulfilled, the facilitator fee will be paid out.
 
-Facilitator fees can be up to 50% of the transaction amount and must be at least $0.01.  They do not affect the total transaction amount, and exist as a separate [Transaction](#transactions) resource with a unique Transaction ID.
+Facilitator fees can be up to 50% of the transaction amount and must be at least $0.01.  They do not affect the original transaction amount, and exist as a separate [Transaction](#transactions) resource with a unique Transaction ID.
 
 ## Metadata
 
