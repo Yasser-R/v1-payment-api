@@ -249,6 +249,11 @@ Each payment to be created in a MassPay job is represented as a JSON object with
 | notes | yes | A note to attach to the payment.  Max 250 characters.
 | metadata | yes | An optional [metadata](#metadata) object.
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| The selected funding source doesn't have enough funds to cover this job's payout. | Insufficient funds to cover total job payout. Select alternative funding source. |
+
 ## List Jobs
 
 ```php
@@ -410,6 +415,11 @@ You can optionally provide the `skip` and `limit` querystring parameters to limi
 
 `GET https://www.dwolla.com/oauth/rest/masspay/?limit=20&skip=5`
 
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid limit. | The value for limit is invalid. |
+| Invalid skip. | The value for skip is invalid. |
 
 ## Retrieve Job
 
@@ -522,6 +532,11 @@ Look up a particular MassPay job by its ID.
 
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/masspay/{id}`
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid job id. | The value for job id is invalid. |
 
 ## List a Job's Items
 
@@ -690,10 +705,21 @@ Retrieve the items for a particular MassPay job.
 -----------------|------------
 limit | Retrieve up to `limit` number of results
 skip | Pagination marker.  Start retrieving results after `skip` number of elements in the set of results.
+status | Filter results on [Item status](#item-statuses). Possible values: `notrun`, `success`, `failed`
 
 You can optionally provide the `skip` and `limit` querystring parameters to limit the number of results returned, and to offset the results by `skip` number of items.  For example, to retrieve the first 20 results after the first 5 in the set of results:
 
 `GET https://www.dwolla.com/oauth/rest/masspay/{id}/items?limit=20&skip=5`
+
+### Item Statuses
+In the response, each `Item` will contain an item `Status` that corresponds to the success or fail of that particular transaction. A MassPay Job Item can contain a status of either `notrun`, `success`, or `failed`.
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid limit. | The value for limit is invalid. |
+| Invalid skip. | The value for skip is invalid. |
+| Invalid status. | The value for status is invalid. |
 
 ## Retrieve a Job's Item
 
@@ -783,3 +809,9 @@ Retrieve a particular MassPay Job Item, by the Job ID and Item ID.
 
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/masspay/{job_id}/items/{item_id}`
+
+### Errors
+| Error String | Description |
+|--------------|-------------|
+| Invalid job id. | The value for job id is invalid. |
+| Invalid job item id. | The value for item id is invalid. |
