@@ -171,7 +171,7 @@ TODO: document errors
 <h2 id='facilitator-fees'>Facilitator Fees</h2>
 <p>By <a href="https://developers.dwolla.com/dev/pages/guides/facilitator_fee">enabling</a> the Facilitator Fee application feature, your application can take a cut of any transactions that it facilitates.  Transactions created via the Send endpoint and  transactions resulting from an <a href="#checkouts">Off-Site Gateway</a> checkout can have a facilitator fee attached to it.  Facilitator fees can also be attached to <a href="#money-requests">Money Requests</a> created by your application.  When the Money Request is fulfilled, the facilitator fee will be paid out.</p>
 
-<p>Facilitator fees can be up to 50% of the transaction amount and must be at least $0.01.  They do not affect the total transaction amount, and exist as a separate <a href="#transactions">Transaction</a> resource with a unique Transaction ID.</p>
+<p>Facilitator fees can be up to 50% of the transaction amount and must be at least $0.01.  They do not affect the original transaction amount, and exist as a separate <a href="#transactions">Transaction</a> resource with a unique Transaction ID.</p>
 <h2 id='metadata'>Metadata</h2>
 <p>Metadata can be supplied for Send, MassPay Items, Money Requests, Refunds, and Checkouts in the metadata property. The <code class="prettyprint">metadata</code> property is a JSON object (a collection of &ldquo;key&rdquo;: &ldquo;value&rdquo; pairs). A maximum of 10 key-value pairs can be stored. Keys and values must be strings of maximum length 255 characters.</p>
 <pre class="highlight shell"><span class="o">{</span>
@@ -1829,6 +1829,14 @@ Invalid purchase order.
 <tr>
 <td>destinationType</td>
 <td>The type of the recipient.  Possible values: <code class="prettyprint">Email</code>, <code class="prettyprint">Dwolla</code>, <code class="prettyprint">Phone</code>.  Defaults to <code class="prettyprint">Dwolla</code></td>
+</tr>
+<tr>
+<td>processingTypes</td>
+<td>Processing types to return. By default, all types returned. Delimited by commas. e.g. processingTypes=ach,fisync</td>
+</tr>
+<tr>
+<td>verified</td>
+<td>Only show funding sources with verified values of either <code class="prettyprint">true</code> or <code class="prettyprint">false</code></td>
 </tr>
 </tbody></table>
 <h3 id='filtering-funding-sources'>Filtering funding sources</h3>
@@ -6975,6 +6983,10 @@ In an effort to remain transparent, here's a list of bugs we know about.
 <tr>
 <td>12/03/2014</td>
 <td>Temporarily removed Scheduled Transactions documentation, which is currently not available while we work on making some improvements to it.</td>
+</tr>
+<tr>
+<td>03/17/2015</td>
+<td>Add new parameters <code class="prettyprint">processingTypes</code> and <code class="prettyprint">verified</code> to the <a href="#list-funding-sources">List Funding Sources</a> endpoint.</td>
 </tr>
 </tbody></table>
 
