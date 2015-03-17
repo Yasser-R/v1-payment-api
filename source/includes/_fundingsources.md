@@ -221,6 +221,8 @@ The following querystring parameters are optional:
 |-------|-------------|
 | destinationId | Only show funding sources that a particular recipient can accept a payment from.  See the section below.
 | destinationType | The type of the recipient.  Possible values: `Email`, `Dwolla`, `Phone`.  Defaults to `Dwolla`
+| processingTypes | Processing types to return. By default, all types returned. Delimited by commas. e.g. processingTypes=ach,fisync
+| verified | Only show funding sources with verified values of either `true` or `false`
 
 ### Filtering funding sources
 You can limit the results of this query to only the funding sources that a particular user can receive a payment from.  This is helpful, for instance, if the user account you're trying to send money to has opted-in to not accept payments funded via an ACH funding source.  In another case, only select merchant accounts have the ability to receive a Credit funded transaction, so Credit would not appear in the list of funding sources when filtered.
