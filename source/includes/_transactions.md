@@ -69,7 +69,7 @@ $$$$$ "DWOLLA DWOLLA BILL YA'LL" $$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 ```
 
-Any movement of money, whether payment, withdrawal, deposit, or fee, is recorded as an individual Transaction.  For instance, depositing money from a funding source into your Dwolla account balance creates a `Transaction` of type `deposit`.
+Any movement of money, whether it's a payment, fee, withdrawal, or adding funds to a Dwolla balance, is recorded as an individual Transaction.  For instance, adding money from a funding source into your Dwolla account balance creates a `Transaction` of type `deposit`.
 
 ### How Transactions Work
 When a payment is sent, 2 or more transactions are created.  At least one is created to credit the recipient's account balance, and another one to debit the sender's account balance.  

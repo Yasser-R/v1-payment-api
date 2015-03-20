@@ -40,7 +40,7 @@
 
 ```
 
-Dwolla accounts have funding sources, such as linked bank accounts or a line of credit.  Funds can be deposited from a bank funding source (`ACH` or `FiSync`) into an user's account `Balance`, and vice versa, funds can be withdrawn from a user's account balance to a bank funding source.
+Dwolla accounts have funding sources, such as linked bank accounts or a line of credit.  Funds can be added from a bank funding source (`ACH` or `FiSync`) into an user's account `Balance`, and vice versa, funds can be withdrawn from a user's account balance to a bank funding source.
 
 Payments funded by a real-time funding source such as the user's account balance, a Fi-Sync enabled bank account, or line of `Credit` clear instantly.  On the other hand, transactions funded by ACH bank funding sources require 2-5 business days before the funds will be made available to the recipient.
 
@@ -65,7 +65,7 @@ It's important to note that the ID of a funding source is an arbitrary string id
 Id | Funding Source ID (this is an arbitrary, generated ID)
 Name | Arbitrary nickname for the funding source
 Type | Possible values: `Savings`, `Checking`, or empty string for Dwolla Account Balance and Credit: `""`
-Verified | `"true"` if funding source is verified.  Funding sources must be verified before funds can be deposited or withdrawn from them.
+Verified | `"true"` if funding source is verified.  Funding sources must be verified before funds can be added to a Dwolla balance or withdrawn from it.
 ProcessingType | Possible values: `ACH`, `FiSync`, or empty string: `""`
 
 ## List Funding Sources
@@ -327,7 +327,7 @@ Look up a particular funding source by its funding source ID.
 |--------------|-------------|
 | No verified funding source matching Id {...} | Could not find a funding source with the given ID for the given OAuth token. |
 
-## Withdraw to a funding source
+## Withdraw to a Funding Source
 ```js
 var fundingSource = "c58bb9f7f1d51d5547e1987a2833f4fb";
 dwolla.withdrawToFundingSource(pin, 5.00, fundingSource, function(err, res) {
@@ -522,7 +522,7 @@ pin | User account PIN
 | The amount is too small. Please send at least $1.00. | The minimum withdraw amount is $1.00. Please adjust the withdraw amount. |
 | Not enough funds in the Dwolla balance to complete the withdrawal. | There are not enough funds in the account's Dwolla balance to complete the withdrawl. |
 
-## Deposit from a funding source
+## Add money from a Funding Source
 
 ```json
 {
@@ -695,7 +695,7 @@ array (
 
 ```
 
-Deposit funds from a user's bank funding source to the user's account balance.  A new [Transaction](#transactions) of type `deposit` is created as a result.
+Add funds from a user's bank funding source to the user's Dwolla account balance.  A new [Transaction](#transactions) of type `deposit` is created as a result.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
 
@@ -714,8 +714,8 @@ pin | User account PIN
 | Invalid funding source. | The funding source specified is either empty or invalid. |
 | Invalid financial institution. | Could not find a funding source with the given ID. |
 | The amount supplied is invalid. | The amount parameter is either missing, empty, or invalid (contains illegal characters). |
-| The amount is too small. Please send at least $1.00. | The minimum deposit amount is $1.00. Please adjust the deposit amount. |
-| The account is limited to {...} per transaction | The maximum amount per deposit for this account is {…}. Please adjust the deposit amount. |
+| The amount is too small. Please send at least $1.00. | The minimum amount to add to a balance is $1.00. Please adjust the amount of funds being added to a Dwolla balance. |
+| The account is limited to {...} per transaction | The maximum amount of money being added to a Dwolla balance for this account is {…}. Please adjust the amount of money being added to a Dwolla balance. |
 
 ## Add new Funding Source
 

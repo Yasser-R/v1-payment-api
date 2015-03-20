@@ -43,7 +43,7 @@ A handful of libraries are officially maintained, and others are community maint
 - iOS: [dwolla-ios](https://github.com/Dwolla/dwolla-ios)
 - OS X Cocoa: [dwolla-cocoa](https://github.com/Dwolla/dwolla-cocoa)
 - Perl: [WebService-Dwolla](http://search.cpan.org/dist/WebService-Dwolla/)
-- C# / .NET: [dwolla.net](https://github.com/justinsoliz/dwolla.net)
+- C# / .NET: [dwolla.net](http://github.com/Dwolla/dwolla.net)
 
 ## Making Requests
 
