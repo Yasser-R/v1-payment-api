@@ -105,7 +105,7 @@
 <li>iOS: <a href="https://github.com/Dwolla/dwolla-ios">dwolla-ios</a></li>
 <li>OS X Cocoa: <a href="https://github.com/Dwolla/dwolla-cocoa">dwolla-cocoa</a></li>
 <li>Perl: <a href="http://search.cpan.org/dist/WebService-Dwolla/">WebService-Dwolla</a></li>
-<li>C# / .NET: <a href="https://github.com/justinsoliz/dwolla.net">dwolla.net</a></li>
+<li>C# / .NET: <a href="http://github.com/Dwolla/dwolla.net">dwolla.net</a></li>
 </ul>
 <h2 id='making-requests'>Making Requests</h2><pre class="highlight shell">POST https://www.dwolla.com/oauth/rest/transactions/send
 Content-Type: application/json
@@ -1613,7 +1613,7 @@ Invalid purchase order.
 
 </pre>
 
-<p>Dwolla accounts have funding sources, such as linked bank accounts or a line of credit.  Funds can be deposited from a bank funding source (<code class="prettyprint">ACH</code> or <code class="prettyprint">FiSync</code>) into an user&rsquo;s account <code class="prettyprint">Balance</code>, and vice versa, funds can be withdrawn from a user&rsquo;s account balance to a bank funding source.</p>
+<p>Dwolla accounts have funding sources, such as linked bank accounts or a line of credit.  Funds can be added from a bank funding source (<code class="prettyprint">ACH</code> or <code class="prettyprint">FiSync</code>) into an user&rsquo;s account <code class="prettyprint">Balance</code>, and vice versa, funds can be withdrawn from a user&rsquo;s account balance to a bank funding source.</p>
 
 <p>Payments funded by a real-time funding source such as the user&rsquo;s account balance, a Fi-Sync enabled bank account, or line of <code class="prettyprint">Credit</code> clear instantly.  On the other hand, transactions funded by ACH bank funding sources require 2-5 business days before the funds will be made available to the recipient.</p>
 
@@ -1675,7 +1675,7 @@ Invalid purchase order.
 </tr>
 <tr>
 <td>Verified</td>
-<td><code class="prettyprint">&quot;true&quot;</code> if funding source is verified.  Funding sources must be verified before funds can be deposited or withdrawn from them.</td>
+<td><code class="prettyprint">&quot;true&quot;</code> if funding source is verified.  Funding sources must be verified before funds can be added to a Dwolla balance or withdrawn from it.</td>
 </tr>
 <tr>
 <td>ProcessingType</td>
@@ -1940,7 +1940,7 @@ Invalid purchase order.
 <td>Could not find a funding source with the given ID for the given OAuth token.</td>
 </tr>
 </tbody></table>
-<h2 id='withdraw-to-a-funding-source'>Withdraw to a funding source</h2><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">fundingSource</span> <span class="o">=</span> <span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">;</span>
+<h2 id='withdraw-to-a-funding-source'>Withdraw to a Funding Source</h2><pre class="highlight javascript"><span class="kd">var</span> <span class="nx">fundingSource</span> <span class="o">=</span> <span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">;</span>
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">withdrawToFundingSource</span><span class="p">(</span><span class="nx">pin</span><span class="p">,</span> <span class="mf">5.00</span><span class="p">,</span> <span class="nx">fundingSource</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
 <span class="p">})</span>
@@ -2148,7 +2148,7 @@ Invalid purchase order.
 <td>There are not enough funds in the account&rsquo;s Dwolla balance to complete the withdrawl.</td>
 </tr>
 </tbody></table>
-<h2 id='deposit-from-a-funding-source'>Deposit from a funding source</h2><pre class="highlight json"><span class="p">{</span><span class="w">
+<h2 id='add-money-from-a-funding-source'>Add money from a Funding Source</h2><pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="err">amount</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
   </span><span class="err">pin</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -2306,7 +2306,7 @@ Invalid purchase order.
 
 </span></pre>
 
-<p>Deposit funds from a user&rsquo;s bank funding source to the user&rsquo;s account balance.  A new <a href="#transactions">Transaction</a> of type <code class="prettyprint">deposit</code> is created as a result.</p>
+<p>Add funds from a user&rsquo;s bank funding source to the user&rsquo;s Dwolla account balance.  A new <a href="#transactions">Transaction</a> of type <code class="prettyprint">deposit</code> is created as a result.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Funding</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -2348,11 +2348,11 @@ Invalid purchase order.
 </tr>
 <tr>
 <td>The amount is too small. Please send at least $1.00.</td>
-<td>The minimum deposit amount is $1.00. Please adjust the deposit amount.</td>
+<td>The minimum amount to add to a balance is $1.00. Please adjust the amount of funds being added to a Dwolla balance.</td>
 </tr>
 <tr>
 <td>The account is limited to {&hellip;} per transaction</td>
-<td>The maximum amount per deposit for this account is {…}. Please adjust the deposit amount.</td>
+<td>The maximum amount of money being added to a Dwolla balance for this account is {…}. Please adjust the amount of money being added to a Dwolla balance.</td>
 </tr>
 </tbody></table>
 <h2 id='add-new-funding-source'>Add new Funding Source</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -2724,7 +2724,7 @@ $$$$$ "DWOLLA DWOLLA BILL YA'LL" $$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </pre>
 
-<p>Any movement of money, whether payment, withdrawal, deposit, or fee, is recorded as an individual Transaction.  For instance, depositing money from a funding source into your Dwolla account balance creates a <code class="prettyprint">Transaction</code> of type <code class="prettyprint">deposit</code>.</p>
+<p>Any movement of money, whether it&rsquo;s a payment, fee, withdrawal, or adding funds to a Dwolla balance, is recorded as an individual Transaction.  For instance, adding money from a funding source into your Dwolla account balance creates a <code class="prettyprint">Transaction</code> of type <code class="prettyprint">deposit</code>.</p>
 <h3 id='how-transactions-work'>How Transactions Work</h3>
 <p>When a payment is sent, 2 or more transactions are created.  At least one is created to credit the recipient&rsquo;s account balance, and another one to debit the sender&rsquo;s account balance.  </p>
 
