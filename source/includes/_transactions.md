@@ -205,6 +205,11 @@ var_export($result);
 ?>
 ```
 
+```python
+# Fetch the 10 most recent transactions
+print(transactions.get())
+```
+
 > Response: 
 
 ```php
@@ -424,6 +429,10 @@ var_export($result);
 puts Dwolla::Transactions.get(nil, {}, false)
 ```
 
+```python
+print(transactions.get())
+```
+
 > Response:
 
 ```php
@@ -618,6 +627,11 @@ Dwolla.transactionById('12345', function(err, data) {
 ```ruby
 #   Retrieve a transaction by ID
 puts Dwolla::Transactions.get(331506)
+```
+
+```python
+# Get info for transaction ID 123456
+print(transactions.info('123456'))
 ```
 
 ```php

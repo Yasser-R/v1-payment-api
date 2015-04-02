@@ -81,6 +81,13 @@ Dwolla.fundingSources(function(err, data) {
 });
 ```
 
+```python
+# Get a list of funding sources associated
+# with the account under the current OAuth token
+
+print(fundingsources.get())
+```
+
 ```ruby
 #   Fetch all funding sources for the
 #   authorized user
@@ -249,7 +256,11 @@ dwolla.fundingSourceById(fundingSource, function(err, res) {
     console.log(res);
 })
 ```
+```python
+# Get information about a funding ID
 
+print(fundingsources.info('12345678'))
+```
 ```ruby
 # Retrieve a funding source by its ID
 
@@ -530,6 +541,12 @@ pin | User account PIN
   pin: 9999
 }
 ```
+```python
+# Deposit $10 into Dwolla from funding ID
+# '12345678'.
+
+print(fundingsources.deposit(10.00, '12345678'))
+```
 
 ```ruby
 puts Dwolla::FundingSources.deposit('5da016f7769bcb1de9938a30d194d5a7', {
@@ -733,6 +750,17 @@ $result = $fundingSources->add($accountNo, $routingNo, $accountType, $nickname);
 var_export($result);
 ?>
 ```
+```python
+# Add a funding source to the account associated
+# with the current OAuth token.
+#
+# '12345678' is the account number.
+# '00000000' is the routing number.
+# 'Checking' is the account type.
+# 'My Bank' is a user defined account identifier string.
+
+print(fundingsources.add('12345678', '00000000', 'Checking', 'My Bank'))
+```
 
 ```js
 /**
@@ -858,12 +886,23 @@ $result = $fundingSources->verify($deposit1, $deposit2, "377d8ed651c2b799784aa2a
 
 var_export($result);
 ?>
-
+```
 ```ruby
 puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
   :deposit1 => 0.01, 
   :deposit2 => 0.04, 
 })
+```
+
+```python
+# Verify the newly created account with via
+# the two micro-deposits.
+#
+# '0.04' is the first deposit.
+# '0.02' is the second deposit.
+# '12345678' is the account number.
+
+print(fundingsources.verify(0.04, 0.02, '12345678'))
 ```
 
 ```json

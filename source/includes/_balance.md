@@ -15,8 +15,10 @@ var_export($result);
 puts Dwolla::Balance.get
 ```
 ```python
-balance = DwollaUser.get_balance()
-print(balance)
+# Get the balance of the account for
+# the user associated with the current OAuth token
+
+print(accounts.balance())
 ```
 ```js
 /***

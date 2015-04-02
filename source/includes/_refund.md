@@ -49,6 +49,12 @@ $result = $Transactions->refund($transactionId, $fundingSource, 20.00);
 var_export($result);
 ?>
 ```
+```python
+# Refund $2 from "Balance" from transaction
+# '123456'
+
+print(transactions.refund('3452346', 'Balance', 2.00))
+```
 
 > Response: 
 

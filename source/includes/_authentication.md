@@ -30,13 +30,17 @@ $Dwolla->setToken("token goes here");
 ?>
 ```
 ```python
-from dwolla import DwollaClientApp, DwollaUser
+from dwolla import accounts, constants
 
-# Instantiate a new Dwolla client
-Dwolla = DwollaClientApp("key goes here", "secret goes here")
+# Configure the library (change these)
+constants.sandbox=False
 
-# set an OAuth access token
-DwollaUser = DwollaUser("token goes here")
+constants.client_id = "zbDwIC0dWCVU7cQtfvGwVwVjvxwQfjaTgkVi+FZOmKqPBzK5JG"
+constants.client_secret = "ckmgwJz9h/fZ09unyXxpupCyrmAMe0bnUiMHF/0+SDaR9RHe99"
+constants.access_token = "aK6DdCVlIsR1hKvTbp8VCwnvci8cwaTLlW9edtbHJVmKoopnoe"
+
+# Use the endpoints under accounts()
+print accounts.basic('some ID')
 ```
 > Invalid or Expired Access Token Response:
 

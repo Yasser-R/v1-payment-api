@@ -25,6 +25,9 @@ $result = $Transactions->stats();
 var_export($result);
 ?>
 ```
+```python
+print(transactions.stats())
+```
 
 > Response:
 

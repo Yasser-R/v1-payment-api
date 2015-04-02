@@ -104,6 +104,28 @@ dwolla.createCheckout(redirect_uri, purchaseOrder, params, function(err, checkou
 });
 ```
 
+```python
+# Create checkout session with items from
+# http://docs.dwolla.com/#checkouts
+
+test = checkouts.create({
+    'orderItems': {
+        frozenset({
+            'name': 'Prime Rib Sandwich',
+            'description': 'A somewhat tasty non-vegetarian sandwich',
+            'quantity': '1',
+            'price': '15.00'
+        })
+    },
+    'destinationId': '812-740-4294',
+    'total': 15.00,
+    'notes': 'blahhh',
+    'metadata': frozenset({
+        'key1': 'something',
+        'key2': 'another thing'
+    })})
+```
+
 ```ruby
 # Set redirect URL, callback URL
 Dwolla::OffsiteGateway.redirect = 'http://dwolla.com/payment_redirect'
@@ -212,6 +234,12 @@ var_export($result);
 ?>
 ```
 
+```python
+# Get information about the checkout with ID abdflkjdf34443
+
+checkouts.get("abdflkjdf34443")
+```
+
 ```js
 var checkoutId = 'a9d7c86a-0d0d-4466-b228-e15584a1315a';
 dwolla.getCheckout(checkoutId, function(err, response) {
@@ -315,6 +343,11 @@ DestinationTransactionId | For the resulting payment, this is the [_Recipient's_
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
   "client_secret": "g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"
 }
+```
+```python
+# Complete the checkout
+
+checkouts.complete('Order ID here')
 ```
 
 ```js

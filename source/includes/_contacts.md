@@ -63,24 +63,10 @@ pp Dwolla::Contacts.get
 pp Dwolla::Contacts.get({:search => 'Ben'})
 ```
 ```python
-'''
-    EXAMPLE 1: 
-      Fetch last 10 contacts from the 
-      account associated with the provided
-      OAuth token
-'''
-contacts = DwollaUser.get_contacts()
-print(contacts)
+# Get the first 10 contacts from the user
+# associated with the current OAuth token.
 
-
-'''
-    EXAMPLE 2: 
-      Search through the contacts of the
-      account associated with the provided
-      OAuth token
-'''
-contacts = DwollaUser.get_contacts('Ben')
-print(contacts)
+print(contacts.get())
 ```
 ```js
 /**

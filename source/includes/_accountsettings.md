@@ -29,13 +29,10 @@ var_export($result);
 puts Dwolla::Accounts.get_auto_withdrawal_status
 ```
 ```python
-'''
-    EXAMPLE 1: 
-        Fetch autowithdraw status for the account
-        associated with the current OAuth token.
-'''
-status = DwollaUser.get_autowithdraw_status
-print(status)
+# Get the auto-withdrawal status of the user
+# associated with the current OAuth token.
+
+print(accounts.autowithdrawalstatus())
 ```
 ```js
 /***
@@ -126,6 +123,12 @@ Determine whether the Auto Withdrawal is enabled for the authorized user.
 
 ## Enable/Disable Auto Withdrawal
 
+```python
+# Toggle the auto-withdrawal status of an account
+# under the Dwolla user associated with the current OAuth token.
+
+print(accounts.toggleautowithdrawalstatus(True, '12345678'))
+```
 ```php
 /**
  * Example 1:

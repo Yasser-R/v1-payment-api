@@ -38,7 +38,10 @@ $url = $OAuth->genAuthUrl("https://myredirect.com/redirect");
 
 ?>
 ```
-
+```python
+# Generate OAuth URL with redirect to requestb.in
+print(oauth.genauthurl("http://requestb.in/122rdhc1"))
+```
 ```js
 // where to send the user after they grant permission:
 var redirect_uri = "https://www.myredirect.com/redirect";  
@@ -111,7 +114,11 @@ $result = $OAuth->get($authorizationCode, $redirect_uri);
 print_r($result);
 ?>
 ```
-
+```python
+# Get access key and refresh token pair
+access_set = oauth.get("Z/KHDIyWO/LboIGn3wGGs1+sRWg=", "http://requestb.in/122rdhc1")
+print(access_set)
+```
 ```json
 {
   "client_id": "JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo",
@@ -179,7 +186,12 @@ token_type | Always `bearer`.
   "grant_type": "refresh_token"
 }
 ```
+```python
+# Exchange your expiring refresh token in "access_set" for another
+# access/refresh token pair
 
+print(oauth.refresh(access_set['refresh_token']))
+```
 ```js
 Dwolla.refreshAuth(refreshToken, function(error, auth) {
   var new_access_token = auth.access_token;

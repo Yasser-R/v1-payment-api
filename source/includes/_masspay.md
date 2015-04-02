@@ -48,6 +48,23 @@ The alternative approach incurs an ACH deposit from the bank funding source for 
   ]
 } 
 ```
+```python
+# Create a MassPay job with two items to
+# the Balance of the user associated with the current
+# OAuth token.
+
+info = masspay.create('Balance',
+               {
+                   {
+                       'amount': 1.00,
+                       'destination': '812-197-4121'
+                   },
+                   {
+                       'amount': 2.00,
+                       'destination': '812-174-9528'
+                   }
+               })
+```
 
 ```ruby
 items = [
@@ -272,7 +289,12 @@ dwolla.getMassPayJobs(function(err, response) {
   console.log(response);
 });
 ```
+```python
+# Get all current MassPay jobs for the
+# user associated with the current OAuth token.
 
+print(masspay.listjobs())
+```
 ```ruby
 puts Dwolla::MassPay.get
 ```
@@ -433,7 +455,13 @@ $result = $MassPay->getJob('8b116429-95c8-428f-be0f-a3ce017cba53');
 var_export($result);
 ?>
 ```
+```python
 
+# Get information about a MassPay
+# job with ID 'abcd123456'
+
+print(masspay.getjob("abcd123456"))
+```
 
 ```ruby
 puts Dwolla::MassPay.getJob('68e22e63-c3cb-45e6-bf04-a37201717e5d')
@@ -558,7 +586,11 @@ dwolla.getMassPayJobItems(jobId, function(err,result) {
   console.log(result);
 });
 ```
-
+```python
+# Get items from MassPay job ID with 'abcd1234'
+items = masspay.getjobitems("abcd1234")
+print(items)
+```
 ```ruby
 puts Dwolla::MassPay.getItems('256f7554-9bcb-4399-97d8-a34c00bb20b1')
 ```
@@ -731,7 +763,11 @@ dwolla.getMassPayJobItem(jobId, itemId, function(err, result) {
   console.log(result);
 });
 ```
+```python
+# Retrieve item 43432 from job with ID aaad1324
 
+print(masspay.getitem("aaad1324", "43432")
+```
 ```ruby
 # Retrieve item 17054 from Job 256f7554-9bcb-4399-97d8-a34c00bb20b1: 
 

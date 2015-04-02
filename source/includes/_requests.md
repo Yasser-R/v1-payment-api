@@ -119,12 +119,9 @@ var_export($result);
 puts Dwolla::Requests.create({:sourceId=> '812-742-8722', :amount=> '1.00'})
 ```
 ```python
-'''
-    EXAMPLE 1:
-      Initiate a money request
-'''
-request = DwollaUser.request_funds('1.00', 'reflector@dwolla.com', _keys.pin, source_type='Email')
-print(request)
+# Request $5 from 812-740-3809
+
+print(request.create('812-740-3809', 5.00))
 ```
 ```js
 /***
@@ -205,13 +202,9 @@ else { print_r($requests); }
 puts Dwolla::requests.get
 ```
 ```python
-'''
-    EXAMPLE 1:
-      Get a list of pending requests
-      for the user with the given oauth token
-'''
-pending_requests = DwollaUser.get_pending_requests()
-print(pending_requests)
+# Get all pending requests from the user
+# associated with the current OAuth token.
+print(request.get())
 ```
 ```js
 /***
@@ -417,14 +410,8 @@ var_export($result);
 puts Dwolla::requests.get('12345')
 ```
 ```python
-'''
-    EXAMPLE 1:
-      Get detailed information for the request
-      with the given 'request_id'
-'''
-request_id = '2209516'
-request = DwollaUser.get_request(request_id)
-print(request)
+# Get info regarding a pending money request.
+print(request.info(1470))
 ```
 ```js
 /***
@@ -610,13 +597,9 @@ puts Dwolla::Requests.fulfill('1653', {
 })
 ```
 ```python
-'''
-    EXAMPLE 1:
-      Fulfill (:pay) a pending payment request
-'''
-request_id = '2214710'
-fulfilled_request = DwollaUser.fulfill_request(request_id, _keys.pin)
-print(fulfilled)
+# Fulfill a pending money request.
+
+print(request.fulfill(1475, 10.00))
 ```
 ```js
 /***
@@ -780,13 +763,9 @@ var_export($result);
 puts Dwolla::Requests.delete('1652')
 ```
 ```python
-'''
-    EXAMPLE 1:
-      Cancel a pending money request
-'''
-request_id = request
-canceled_request = DwollaUser.cancel_request(request_id)
-print(canceled_request)
+# Cancel a pending money request.
+
+print(request.cancel(1470))
 ```
 ```js
 /***

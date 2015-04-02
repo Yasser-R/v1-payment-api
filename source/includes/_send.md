@@ -42,11 +42,8 @@ transactionId = Dwolla::Transactions.send({
 puts transactionId
 ```
 ```python
-'''
-      Send money ($1.00) to a Dwolla ID 812-626-8794
-'''
-transaction = DwollaUser.send_funds(0.01, '812-626-8794', _keys.pin)
-print(transaction)
+# Send $5.50 to a Dwolla ID and print the transaction ID
+print(transactions.send('812-197-4121', 5.50))
 ```
 ```js
 /**

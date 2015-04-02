@@ -44,13 +44,8 @@ var_export($result);
 puts Dwolla::Users.get('gordon@dwolla.com')
 ```
 ```python
-'''
-    EXAMPLE 1: 
-      Fetch basic account information
-      for a given Dwolla ID
-'''
-me = Dwolla.get_account_info('812-626-8794')
-print(me)
+# Fetch basic information for a user via their Dwolla ID
+print(accounts.basic('812-202-3784'))
 ```
 ```js
 /**
@@ -156,14 +151,8 @@ var_export($result);
 puts Dwolla::Users.get
 ```
 ```python
-'''
-    EXAMPLE 1: 
-      Fetch account information for the
-      account associated with the provided
-      OAuth token
-'''
-me = DwollaUser.get_account_info()
-print(me)
+# Print FULL account information for the user associated with the currently set OAuth token.
+print(accounts.full())
 ```
 ```js
 /**
@@ -284,13 +273,8 @@ var_export($result);
 pp Dwolla::Contacts.nearby(41.58975983, -93.61564636)
 ```
 ```python
-'''
-    EXAMPLE 1: 
-      Fetch spots near  41.59 and 
-      -93.62 (default parameters in dwolla-python)
-'''
-contacts = DwollaUser.get_nearby_spots()
-print(contacts)
+# Fetch Dwolla spots near 40.7127, 74.0059
+print(contacts.nearby(40.7127, 74.0059))
 ```
 ```js
 /**
@@ -505,13 +489,8 @@ var_export($result);
 pp Dwolla::Users.nearby(:latitude => 40.7820, :longitude => -73.8317)
 ```
 ```python
-'''
-    EXAMPLE 1: 
-      Fetch users near  40.78 and 
-      -73.83 (default parameters in dwolla-python)
-'''
-users = DwollaUser.get_nearby_users('40.7820', '-73.8317')
-print(users)
+# Get users near 40.7127, 74.0059
+print(accounts.nearby(40.7127, 74.0059))
 ```
 ```js
 /**
