@@ -306,22 +306,29 @@ TODO: document errors
 <span class="no">Dwolla</span><span class="o">::</span><span class="n">token</span> <span class="o">=</span> <span class="s2">"JRRTolkien"</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
-<span class="k">require</span> <span class="s1">'dwolla.php'</span><span class="p">;</span>
+<span class="c1">// Any dwolla-php subclass can be configured in the following manner
+</span><span class="k">require</span> <span class="s1">'../vendor/autoload.php'</span><span class="p">;</span>
+<span class="nv">$Account</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Account</span><span class="p">();</span>
 
-<span class="c1">// Instantiate a new Dwolla REST Client
-</span><span class="nv">$Dwolla</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DwollaRestClient</span><span class="p">(</span><span class="s2">"key goes here"</span><span class="p">,</span> <span class="s2">"secret goes here"</span><span class="p">);</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">sandbox</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">debug</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
 
-<span class="c1">// Set an OAuth access token:
-</span><span class="nv">$Dwolla</span><span class="o">-&gt;</span><span class="na">setToken</span><span class="p">(</span><span class="s2">"token goes here"</span><span class="p">);</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_id</span> <span class="o">=</span> <span class="s2">"Key"</span><span class="p">;</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">client_secret</span> <span class="o">=</span> <span class="s2">"Secret"</span><span class="p">;</span>
+<span class="nv">$Account</span><span class="o">-&gt;</span><span class="na">settings</span><span class="o">-&gt;</span><span class="na">oauth_token</span> <span class="o">=</span> <span class="s2">"OAuth token"</span><span class="p">;</span>
 <span class="cp">?&gt;</span>
 </pre>
-<pre class="highlight python"><span class="kn">from</span> <span class="nn">dwolla</span> <span class="kn">import</span> <span class="n">DwollaClientApp</span><span class="p">,</span> <span class="n">DwollaUser</span>
+<pre class="highlight python"><span class="kn">from</span> <span class="nn">dwolla</span> <span class="kn">import</span> <span class="n">accounts</span><span class="p">,</span> <span class="n">constants</span>
 
-<span class="c"># Instantiate a new Dwolla client</span>
-<span class="n">Dwolla</span> <span class="o">=</span> <span class="n">DwollaClientApp</span><span class="p">(</span><span class="s">"key goes here"</span><span class="p">,</span> <span class="s">"secret goes here"</span><span class="p">)</span>
+<span class="c"># Configure the library (change these)</span>
+<span class="n">constants</span><span class="o">.</span><span class="n">sandbox</span><span class="o">=</span><span class="bp">False</span>
 
-<span class="c"># set an OAuth access token</span>
-<span class="n">DwollaUser</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="p">(</span><span class="s">"token goes here"</span><span class="p">)</span>
+<span class="n">constants</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="s">"zbDwIC0dWCVU7cQtfvGwVwVjvxwQfjaTgkVi+FZOmKqPBzK5JG"</span>
+<span class="n">constants</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="s">"ckmgwJz9h/fZ09unyXxpupCyrmAMe0bnUiMHF/0+SDaR9RHe99"</span>
+<span class="n">constants</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="s">"aK6DdCVlIsR1hKvTbp8VCwnvci8cwaTLlW9edtbHJVmKoopnoe"</span>
+
+<span class="c"># Use the endpoints under accounts()</span>
+<span class="k">print</span> <span class="n">accounts</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="s">'some ID'</span><span class="p">)</span>
 </pre>
 
 <blockquote>
@@ -382,6 +389,9 @@ Needless to say, you should replace <code class="prettyprint">&lt;T0K3N_H3R3&gt;
 <span class="nv">$url</span> <span class="o">=</span> <span class="nv">$OAuth</span><span class="o">-&gt;</span><span class="na">genAuthUrl</span><span class="p">(</span><span class="s2">"https://myredirect.com/redirect"</span><span class="p">);</span>
 
 <span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight python"><span class="c"># Generate OAuth URL with redirect to requestb.in</span>
+<span class="k">print</span><span class="p">(</span><span class="n">oauth</span><span class="o">.</span><span class="n">genauthurl</span><span class="p">(</span><span class="s">"http://requestb.in/122rdhc1"</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="c1">// where to send the user after they grant permission:
 </span><span class="kd">var</span> <span class="nx">redirect_uri</span> <span class="o">=</span> <span class="s2">"https://www.myredirect.com/redirect"</span><span class="p">;</span>  
@@ -487,6 +497,10 @@ Remember to url-encode all querystring parameters!
 <span class="nb">print_r</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get access key and refresh token pair</span>
+<span class="n">access_set</span> <span class="o">=</span> <span class="n">oauth</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"Z/KHDIyWO/LboIGn3wGGs1+sRWg="</span><span class="p">,</span> <span class="s">"http://requestb.in/122rdhc1"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">access_set</span><span class="p">)</span>
+</pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"client_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JCGQXLrlfuOqdUYdTcLz3rBiCZQDRvdWIUPkw++GMuGhkem9Bo"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="p">,</span><span class="w">
@@ -583,6 +597,11 @@ Remember to url-encode all querystring parameters!
   </span><span class="s2">"grant_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"refresh_token"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight python"><span class="c"># Exchange your expiring refresh token in "access_set" for another</span>
+<span class="c"># access/refresh token pair</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">oauth</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">access_set</span><span class="p">[</span><span class="s">'refresh_token'</span><span class="p">]))</span>
+</pre>
 <pre class="highlight javascript"><span class="nx">Dwolla</span><span class="p">.</span><span class="nx">refreshAuth</span><span class="p">(</span><span class="nx">refreshToken</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">auth</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">new_access_token</span> <span class="o">=</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">access_token</span><span class="p">;</span>
   <span class="kd">var</span> <span class="nx">new_refresh_token</span> <span class="o">=</span> <span class="nx">auth</span><span class="p">.</span><span class="nx">refresh_token</span><span class="p">;</span>
@@ -892,11 +911,8 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 
 <span class="nb">puts</span> <span class="n">transactionId</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-      Send money ($1.00) to a Dwolla ID 812-626-8794
-'''</span>
-<span class="n">transaction</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">send_funds</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="s">'812-626-8794'</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Send $5.50 to a Dwolla ID and print the transaction ID</span>
+<span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">'812-197-4121'</span><span class="p">,</span> <span class="mf">5.50</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
  *   Send money ($1.00) to an email address, with a note
@@ -926,6 +942,8 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
 <pre class="highlight php">343947    // resulting Transacton ID
+</pre>
+<pre class="highlight python"><span class="mi">113533</span> <span class="c"># Sender transaction ID</span>
 </pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -1135,6 +1153,26 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">checkout</span><span class="p">.</span><span class="nx">checkoutURL</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight python"><span class="c"># Create checkout session with items from</span>
+<span class="c"># http://docs.dwolla.com/#checkouts</span>
+
+<span class="n">test</span> <span class="o">=</span> <span class="n">checkouts</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s">'orderItems'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nb">frozenset</span><span class="p">({</span>
+            <span class="s">'name'</span><span class="p">:</span> <span class="s">'Prime Rib Sandwich'</span><span class="p">,</span>
+            <span class="s">'description'</span><span class="p">:</span> <span class="s">'A somewhat tasty non-vegetarian sandwich'</span><span class="p">,</span>
+            <span class="s">'quantity'</span><span class="p">:</span> <span class="s">'1'</span><span class="p">,</span>
+            <span class="s">'price'</span><span class="p">:</span> <span class="s">'15.00'</span>
+        <span class="p">})</span>
+    <span class="p">},</span>
+    <span class="s">'destinationId'</span><span class="p">:</span> <span class="s">'812-740-4294'</span><span class="p">,</span>
+    <span class="s">'total'</span><span class="p">:</span> <span class="mf">15.00</span><span class="p">,</span>
+    <span class="s">'notes'</span><span class="p">:</span> <span class="s">'blahhh'</span><span class="p">,</span>
+    <span class="s">'metadata'</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">({</span>
+        <span class="s">'key1'</span><span class="p">:</span> <span class="s">'something'</span><span class="p">,</span>
+        <span class="s">'key2'</span><span class="p">:</span> <span class="s">'another thing'</span>
+    <span class="p">})})</span>
+</pre>
 <pre class="highlight ruby"><span class="c1"># Set redirect URL, callback URL</span>
 <span class="no">Dwolla</span><span class="o">::</span><span class="no">OffsiteGateway</span><span class="p">.</span><span class="nf">redirect</span> <span class="o">=</span> <span class="s1">'http://dwolla.com/payment_redirect'</span>
 <span class="no">Dwolla</span><span class="o">::</span><span class="no">OffsiteGateway</span><span class="p">.</span><span class="nf">callback</span> <span class="o">=</span> <span class="s1">'http://dwolla.com/payment_callback'</span>
@@ -1157,6 +1195,8 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight python"><span class="p">{</span><span class="s">u'URL'</span><span class="p">:</span> <span class="s">u'https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac'</span><span class="p">}</span>
+</pre>
 <pre class="highlight javascript"><span class="nx">https</span><span class="err">:</span><span class="c1">//www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 </span></pre>
 <pre class="highlight php">array (
@@ -1354,6 +1394,10 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get information about the checkout with ID abdflkjdf34443</span>
+
+<span class="n">checkouts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">"abdflkjdf34443"</span><span class="p">)</span>
+</pre>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">checkoutId</span> <span class="o">=</span> <span class="s1">'a9d7c86a-0d0d-4466-b228-e15584a1315a'</span><span class="p">;</span>
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">getCheckout</span><span class="p">(</span><span class="nx">checkoutId</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
@@ -1404,6 +1448,21 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
   <span class="na">DestinationTransactionId</span><span class="p">:</span> <span class="mi">290141</span><span class="p">,</span>
   <span class="na">OrderItems</span><span class="p">:</span> <span class="p">[],</span>
   <span class="na">Metadata</span><span class="p">:</span> <span class="kc">null</span> 
+<span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span> 
+  <span class="s">u'CheckoutId'</span><span class="p">:</span> <span class="s">u'd0429a55-c338-4139-b273-48d2f8c45693'</span><span class="p">,</span>
+  <span class="s">u'Discount'</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">u'Shipping'</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">u'Tax'</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">u'Total'</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="s">u'Status'</span><span class="p">:</span> <span class="s">u'Completed'</span><span class="p">,</span>
+  <span class="s">u'FundingSource'</span><span class="p">:</span> <span class="s">u'Balance'</span><span class="p">,</span>
+  <span class="s">u'TransactionId'</span><span class="p">:</span> <span class="mi">290142</span><span class="p">,</span>
+  <span class="s">u'ProfileId'</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s">u'DestinationTransactionId'</span><span class="p">:</span> <span class="mi">290141</span><span class="p">,</span>
+  <span class="s">u'OrderItems'</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s">u'Metadata'</span><span class="p">:</span> <span class="n">null</span> 
 <span class="p">}</span>
 </pre>
 <pre class="highlight php">array (
@@ -1460,6 +1519,10 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
   </span><span class="s2">"client_secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"g7QLwvO37aN2HoKx1amekWi8a2g7AIuPbD5C/JSLqXIcDOxfTr"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight python"><span class="c"># Complete the checkout</span>
+
+<span class="n">checkouts</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="s">'Order ID here'</span><span class="p">)</span>
+</pre>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">checkoutId</span> <span class="o">=</span> <span class="s1">'a9d7c86a-0d0d-4466-b228-e15584a1315a'</span><span class="p">;</span>
 
 <span class="nx">dwolla</span><span class="p">.</span><span class="nx">completeCheckout</span><span class="p">(</span><span class="nx">checkoutId</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
@@ -1691,6 +1754,11 @@ Invalid purchase order.
    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get a list of funding sources associated</span>
+<span class="c"># with the account under the current OAuth token</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fundingsources</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+</pre>
 <pre class="highlight ruby"><span class="c1">#   Fetch all funding sources for the</span>
 <span class="c1">#   authorized user</span>
 
@@ -1736,6 +1804,37 @@ Invalid purchase order.
     'ProcessingType' =&gt; 'ACH',
   ),
 )
+</pre>
+<pre class="highlight python"><span class="p">[</span>
+<span class="p">{</span>
+    <span class="s">"Id"</span><span class="p">:</span> <span class="s">"Balance"</span><span class="p">,</span>
+    <span class="s">"Name"</span><span class="p">:</span> <span class="s">"My Dwolla Balance"</span><span class="p">,</span>
+    <span class="s">"Type"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+    <span class="s">"Verified"</span><span class="p">:</span> <span class="s">"true"</span><span class="p">,</span>
+    <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">""</span>
+<span class="p">},</span>
+<span class="p">{</span>
+    <span class="s">"Id"</span><span class="p">:</span> <span class="s">"c58bb9f7f1d51d5547e1987a2833f4fa"</span><span class="p">,</span>
+    <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Donations Collection Fund - Savings"</span><span class="p">,</span>
+    <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Savings"</span><span class="p">,</span>
+    <span class="s">"Verified"</span><span class="p">:</span> <span class="s">"true"</span><span class="p">,</span>
+    <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">"ACH"</span>
+<span class="p">},</span>
+<span class="p">{</span>
+    <span class="s">"Id"</span><span class="p">:</span> <span class="s">"Credit"</span><span class="p">,</span>
+    <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Credit"</span><span class="p">,</span>
+    <span class="s">"Type"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+    <span class="s">"Verified"</span><span class="p">:</span> <span class="s">"true"</span><span class="p">,</span>
+    <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">""</span>
+<span class="p">},</span>
+<span class="p">{</span>
+    <span class="s">"Id"</span><span class="p">:</span> <span class="s">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">,</span>
+    <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Donations Payout Account - Checking"</span><span class="p">,</span>
+    <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Checking"</span><span class="p">,</span>
+    <span class="s">"Verified"</span><span class="p">:</span> <span class="s">"true"</span><span class="p">,</span>
+    <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">"FiSync"</span>
+<span class="p">}</span>
+<span class="p">]</span>
 </pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -1867,6 +1966,10 @@ Invalid purchase order.
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
 <span class="p">})</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get information about a funding ID</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fundingsources</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">'12345678'</span><span class="p">))</span>
+</pre>
 <pre class="highlight ruby"><span class="c1"># Retrieve a funding source by its ID</span>
 
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s2">"5da016f7769bcb1de9938a30d194d5a7"</span><span class="p">)</span>
@@ -1900,6 +2003,14 @@ Invalid purchase order.
   <span class="s2">"Type"</span>           <span class="o">=&gt;</span> <span class="s2">"Checking"</span><span class="p">,</span>
   <span class="s2">"Verified"</span>       <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
   <span class="s2">"ProcessingType"</span> <span class="o">=&gt;</span> <span class="s2">"ACH"</span>
+<span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+<span class="s">"Id"</span><span class="p">:</span> <span class="s">"12345678"</span><span class="p">,</span>
+<span class="s">"Name"</span><span class="p">:</span> <span class="s">"Donations Payout Account - Checking"</span><span class="p">,</span>
+<span class="s">"Type"</span><span class="p">:</span> <span class="s">"Checking"</span><span class="p">,</span>
+<span class="s">"Verified"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+<span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">"FiSync"</span>
 <span class="p">}</span>
 </pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
@@ -1950,6 +2061,11 @@ Invalid purchase order.
     </span><span class="err">pin</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight python"><span class="c"># Withdraw $5 from Dwolla to funding ID</span>
+<span class="c"># '12345678'.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fundingsources</span><span class="o">.</span><span class="n">withdraw</span><span class="p">(</span><span class="mf">5.00</span><span class="p">,</span> <span class="s">'12345678'</span><span class="p">))</span>
+</pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">withdraw</span><span class="p">(</span><span class="s1">'funding_source_id'</span><span class="p">,</span> <span class="p">{</span>
   <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">12</span><span class="o">.</span><span class="mi">95</span><span class="p">,</span> 
   <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span>
@@ -1969,40 +2085,73 @@ Invalid purchase order.
 </pre>
 
 <blockquote>
-<p>Response:</p>
-</blockquote>
-<pre class="highlight php">array (
-  'Id' =&gt; 346098,
-  'Amount' =&gt; 5,
-  'Date' =&gt; '2014-10-22T19:49:45Z',
-  'Type' =&gt; 'withdrawal',
-  'UserType' =&gt; 'Dwolla',
-  'DestinationId' =&gt; 'XXX9999',
-  'DestinationName' =&gt; 'Blah',
-  'Destination' =&gt;
+<p>Response:
+<code class="prettyprint">python
+{ 
+        &quot;Id&quot;: 12345678,
+        &quot;Amount&quot;: 5,
+        &quot;Date&quot;: &quot;2014-09-05T06:40:56Z&quot;,
+        &quot;Type&quot;: &quot;withdrawal&quot;,
+        &quot;UserType&quot;: &quot;Dwolla&quot;,
+        &quot;DestinationId&quot;: &quot;XXX9999&quot;,
+        &quot;DestinationName&quot;: &quot;Blah&quot;,
+        &quot;Destination&quot;: { 
+            &quot;Id&quot;: &quot;XXX9999&quot;, 
+            &quot;Name&quot;: &quot;Blah&quot;, 
+            &quot;Type&quot;: &quot;Dwolla&quot;, 
+            &quot;Image&quot;: &quot;&quot;
+        },
+        &quot;SourceId&quot;: &quot;812-742-8722&quot;,
+        &quot;SourceName&quot;: &quot;Cafe Kubal&quot;,
+        &quot;Source&quot;: {
+            &quot;Id&quot;: &quot;812-742-8722&quot;,
+            &quot;Name&quot;: &quot;Cafe Kubal&quot;,
+            &quot;Type&quot;: &quot;Dwolla&quot;,
+            &quot;Image&quot;: &quot;http://uat.dwolla.com/avatars/812-742-8722&quot; 
+        },
+        &quot;ClearingDate&quot;: &quot;2014-09-08T00:00:00Z&quot;,
+        &quot;Status&quot;: &quot;pending&quot;,
+        &quot;Notes&quot;: null,
+        &quot;Fees&quot;: null,
+        &quot;OriginalTransactionId&quot;: null,
+        &quot;Metadata&quot;: null 
+      }
+}
+</code>
+<code class="prettyprint">php
+array (
+  &#39;Id&#39; =&gt; 346098,
+  &#39;Amount&#39; =&gt; 5,
+  &#39;Date&#39; =&gt; &#39;2014-10-22T19:49:45Z&#39;,
+  &#39;Type&#39; =&gt; &#39;withdrawal&#39;,
+  &#39;UserType&#39; =&gt; &#39;Dwolla&#39;,
+  &#39;DestinationId&#39; =&gt; &#39;XXX9999&#39;,
+  &#39;DestinationName&#39; =&gt; &#39;Blah&#39;,
+  &#39;Destination&#39; =&gt;
   array (
-    'Id' =&gt; 'XXX9999',
-    'Name' =&gt; 'Blah',
-    'Type' =&gt; 'Dwolla',
-    'Image' =&gt; '',
+    &#39;Id&#39; =&gt; &#39;XXX9999&#39;,
+    &#39;Name&#39; =&gt; &#39;Blah&#39;,
+    &#39;Type&#39; =&gt; &#39;Dwolla&#39;,
+    &#39;Image&#39; =&gt; &#39;&#39;,
   ),
-  'SourceId' =&gt; '812-742-8722',
-  'SourceName' =&gt; 'Cafe Kubal',
-  'Source' =&gt;
+  &#39;SourceId&#39; =&gt; &#39;812-742-8722&#39;,
+  &#39;SourceName&#39; =&gt; &#39;Cafe Kubal&#39;,
+  &#39;Source&#39; =&gt;
   array (
-    'Id' =&gt; '812-742-8722',
-    'Name' =&gt; 'Cafe Kubal',
-    'Type' =&gt; 'Dwolla',
-    'Image' =&gt; 'http://uat.dwolla.com/avatars/812-742-8722',
+    &#39;Id&#39; =&gt; &#39;812-742-8722&#39;,
+    &#39;Name&#39; =&gt; &#39;Cafe Kubal&#39;,
+    &#39;Type&#39; =&gt; &#39;Dwolla&#39;,
+    &#39;Image&#39; =&gt; &#39;http://uat.dwolla.com/avatars/812-742-8722&#39;,
   ),
-  'ClearingDate' =&gt; '2014-10-24T00:00:00Z',
-  'Status' =&gt; 'pending',
-  'Notes' =&gt; NULL,
-  'Fees' =&gt; NULL,
-  'OriginalTransactionId' =&gt; NULL,
-  'Metadata' =&gt; NULL,
+  &#39;ClearingDate&#39; =&gt; &#39;2014-10-24T00:00:00Z&#39;,
+  &#39;Status&#39; =&gt; &#39;pending&#39;,
+  &#39;Notes&#39; =&gt; NULL,
+  &#39;Fees&#39; =&gt; NULL,
+  &#39;OriginalTransactionId&#39; =&gt; NULL,
+  &#39;Metadata&#39; =&gt; NULL,
 )
-</pre>
+</code> </p>
+</blockquote>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">341600</span><span class="p">,</span>
   <span class="s2">"Amount"</span>                <span class="o">=&gt;</span> <span class="mi">12</span><span class="o">.</span><span class="mi">95</span><span class="p">,</span>
@@ -2153,6 +2302,11 @@ Invalid purchase order.
   </span><span class="err">pin</span><span class="p">:</span><span class="w"> </span><span class="mi">9999</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></pre>
+<pre class="highlight python"><span class="c"># Deposit $10 into Dwolla from funding ID</span>
+<span class="c"># '12345678'.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fundingsources</span><span class="o">.</span><span class="n">deposit</span><span class="p">(</span><span class="mf">10.00</span><span class="p">,</span> <span class="s">'12345678'</span><span class="p">))</span>
+</pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">deposit</span><span class="p">(</span><span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">,</span> <span class="p">{</span>
   <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">12</span><span class="o">.</span><span class="mi">95</span><span class="p">,</span> 
   <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="s1">'9999'</span>
@@ -2209,6 +2363,36 @@ Invalid purchase order.
   'OriginalTransactionId' =&gt; NULL,
   'Metadata' =&gt; NULL,
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span> 
+       <span class="s">"Id"</span><span class="p">:</span> <span class="mi">12345678</span><span class="p">,</span>
+       <span class="s">"Amount"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+       <span class="s">"Date"</span><span class="p">:</span> <span class="s">"2014-09-05T06:40:56Z"</span><span class="p">,</span>
+       <span class="s">"Type"</span><span class="p">:</span> <span class="s">"deposit"</span><span class="p">,</span>
+       <span class="s">"UserType"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+       <span class="s">"DestinationId"</span><span class="p">:</span> <span class="s">"XXX9999"</span><span class="p">,</span>
+       <span class="s">"DestinationName"</span><span class="p">:</span> <span class="s">"Blah"</span><span class="p">,</span>
+       <span class="s">"Destination"</span><span class="p">:</span> <span class="p">{</span>
+           <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-742-8722"</span><span class="p">,</span>
+           <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Cafe Kubal"</span><span class="p">,</span>
+           <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+           <span class="s">"Image"</span><span class="p">:</span> <span class="s">"http://uat.dwolla.com/avatars/812-742-8722"</span> 
+       <span class="p">},</span>
+       <span class="s">"SourceId"</span><span class="p">:</span> <span class="s">"812-742-8722"</span><span class="p">,</span>
+       <span class="s">"SourceName"</span><span class="p">:</span> <span class="s">"Cafe Kubal"</span><span class="p">,</span>
+       <span class="s">"Source"</span><span class="p">:</span> <span class="p">{</span> 
+           <span class="s">"Id"</span><span class="p">:</span> <span class="s">"XXX9999"</span><span class="p">,</span> 
+           <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Blah"</span><span class="p">,</span> 
+           <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span> 
+           <span class="s">"Image"</span><span class="p">:</span> <span class="s">""</span>
+       <span class="p">},</span>
+       <span class="s">"ClearingDate"</span><span class="p">:</span> <span class="s">"2014-09-08T00:00:00Z"</span><span class="p">,</span>
+       <span class="s">"Status"</span><span class="p">:</span> <span class="s">"pending"</span><span class="p">,</span>
+       <span class="s">"Notes"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+       <span class="s">"Fees"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+       <span class="s">"OriginalTransactionId"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+       <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span> 
+<span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">341601</span><span class="p">,</span>
@@ -2368,6 +2552,16 @@ Invalid purchase order.
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python"><span class="c"># Add a funding source to the account associated</span>
+<span class="c"># with the current OAuth token.</span>
+<span class="c">#</span>
+<span class="c"># '12345678' is the account number.</span>
+<span class="c"># '00000000' is the routing number.</span>
+<span class="c"># 'Checking' is the account type.</span>
+<span class="c"># 'My Bank' is a user defined account identifier string.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">fundingsources</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">'12345678'</span><span class="p">,</span> <span class="s">'00000000'</span><span class="p">,</span> <span class="s">'Checking'</span><span class="p">,</span> <span class="s">'My Bank'</span><span class="p">))</span>
+</pre>
 <pre class="highlight javascript"><span class="cm">/**
  * Add a funding source with account number '12345678',
  * routing number '87654321', of type 'Checking' and with
@@ -2415,6 +2609,14 @@ Invalid purchase order.
   <span class="s2">"Type"</span>           <span class="o">=&gt;</span> <span class="s2">"Checking"</span><span class="p">,</span>
   <span class="s2">"Verified"</span>       <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
   <span class="s2">"ProcessingType"</span> <span class="o">=&gt;</span> <span class="s2">"ACH"</span>
+<span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="s">"34da835f235cd25302ef0c5c1cb1d4b9"</span><span class="p">,</span>
+        <span class="s">"Name"</span><span class="p">:</span> <span class="s">"My Bank"</span><span class="p">,</span>
+        <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Checking"</span><span class="p">,</span>
+        <span class="s">"Verified"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+        <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">"ACH"</span>
 <span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span> 
@@ -2526,12 +2728,20 @@ Invalid purchase order.
 
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
+</pre>
+<pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">FundingSources</span><span class="p">.</span><span class="nf">verify</span><span class="p">(</span><span class="s2">"7bf971a12543f560119318e67aa76035"</span><span class="p">,</span> <span class="p">{</span>
+  <span class="ss">:deposit1</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="mo">01</span><span class="p">,</span> 
+  <span class="ss">:deposit2</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="mo">04</span><span class="p">,</span> 
+<span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="c"># Verify the newly created account with via</span>
+<span class="c"># the two micro-deposits.</span>
+<span class="c">#</span>
+<span class="c"># '0.04' is the first deposit.</span>
+<span class="c"># '0.02' is the second deposit.</span>
+<span class="c"># '12345678' is the account number.</span>
 
-```ruby
-puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
-  :deposit1 =&gt; 0.01, 
-  :deposit2 =&gt; 0.04, 
-})
+<span class="k">print</span><span class="p">(</span><span class="n">fundingsources</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="s">'12345678'</span><span class="p">))</span>
 </pre>
 <pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"deposit1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
@@ -2560,6 +2770,14 @@ puts Dwolla::FundingSources.verify("7bf971a12543f560119318e67aa76035", {
   'Verified' =&gt; true,
   'ProcessingType' =&gt; 'ACH',
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="s">"12345678"</span><span class="p">,</span>
+        <span class="s">"Name"</span><span class="p">:</span> <span class="s">"My Checking Account - Checking"</span><span class="p">,</span>
+        <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Checking"</span><span class="p">,</span>
+        <span class="s">"Verified"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">"ACH"</span>
+<span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>             <span class="o">=&gt;</span> <span class="s2">"7bf971a12543f560119318e67aa76035"</span><span class="p">,</span>
@@ -2942,6 +3160,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python"><span class="c"># Fetch the 10 most recent transactions</span>
+<span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+</pre>
 
 <blockquote>
 <p>Response: </p>
@@ -2984,6 +3205,39 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   ...
   ),
 )
+</pre>
+<pre class="highlight python"><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="mi">113533</span><span class="p">,</span>
+        <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">5.50</span><span class="p">,</span>
+        <span class="s">"Date"</span><span class="p">:</span> <span class="s">"2014-12-13T05:07:15Z"</span><span class="p">,</span>
+        <span class="s">"Type"</span><span class="p">:</span> <span class="s">"money_sent"</span><span class="p">,</span>
+        <span class="s">"UserType"</span><span class="p">:</span> <span class="s">"Email"</span><span class="p">,</span>
+        <span class="s">"DestinationId"</span><span class="p">:</span> <span class="s">"812-197-4121"</span><span class="p">,</span>
+        <span class="s">"DestinationName"</span><span class="p">:</span> <span class="s">"Some Name"</span><span class="p">,</span>
+        <span class="s">"Destination"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-197-4121"</span><span class="p">,</span>
+            <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Some Name"</span><span class="p">,</span>
+            <span class="s">"Type"</span><span class="p">:</span> <span class="s">"dwolla"</span><span class="p">,</span>
+            <span class="s">"Image"</span><span class="p">:</span> <span class="s">""</span>
+        <span class="p">},</span>
+        <span class="s">"SourceId"</span><span class="p">:</span> <span class="s">"812-202-3784"</span><span class="p">,</span>
+        <span class="s">"SourceName"</span><span class="p">:</span> <span class="s">"David Stancu"</span><span class="p">,</span>
+        <span class="s">"Source"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-202-3784"</span><span class="p">,</span>
+            <span class="s">"Name"</span><span class="p">:</span> <span class="s">"David Stancu"</span><span class="p">,</span>
+            <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+            <span class="s">"Image"</span><span class="p">:</span> <span class="s">"https://dwolla-avatars.s3.amazonaws.com/812-202-3784/ac045522"</span>
+        <span class="p">},</span>
+        <span class="s">"ClearingDate"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+        <span class="s">"Status"</span><span class="p">:</span> <span class="s">"cancelled"</span><span class="p">,</span>
+        <span class="s">"Notes"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+        <span class="s">"Fees"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">"OriginalTransactionId"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+<span class="p">]</span>
 </pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
@@ -3179,6 +3433,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="cp">?&gt;</span>
 </pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="kp">nil</span><span class="p">,</span> <span class="p">{},</span> <span class="kp">false</span><span class="p">)</span>
+</pre>
+<pre class="highlight python"><span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
 </pre>
 
 <blockquote>
@@ -3387,6 +3643,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <pre class="highlight ruby"><span class="c1">#   Retrieve a transaction by ID</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">331506</span><span class="p">)</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get info for transaction ID 123456</span>
+<span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">'123456'</span><span class="p">))</span>
+</pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="nv">$Transactions</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\Transactions</span><span class="p">();</span>
 
@@ -3438,6 +3697,37 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   'OriginalTransactionId' =&gt; NULL,
   'Metadata' =&gt; NULL,
 )
+</pre>
+<pre class="highlight python"><span class="n">Return</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="mi">123456</span><span class="p">,</span>
+        <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">5.50</span><span class="p">,</span>
+        <span class="s">"Date"</span><span class="p">:</span> <span class="s">"2014-12-13T05:07:15Z"</span><span class="p">,</span>
+        <span class="s">"Type"</span><span class="p">:</span> <span class="s">"money_sent"</span><span class="p">,</span>
+        <span class="s">"UserType"</span><span class="p">:</span> <span class="s">"Email"</span><span class="p">,</span>
+        <span class="s">"DestinationId"</span><span class="p">:</span> <span class="s">"812-197-4121"</span><span class="p">,</span>
+        <span class="s">"DestinationName"</span><span class="p">:</span> <span class="s">"Some Name"</span><span class="p">,</span>
+        <span class="s">"Destination"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-197-4121"</span><span class="p">,</span>
+            <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Some Name"</span><span class="p">,</span>
+            <span class="s">"Type"</span><span class="p">:</span> <span class="s">"dwolla"</span><span class="p">,</span>
+            <span class="s">"Image"</span><span class="p">:</span> <span class="s">""</span>
+        <span class="p">},</span>
+        <span class="s">"SourceId"</span><span class="p">:</span> <span class="s">"812-202-3784"</span><span class="p">,</span>
+        <span class="s">"SourceName"</span><span class="p">:</span> <span class="s">"David Stancu"</span><span class="p">,</span>
+        <span class="s">"Source"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-202-3784"</span><span class="p">,</span>
+            <span class="s">"Name"</span><span class="p">:</span> <span class="s">"David Stancu"</span><span class="p">,</span>
+            <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+            <span class="s">"Image"</span><span class="p">:</span> <span class="s">"https://dwolla-avatars.s3.amazonaws.com/812-202-3784/ac045522"</span>
+        <span class="p">},</span>
+        <span class="s">"ClearingDate"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+        <span class="s">"Status"</span><span class="p">:</span> <span class="s">"cancelled"</span><span class="p">,</span>
+        <span class="s">"Notes"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+        <span class="s">"Fees"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">"OriginalTransactionId"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span>
+    <span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
     <span class="s2">"Id"</span>                    <span class="o">=&gt;</span> <span class="mi">331506</span><span class="p">,</span>
@@ -3697,6 +3987,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python"><span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">stats</span><span class="p">())</span>
+</pre>
 
 <blockquote>
 <p>Response:</p>
@@ -3704,6 +3996,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"TransactionsCount"</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
   <span class="s2">"TransactionsTotal"</span> <span class="o">=&gt;</span> <span class="mi">134</span><span class="o">.</span><span class="mi">22</span>
+<span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+    <span class="s">"TransactionsCount"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s">"TransactionsTotal"</span><span class="p">:</span> <span class="mf">116.92</span>
 <span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span>
@@ -3816,13 +4113,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="c1">#   for a given email address</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'gordon@dwolla.com'</span><span class="p">)</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-      Fetch basic account information
-      for a given Dwolla ID
-'''</span>
-<span class="n">me</span> <span class="o">=</span> <span class="n">Dwolla</span><span class="o">.</span><span class="n">get_account_info</span><span class="p">(</span><span class="s">'812-626-8794'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Fetch basic information for a user via their Dwolla ID</span>
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">basic</span><span class="p">(</span><span class="s">'812-202-3784'</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
  *   Fetch basic account information
@@ -3850,6 +4142,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="s2">"Latitude"</span>  <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
   <span class="s2">"Longitude"</span> <span class="o">=&gt;</span> <span class="mi">0</span>
 <span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span><span class="s">u'Latitude'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">u'Id'</span><span class="p">:</span> <span class="s">u'812-202-3784'</span><span class="p">,</span> <span class="s">u'Longitude'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">u'Name'</span><span class="p">:</span> <span class="s">u'David Stancu'</span><span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span>
     <span class="s2">"Id"</span><span class="p">:</span> <span class="s2">"812-111-1111"</span><span class="p">,</span>
@@ -3933,14 +4227,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="c1">#   authorized user</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">get</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-      Fetch account information for the
-      account associated with the provided
-      OAuth token
-'''</span>
-<span class="n">me</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_account_info</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Print FULL account information for the user associated with the currently set OAuth token.</span>
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">full</span><span class="p">())</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
  *   Fetch account information for the
@@ -3964,6 +4252,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="s2">"Latitude"</span>  <span class="o">=&gt;</span> <span class="mi">41</span><span class="o">.</span><span class="mi">58975983</span><span class="p">,</span>
   <span class="s2">"Longitude"</span> <span class="o">=&gt;</span> <span class="o">-</span><span class="mi">93</span><span class="o">.</span><span class="mi">61564636</span>
 <span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span><span class="s">u'City'</span><span class="p">:</span> <span class="s">u'New York'</span><span class="p">,</span> <span class="s">u'Name'</span><span class="p">:</span> <span class="s">u'David Stancu'</span><span class="p">,</span> <span class="s">u'Longitude'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">u'State'</span><span class="p">:</span> <span class="s">u'NY'</span><span class="p">,</span> <span class="s">u'Latitude'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">u'Type'</span><span class="p">:</span> <span class="s">u'Personal'</span><span class="p">,</span> <span class="s">u'Id'</span><span class="p">:</span> <span class="s">u'812-202-3784'</span><span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span>
     <span class="s2">"City"</span><span class="p">:</span> <span class="s2">"Des Moines"</span><span class="p">,</span>
@@ -4064,13 +4354,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="c1">#   for a given set of coordinates (lat, long)</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Contacts</span><span class="p">.</span><span class="nf">nearby</span><span class="p">(</span><span class="mi">41</span><span class="o">.</span><span class="mi">58975983</span><span class="p">,</span> <span class="o">-</span><span class="mi">93</span><span class="o">.</span><span class="mi">61564636</span><span class="p">)</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-      Fetch spots near  41.59 and 
-      -93.62 (default parameters in dwolla-python)
-'''</span>
-<span class="n">contacts</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_nearby_spots</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Fetch Dwolla spots near 40.7127, 74.0059</span>
+<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="o">.</span><span class="n">nearby</span><span class="p">(</span><span class="mf">40.7127</span><span class="p">,</span> <span class="mf">74.0059</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
  * Fetch all spots near lat 41.585 and 
@@ -4117,6 +4402,37 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     'Delta' =&gt; 0.013113469999993299,
   )
 )
+</pre>
+<pre class="highlight python">    <span class="p">[</span>
+       <span class="p">{</span>
+           <span class="s">"Name"</span><span class="p">:</span> <span class="s">"ThelmasTreats"</span><span class="p">,</span>
+           <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-608-8758"</span><span class="p">,</span>
+           <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+           <span class="s">"Image"</span><span class="p">:</span> <span class="s">"https://www.dwolla.com/avatars/812-608-8758"</span><span class="p">,</span>
+           <span class="s">"Latitude"</span><span class="p">:</span> <span class="mf">41.590043</span><span class="p">,</span>
+           <span class="s">"Longitude"</span><span class="p">:</span> <span class="o">-</span><span class="mf">93.62095</span><span class="p">,</span>
+           <span class="s">"Address"</span><span class="p">:</span> <span class="s">"615 3rd Street</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+           <span class="s">"City"</span><span class="p">:</span> <span class="s">"Des Moines"</span><span class="p">,</span>
+           <span class="s">"State"</span><span class="p">:</span> <span class="s">"IA"</span><span class="p">,</span>
+           <span class="s">"PostalCode"</span><span class="p">:</span> <span class="s">"50309"</span><span class="p">,</span>
+           <span class="s">"Group"</span><span class="p">:</span> <span class="s">"812-608-8758"</span><span class="p">,</span>
+           <span class="s">"Delta"</span><span class="p">:</span> <span class="mf">0.0009069999999908873</span>
+       <span class="p">},</span>
+       <span class="p">{</span>
+           <span class="s">"Name"</span><span class="p">:</span> <span class="s">"IKONIX Studio"</span><span class="p">,</span>
+           <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-505-4939"</span><span class="p">,</span>
+           <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+           <span class="s">"Image"</span><span class="p">:</span> <span class="s">"https://www.dwolla.com/avatars/812-505-4939"</span><span class="p">,</span>
+           <span class="s">"Latitude"</span><span class="p">:</span> <span class="mf">41.5887958</span><span class="p">,</span>
+           <span class="s">"Longitude"</span><span class="p">:</span> <span class="o">-</span><span class="mf">93.6215057</span><span class="p">,</span>
+           <span class="s">"Address"</span><span class="p">:</span> <span class="s">"506 3rd St</span><span class="se">\n</span><span class="s">Suite 206"</span><span class="p">,</span>
+           <span class="s">"City"</span><span class="p">:</span> <span class="s">"Des Moines"</span><span class="p">,</span>
+           <span class="s">"State"</span><span class="p">:</span> <span class="s">"IA"</span><span class="p">,</span>
+           <span class="s">"PostalCode"</span><span class="p">:</span> <span class="s">"50309"</span><span class="p">,</span>
+           <span class="s">"Group"</span><span class="p">:</span> <span class="s">"812-505-4939"</span><span class="p">,</span>
+           <span class="s">"Delta"</span><span class="p">:</span> <span class="mf">0.0027098999999992657</span>
+   <span class="p">}</span>
+<span class="p">]</span>
 </pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
@@ -4348,13 +4664,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="c1">#   for a given set of coordinates (lat, long)</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Users</span><span class="p">.</span><span class="nf">nearby</span><span class="p">(</span><span class="ss">:latitude</span> <span class="o">=&gt;</span> <span class="mi">40</span><span class="o">.</span><span class="mi">7820</span><span class="p">,</span> <span class="ss">:longitude</span> <span class="o">=&gt;</span> <span class="o">-</span><span class="mi">73</span><span class="o">.</span><span class="mi">8317</span><span class="p">)</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-      Fetch users near  40.78 and 
-      -73.83 (default parameters in dwolla-python)
-'''</span>
-<span class="n">users</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_nearby_users</span><span class="p">(</span><span class="s">'40.7820'</span><span class="p">,</span> <span class="s">'-73.8317'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">users</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Get users near 40.7127, 74.0059</span>
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">nearby</span><span class="p">(</span><span class="mf">40.7127</span><span class="p">,</span> <span class="mf">74.0059</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
  * Fetch all spots near lat 40.7820 and 
@@ -4380,6 +4691,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     'Delta' =&gt; 114.72287700000001
   )
 )
+</pre>
+<pre class="highlight python"><span class="p">[{</span>
+    <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-687-7049"</span><span class="p">,</span>
+    <span class="s">"Image"</span><span class="p">:</span> <span class="s">"https://www.dwolla.com/avatars/812-687-7049"</span><span class="p">,</span>
+    <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Gordon Zheng"</span><span class="p">,</span>
+    <span class="s">"Latitude"</span><span class="p">:</span> <span class="mf">40.708448</span><span class="p">,</span>
+    <span class="s">"Longitude"</span><span class="p">:</span> <span class="o">-</span><span class="mf">74.014429</span><span class="p">,</span>
+    <span class="s">"Delta"</span><span class="p">:</span> <span class="mf">114.72287700000001</span>
+<span class="p">}]</span>
 </pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
@@ -4576,24 +4896,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="c1">#   OAuth token</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Contacts</span><span class="p">.</span><span class="nf">get</span><span class="p">({</span><span class="ss">:search</span> <span class="o">=&gt;</span> <span class="s1">'Ben'</span><span class="p">})</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-      Fetch last 10 contacts from the 
-      account associated with the provided
-      OAuth token
-'''</span>
-<span class="n">contacts</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_contacts</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Get the first 10 contacts from the user</span>
+<span class="c"># associated with the current OAuth token.</span>
 
-
-<span class="s">'''
-    EXAMPLE 2: 
-      Search through the contacts of the
-      account associated with the provided
-      OAuth token
-'''</span>
-<span class="n">contacts</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_contacts</span><span class="p">(</span><span class="s">'Ben'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">contacts</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
  * EXAMPLE 1: 
@@ -4634,6 +4940,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="p">{</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span> <span class="p">},</span>
   <span class="p">{</span> <span class="p">.</span><span class="nf">.</span><span class="o">.</span> <span class="p">}</span>
 <span class="o">]</span>
+</pre>
+<pre class="highlight python"><span class="p">[{</span><span class="s">u'City'</span><span class="p">:</span> <span class="s">u'Des Moines'</span><span class="p">,</span> <span class="s">u'Name'</span><span class="p">:</span> <span class="s">u'Dwolla, Inc.'</span><span class="p">,</span> <span class="s">u'Image'</span><span class="p">:</span> <span class="s">u'https://www.dwolla.com/avatars/812-616-9409'</span><span class="p">,</span> <span class="s">u'State'</span><span class="p">:</span> <span class="s">u'IA'</span><span class="p">,</span> <span class="s">u'Type'</span><span class="p">:</span> <span class="s">u'Dwolla'</span><span class="p">,</span> <span class="s">u'Id'</span><span class="p">:</span> <span class="s">u'812-616-9409'</span><span class="p">},</span> 
+<span class="p">{</span><span class="s">u'City'</span><span class="p">:</span> <span class="s">u'Elmhurst'</span><span class="p">,</span> <span class="s">u'Name'</span><span class="p">:</span> <span class="s">u'Gordon Zheng'</span><span class="p">,</span> <span class="s">u'Image'</span><span class="p">:</span> <span class="s">u'https://www.dwolla.com/avatars/812-687-7049'</span><span class="p">,</span> <span class="s">u'State'</span><span class="p">:</span> <span class="s">u'NY'</span><span class="p">,</span> <span class="s">u'Type'</span><span class="p">:</span> <span class="s">u'Dwolla'</span><span class="p">,</span> <span class="s">u'Id'</span><span class="p">:</span> <span class="s">u'812-687-7049'</span><span class="p">}]</span>
 </pre>
 <pre class="highlight php">array (
   0 =&gt;
@@ -4754,8 +5063,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <pre class="highlight ruby"><span class="c1">#   Get the balance of the authenticated user</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Balance</span><span class="p">.</span><span class="nf">get</span>
 </pre>
-<pre class="highlight python"><span class="n">balance</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_balance</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">balance</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Get the balance of the account for</span>
+<span class="c"># the user associated with the current OAuth token</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">balance</span><span class="p">())</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Get balance of the user associated with the OAuth token.
@@ -4771,6 +5082,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p>Response:</p>
 </blockquote>
 <pre class="highlight php">55.76
+</pre>
+<pre class="highlight python"><span class="mf">55.76</span>
 </pre>
 <pre class="highlight ruby"><span class="mi">55</span><span class="o">.</span><span class="mi">76</span>
 </pre>
@@ -4806,9 +5119,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 <p>Your MassPay <code class="prettyprint">Job</code> will then be queued and processed.  As the service processes a <code class="prettyprint">Job</code>, each <code class="prettyprint">Item</code> is processed one ofter the other, at an average rate of about 0.5 sec. / item.  Therefore, you can expect a 1000-item MassPay Job to be completed in about 8 minutes.</p>
 
-<p>MassPay offers a significant advantage over repeatedly calling the <a href="#send-money">Send</a> endpoint for each individual transaction, which is the fact that a bank-funded MassPay Job only incurs a single ACH deposit to fund the entire batch of payments.</p>
-
-<p>The alternative approach incurs an ACH deposit from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions, which inspired us to build the <em>Single Deposit</em> feature.</p>
+<p>MassPay offers a significant advantage over repeatedly calling the <a href="#send-money">Send</a> endpoint for each individual transaction, which is the fact that a bank-funded MassPay Job only incurs a single ACH transaction to fund the entire batch of payments.  The alternative approach would incur an ACH transaction from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
 <h2 id='create-job'>Create Job</h2><pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"fundsSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"76fe6c3ff2417eb02a9019c25c9a259d"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999"</span><span class="p">,</span><span class="w">
@@ -4831,6 +5142,22 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w"> 
 </span></pre>
+<pre class="highlight python"><span class="c"># Create a MassPay job with two items to</span>
+<span class="c"># the Balance of the user associated with the current</span>
+<span class="c"># OAuth token.</span>
+
+<span class="n">info</span> <span class="o">=</span> <span class="n">masspay</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">'Balance'</span><span class="p">,</span>
+               <span class="p">{</span>
+                   <span class="p">{</span>
+                       <span class="s">'amount'</span><span class="p">:</span> <span class="mf">1.00</span><span class="p">,</span>
+                       <span class="s">'destination'</span><span class="p">:</span> <span class="s">'812-197-4121'</span>
+                   <span class="p">},</span>
+                   <span class="p">{</span>
+                       <span class="s">'amount'</span><span class="p">:</span> <span class="mf">2.00</span><span class="p">,</span>
+                       <span class="s">'destination'</span><span class="p">:</span> <span class="s">'812-174-9528'</span>
+                   <span class="p">}</span>
+               <span class="p">})</span>
+</pre>
 <pre class="highlight ruby"><span class="n">items</span> <span class="o">=</span> <span class="o">[</span>
   <span class="p">{</span>
     <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">9</span><span class="o">.</span><span class="mi">99</span><span class="p">,</span>
@@ -4938,6 +5265,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     'Successful' =&gt; 0,
   ),
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="s">"47fe2f7c-8d6d-4f98-bcd9-a3100178062f"</span><span class="p">,</span>
+        <span class="s">"AssumeCosts"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s">"FundingSource"</span><span class="p">:</span> <span class="s">"Balance"</span><span class="p">,</span>
+        <span class="s">"Total"</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">,</span>
+        <span class="s">"Fees"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:49:03Z"</span><span class="p">,</span>
+        <span class="s">"Status"</span><span class="p">:</span> <span class="s">"queued"</span><span class="p">,</span>
+        <span class="s">"ItemSummary"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s">"Completed"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s">"Successful"</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>            <span class="o">=&gt;</span> <span class="s2">"d18a2589-409c-4d0d-8404-a3ca005d3bf2"</span><span class="p">,</span>
@@ -5092,6 +5433,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get all current MassPay jobs for the</span>
+<span class="c"># user associated with the current OAuth token.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">masspay</span><span class="o">.</span><span class="n">listjobs</span><span class="p">())</span>
+</pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">get</span>
 </pre>
 
@@ -5120,6 +5466,39 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   2 =&gt; array ( ... ),
   ...
 )
+</pre>
+<pre class="highlight python"><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"643f2db9-5b45-4755-a881-a3100178b6d7"</span><span class="p">,</span>
+            <span class="s">"UserJobId"</span><span class="p">:</span> <span class="s">"I've got a job for ya"</span><span class="p">,</span>
+            <span class="s">"AssumeCosts"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s">"FundingSource"</span><span class="p">:</span> <span class="s">"Balance"</span><span class="p">,</span>
+            <span class="s">"Total"</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>
+            <span class="s">"Fees"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:51:34Z"</span><span class="p">,</span>
+            <span class="s">"Status"</span><span class="p">:</span> <span class="s">"complete"</span><span class="p">,</span>
+            <span class="s">"ItemSummary"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"Count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s">"Completed"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s">"Successful"</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"634de23d-ab50-4a53-bcd2-a310017794a8"</span><span class="p">,</span>
+            <span class="s">"UserJobId"</span><span class="p">:</span> <span class="s">"I've got another job for ya"</span><span class="p">,</span>
+            <span class="s">"AssumeCosts"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+            <span class="s">"FundingSource"</span><span class="p">:</span> <span class="s">"Balance"</span><span class="p">,</span>
+            <span class="s">"Total"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s">"Fees"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:47:26Z"</span><span class="p">,</span>
+            <span class="s">"Status"</span><span class="p">:</span> <span class="s">"complete"</span><span class="p">,</span>
+            <span class="s">"ItemSummary"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"Count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s">"Completed"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s">"Successful"</span><span class="p">:</span> <span class="mi">2</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">]</span>
 </pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
@@ -5261,6 +5640,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python">
+<span class="c"># Get information about a MassPay</span>
+<span class="c"># job with ID 'abcd123456'</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">masspay</span><span class="o">.</span><span class="n">getjob</span><span class="p">(</span><span class="s">"abcd123456"</span><span class="p">))</span>
+</pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">getJob</span><span class="p">(</span><span class="s1">'68e22e63-c3cb-45e6-bf04-a37201717e5d'</span><span class="p">)</span>
 </pre>
 <pre class="highlight javascript"><span class="kd">var</span> <span class="nx">jobId</span> <span class="o">=</span> <span class="s1">'68e22e63-c3cb-45e6-bf04-a37201717e5d'</span><span class="p">;</span>
@@ -5289,6 +5674,20 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     'Successful' =&gt; 2,
   ),
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="s">"abcd123456"</span><span class="p">,</span>
+        <span class="s">"AssumeCosts"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+        <span class="s">"FundingSource"</span><span class="p">:</span> <span class="s">"Balance"</span><span class="p">,</span>
+        <span class="s">"Total"</span><span class="p">:</span> <span class="mf">3.00</span><span class="p">,</span>
+        <span class="s">"Fees"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:49:03Z"</span><span class="p">,</span>
+        <span class="s">"Status"</span><span class="p">:</span> <span class="s">"complete"</span><span class="p">,</span>
+        <span class="s">"ItemSummary"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Count"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s">"Completed"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s">"Successful"</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"Id"</span>            <span class="o">=&gt;</span> <span class="s2">"256f7554-9bcb-4399-97d8-a34c00bb20b1"</span><span class="p">,</span>
@@ -5375,6 +5774,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight python"><span class="c"># Get items from MassPay job ID with 'abcd1234'</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">masspay</span><span class="o">.</span><span class="n">getjobitems</span><span class="p">(</span><span class="s">"abcd1234"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+</pre>
 <pre class="highlight ruby"><span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">getItems</span><span class="p">(</span><span class="s1">'256f7554-9bcb-4399-97d8-a34c00bb20b1'</span><span class="p">)</span>
 </pre>
 
@@ -5439,6 +5842,32 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     <span class="s2">"Metadata"</span>        <span class="o">=&gt;</span> <span class="kp">nil</span>
   <span class="p">}</span>
 <span class="o">]</span>
+</pre>
+<pre class="highlight python"><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"JobId"</span><span class="p">:</span> <span class="s">"abcd12345"</span><span class="p">,</span>
+            <span class="s">"ItemId"</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+            <span class="s">"Destination"</span><span class="p">:</span> <span class="s">"812-197-4121"</span><span class="p">,</span>
+            <span class="s">"DestinationType"</span><span class="p">:</span> <span class="s">"dwolla"</span><span class="p">,</span>
+            <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">1.00</span><span class="p">,</span>
+            <span class="s">"Status"</span><span class="p">:</span> <span class="s">"success"</span><span class="p">,</span>
+            <span class="s">"TransactionId"</span><span class="p">:</span> <span class="mi">4938766</span><span class="p">,</span>
+            <span class="s">"Error"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:51:34Z"</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s">"JobId"</span><span class="p">:</span> <span class="s">"abcd12345"</span><span class="p">,</span>
+            <span class="s">"ItemId"</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+            <span class="s">"Destination"</span><span class="p">:</span> <span class="s">"812-174-9528"</span><span class="p">,</span>
+            <span class="s">"DestinationType"</span><span class="p">:</span> <span class="s">"dwolla"</span><span class="p">,</span>
+            <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">2.00</span><span class="p">,</span>
+            <span class="s">"Status"</span><span class="p">:</span> <span class="s">"success"</span><span class="p">,</span>
+            <span class="s">"TransactionId"</span><span class="p">:</span> <span class="mi">4938768</span><span class="p">,</span>
+            <span class="s">"Error"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:51:34Z"</span><span class="p">,</span>
+            <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span> 
+        <span class="p">}</span>
+<span class="p">]</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span>
   <span class="s2">"JobId"</span><span class="p">:</span> <span class="s2">"643f2db9-5b45-4755-a881-a3100178b6d7"</span><span class="p">,</span>
@@ -5561,6 +5990,10 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+<pre class="highlight python"><span class="c"># Retrieve item 43432 from job with ID aaad1324</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">masspay</span><span class="o">.</span><span class="n">getitem</span><span class="p">(</span><span class="s">"aaad1324"</span><span class="p">,</span> <span class="s">"43432"</span><span class="p">)</span>
+</pre>
 <pre class="highlight ruby"><span class="c1"># Retrieve item 17054 from Job 256f7554-9bcb-4399-97d8-a34c00bb20b1: </span>
 
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">MassPay</span><span class="p">.</span><span class="nf">getItem</span><span class="p">(</span><span class="s1">'256f7554-9bcb-4399-97d8-a34c00bb20b1'</span><span class="p">,</span> <span class="s1">'17054'</span><span class="p">)</span>
@@ -5590,6 +6023,18 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
   'Metadata' =&gt; NULL,
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+    <span class="s">"JobId"</span><span class="p">:</span> <span class="s">"aaad1324"</span><span class="p">,</span>
+    <span class="s">"ItemId"</span><span class="p">:</span> <span class="mi">43432</span><span class="p">,</span>
+    <span class="s">"Destination"</span><span class="p">:</span> <span class="s">"812-197-4121"</span><span class="p">,</span>
+    <span class="s">"DestinationType"</span><span class="p">:</span> <span class="s">"dwolla"</span><span class="p">,</span>
+    <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">1.00</span><span class="p">,</span>
+    <span class="s">"Status"</span><span class="p">:</span> <span class="s">"success"</span><span class="p">,</span>
+    <span class="s">"TransactionId"</span><span class="p">:</span> <span class="mi">4938766</span><span class="p">,</span>
+    <span class="s">"Error"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+    <span class="s">"CreatedDate"</span><span class="p">:</span> <span class="s">"2014-04-18T05:51:34Z"</span>
+<span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span> 
   <span class="na">JobId</span><span class="p">:</span> <span class="s1">'9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e'</span><span class="p">,</span>
@@ -5689,6 +6134,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="nb">var_export</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 </pre>
+<pre class="highlight python"><span class="c"># Refund $2 from "Balance" from transaction</span>
+<span class="c"># '123456'</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">refund</span><span class="p">(</span><span class="s">'3452346'</span><span class="p">,</span> <span class="s">'Balance'</span><span class="p">,</span> <span class="mf">2.00</span><span class="p">))</span>
+</pre>
 
 <blockquote>
 <p>Response: </p>
@@ -5698,6 +6148,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   'RefundDate' =&gt; '10/24/2014 23:23:20',
   'Amount' =&gt; 20,
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+    <span class="s">"TransactionId"</span><span class="p">:</span> <span class="mi">4532</span><span class="p">,</span>
+    <span class="s">"RefundDate"</span><span class="p">:</span> <span class="s">"2014-12-10T12:01:09Z"</span><span class="p">,</span>
+    <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">2.00</span>
+<span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"TransactionId"</span> <span class="o">=&gt;</span> <span class="mi">341621</span><span class="p">,</span>
@@ -5973,12 +6429,9 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <pre class="highlight ruby"><span class="c1"># Request 1.00 from a Dwolla ID</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Requests</span><span class="p">.</span><span class="nf">create</span><span class="p">({</span><span class="ss">:sourceId</span><span class="o">=&gt;</span> <span class="s1">'812-742-8722'</span><span class="p">,</span> <span class="ss">:amount</span><span class="o">=&gt;</span> <span class="s1">'1.00'</span><span class="p">})</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1:
-      Initiate a money request
-'''</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">request_funds</span><span class="p">(</span><span class="s">'1.00'</span><span class="p">,</span> <span class="s">'reflector@dwolla.com'</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="s">'Email'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Request $5 from 812-740-3809</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">'812-740-3809'</span><span class="p">,</span> <span class="mf">5.00</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Request $5 from Source ID '812-111-1111'
@@ -5993,6 +6446,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <p>If successful, you&rsquo;ll receive this response:</p>
 </blockquote>
 <pre class="highlight php">1670        // request ID
+</pre>
+<pre class="highlight python"><span class="mi">1470</span> <span class="c"># Request ID</span>
 </pre>
 <pre class="highlight ruby"><span class="mi">1652</span>      <span class="c1"># request ID</span>
 </pre>
@@ -6111,13 +6566,9 @@ else { print_r($requests); }
 <pre class="highlight ruby"><span class="c1"># Get all pending requests</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">get</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1:
-      Get a list of pending requests
-      for the user with the given oauth token
-'''</span>
-<span class="n">pending_requests</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_pending_requests</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">pending_requests</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Get all pending requests from the user</span>
+<span class="c"># associated with the current OAuth token.</span>
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * List pending money requests for the authorized user
@@ -6176,6 +6627,36 @@ else { print_r($requests); }
   2 =&gt; array ( ... ),
   ...
 )
+</pre>
+<pre class="highlight python"><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
+            <span class="s">"Source"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-693-9484"</span><span class="p">,</span>
+                <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Spencer Hunter"</span><span class="p">,</span>
+                <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+                <span class="s">"Image"</span><span class="p">:</span> <span class="n">null</span>
+            <span class="p">},</span>
+            <span class="s">"Destination"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-706-1396"</span><span class="p">,</span>
+                <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Jane Doe"</span><span class="p">,</span>
+                <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+                <span class="s">"Image"</span><span class="p">:</span> <span class="n">null</span>
+            <span class="p">},</span>
+            <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">5.00</span><span class="p">,</span>
+            <span class="s">"Notes"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+            <span class="s">"DateRequested"</span><span class="p">:</span> <span class="s">"2014-07-23T21:49:06Z"</span><span class="p">,</span>
+            <span class="s">"Status"</span><span class="p">:</span> <span class="s">"Pending"</span> <span class="p">,</span>
+            <span class="s">"Transaction"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s">"CancelledBy"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s">"DateCancelled"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+            <span class="s">"SenderAssumeFee"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="s">"SenderAssumeAdditionalFees"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="s">"AdditionalFees"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span> 
+        <span class="p">},</span>
+        <span class="o">...</span>
+<span class="p">]</span>
 </pre>
 <pre class="highlight ruby"><span class="o">[</span>
   <span class="p">{</span>
@@ -6321,14 +6802,8 @@ else { print_r($requests); }
 <pre class="highlight ruby"><span class="c1"># Example 1: Get request details for request '12345'</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="n">requests</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="s1">'12345'</span><span class="p">)</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1:
-      Get detailed information for the request
-      with the given 'request_id'
-'''</span>
-<span class="n">request_id</span> <span class="o">=</span> <span class="s">'2209516'</span>
-<span class="n">request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Get info regarding a pending money request.</span>
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="mi">1470</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Fetch a money request by id '12345678'
@@ -6399,6 +6874,33 @@ else { print_r($requests); }
     <span class="s2">"AdditionalFees"</span>             <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
     <span class="s2">"Metadata"</span>                   <span class="o">=&gt;</span> <span class="kp">nil</span>
   <span class="p">}</span>
+</pre>
+<pre class="highlight python">        <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="mi">1470</span><span class="p">,</span>
+            <span class="s">"Source"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-693-9484"</span><span class="p">,</span>
+                <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Spencer Hunter"</span><span class="p">,</span>
+                <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+                <span class="s">"Image"</span><span class="p">:</span> <span class="n">null</span>
+            <span class="p">},</span>
+            <span class="s">"Destination"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-706-1396"</span><span class="p">,</span>
+                <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Jane Doe"</span><span class="p">,</span>
+                <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+                <span class="s">"Image"</span><span class="p">:</span> <span class="n">null</span>
+            <span class="p">},</span>
+            <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">5.00</span><span class="p">,</span>
+            <span class="s">"Notes"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+            <span class="s">"DateRequested"</span><span class="p">:</span> <span class="s">"2014-07-23T21:49:06Z"</span><span class="p">,</span>
+            <span class="s">"Status"</span><span class="p">:</span> <span class="s">"Pending"</span> <span class="p">,</span>
+            <span class="s">"Transaction"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s">"CancelledBy"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s">"DateCancelled"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
+            <span class="s">"SenderAssumeFee"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="s">"SenderAssumeAdditionalFees"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+            <span class="s">"AdditionalFees"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span> 
+        <span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span>
   <span class="s2">"Id"</span><span class="p">:</span> <span class="mi">660</span><span class="p">,</span>
@@ -6506,13 +7008,9 @@ else { print_r($requests); }
   <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">20</span><span class="o">.</span><span class="mo">00</span><span class="p">,</span>
 <span class="p">})</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1:
-      Fulfill (:pay) a pending payment request
-'''</span>
-<span class="n">request_id</span> <span class="o">=</span> <span class="s">'2214710'</span>
-<span class="n">fulfilled_request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">fulfill_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">,</span> <span class="n">_keys</span><span class="o">.</span><span class="n">pin</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">fulfilled</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Fulfill a pending money request.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">fulfill</span><span class="p">(</span><span class="mi">1475</span><span class="p">,</span> <span class="mf">10.00</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Fulfill money request ID '12345678'.  Pay '10.00'
@@ -6548,6 +7046,27 @@ else { print_r($requests); }
   'ClearingDate' =&gt; '2014-10-24T23:37:18Z',
   'Status' =&gt; 'processed',
 )
+</pre>
+<pre class="highlight python"><span class="p">{</span>
+        <span class="s">"Id"</span><span class="p">:</span> <span class="mi">147659</span><span class="p">,</span>
+        <span class="s">"RequestId"</span><span class="p">:</span> <span class="mi">1475</span><span class="p">,</span>
+        <span class="s">"Amount"</span><span class="p">:</span> <span class="mf">10.00</span><span class="p">,</span>
+        <span class="s">"SentDate"</span><span class="p">:</span> <span class="s">"2014-01-22T13:11:10Z"</span><span class="p">,</span>
+        <span class="s">"ClearingDate"</span><span class="p">:</span> <span class="s">"2014-01-22T13:11:10Z"</span><span class="p">,</span>
+        <span class="s">"Status"</span><span class="p">:</span> <span class="s">"processed"</span> <span class="p">,</span>
+        <span class="s">"Source"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-693-9484"</span><span class="p">,</span>
+            <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Michael Schonfeld"</span><span class="p">,</span>
+            <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+            <span class="s">"Image"</span><span class="p">:</span> <span class="n">null</span>
+        <span class="p">},</span>
+        <span class="s">"Destination"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">"Id"</span><span class="p">:</span> <span class="s">"812-600-6705"</span><span class="p">,</span>
+            <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Michael Schonfeld"</span><span class="p">,</span>
+            <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Dwolla"</span><span class="p">,</span>
+            <span class="s">"Image"</span><span class="p">:</span> <span class="n">null</span>
+        <span class="p">}</span>
+<span class="p">}</span>
 </pre>
 <pre class="highlight ruby"><span class="p">{</span>
   <span class="s2">"RequestId"</span>    <span class="o">=&gt;</span> <span class="mi">1653</span><span class="p">,</span>
@@ -6719,13 +7238,9 @@ else { print_r($requests); }
 <pre class="highlight ruby"><span class="c1"># Cancel request with ID '12345'</span>
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Requests</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="s1">'1652'</span><span class="p">)</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1:
-      Cancel a pending money request
-'''</span>
-<span class="n">request_id</span> <span class="o">=</span> <span class="n">request</span>
-<span class="n">canceled_request</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">cancel_request</span><span class="p">(</span><span class="n">request_id</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">canceled_request</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Cancel a pending money request.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">cancel</span><span class="p">(</span><span class="mi">1470</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Cancel money request with ID '12345678'
@@ -6800,13 +7315,10 @@ else { print_r($requests); }
 
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Accounts</span><span class="p">.</span><span class="nf">get_auto_withdrawal_status</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-        Fetch autowithdraw status for the account
-        associated with the current OAuth token.
-'''</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">get_autowithdraw_status</span>
-<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Get the auto-withdrawal status of the user</span>
+<span class="c"># associated with the current OAuth token.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">autowithdrawalstatus</span><span class="p">())</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Find out whether or not auto-withdrawal is enabled for the 
@@ -6825,6 +7337,8 @@ else { print_r($requests); }
   <span class="s2">"Enabled"</span>   <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
   <span class="s2">"FundingId"</span> <span class="o">=&gt;</span> <span class="s2">"5da016f7769bcb1de9938a30d194d5a7"</span>
 <span class="p">}</span>
+</pre>
+<pre class="highlight python"><span class="p">{</span><span class="s">u'Enabled'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span> <span class="s">u'FundingId'</span><span class="p">:</span> <span class="s">u'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">}</span>
 </pre>
 <pre class="highlight javascript"><span class="p">{</span>
     <span class="s2">"Enabled"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -6859,6 +7373,8 @@ else { print_r($requests); }
   <span class="s2">"FundingId"</span> <span class="o">=&gt;</span> <span class="s2">""</span>
 <span class="p">}</span>
 </pre>
+<pre class="highlight python"><span class="p">{</span><span class="s">u'Enabled'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span> <span class="s">u'FundingId'</span><span class="p">:</span> <span class="s">u''</span><span class="p">}</span>
+</pre>
 <pre class="highlight javascript"><span class="p">{</span>
   <span class="s2">"Enabled"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
   <span class="s2">"FundingId"</span><span class="p">:</span> <span class="s2">""</span>
@@ -6879,7 +7395,12 @@ else { print_r($requests); }
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">ManageAccount</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl</code></p>
-<h2 id='enabledisable-auto-withdrawal'>Enable/Disable Auto Withdrawal</h2><pre class="highlight php">/**
+<h2 id='enabledisable-auto-withdrawal'>Enable/Disable Auto Withdrawal</h2><pre class="highlight python"><span class="c"># Toggle the auto-withdrawal status of an account</span>
+<span class="c"># under the Dwolla user associated with the current OAuth token.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">toggleautowithdrawalstatus</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="s">'12345678'</span><span class="p">))</span>
+</pre>
+<pre class="highlight php">/**
  * Example 1:
  * Enable autowithdraw for funding source '12345' under the
  * account associted with the OAuth token
@@ -6901,13 +7422,10 @@ else { print_r($requests); }
 
 <span class="nb">puts</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Accounts</span><span class="p">.</span><span class="nf">toggle_auto_withdrawl</span><span class="p">(</span><span class="kp">true</span><span class="p">,</span> <span class="s1">'12345'</span><span class="p">)</span>
 </pre>
-<pre class="highlight python"><span class="s">'''
-    EXAMPLE 1: 
-        nable autowithdraw for funding source '12345' under the
-        associated with the current OAuth token.
-'''</span>
-<span class="n">status</span> <span class="o">=</span> <span class="n">DwollaUser</span><span class="o">.</span><span class="n">set_autowithdraw_status</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="s">'12345'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+<pre class="highlight python"><span class="c"># Toggle the auto-withdrawal status of an account</span>
+<span class="c"># under the Dwolla user associated with the current OAuth token.</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">accounts</span><span class="o">.</span><span class="n">toggleautowithdrawalstatus</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="s">'12345678'</span><span class="p">))</span>
 </pre>
 <pre class="highlight javascript"><span class="cm">/***
  * Enable auto-withdraw for the user associated with the OAuth token,
@@ -6925,6 +7443,8 @@ else { print_r($requests); }
 <pre class="highlight php">'Enabled'
 </pre>
 <pre class="highlight ruby"><span class="s2">"Enabled"</span>
+</pre>
+<pre class="highlight python"><span class="s">"Enabled"</span>
 </pre>
 <pre class="highlight javascript"><span class="s2">"Enabled"</span>
 </pre>
@@ -6987,6 +7507,10 @@ In an effort to remain transparent, here's a list of bugs we know about.
 <tr>
 <td>03/17/2015</td>
 <td>Add new parameters <code class="prettyprint">processingTypes</code> and <code class="prettyprint">verified</code> to the <a href="#list-funding-sources">List Funding Sources</a> endpoint.</td>
+</tr>
+<tr>
+<td>4/1/2015</td>
+<td>Added Python example code</td>
 </tr>
 </tbody></table>
 
