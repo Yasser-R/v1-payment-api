@@ -137,6 +137,38 @@ array (
   ),
 )
 ```
+```python
+[
+{
+    "Id": "Balance",
+    "Name": "My Dwolla Balance",
+    "Type": "",
+    "Verified": "true",
+    "ProcessingType": ""
+},
+{
+    "Id": "c58bb9f7f1d51d5547e1987a2833f4fa",
+    "Name": "Donations Collection Fund - Savings",
+    "Type": "Savings",
+    "Verified": "true",
+    "ProcessingType": "ACH"
+},
+{
+    "Id": "Credit",
+    "Name": "Credit",
+    "Type": "",
+    "Verified": "true",
+    "ProcessingType": ""
+},
+{
+    "Id": "c58bb9f7f1d51d5547e1987a2833f4fb",
+    "Name": "Donations Payout Account - Checking",
+    "Type": "Checking",
+    "Verified": "true",
+    "ProcessingType": "FiSync"
+}
+]
+```
 
 ```json
 {
@@ -301,7 +333,15 @@ array (
   "ProcessingType" => "ACH"
 }
 ```
-
+```python
+{
+"Id": "12345678",
+"Name": "Donations Payout Account - Checking",
+"Type": "Checking",
+"Verified": true,
+"ProcessingType": "FiSync"
+}
+```
 ```json
 {
     "Success": true,
@@ -352,6 +392,12 @@ dwolla.withdrawToFundingSource(pin, 5.00, fundingSource, function(err, res) {
     pin: 9999
 }
 ```
+```python
+# Withdraw $5 from Dwolla to funding ID
+# '12345678'.
+
+print(fundingsources.withdraw(5.00, '12345678'))
+```
 
 ```ruby
 puts Dwolla::FundingSources.withdraw('funding_source_id', {
@@ -375,7 +421,38 @@ var_export($result);
 ```
 
 > Response:
-
+```python
+{ 
+        "Id": 12345678,
+        "Amount": 5,
+        "Date": "2014-09-05T06:40:56Z",
+        "Type": "withdrawal",
+        "UserType": "Dwolla",
+        "DestinationId": "XXX9999",
+        "DestinationName": "Blah",
+        "Destination": { 
+            "Id": "XXX9999", 
+            "Name": "Blah", 
+            "Type": "Dwolla", 
+            "Image": ""
+        },
+        "SourceId": "812-742-8722",
+        "SourceName": "Cafe Kubal",
+        "Source": {
+            "Id": "812-742-8722",
+            "Name": "Cafe Kubal",
+            "Type": "Dwolla",
+            "Image": "http://uat.dwolla.com/avatars/812-742-8722" 
+        },
+        "ClearingDate": "2014-09-08T00:00:00Z",
+        "Status": "pending",
+        "Notes": null,
+        "Fees": null,
+        "OriginalTransactionId": null,
+        "Metadata": null 
+      }
+}
+```
 ```php
 array (
   'Id' => 346098,
@@ -611,6 +688,38 @@ array (
 )
 ```
 
+```python
+{ 
+       "Id": 12345678,
+       "Amount": 5,
+       "Date": "2014-09-05T06:40:56Z",
+       "Type": "deposit",
+       "UserType": "Dwolla",
+       "DestinationId": "XXX9999",
+       "DestinationName": "Blah",
+       "Destination": {
+           "Id": "812-742-8722",
+           "Name": "Cafe Kubal",
+           "Type": "Dwolla",
+           "Image": "http://uat.dwolla.com/avatars/812-742-8722" 
+       },
+       "SourceId": "812-742-8722",
+       "SourceName": "Cafe Kubal",
+       "Source": { 
+           "Id": "XXX9999", 
+           "Name": "Blah", 
+           "Type": "Dwolla", 
+           "Image": ""
+       },
+       "ClearingDate": "2014-09-08T00:00:00Z",
+       "Status": "pending",
+       "Notes": null,
+       "Fees": null,
+       "OriginalTransactionId": null,
+       "Metadata": null 
+}
+```
+
 ```ruby
 {
   "Id"                    => 341601,
@@ -818,6 +927,15 @@ array (
   "ProcessingType" => "ACH"
 }
 ```
+```python
+{
+        "Id": "34da835f235cd25302ef0c5c1cb1d4b9",
+        "Name": "My Bank",
+        "Type": "Checking",
+        "Verified": false,
+        "ProcessingType": "ACH"
+}
+```
 
 ```js
 { 
@@ -935,6 +1053,15 @@ array (
   'Verified' => true,
   'ProcessingType' => 'ACH',
 )
+```
+```python
+{
+        "Id": "12345678",
+        "Name": "My Checking Account - Checking",
+        "Type": "Checking",
+        "Verified": true,
+        "ProcessingType": "ACH"
+}
 ```
 
 ```ruby

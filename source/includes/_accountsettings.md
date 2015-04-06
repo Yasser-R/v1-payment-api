@@ -53,7 +53,9 @@ Dwolla.getAutoWithdrawalStatus(function(err, data) {
   "FundingId" => "5da016f7769bcb1de9938a30d194d5a7"
 }
 ```
-
+```python
+{u'Enabled': True, u'FundingId': u'5da016f7769bcb1de9938a30d194d5a7'}
+```
 ```js
 {
     "Enabled": true,
@@ -94,7 +96,9 @@ array (
   "FundingId" => ""
 }
 ```
-
+```python
+{u'Enabled': False, u'FundingId': u''}
+```
 ```js
 {
   "Enabled": false,
@@ -154,13 +158,10 @@ var_export($result);
 puts Dwolla::Accounts.toggle_auto_withdrawl(true, '12345')
 ```
 ```python
-'''
-    EXAMPLE 1: 
-        nable autowithdraw for funding source '12345' under the
-        associated with the current OAuth token.
-'''
-status = DwollaUser.set_autowithdraw_status(true, '12345')
-print(status)
+# Toggle the auto-withdrawal status of an account
+# under the Dwolla user associated with the current OAuth token.
+
+print(accounts.toggleautowithdrawalstatus(True, '12345678'))
 ```
 ```js
 /***
@@ -182,7 +183,9 @@ Dwolla.toggleAutoWithdraw('true', '1234567', function(err, data) {
 ```ruby
 "Enabled"
 ```
-
+```python
+"Enabled"
+```
 ```js
 "Enabled"
 ```

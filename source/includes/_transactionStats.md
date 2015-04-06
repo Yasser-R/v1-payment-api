@@ -37,7 +37,12 @@ print(transactions.stats())
   "TransactionsTotal" => 134.22
 }
 ```
-
+```python
+{
+    "TransactionsCount": 5,
+    "TransactionsTotal": 116.92
+}
+```
 ```js
 {
   "TransactionsCount": 5,

@@ -138,6 +138,9 @@ Dwolla.request('812-111-1111', '5.00', function(err, data) {
 ```php
 1670        // request ID
 ```
+```python
+1470 # Request ID
+```
 
 ```ruby
 1652      # request ID
@@ -268,7 +271,37 @@ array (
   ...
 )
 ```
-
+```python
+[
+        {
+            "Id": 640,
+            "Source": {
+                "Id": "812-693-9484",
+                "Name": "Spencer Hunter",
+                "Type": "Dwolla",
+                "Image": null
+            },
+            "Destination": {
+                "Id": "812-706-1396",
+                "Name": "Jane Doe",
+                "Type": "Dwolla",
+                "Image": null
+            },
+            "Amount": 5.00,
+            "Notes": "",
+            "DateRequested": "2014-07-23T21:49:06Z",
+            "Status": "Pending" ,
+            "Transaction": null,
+            "CancelledBy": null,
+            "DateCancelled": "",
+            "SenderAssumeFee": false,
+            "SenderAssumeAdditionalFees": false,
+            "AdditionalFees": [],
+            "Metadata": null 
+        },
+        ...
+]
+```
 ```ruby
 [
   {
@@ -486,7 +519,34 @@ array (
     "Metadata"                   => nil
   }
 ```
-
+```python
+        {
+            "Id": 1470,
+            "Source": {
+                "Id": "812-693-9484",
+                "Name": "Spencer Hunter",
+                "Type": "Dwolla",
+                "Image": null
+            },
+            "Destination": {
+                "Id": "812-706-1396",
+                "Name": "Jane Doe",
+                "Type": "Dwolla",
+                "Image": null
+            },
+            "Amount": 5.00,
+            "Notes": "",
+            "DateRequested": "2014-07-23T21:49:06Z",
+            "Status": "Pending" ,
+            "Transaction": null,
+            "CancelledBy": null,
+            "DateCancelled": "",
+            "SenderAssumeFee": false,
+            "SenderAssumeAdditionalFees": false,
+            "AdditionalFees": [],
+            "Metadata": null 
+        }
+```
 ```js
 {
   "Id": 660,
@@ -637,7 +697,28 @@ array (
   'Status' => 'processed',
 )
 ```
-
+```python
+{
+        "Id": 147659,
+        "RequestId": 1475,
+        "Amount": 10.00,
+        "SentDate": "2014-01-22T13:11:10Z",
+        "ClearingDate": "2014-01-22T13:11:10Z",
+        "Status": "processed" ,
+        "Source": {
+            "Id": "812-693-9484",
+            "Name": "Michael Schonfeld",
+            "Type": "Dwolla",
+            "Image": null
+        },
+        "Destination": {
+            "Id": "812-600-6705",
+            "Name": "Michael Schonfeld",
+            "Type": "Dwolla",
+            "Image": null
+        }
+}
+```
 ```ruby
 {
   "RequestId"    => 1653,

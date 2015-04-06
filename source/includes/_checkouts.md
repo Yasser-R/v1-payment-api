@@ -149,7 +149,9 @@ pp Dwolla::OffsiteGateway.get_checkout_url('812-734-7288')
     }
 }
 ```
-
+```python
+{u'URL': u'https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac'}
+```
 ```js
 https://www.dwolla.com/payment/checkout/684862bc-8d94-4e53-9c41-26398b4b7fac
 ```
@@ -297,7 +299,22 @@ This method is not yet supported in dwolla-ruby.
   Metadata: null 
 }
 ```
-
+```python
+{ 
+  u'CheckoutId': u'd0429a55-c338-4139-b273-48d2f8c45693',
+  u'Discount': null,
+  u'Shipping': null,
+  u'Tax': null,
+  u'Total': 5,
+  u'Status': u'Completed',
+  u'FundingSource': u'Balance',
+  u'TransactionId': 290142,
+  u'ProfileId': null,
+  u'DestinationTransactionId': 290141,
+  u'OrderItems': [],
+  u'Metadata': null 
+}
+```
 ```php
 array (
   'CheckoutId' => 'f3f454bd-89a9-422f-8fef-5eb9f82ccc8f',

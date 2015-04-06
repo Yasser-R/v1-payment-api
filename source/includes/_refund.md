@@ -65,7 +65,13 @@ array (
   'Amount' => 20,
 )
 ```
-
+```python
+{
+    "TransactionId": 4532,
+    "RefundDate": "2014-12-10T12:01:09Z",
+    "Amount": 2.00
+}
+```
 ```ruby
 {
   "TransactionId" => 341621,

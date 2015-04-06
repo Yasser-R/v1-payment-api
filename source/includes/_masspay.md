@@ -179,7 +179,21 @@ array (
   ),
 )
 ```
-
+```python
+{
+        "Id": "47fe2f7c-8d6d-4f98-bcd9-a3100178062f",
+        "AssumeCosts": true,
+        "FundingSource": "Balance",
+        "Total": 3.00,
+        "Fees": 0,
+        "CreatedDate": "2014-04-18T05:49:03Z",
+        "Status": "queued",
+        "ItemSummary": {
+            "Count": 2,
+            "Completed": 0,
+            "Successful": 0
+}
+```
 ```ruby
 {
   "Id"            => "d18a2589-409c-4d0d-8404-a3ca005d3bf2",
@@ -324,6 +338,41 @@ array (
   2 => array ( ... ),
   ...
 )
+```
+
+```python
+[
+        {
+            "Id": "643f2db9-5b45-4755-a881-a3100178b6d7",
+            "UserJobId": "I've got a job for ya",
+            "AssumeCosts": true,
+            "FundingSource": "Balance",
+            "Total": 0.02,
+            "Fees": 0,
+            "CreatedDate": "2014-04-18T05:51:34Z",
+            "Status": "complete",
+            "ItemSummary": {
+                "Count": 2,
+                "Completed": 2,
+                "Successful": 2
+            }
+        },
+        {
+            "Id": "634de23d-ab50-4a53-bcd2-a310017794a8",
+            "UserJobId": "I've got another job for ya",
+            "AssumeCosts": true,
+            "FundingSource": "Balance",
+            "Total": 2,
+            "Fees": 0,
+            "CreatedDate": "2014-04-18T05:47:26Z",
+            "Status": "complete",
+            "ItemSummary": {
+                "Count": 2,
+                "Completed": 2,
+                "Successful": 2
+            }
+        }
+]
 ```
 
 ```ruby
@@ -496,6 +545,22 @@ array (
 )
 ```
 
+```python
+{
+        "Id": "abcd123456",
+        "AssumeCosts": true,
+        "FundingSource": "Balance",
+        "Total": 3.00,
+        "Fees": 0,
+        "CreatedDate": "2014-04-18T05:49:03Z",
+        "Status": "complete",
+        "ItemSummary": {
+            "Count": 2,
+            "Completed": 2,
+            "Successful": 2
+}
+```
+
 ```ruby
 {
   "Id"            => "256f7554-9bcb-4399-97d8-a34c00bb20b1",
@@ -659,6 +724,33 @@ array (
   }
 ]
 ```
+```python
+[
+        {
+            "JobId": "abcd12345",
+            "ItemId": 13,
+            "Destination": "812-197-4121",
+            "DestinationType": "dwolla",
+            "Amount": 1.00,
+            "Status": "success",
+            "TransactionId": 4938766,
+            "Error": null,
+            "CreatedDate": "2014-04-18T05:51:34Z"
+        },
+        {
+            "JobId": "abcd12345",
+            "ItemId": 14,
+            "Destination": "812-174-9528",
+            "DestinationType": "dwolla",
+            "Amount": 2.00,
+            "Status": "success",
+            "TransactionId": 4938768,
+            "Error": null,
+            "CreatedDate": "2014-04-18T05:51:34Z",
+            "Metadata": null 
+        }
+]
+````
 
 ```js
 {
@@ -802,6 +894,19 @@ array (
 )
 ```
 
+```python
+{
+    "JobId": "aaad1324",
+    "ItemId": 43432,
+    "Destination": "812-197-4121",
+    "DestinationType": "dwolla",
+    "Amount": 1.00,
+    "Status": "success",
+    "TransactionId": 4938766,
+    "Error": null,
+    "CreatedDate": "2014-04-18T05:51:34Z"
+}
+```
 ```js
 { 
   JobId: '9ed0f61a-5cc9-4f36-a7c1-a37e0001c55e',

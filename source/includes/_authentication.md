@@ -20,13 +20,16 @@ Dwolla::token = "JRRTolkien"
 ```
 ```php
 <?php
-require 'dwolla.php';
+// Any dwolla-php subclass can be configured in the following manner
+require '../vendor/autoload.php';
+$Account = new Dwolla\Account();
 
-// Instantiate a new Dwolla REST Client
-$Dwolla = new DwollaRestClient("key goes here", "secret goes here");
+$Account->settings->sandbox = false;
+$Account->settings->debug = true;
 
-// Set an OAuth access token:
-$Dwolla->setToken("token goes here");
+$Account->settings->client_id = "Key";
+$Account->settings->client_secret = "Secret";
+$Account->settings->oauth_token = "OAuth token";
 ?>
 ```
 ```python

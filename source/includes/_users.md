@@ -77,7 +77,9 @@ array (
   "Longitude" => 0
 }
 ```
-
+```python
+{u'Latitude': 0, u'Id': u'812-202-3784', u'Longitude': 0, u'Name': u'David Stancu'}
+```
 ```js
 {
     "Id": "812-111-1111",
@@ -177,6 +179,9 @@ Dwolla.fullAccountInfo(function(err, data) {
   "Latitude"  => 41.58975983,
   "Longitude" => -93.61564636
 }
+```
+```python
+{u'City': u'New York', u'Name': u'David Stancu', u'Longitude': 0, u'State': u'NY', u'Latitude': 0, u'Type': u'Personal', u'Id': u'812-202-3784'}
 ```
 
 ```js
@@ -322,6 +327,38 @@ array (
     'Delta' => 0.013113469999993299,
   )
 )
+```
+```python
+    [
+       {
+           "Name": "ThelmasTreats",
+           "Id": "812-608-8758",
+           "Type": "Dwolla",
+           "Image": "https://www.dwolla.com/avatars/812-608-8758",
+           "Latitude": 41.590043,
+           "Longitude": -93.62095,
+           "Address": "615 3rd Street\n",
+           "City": "Des Moines",
+           "State": "IA",
+           "PostalCode": "50309",
+           "Group": "812-608-8758",
+           "Delta": 0.0009069999999908873
+       },
+       {
+           "Name": "IKONIX Studio",
+           "Id": "812-505-4939",
+           "Type": "Dwolla",
+           "Image": "https://www.dwolla.com/avatars/812-505-4939",
+           "Latitude": 41.5887958,
+           "Longitude": -93.6215057,
+           "Address": "506 3rd St\nSuite 206",
+           "City": "Des Moines",
+           "State": "IA",
+           "PostalCode": "50309",
+           "Group": "812-505-4939",
+           "Delta": 0.0027098999999992657
+   }
+]
 ```
 
 ```ruby
@@ -517,6 +554,16 @@ array (
     'Delta' => 114.72287700000001
   )
 )
+```
+```python
+[{
+    "Id": "812-687-7049",
+    "Image": "https://www.dwolla.com/avatars/812-687-7049",
+    "Name": "Gordon Zheng",
+    "Latitude": 40.708448,
+    "Longitude": -74.014429,
+    "Delta": 114.72287700000001
+}]
 ```
 
 ```ruby

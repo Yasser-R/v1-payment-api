@@ -252,7 +252,40 @@ array (
   ),
 )
 ```
-
+```python
+[
+    {
+        "Id": 113533,
+        "Amount": 5.50,
+        "Date": "2014-12-13T05:07:15Z",
+        "Type": "money_sent",
+        "UserType": "Email",
+        "DestinationId": "812-197-4121",
+        "DestinationName": "Some Name",
+        "Destination": {
+            "Id": "812-197-4121",
+            "Name": "Some Name",
+            "Type": "dwolla",
+            "Image": ""
+        },
+        "SourceId": "812-202-3784",
+        "SourceName": "David Stancu",
+        "Source": {
+            "Id": "812-202-3784",
+            "Name": "David Stancu",
+            "Type": "Dwolla",
+            "Image": "https://dwolla-avatars.s3.amazonaws.com/812-202-3784/ac045522"
+        },
+        "ClearingDate": "",
+        "Status": "cancelled",
+        "Notes": "",
+        "Fees": null,
+        "OriginalTransactionId": null,
+        "Metadata": null
+    },
+    ...
+]
+```
 ```ruby
 [
   {
@@ -686,6 +719,38 @@ array (
   'OriginalTransactionId' => NULL,
   'Metadata' => NULL,
 )
+```
+```python
+Return:
+    {
+        "Id": 123456,
+        "Amount": 5.50,
+        "Date": "2014-12-13T05:07:15Z",
+        "Type": "money_sent",
+        "UserType": "Email",
+        "DestinationId": "812-197-4121",
+        "DestinationName": "Some Name",
+        "Destination": {
+            "Id": "812-197-4121",
+            "Name": "Some Name",
+            "Type": "dwolla",
+            "Image": ""
+        },
+        "SourceId": "812-202-3784",
+        "SourceName": "David Stancu",
+        "Source": {
+            "Id": "812-202-3784",
+            "Name": "David Stancu",
+            "Type": "Dwolla",
+            "Image": "https://dwolla-avatars.s3.amazonaws.com/812-202-3784/ac045522"
+        },
+        "ClearingDate": "",
+        "Status": "cancelled",
+        "Notes": "",
+        "Fees": null,
+        "OriginalTransactionId": null,
+        "Metadata": null
+    }
 ```
 
 ```ruby
