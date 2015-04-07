@@ -385,7 +385,6 @@ dwolla.withdrawToFundingSource(pin, 5.00, fundingSource, function(err, res) {
   console.log(res);
 })
 ```
-
 ```json
 {
     amount: 300.52,
@@ -398,14 +397,12 @@ dwolla.withdrawToFundingSource(pin, 5.00, fundingSource, function(err, res) {
 
 print(fundingsources.withdraw(5.00, '12345678'))
 ```
-
 ```ruby
 puts Dwolla::FundingSources.withdraw('funding_source_id', {
   :amount => 12.95, 
   :pin => @pin
 })
 ```
-
 ```php
 <?php
 
@@ -421,6 +418,7 @@ var_export($result);
 ```
 
 > Response:
+
 ```python
 { 
         "Id": 12345678,
