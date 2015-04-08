@@ -54,7 +54,7 @@ It's important to note that the ID of a funding source is an arbitrary string id
 -------|-------------|---------------|
 | Balance | Every Dwolla user has an account balance. Payments funded by a user's balance clear instantly. | Instant |
 | ACH | A traditional bank account associated with the account. | 2-5 business days
-| FiSync | A linked bank account with a participating FiSync bank.  Currently, only bank accounts with Veridian Credit Union support FiSync. | Instant
+| FiSync | A linked bank account with a participating FiSync bank.  Currently, only bank accounts with BBVA Compass or Veridian Credit Union support FiSync. | Instant
 | Credit | A line of credit via Dwolla Credit.  Currently, only business accounts that have undergone review may accept credit-funded payments.  | Instant
 | Sweep | A special funding source type available to accounts with Sweep functionality. | Instant
 
