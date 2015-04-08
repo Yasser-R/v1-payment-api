@@ -42,7 +42,7 @@
 
 Dwolla accounts have funding sources, such as linked bank accounts or a line of credit.  Funds can be added from a bank funding source (`ACH` or `FiSync`) into an user's account `Balance`, and vice versa, funds can be withdrawn from a user's account balance to a bank funding source.
 
-Payments funded by a real-time funding source such as the user's account balance, a Fi-Sync enabled bank account, or line of `Credit` clear instantly.  On the other hand, transactions funded by ACH bank funding sources require 2-5 business days before the funds will be made available to the recipient.
+Payments funded by a real-time funding source such as the user's account balance, a [FiSync](http://help.dwolla.com/customer/portal/articles/1932943-what-is-fisync) enabled bank account, or line of `Credit` clear instantly.  On the other hand, transactions funded by ACH bank funding sources require 2-5 business days before the funds will be made available to the recipient.
 
 ACH funding sources can be added and verified via the API.  
 
@@ -54,7 +54,7 @@ It's important to note that the ID of a funding source is an arbitrary string id
 -------|-------------|---------------|
 | Balance | Every Dwolla user has an account balance. Payments funded by a user's balance clear instantly. | Instant |
 | ACH | A traditional bank account associated with the account. | 2-5 business days
-| FiSync | A linked bank account with a participating FiSync bank.  Currently, only bank accounts with BBVA Compass or Veridian Credit Union support FiSync. | Instant
+| FiSync | A linked bank account with a participating FiSync bank. | Instant
 | Credit | A line of credit via Dwolla Credit.  Currently, only business accounts that have undergone review may accept credit-funded payments.  | Instant
 | Sweep | A special funding source type available to accounts with Sweep functionality. | Instant
 
