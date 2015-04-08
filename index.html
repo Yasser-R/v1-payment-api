@@ -1703,7 +1703,7 @@ Invalid purchase order.
 </tr>
 <tr>
 <td>FiSync</td>
-<td>A linked bank account with a participating FiSync bank.  Currently, only bank accounts with Veridian Credit Union support FiSync.</td>
+<td>A linked bank account with a participating FiSync bank.  Currently, only bank accounts with BBVA Compass or Veridian Credit Union support FiSync.</td>
 <td>Instant</td>
 </tr>
 <tr>
@@ -5117,7 +5117,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 <p>Your MassPay <code class="prettyprint">Job</code> will then be queued and processed.  As the service processes a <code class="prettyprint">Job</code>, each <code class="prettyprint">Item</code> is processed one ofter the other, at an average rate of about 0.5 sec. / item.  Therefore, you can expect a 1000-item MassPay Job to be completed in about 8 minutes.</p>
 
-<p>MassPay offers a significant advantage over repeatedly calling the <a href="#send-money">Send</a> endpoint for each individual transaction, which is the fact that a bank-funded MassPay Job only incurs a single ACH transaction to fund the entire batch of payments.  The alternative approach would incur an ACH transaction from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
+<p>MassPay offers a significant advantage over repeatedly calling the <a href="#send-money">Send</a> endpoint for each individual transaction, which is the fact that a bank-funded MassPay Job only incurs a single withdrawal from the bank account to fund the entire batch of payments.  The alternative approach incurs a withdrawal from the bank funding source for each individual payment.  Those who used this approach have reported incurring fees from their financial institutions for excessive ACH transactions.</p>
 <h2 id='create-job'>Create Job</h2><pre class="highlight json"><span class="p">{</span><span class="w">
   </span><span class="s2">"fundsSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"76fe6c3ff2417eb02a9019c25c9a259d"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999"</span><span class="p">,</span><span class="w">
