@@ -19,6 +19,7 @@ includes:
   - introduction
   - authentication
   - oauth
+  - catalog
   - webhooks
 
   # resources
@@ -26,6 +27,7 @@ includes:
   - checkouts
   - fundingsources
   - transactions
+  - scheduledtransactions
   - transactionStats
   - users
   - contacts

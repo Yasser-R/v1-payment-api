@@ -71,12 +71,13 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&response_type
 `
 
 
-Parameter | Description
-----------|------------
-client_id | Application key
-response_type | This must always be set to `code`
-redirect_uri | URL where the user will be redirected to afterwards
-scope | Permissions you are requesting.  See [below](#oauth-scopes) for list of available scopes.  Scopes are delimited by a pipe ("&#124;")
+Parameter | Optional |Description
+----------|----------|------------
+client_id | | Application key
+response_type | | This must always be set to `code`
+redirect_uri | | URL where the user will be redirected to afterwards
+scope | | Permissions you are requesting.  See [below](#oauth-scopes) for list of available scopes.  Scopes are delimited by a pipe ("&#124;")
+verified_account | yes | Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account.
 
 <aside class="notice">
 Remember to url-encode all querystring parameters!
@@ -97,6 +98,7 @@ Send | Send money on the user's behalf
 Request | Send money requests, list them, fulfill them
 Funding | Access the user's funding sources (i.e. connected bank accounts)
 ManageAccount | Manage the user's account settings
+Scheduled | Allow scheduling one-time and recurring payments.
 
 ## Finish Authorization
 

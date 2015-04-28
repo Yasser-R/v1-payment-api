@@ -84,7 +84,8 @@ Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET 
 {
     "Success": true,
     "Message": "Success",
-    "Response": 71332
+    "Response": 71332,
+    "_links": null
 }
 ```
 
@@ -94,7 +95,8 @@ Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET 
 {
 	"Success": false,
 	"Message": "Invalid access token.",
-	"Response": null
+	"Response": null,
+    "_links": null
 }
 ```
 
@@ -105,6 +107,10 @@ That means every API response contains:
 - `Success`, a boolean indicating whether or not the call was successful, or resulted in an error
 - `Message`, an error message if the API call was unsuccessful, or `"Success"` otherwise
 - `Response`, the actual data returned by the API call.
+
+Most API responses will contain:
+
+- `_links`, object that contains links (to URIs). Keys within _links are the name of the link and describe the relationship between the current resource and the link.
 
 <!---
 ## Errors
