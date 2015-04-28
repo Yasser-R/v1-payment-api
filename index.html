@@ -139,7 +139,8 @@ Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</
 <pre class="highlight shell"><span class="o">{</span>
     <span class="s2">"Success"</span>: <span class="nb">true</span>,
     <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
-    <span class="s2">"Response"</span>: 71332
+    <span class="s2">"Response"</span>: 71332,
+    <span class="s2">"_links"</span>: null
 <span class="o">}</span>
 </pre>
 
@@ -149,7 +150,8 @@ Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</
 <pre class="highlight shell"><span class="o">{</span>
     <span class="s2">"Success"</span>: <span class="nb">false</span>,
     <span class="s2">"Message"</span>: <span class="s2">"Invalid access token."</span>,
-    <span class="s2">"Response"</span>: null
+    <span class="s2">"Response"</span>: null,
+    <span class="s2">"_links"</span>: null
 <span class="o">}</span>
 </pre>
 
@@ -161,6 +163,12 @@ Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</
 <li><code class="prettyprint">Success</code>, a boolean indicating whether or not the call was successful, or resulted in an error</li>
 <li><code class="prettyprint">Message</code>, an error message if the API call was unsuccessful, or <code class="prettyprint">&quot;Success&quot;</code> otherwise</li>
 <li><code class="prettyprint">Response</code>, the actual data returned by the API call.</li>
+</ul>
+
+<p>Most API responses will contain:</p>
+
+<ul>
+<li><code class="prettyprint">_links</code>, object that contains links (to URIs). Keys within _links are the name of the link and describe the relationship between the current resource and the link.</li>
 </ul>
 
 <!---
@@ -418,24 +426,34 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Optional</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>client_id</td>
+<td></td>
 <td>Application key</td>
 </tr>
 <tr>
 <td>response_type</td>
+<td></td>
 <td>This must always be set to <code class="prettyprint">code</code></td>
 </tr>
 <tr>
 <td>redirect_uri</td>
+<td></td>
 <td>URL where the user will be redirected to afterwards</td>
 </tr>
 <tr>
 <td>scope</td>
+<td></td>
 <td>Permissions you are requesting.  See <a href="#oauth-scopes">below</a> for list of available scopes.  Scopes are delimited by a pipe (&ldquo;&#124;&rdquo;)</td>
+</tr>
+<tr>
+<td>verified_account</td>
+<td>yes</td>
+<td>Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account.</td>
 </tr>
 </tbody></table>
 
@@ -482,6 +500,10 @@ Remember to url-encode all querystring parameters!
 <tr>
 <td>ManageAccount</td>
 <td>Manage the user&rsquo;s account settings</td>
+</tr>
+<tr>
+<td>Scheduled</td>
+<td>Allow scheduling one-time and recurring payments.</td>
 </tr>
 </tbody></table>
 <h2 id='finish-authorization'>Finish Authorization</h2><pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -703,6 +725,75 @@ Remember to url-encode all querystring parameters!
 <td>Always <code class="prettyprint">bearer</code>.</td>
 </tr>
 </tbody></table>
+
+          <h1 id='catalog'>Catalog</h1><pre class="highlight plaintext">      __...--~~~~~-._   _.-~~~~~--...__
+    //               `V'               \\ 
+   //                 |                 \\ 
+  //__...--~~~~~~-._  |  _.-~~~~~~--...__\\ 
+ //__.....----~~~~._\ | /_.~~~~----.....__\\
+====================\\|//====================
+                    `---`  
+</pre>
+
+<blockquote>
+<p>Response: Full user with token that contains Send, Scheduled, and Requests.</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{}</span>,
+    <span class="s2">"_links"</span>: <span class="o">{</span>
+        <span class="s2">"self"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/catalog"</span>
+        <span class="o">}</span>,
+        <span class="s2">"send"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/transactions/send"</span>
+        <span class="o">}</span>,
+        <span class="s2">"createScheduled"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/transactions/scheduled"</span>
+        <span class="o">}</span>,
+        <span class="s2">"fulfill"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/requests/{request_id}/fulfill"</span>,
+            <span class="s2">"templated"</span>: <span class="nb">true</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<blockquote>
+<p>Response: Direct user with token that contains Send, Scheduled, and Requests.</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{}</span>,
+    <span class="s2">"_links"</span>: <span class="o">{</span>
+        <span class="s2">"self"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/catalog"</span>
+        <span class="o">}</span>,
+        <span class="s2">"sendWithoutPin"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/transactions/send"</span>
+        <span class="o">}</span>,
+        <span class="s2">"createScheduledWithoutPin"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/transactions/scheduled"</span>
+        <span class="o">}</span>,
+        <span class="s2">"fulfillWithoutPin"</span>: <span class="o">{</span>
+            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/requests/{request_id}/fulfill"</span>,
+            <span class="s2">"templated"</span>: <span class="nb">true</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Fetch a list of endpoints available to the user. The Catalog endpoint is an initial step toward supporting <a href="http://stateless.co/hal_specification.html">HAL</a>.  </p>
+
+<p>Currently, it only includes links to the Send, Create Scheduled, and Fulfill Request endpoints.  In the future, it will be extended to include all endpoints available to a user.</p>
+
+<p>Use this endpoint to determine whether or not the user needs to provide a PIN in order to use the Send, Create Scheduled, or Fulfill Request endpoints.  Since Direct users do not have a PIN, for instance, the <code class="prettyprint">sendWithoutPin</code> key will be included in <code class="prettyprint">_links</code> instead of the regular <code class="prettyprint">send</code> which you would see for Full users.  The URI remains the same in either case, but for any link with &ldquo;WithoutPin&rdquo; appended to it, you will not need to ask the user for their PIN and may omit the <code class="prettyprint">pin</code> parameter when calling the endpoint.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token but does not require a particular scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/catalog</code></p>
 
           <h1 id='webhooks'>Webhooks</h1>
 <p><a href="https://developers.dwolla.com/dev/pages/guides/using_webhooks">Webhook notifications</a> are used to notify your application when particular events occur relating to Transactions or Requests that your application facilitated / created.  There are four kinds of webhook notifications:</p>
@@ -3962,6 +4053,728 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <tr>
 <td>Results</td>
 <td>JSON array of <a href="#transaction-resource">Transaction</a> resources.</td>
+</tr>
+</tbody></table>
+
+          <h1 id='scheduled-transactions'>Scheduled Transactions</h1><pre class="highlight plaintext">        _____
+     _.'_____`._
+   .'.-'  12 `-.`.
+  /,' 11      1 `.\
+ // 10      /   2 \\
+;;         /       ::
+|| 9  ----O      3 ||
+::                 ;;
+ \\ 8           4 //
+  \`. 7       5 ,'/
+   '.`-.__6__.-'.'
+    ((-._____.-))
+    _))       ((_
+   '--'SSt    '--'
+
+</pre>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Id"</span>: <span class="s2">"3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef"</span>,
+  <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-13"</span>,
+  <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-18"</span>,
+  <span class="s2">"TransactionId"</span>: null,
+  <span class="s2">"Amount"</span>: 10,
+  <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+  <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+  <span class="s2">"Destination"</span>: <span class="o">{</span>
+      <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+      <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+      <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+      <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+  <span class="o">}</span>,
+  <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled transaction"</span>,
+  <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+  <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>,
+  <span class="s2">"Metadata"</span>: <span class="o">{</span>
+    <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Payments can be scheduled to be created at a future date, up to 3 years into the future.  When a Scheduled Transaction is created, no transaction is created (and thus, no funds are transferred) until the <code class="prettyprint">ScheduledDate</code>. </p>
+
+<p>Scheduled Payments can be one-time or recurring. Options for recurring payments are flexible.  You can create a recurring payment that pays weekly, monthly, daily, or every 2 weeks, every week on Tuesdays and Fridays, every 12th and 18th and 26th each month, and so on.</p>
+
+<p>If there is an error creating the transaction, the Scheduled Transaction will have a <code class="prettyprint">Status</code> of <code class="prettyprint">failed</code>.  Only bank-sourced payments are supported at this time.  </p>
+<h3 id='scheduled-transaction-resource'>Scheduled Transaction Resource</h3>
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Id</td>
+<td>A unique ID for the scheduled transaction</td>
+</tr>
+<tr>
+<td>ScheduledDate</td>
+<td>Date when transaction will be created.  Must be within 3 years from when the scheduled transaction was created.  Format: <code class="prettyprint">YYYY-MM-DD</code></td>
+</tr>
+<tr>
+<td>ExpectedClearingDate</td>
+<td>Estimated date when the funds will be available to the recipient.  Typically 1-3 business days after the <code class="prettyprint">ScheduledDate</code>.</td>
+</tr>
+<tr>
+<td>TransactionId</td>
+<td>Transaction ID of resulting Transaction.  <code class="prettyprint">null</code> until the transaction is successfully created.</td>
+</tr>
+<tr>
+<td>Amount</td>
+<td>Amount of the transaction to be created.</td>
+</tr>
+<tr>
+<td>FundingSource</td>
+<td>ID of the bank funding source which will fund the transaction</td>
+</tr>
+<tr>
+<td>AssumeCosts</td>
+<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+</tr>
+<tr>
+<td>Destination</td>
+<td>JSON object describing the recipient.  <code class="prettyprint">Id</code> is the recipient&rsquo;s Dwolla ID or email address, <code class="prettyprint">Name</code> is the recipient&rsquo;s full name, <code class="prettyprint">Type</code> is either <code class="prettyprint">Dwolla</code> or <code class="prettyprint">Email</code> and <code class="prettyprint">Image</code> is a URL to the recipient&rsquo;s avatar, if the recipient is an existing Dwolla user.</td>
+</tr>
+<tr>
+<td>Notes</td>
+<td>Optional notes field.  Max 250 chars.</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Possible values: &lsquo;scheduled&rsquo;, &lsquo;processed&rsquo;, &lsquo;failed&rsquo;</td>
+</tr>
+<tr>
+<td>Metadata</td>
+<td>JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. Omitted if <code class="prettyprint">null</code>, if not provided, or visible to application.  <a href="#metadata">Read more</a></td>
+</tr>
+</tbody></table>
+<h2 id='create-scheduled-transaction'>Create Scheduled Transaction</h2><pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"pin"</span>: <span class="s2">"9999"</span>,
+  <span class="s2">"destinationId"</span>: <span class="s2">"gordon@dwolla.com"</span>,
+  <span class="s2">"destinationType"</span>: <span class="s2">"Email"</span>,
+  <span class="s2">"amount"</span>: 300.00,
+  <span class="s2">"scheduleDate"</span>: <span class="s2">"2015-09-13"</span>,
+  <span class="s2">"assumeCosts"</span>: <span class="nb">true</span>,
+  <span class="s2">"fundsSource"</span>: <span class="s2">"5da016f7769bcc1de9998a30d194d5a7"</span>,
+  <span class="s2">"notes"</span>: <span class="s2">"here's this month's rent!"</span>,
+  <span class="s2">"metadata"</span>: <span class="o">{</span>
+    <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+<pre class="highlight php">/**
+ * Send $300 to a Dwolla ID,
+ * on 2018-01-01, from funding source with ID
+ * "ashfdjh8f9df89"
+ */
+print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f9df89'));
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Schedule a transaction for 300 on 2015-09-09 to 812-111-1234
+ */</span>
+
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">schedule</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="s1">'812-111-1234'</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">'2015-09-09'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#   Send money ($1.00) to a Dwolla ID</span>
+<span class="c1">#   on 2015-09-09 from funding source "abcdef"</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">schedule</span><span class="p">({</span>
+                                <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">,</span>
+                                <span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="o">.</span><span class="mo">00</span><span class="p">,</span>
+                                <span class="ss">:destinationId</span> <span class="o">=&gt;</span> <span class="s1">'812-111-1111'</span><span class="p">,</span>
+                                <span class="ss">:fundsSource</span> <span class="o">=&gt;</span> <span class="s1">'abcdef'</span><span class="p">,</span>
+                                <span class="ss">:scheduleDate</span> <span class="o">=&gt;</span> <span class="s1">'2015-09-09'</span><span class="p">})</span> 
+</pre>
+<pre class="highlight python"><span class="c"># Schedule a transaction for 2018-01-01 with</span>
+<span class="c"># amount $300</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s">'812-111-1111'</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s">'2018-01-01'</span><span class="p">,</span> <span class="s">'5da016f7769bcc1de9998a30d194d5a7'</span><span class="p">))</span>
+</pre>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef"</span>,
+        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2015-09-13"</span>,
+        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-09-18"</span>,
+        <span class="s2">"TransactionId"</span>: null,
+        <span class="s2">"Amount"</span>: 300.00,
+        <span class="s2">"FundingSource"</span>: <span class="s2">"5da016f7769bcc1de9998a30d194d5a7"</span>,
+        <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://www.dwolla.com/avatars/812-111-1111"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">"here's this month's rent!"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>,
+        <span class="s2">"Metadata"</span>: <span class="o">{</span>
+          <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Create a new Scheduled Transaction on behalf of the authorized user.  Initial <code class="prettyprint">Status</code> will be <code class="prettyprint">scheduled</code>.  Must fund payment with a bank-funding source. Allows scheduling of a one-time payment, or recurring payments with use of the <code class="prettyprint">recurrence</code> object.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/scheduled</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td></td>
+<td>Amount of transaction.  Must be within the sender&rsquo;s account transaction limit.</td>
+</tr>
+<tr>
+<td>destinationId</td>
+<td></td>
+<td>Recipient&rsquo;s Dwolla ID or email address.</td>
+</tr>
+<tr>
+<td>destinationType</td>
+<td>yes</td>
+<td>Recipient type: <code class="prettyprint">Dwolla</code> or <code class="prettyprint">Email</code>.  Must set this to <code class="prettyprint">Email</code> if you provided an email as the <code class="prettyprint">destinationId</code>.</td>
+</tr>
+<tr>
+<td>pin</td>
+<td></td>
+<td>Sender&rsquo;s account PIN</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td></td>
+<td>ID of the <a href="#funding-sources">Funding Source</a> to fund this payment.</td>
+</tr>
+<tr>
+<td>scheduleDate</td>
+<td></td>
+<td>Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.</td>
+</tr>
+<tr>
+<td>recurrence</td>
+<td>yes</td>
+<td>A recurrence JSON object. <a href="#recurrence-object">See below</a></td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td>yes</td>
+<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>yes</td>
+<td>Optional note to attach to transaction.  Max 250 chars.</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td>yes</td>
+<td>Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters). <a href="#metadata">Read more</a></td>
+</tr>
+</tbody></table>
+<h3 id='recurrence-object'>Recurrence Object</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>frequency</td>
+<td></td>
+<td>Either <code class="prettyprint">weekly</code> or <code class="prettyprint">monthly</code>.</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>yes</td>
+<td>Date at which to stop the recurrence.</td>
+</tr>
+<tr>
+<td>endAfter</td>
+<td>yes</td>
+<td>Stop the recurrence after this many payments</td>
+</tr>
+<tr>
+<td>repeatEvery</td>
+<td>yes</td>
+<td>Defaults to <code class="prettyprint">1</code>.  For example a frequency of <code class="prettyprint">weekly</code> and repeatEvery set to <code class="prettyprint">2</code> would mean &ldquo;pay every 2 weeks&rdquo;.</td>
+</tr>
+<tr>
+<td>onDays</td>
+<td></td>
+<td>Day of the week or day of the month to initiate payments.  Valid values for <code class="prettyprint">weekly</code> are <code class="prettyprint">1-7</code>, where <code class="prettyprint">1</code> is Sunday and <code class="prettyprint">7</code> is Saturday.  For monthly, valid values are <code class="prettyprint">1-31</code> and <code class="prettyprint">-1</code>.  -1 is relative, indicating the last day of the month.  If you use 29, 30, or 31 and the month doesn&rsquo;t have that day, it will initiate on the last day of the month.  You can also pass combinations of days. <code class="prettyprint">weekly</code> with onDays = <code class="prettyprint">1,2,3,4,5,6,7</code> would initiate a payment every day of the week.  For <code class="prettyprint">monthly</code>, you are not able to combine <code class="prettyprint">28,29,30,31</code> and/or <code class="prettyprint">-1</code> as this would cause an overlap.</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Invalid account PIN</td>
+<td>The supplied PIN is invalid or incorrect.</td>
+</tr>
+<tr>
+<td>There was an error scheduling the transaction at this time.</td>
+<td>There was an error scheduling this transaction</td>
+</tr>
+<tr>
+<td>Invalid funding source.</td>
+<td>The specified funding source doesn&rsquo;t exist or is invalid.</td>
+</tr>
+<tr>
+<td>Funding source must be a bank.</td>
+<td>The specified funding source must be a bank</td>
+</tr>
+<tr>
+<td>Notes length is too long. Maximum of 250 character is allowed.</td>
+<td>The &lsquo;notes&rsquo; length is too long.</td>
+</tr>
+<tr>
+<td>This user is unable to receive transactions from provided funding source.</td>
+<td>The destination user is unable to receive funds from specified funding source</td>
+</tr>
+</tbody></table>
+<h2 id='list-scheduled-transactions'>List Scheduled Transactions</h2><pre class="highlight php">/**
+ * Get all scheduled transactions
+ */
+print_r($Transactions-&gt;scheduled());
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Get all scheduled transactions.
+ */</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">scheduled</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#  Get all scheduled transactions</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">scheduled</span><span class="p">()</span> 
+</pre>
+<pre class="highlight python"><span class="c"># Get all scheduled transactions</span>
+<span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">scheduled</span><span class="p">())</span>
+</pre>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Total"</span>: 2,
+        <span class="s2">"Count"</span>: 2,
+        <span class="s2">"Results"</span>: <span class="o">[</span>
+            <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"59be7670-343b-46a1-bbb0-7070c2ba1806"</span>,
+                <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-10"</span>,
+                <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-15"</span>,
+                <span class="s2">"TransactionId"</span>: 329870,
+                <span class="s2">"Amount"</span>: 12,
+                <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+                <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+                <span class="s2">"Destination"</span>: <span class="o">{</span>
+                    <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+                    <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+                    <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                    <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+                <span class="o">}</span>,
+                <span class="s2">"Notes"</span>: <span class="s2">"scheduled 1"</span>,
+                <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
+                <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-09T22:00:03Z"</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"1d7c80c6-8dcd-4219-8ddc-440909eccc0d"</span>,
+                <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-10"</span>,
+                <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-15"</span>,
+                <span class="s2">"TransactionId"</span>: 329867,
+                <span class="s2">"Amount"</span>: 1,
+                <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+                <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+                <span class="s2">"Destination"</span>: <span class="o">{</span>
+                    <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+                    <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+                    <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                    <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+                <span class="o">}</span>,
+                <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled"</span>,
+                <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
+                <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-09T21:58:14Z"</span>
+            <span class="o">}</span>
+        <span class="o">]</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>List the authorized user&rsquo;s scheduled transactions which have been created by your application.  </p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled?limit=10</code></p>
+<h3 id='optional-parameters'>Optional Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>Filter scheduled transactions by their status.  Possible values: <code class="prettyprint">scheduled</code>, <code class="prettyprint">processed</code>, <code class="prettyprint">failed</code>.</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>Pagination: number of results to return.</td>
+</tr>
+<tr>
+<td>skip</td>
+<td>Pagination: number of results to skip.</td>
+</tr>
+<tr>
+<td>fundingSource</td>
+<td>Show only scheduled transactions funded by a given funding source ID.</td>
+</tr>
+</tbody></table>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Total</td>
+<td>Total number of query results</td>
+</tr>
+<tr>
+<td>Count</td>
+<td>Number of query results included in response.  Can be less than <code class="prettyprint">Total</code>, if paginating with <code class="prettyprint">limit</code> set in query.</td>
+</tr>
+<tr>
+<td>Results</td>
+<td>JSON array of <a href="#scheduled-transaction-resource">Scheduled Transactions</a></td>
+</tr>
+</tbody></table>
+<h2 id='retrieve-scheduled-transaction'>Retrieve Scheduled Transaction</h2><pre class="highlight php">/**
+ * Get scheduled transaction with ID
+ * 'd72b9f82-307e-4a35-9559-7889ea929db7'
+ */
+print_r($Transactions-&gt;scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'));
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Get scheduled transaction with ID 'd72b9f82-307e-4a35-9559-7889ea929db7'
+ */</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">scheduledById</span><span class="p">(</span><span class="s1">'d72b9f82-307e-4a35-9559-7889ea929db7'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#   Get scheduled transaction with ID</span>
+<span class="c1">#   'd72b9f82-307e-4a35-9559-7889ea929db7'</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">scheduled_by_id</span><span class="p">(</span><span class="s1">'d72b9f82-307e-4a35-9559-7889ea929db7'</span><span class="p">)</span> 
+</pre>
+<pre class="highlight python"><span class="c"># Get scheduled transaction with </span>
+<span class="c"># ID 'd72b9f82-307e-4a35-9559-7889ea929db7'</span>
+<span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">scheduledbyid</span><span class="p">(</span><span class="s">'d72b9f82-307e-4a35-9559-7889ea929db7'</span><span class="p">)</span>
+</pre>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"d72b9f82-307e-4a35-9559-7889ea929db7"</span>,
+        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-11"</span>,
+        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-16"</span>,
+        <span class="s2">"TransactionId"</span>: 330295,
+        <span class="s2">"Amount"</span>: 100,
+        <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+        <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-10T21:05:39Z"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Retrieve a scheduled transaction by its ID.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
+<h2 id='edit-scheduled-transaction'>Edit Scheduled Transaction</h2>
+<blockquote>
+<p>Edit the amount:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"pin"</span>: 9999,
+  <span class="s2">"amount"</span>: 16
+<span class="o">}</span>
+</pre>
+<pre class="highlight php">/**
+ * Edit scheduled transaction with ID
+ * '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to reflect amount 16
+ */
+print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', ['amount' =&gt; 16]));
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Edit scheduled transaction with ID '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' 
+ * to specify a new amount of 16
+ */</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">editScheduled</span><span class="p">(</span><span class="s1">'08f9b638-0f8e-4e00-abe5-41c8fd24fbe8'</span><span class="p">,</span> <span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="p">{</span><span class="na">amount</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span> <span class="p">{</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#   Edit scheduled transaction with ID </span>
+<span class="c1">#   '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to have new amount 16</span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">edit_scheduled_by_id</span><span class="p">(</span><span class="s1">'08f9b638-0f8e-4e00-abe5-41c8fd24fbe8'</span><span class="p">,</span> <span class="p">{</span><span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">16</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="c"># Edit scheduled transaction with ID</span>
+<span class="c"># '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to reflect amount 16</span>
+<span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">editscheduledbyid</span><span class="p">(</span><span class="s">'08f9b638-0f8e-4e00-abe5-41c8fd24fbe8'</span><span class="p">,</span> <span class="p">{</span><span class="s">'amount'</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
+</pre>
+
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="o">{</span>
+        <span class="s2">"Id"</span>: <span class="s2">"08f9b638-0f8e-4e00-abe5-41c8fd24fbe8"</span>,
+        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-11"</span>,
+        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-16"</span>,
+        <span class="s2">"TransactionId"</span>: null,
+        <span class="s2">"Amount"</span>: 16,
+        <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
+        <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+        <span class="s2">"Destination"</span>: <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+            <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+            <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled test update"</span>,
+        <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-10T18:28:20Z"</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre>
+
+<p>Edit an existing scheduled transaction. Partial editing is allowed: just supply the field(s) to change, along with the sender&rsquo;s PIN.  </p>
+
+<p>Note: the <code class="prettyprint">recurrence</code> field <em>cannot</em> be modified.  If you need to change the recurrence of a scheduled transaction, delete it and create a new one.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">PUT https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Optional?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pin</td>
+<td>required</td>
+<td>Sender&rsquo;s account PIN</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>yes</td>
+<td>Amount of transaction.  Must be within the sender&rsquo;s account transaction limit.</td>
+</tr>
+<tr>
+<td>destinationId</td>
+<td>yes</td>
+<td>Recipient&rsquo;s Dwolla ID or email address.</td>
+</tr>
+<tr>
+<td>destinationType</td>
+<td>yes</td>
+<td>Recipient type: <code class="prettyprint">Dwolla</code> or <code class="prettyprint">Email</code>.  Must set this to <code class="prettyprint">Email</code> if you provided an email as the <code class="prettyprint">destinationId</code>.</td>
+</tr>
+<tr>
+<td>fundsSource</td>
+<td>yes</td>
+<td>ID of the <a href="#funding-sources">Funding Source</a> to fund this payment.</td>
+</tr>
+<tr>
+<td>scheduleDate</td>
+<td>yes</td>
+<td>Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.</td>
+</tr>
+<tr>
+<td>assumeCosts</td>
+<td>yes</td>
+<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>yes</td>
+<td>Optional note to attach to transaction.  Max 250 chars.</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Transaction has already been processed.</td>
+<td>Unable to edit a transaction that has alredy been processed</td>
+</tr>
+<tr>
+<td>There was an error updating the scheduled transaction.</td>
+<td>Error occured when updating the scheduled transaction</td>
+</tr>
+</tbody></table>
+<h2 id='delete-scheduled-transaction'>Delete Scheduled Transaction</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/d856d2ec-4098-4b3b-b20f-b2561ec85871?pin<span class="o">={</span>PIN<span class="o">}</span>
+</pre>
+<pre class="highlight php">/**
+ * Delete scheduled transaction with ID
+ * 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
+ */
+print_r($Transactions-&gt;deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85871'));
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Delete scheduled transaction with ID 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
+ */</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">deleteScheduledById</span><span class="p">(</span><span class="s1">'d856d2ec-4098-4b3b-b20f-b2561ec85871'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#   Delete the scheduled transaction with ID </span>
+<span class="c1">#   'd856d2ec-4098-4b3b-b20f-b2561ec85871' </span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">delete_scheduled_by_id</span><span class="p">(</span><span class="s1">'d856d2ec-4098-4b3b-b20f-b2561ec85871'</span><span class="p">,</span> <span class="p">{</span><span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="c"># Delete scheduled transaction with ID</span>
+<span class="c"># 'd856d2ec-4098-4b3b-b20f-b2561ec85871'</span>
+<span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">deletescheduledbyid</span><span class="p">(</span><span class="s">'d856d2ec-4098-4b3b-b20f-b2561ec85871'</span><span class="p">)</span>
+</pre>
+
+<blockquote>
+<p>If successful, response contains the ID of the deleted scheduled transaction:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+    <span class="s2">"Success"</span>: <span class="nb">true</span>,
+    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+    <span class="s2">"Response"</span>: <span class="s2">"d856d2ec-4098-4b3b-b20f-b2561ec85871"</span>
+<span class="o">}</span>
+</pre>
+
+<p>Delete a <em>pending</em> scheduled transaction created by your application.  Status must be <code class="prettyprint">scheduled</code>.  Cannot delete a <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled transaction.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}?pin={PIN}</code></p>
+<h3 id='querystring-params'>Querystring params</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pin</td>
+<td>User&rsquo;s PIN</td>
+</tr>
+</tbody></table>
+<h3 id='errors'>Errors</h3>
+<table><thead>
+<tr>
+<th>Error String</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Scheduled transaction must not have been processed to delete.</td>
+<td>The scheduled transaction must be processed before deleting</td>
+</tr>
+<tr>
+<td>There was an error deleting the scheduled transaction.</td>
+<td>There was an error deleting the scheduled transaction</td>
+</tr>
+</tbody></table>
+<h2 id='delete-all-scheduled-transactions'>Delete all Scheduled Transactions</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled?pin<span class="o">={</span>PIN<span class="o">}</span>
+</pre>
+<pre class="highlight php">/**
+ * Delete all scheduled transactions
+ */
+print_r($Transactions-&gt;deleteAllScheduled());
+</pre>
+<pre class="highlight javascript"><span class="cm">/**
+ * Delete all scheduled transactions.
+ */</span>
+<span class="nx">Dwolla</span><span class="p">.</span><span class="nx">deleteAllScheduled</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<pre class="highlight ruby"><span class="c1">#   Delete all scheduled transactions </span>
+<span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">delete_all_scheduled</span><span class="p">({</span><span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
+</pre>
+<pre class="highlight python"><span class="c"># Delete all scheduled transactions</span>
+<span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">deleteallscheduled</span><span class="p">()</span>
+</pre>
+
+<blockquote>
+<p>If successful, response contains JSON array of IDs of scheduled transactions deleted:</p>
+</blockquote>
+<pre class="highlight shell"><span class="o">{</span>
+  <span class="s2">"Success"</span>: <span class="nb">true</span>,
+  <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
+  <span class="s2">"Response"</span>: <span class="o">[</span>
+    <span class="s2">"09e66fa3-1542-40b0-8143-67f72c75ae77"</span>,
+    <span class="s2">"1646c924-c6e0-46f1-b33d-5b999b408cab"</span>,
+    <span class="s2">"48c93710-5cb0-424b-b0b0-3a692a0ba840"</span>
+  <span class="o">]</span>
+<span class="o">}</span>
+</pre>
+
+<p>Delete <strong>all</strong> of an authorized user&rsquo;s <em>pending</em> scheduled transactions created by your application.  Will not delete any <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled transactions.</p>
+
+<p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled?pin={PIN}</code></p>
+<h3 id='querystring-params'>Querystring params</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>pin</td>
+<td>User&rsquo;s PIN</td>
 </tr>
 </tbody></table>
 
@@ -7509,6 +8322,10 @@ In an effort to remain transparent, here's a list of bugs we know about.
 <tr>
 <td>4/1/2015</td>
 <td>Added Python example code</td>
+</tr>
+<tr>
+<td>4/28/2015</td>
+<td>Add Scheduled Recurring documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.</td>
 </tr>
 </tbody></table>
 
