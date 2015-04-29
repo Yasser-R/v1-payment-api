@@ -281,8 +281,7 @@ Parameter | Description
 ----------|------------
 Total | Total number of query results
 Count | Number of query results included in response.  Can be less than `Total`, if paginating with `limit` set in query.
-Results | JSON array of [Scheduled Payments](#scheduled-payment
--resource)
+Results | JSON array of [Scheduled Payments](#scheduled-payment-resource)
 
 ## Retrieve Scheduled Payment
 
