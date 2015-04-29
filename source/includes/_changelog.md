@@ -8,4 +8,4 @@ Date | Changes
 12/03/2014 | Temporarily removed Scheduled Transactions documentation, which is currently not available while we work on making some improvements to it.
 03/17/2015 | Add new parameters `processingTypes` and `verified` to the [List Funding Sources](#list-funding-sources) endpoint.
 4/1/2015 | Added Python example code
-4/28/2015 | Add Scheduled Recurring documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.
+4/28/2015 | Add Scheduled Payments documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.
