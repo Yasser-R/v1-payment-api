@@ -1,4 +1,4 @@
-# Scheduled Transactions
+# Scheduled Payments
 
 ```always
         _____
@@ -33,7 +33,7 @@
       "Type": "Dwolla",
       "Image": "http://uat.dwolla.com/avatars/812-111-1111"
   },
-  "Notes": "This is a scheduled transaction",
+  "Notes": "This is a scheduled payment",
   "Status": "scheduled",
   "CreatedDate": "2014-09-12T20:37:37Z",
   "Metadata": {
@@ -42,18 +42,18 @@
 }
 ```
 
-Payments can be scheduled to be created at a future date, up to 3 years into the future.  When a Scheduled Transaction is created, no transaction is created (and thus, no funds are transferred) until the `ScheduledDate`. 
+Payments can be scheduled to be created at a future date, up to 3 years into the future.  When a Scheduled Payment is created, no transaction is created (and thus, no funds are transferred) until the `ScheduledDate`. 
 
 Scheduled Payments can be one-time or recurring. Options for recurring payments are flexible.  You can create a recurring payment that pays weekly, monthly, daily, or every 2 weeks, every week on Tuesdays and Fridays, every 12th and 18th and 26th each month, and so on.
 
-If there is an error creating the transaction, the Scheduled Transaction will have a `Status` of `failed`.  Only bank-sourced payments are supported at this time.  
+If there is an error creating the transaction, the Scheduled Payment will have a `Status` of `failed`.  Only bank-sourced payments are supported at this time.  
 
-### Scheduled Transaction Resource
+### Scheduled Payment Resource
 
 Property | Description
 ---------|------------
-Id | A unique ID for the scheduled transaction
-ScheduledDate | Date when transaction will be created.  Must be within 3 years from when the scheduled transaction was created.  Format: `YYYY-MM-DD`
+Id | A unique ID for the scheduled payment
+ScheduledDate | Date when transaction will be created.  Must be within 3 years from when the scheduled payment was created.  Format: `YYYY-MM-DD`
 ExpectedClearingDate | Estimated date when the funds will be available to the recipient.  Typically 1-3 business days after the `ScheduledDate`.
 TransactionId | Transaction ID of resulting Transaction.  `null` until the transaction is successfully created.
 Amount | Amount of the transaction to be created.
@@ -64,7 +64,7 @@ Notes | Optional notes field.  Max 250 chars.
 Status | Possible values: 'scheduled', 'processed', 'failed'
 Metadata | JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. Omitted if `null`, if not provided, or visible to application.  [Read more](#metadata)
 
-## Create Scheduled Transaction
+## Create Scheduled Payment
 
 ```shell
 {
@@ -91,7 +91,7 @@ print_r($Transactions->schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f9df
 ```
 ```js
 /**
- * Schedule a transaction for 300 on 2015-09-09 to 812-111-1234
+ * Schedule a payment for 300 on 2015-09-09 to 812-111-1234
  */
 
 Dwolla.schedule(cfg.pin, '812-111-1234', 300, '2015-09-09', function(err, data) {
@@ -110,7 +110,7 @@ pp Dwolla::Transactions.schedule({
                                 :scheduleDate => '2015-09-09'}) 
 ```
 ```python
-# Schedule a transaction for 2018-01-01 with
+# Schedule a payment for 2018-01-01 with
 # amount $300
 
 print(transactions.schedule('812-111-1111', 300, '2018-01-01', '5da016f7769bcc1de9998a30d194d5a7'))
@@ -146,7 +146,7 @@ print(transactions.schedule('812-111-1111', 300, '2018-01-01', '5da016f7769bcc1d
 }
 ```
 
-Create a new Scheduled Transaction on behalf of the authorized user.  Initial `Status` will be `scheduled`.  Must fund payment with a bank-funding source. Allows scheduling of a one-time payment, or recurring payments with use of the `recurrence` object.
+Create a new Scheduled Payment on behalf of the authorized user.  Initial `Status` will be `scheduled`.  Must fund payment with a bank-funding source. Allows scheduling of a one-time payment, or recurring payments with use of the `recurrence` object.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
 
@@ -185,16 +185,16 @@ onDays | | Day of the week or day of the month to initiate payments.  Valid valu
 | Notes length is too long. Maximum of 250 character is allowed. | The 'notes' length is too long. |
 | This user is unable to receive transactions from provided funding source. | The destination user is unable to receive funds from specified funding source |
 
-## List Scheduled Transactions
+## List Scheduled Payments
 ```php
 /**
- * Get all scheduled transactions
+ * Get all scheduled payments
  */
 print_r($Transactions->scheduled());
 ```
 ```js
 /**
- * Get all scheduled transactions.
+ * Get all scheduled payments.
  */
 Dwolla.scheduled(function(err, data) {
   if (err) {console.log(err);}
@@ -202,11 +202,11 @@ Dwolla.scheduled(function(err, data) {
 });
 ```
 ```ruby
-#  Get all scheduled transactions
+#  Get all scheduled payments
 pp Dwolla::Transactions.scheduled() 
 ```
 ```python
-# Get all scheduled transactions
+# Get all scheduled payments
 print(transactions.scheduled())
 ```
 
@@ -259,7 +259,7 @@ print(transactions.scheduled())
 }
 ```
 
-List the authorized user's scheduled transactions which have been created by your application.  
+List the authorized user's scheduled payments which have been created by your application.  
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
 
@@ -270,10 +270,10 @@ List the authorized user's scheduled transactions which have been created by you
 
 Parameter | Description
 ----------|------------
-status | Filter scheduled transactions by their status.  Possible values: `scheduled`, `processed`, `failed`.
+status | Filter scheduled payments by their status.  Possible values: `scheduled`, `processed`, `failed`.
 limit | Pagination: number of results to return.
 skip | Pagination: number of results to skip.
-fundingSource | Show only scheduled transactions funded by a given funding source ID.
+fundingSource | Show only scheduled payments funded by a given funding source ID.
 
 ### Response
 
@@ -281,20 +281,21 @@ Parameter | Description
 ----------|------------
 Total | Total number of query results
 Count | Number of query results included in response.  Can be less than `Total`, if paginating with `limit` set in query.
-Results | JSON array of [Scheduled Transactions](#scheduled-transaction-resource)
+Results | JSON array of [Scheduled Payments](#scheduled-payment
+-resource)
 
-## Retrieve Scheduled Transaction
+## Retrieve Scheduled Payment
 
 ```php
 /**
- * Get scheduled transaction with ID
+ * Get scheduled payment with ID
  * 'd72b9f82-307e-4a35-9559-7889ea929db7'
  */
 print_r($Transactions->scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'));
 ```
 ```js
 /**
- * Get scheduled transaction with ID 'd72b9f82-307e-4a35-9559-7889ea929db7'
+ * Get scheduled payment with ID 'd72b9f82-307e-4a35-9559-7889ea929db7'
  */
 Dwolla.scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7', function(err, data) {
   if (err) {console.log(err);}
@@ -302,12 +303,12 @@ Dwolla.scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7', function(err, data)
 });
 ```
 ```ruby
-#   Get scheduled transaction with ID
+#   Get scheduled payment with ID
 #   'd72b9f82-307e-4a35-9559-7889ea929db7'
 pp Dwolla::Transactions.scheduled_by_id('d72b9f82-307e-4a35-9559-7889ea929db7') 
 ```
 ```python
-# Get scheduled transaction with 
+# Get scheduled payment with 
 # ID 'd72b9f82-307e-4a35-9559-7889ea929db7'
 print transactions.scheduledbyid('d72b9f82-307e-4a35-9559-7889ea929db7')
 ```
@@ -336,14 +337,14 @@ print transactions.scheduledbyid('d72b9f82-307e-4a35-9559-7889ea929db7')
 }
 ```
 
-Retrieve a scheduled transaction by its ID.
+Retrieve a scheduled payment by its ID.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
 
 ### HTTP Request
 `GET https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}`
 
-## Edit Scheduled Transaction
+## Edit Scheduled Payment
 
 > Edit the amount:
 
@@ -355,14 +356,14 @@ Retrieve a scheduled transaction by its ID.
 ```
 ```php
 /**
- * Edit scheduled transaction with ID
+ * Edit scheduled payment with ID
  * '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to reflect amount 16
  */
 print_r($Transactions->editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', ['amount' => 16]));
 ```
 ```js
 /**
- * Edit scheduled transaction with ID '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' 
+ * Edit scheduled payment with ID '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' 
  * to specify a new amount of 16
  */
 Dwolla.editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', cfg.pin, {amount: 16}, {function(err, data) {
@@ -371,12 +372,12 @@ Dwolla.editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', cfg.pin, {amount: 1
 });
 ```
 ```ruby
-#   Edit scheduled transaction with ID 
+#   Edit scheduled payment with ID 
 #   '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to have new amount 16
 pp Dwolla::Transactions.edit_scheduled_by_id('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', {:amount => 16})
 ```
 ```python
-# Edit scheduled transaction with ID
+# Edit scheduled payment with ID
 # '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to reflect amount 16
 print transactions.editscheduledbyid('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', {'amount': 16})
 ```
@@ -408,9 +409,9 @@ print transactions.editscheduledbyid('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', {'a
 }
 ```
 
-Edit an existing scheduled transaction. Partial editing is allowed: just supply the field(s) to change, along with the sender's PIN.  
+Edit an existing scheduled payment. Partial editing is allowed: just supply the field(s) to change, along with the sender's PIN.  
 
-Note: the `recurrence` field *cannot* be modified.  If you need to change the recurrence of a scheduled transaction, delete it and create a new one.
+Note: the `recurrence` field *cannot* be modified.  If you need to change the recurrence of a scheduled payment, delete it and create a new one.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
 
@@ -420,11 +421,11 @@ Note: the `recurrence` field *cannot* be modified.  If you need to change the re
 Parameter | Optional? | Description
 ----------|-----------|------------
 pin | required | Sender's account PIN
-amount | yes | Amount of transaction.  Must be within the sender's account transaction limit.
+amount | yes | Amount of payment.  Must be within the sender's account transaction limit.
 destinationId | yes | Recipient's Dwolla ID or email address.  
 destinationType | yes | Recipient type: `Dwolla` or `Email`.  Must set this to `Email` if you provided an email as the `destinationId`.
 fundsSource | yes | ID of the [Funding Source](#funding-sources) to fund this payment.
-scheduleDate | yes | Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.
+scheduleDate | yes | Date to initiate payment.  If the payment is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.
 assumeCosts | yes | Boolean.  Set to `true` if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).
 notes | yes | Optional note to attach to transaction.  Max 250 chars.
 
@@ -432,23 +433,23 @@ notes | yes | Optional note to attach to transaction.  Max 250 chars.
 | Error String | Description |
 |--------------|-------------|
 | Transaction has already been processed. | Unable to edit a transaction that has alredy been processed |
-| There was an error updating the scheduled transaction. | Error occured when updating the scheduled transaction |
+| There was an error updating the scheduled payment. | Error occured when updating the scheduled payment |
 
-## Delete Scheduled Transaction
+## Delete Scheduled Payment
 
 ```shell
 DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/d856d2ec-4098-4b3b-b20f-b2561ec85871?pin={PIN}
 ```
 ```php
 /**
- * Delete scheduled transaction with ID
+ * Delete scheduled payment with ID
  * 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
  */
 print_r($Transactions->deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85871'));
 ```
 ```js
 /**
- * Delete scheduled transaction with ID 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
+ * Delete scheduled payment with ID 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
  */
 Dwolla.deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85871', function(err, data) {
   if (err) {console.log(err);}
@@ -456,17 +457,17 @@ Dwolla.deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85871', function(err,
 });
 ```
 ```ruby
-#   Delete the scheduled transaction with ID 
+#   Delete the scheduled payment with ID 
 #   'd856d2ec-4098-4b3b-b20f-b2561ec85871' 
 pp Dwolla::Transactions.delete_scheduled_by_id('d856d2ec-4098-4b3b-b20f-b2561ec85871', {:pin => @pin})
 ```
 ```python
-# Delete scheduled transaction with ID
+# Delete scheduled payment with ID
 # 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
 print transactions.deletescheduledbyid('d856d2ec-4098-4b3b-b20f-b2561ec85871')
 ```
 
-> If successful, response contains the ID of the deleted scheduled transaction:
+> If successful, response contains the ID of the deleted scheduled payment:
 
 ```shell
 {
@@ -476,7 +477,7 @@ print transactions.deletescheduledbyid('d856d2ec-4098-4b3b-b20f-b2561ec85871')
 }
 ```
 
-Delete a *pending* scheduled transaction created by your application.  Status must be `scheduled`.  Cannot delete a `processed` or `failed` scheduled transaction.
+Delete a *pending* scheduled payment created by your application.  Status must be `scheduled`.  Cannot delete a `processed` or `failed` scheduled payment.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
 
@@ -491,23 +492,23 @@ pin | User's PIN
 ### Errors
 | Error String | Description |
 |--------------|-------------|
-| Scheduled transaction must not have been processed to delete. | The scheduled transaction must be processed before deleting |
-| There was an error deleting the scheduled transaction. | There was an error deleting the scheduled transaction |
+| Scheduled transaction must not have been processed to delete. | The scheduled payment must be deleted before the `ScheduleDate` |
+| There was an error deleting the scheduled payment. | Generic error.  If you're not sure why this happened, contact us. |
 
-## Delete all Scheduled Transactions
+## Delete all Scheduled Payments
 
 ```shell
 DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled?pin={PIN}
 ```
 ```php
 /**
- * Delete all scheduled transactions
+ * Delete all scheduled payments
  */
 print_r($Transactions->deleteAllScheduled());
 ```
 ```js
 /**
- * Delete all scheduled transactions.
+ * Delete all scheduled payments.
  */
 Dwolla.deleteAllScheduled(function(err, data) {
   if (err) {console.log(err);}
@@ -515,15 +516,15 @@ Dwolla.deleteAllScheduled(function(err, data) {
 });
 ```
 ```ruby
-#   Delete all scheduled transactions 
+#   Delete all scheduled payments 
 pp Dwolla::Transactions.delete_all_scheduled({:pin => @pin})
 ```
 ```python
-# Delete all scheduled transactions
+# Delete all scheduled payments
 print transactions.deleteallscheduled()
 ```
 
-> If successful, response contains JSON array of IDs of scheduled transactions deleted:
+> If successful, response contains JSON array of IDs of scheduled payments deleted:
 
 ```shell
 {
@@ -537,7 +538,7 @@ print transactions.deleteallscheduled()
 }
 ```
 
-Delete **all** of an authorized user's *pending* scheduled transactions created by your application.  Will not delete any `processed` or `failed` scheduled transactions.
+Delete **all** of an authorized user's *pending* scheduled payments created by your application.  Will not delete any `processed` or `failed` scheduled payments.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
 
