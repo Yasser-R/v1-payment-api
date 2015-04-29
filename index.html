@@ -4056,7 +4056,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tr>
 </tbody></table>
 
-          <h1 id='scheduled-transactions'>Scheduled Transactions</h1><pre class="highlight plaintext">        _____
+          <h1 id='scheduled-payments'>Scheduled Payments</h1><pre class="highlight plaintext">        _____
      _.'_____`._
    .'.-'  12 `-.`.
   /,' 11      1 `.\
@@ -4086,7 +4086,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
       <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
       <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
   <span class="o">}</span>,
-  <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled transaction"</span>,
+  <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled payment"</span>,
   <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
   <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>,
   <span class="s2">"Metadata"</span>: <span class="o">{</span>
@@ -4095,12 +4095,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <span class="o">}</span>
 </pre>
 
-<p>Payments can be scheduled to be created at a future date, up to 3 years into the future.  When a Scheduled Transaction is created, no transaction is created (and thus, no funds are transferred) until the <code class="prettyprint">ScheduledDate</code>. </p>
+<p>Payments can be scheduled to be created at a future date, up to 3 years into the future.  When a Scheduled Payment is created, no transaction is created (and thus, no funds are transferred) until the <code class="prettyprint">ScheduledDate</code>. </p>
 
 <p>Scheduled Payments can be one-time or recurring. Options for recurring payments are flexible.  You can create a recurring payment that pays weekly, monthly, daily, or every 2 weeks, every week on Tuesdays and Fridays, every 12th and 18th and 26th each month, and so on.</p>
 
-<p>If there is an error creating the transaction, the Scheduled Transaction will have a <code class="prettyprint">Status</code> of <code class="prettyprint">failed</code>.  Only bank-sourced payments are supported at this time.  </p>
-<h3 id='scheduled-transaction-resource'>Scheduled Transaction Resource</h3>
+<p>If there is an error creating the transaction, the Scheduled Payment will have a <code class="prettyprint">Status</code> of <code class="prettyprint">failed</code>.  Only bank-sourced payments are supported at this time.  </p>
+<h3 id='scheduled-payment-resource'>Scheduled Payment Resource</h3>
 <table><thead>
 <tr>
 <th>Property</th>
@@ -4109,11 +4109,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </thead><tbody>
 <tr>
 <td>Id</td>
-<td>A unique ID for the scheduled transaction</td>
+<td>A unique ID for the scheduled payment</td>
 </tr>
 <tr>
 <td>ScheduledDate</td>
-<td>Date when transaction will be created.  Must be within 3 years from when the scheduled transaction was created.  Format: <code class="prettyprint">YYYY-MM-DD</code></td>
+<td>Date when transaction will be created.  Must be within 3 years from when the scheduled payment was created.  Format: <code class="prettyprint">YYYY-MM-DD</code></td>
 </tr>
 <tr>
 <td>ExpectedClearingDate</td>
@@ -4152,7 +4152,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. Omitted if <code class="prettyprint">null</code>, if not provided, or visible to application.  <a href="#metadata">Read more</a></td>
 </tr>
 </tbody></table>
-<h2 id='create-scheduled-transaction'>Create Scheduled Transaction</h2><pre class="highlight shell"><span class="o">{</span>
+<h2 id='create-scheduled-payment'>Create Scheduled Payment</h2><pre class="highlight shell"><span class="o">{</span>
   <span class="s2">"pin"</span>: <span class="s2">"9999"</span>,
   <span class="s2">"destinationId"</span>: <span class="s2">"gordon@dwolla.com"</span>,
   <span class="s2">"destinationType"</span>: <span class="s2">"Email"</span>,
@@ -4174,7 +4174,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f9df89'));
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
- * Schedule a transaction for 300 on 2015-09-09 to 812-111-1234
+ * Schedule a payment for 300 on 2015-09-09 to 812-111-1234
  */</span>
 
 <span class="nx">Dwolla</span><span class="p">.</span><span class="nx">schedule</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="s1">'812-111-1234'</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s1">'2015-09-09'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
@@ -4191,7 +4191,7 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
                                 <span class="ss">:fundsSource</span> <span class="o">=&gt;</span> <span class="s1">'abcdef'</span><span class="p">,</span>
                                 <span class="ss">:scheduleDate</span> <span class="o">=&gt;</span> <span class="s1">'2015-09-09'</span><span class="p">})</span> 
 </pre>
-<pre class="highlight python"><span class="c"># Schedule a transaction for 2018-01-01 with</span>
+<pre class="highlight python"><span class="c"># Schedule a payment for 2018-01-01 with</span>
 <span class="c"># amount $300</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s">'812-111-1111'</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="s">'2018-01-01'</span><span class="p">,</span> <span class="s">'5da016f7769bcc1de9998a30d194d5a7'</span><span class="p">))</span>
@@ -4227,7 +4227,7 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
 <span class="o">}</span>
 </pre>
 
-<p>Create a new Scheduled Transaction on behalf of the authorized user.  Initial <code class="prettyprint">Status</code> will be <code class="prettyprint">scheduled</code>.  Must fund payment with a bank-funding source. Allows scheduling of a one-time payment, or recurring payments with use of the <code class="prettyprint">recurrence</code> object.</p>
+<p>Create a new Scheduled Payment on behalf of the authorized user.  Initial <code class="prettyprint">Status</code> will be <code class="prettyprint">scheduled</code>.  Must fund payment with a bank-funding source. Allows scheduling of a one-time payment, or recurring payments with use of the <code class="prettyprint">recurrence</code> object.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -4357,23 +4357,23 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
 <td>The destination user is unable to receive funds from specified funding source</td>
 </tr>
 </tbody></table>
-<h2 id='list-scheduled-transactions'>List Scheduled Transactions</h2><pre class="highlight php">/**
- * Get all scheduled transactions
+<h2 id='list-scheduled-payments'>List Scheduled Payments</h2><pre class="highlight php">/**
+ * Get all scheduled payments
  */
 print_r($Transactions-&gt;scheduled());
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
- * Get all scheduled transactions.
+ * Get all scheduled payments.
  */</span>
 <span class="nx">Dwolla</span><span class="p">.</span><span class="nx">scheduled</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
-<pre class="highlight ruby"><span class="c1">#  Get all scheduled transactions</span>
+<pre class="highlight ruby"><span class="c1">#  Get all scheduled payments</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">scheduled</span><span class="p">()</span> 
 </pre>
-<pre class="highlight python"><span class="c"># Get all scheduled transactions</span>
+<pre class="highlight python"><span class="c"># Get all scheduled payments</span>
 <span class="k">print</span><span class="p">(</span><span class="n">transactions</span><span class="o">.</span><span class="n">scheduled</span><span class="p">())</span>
 </pre>
 <pre class="highlight shell"><span class="o">{</span>
@@ -4424,7 +4424,7 @@ print_r($Transactions-&gt;scheduled());
 <span class="o">}</span>
 </pre>
 
-<p>List the authorized user&rsquo;s scheduled transactions which have been created by your application.  </p>
+<p>List the authorized user&rsquo;s scheduled payments which have been created by your application.  </p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -4438,7 +4438,7 @@ print_r($Transactions-&gt;scheduled());
 </thead><tbody>
 <tr>
 <td>status</td>
-<td>Filter scheduled transactions by their status.  Possible values: <code class="prettyprint">scheduled</code>, <code class="prettyprint">processed</code>, <code class="prettyprint">failed</code>.</td>
+<td>Filter scheduled payments by their status.  Possible values: <code class="prettyprint">scheduled</code>, <code class="prettyprint">processed</code>, <code class="prettyprint">failed</code>.</td>
 </tr>
 <tr>
 <td>limit</td>
@@ -4450,7 +4450,7 @@ print_r($Transactions-&gt;scheduled());
 </tr>
 <tr>
 <td>fundingSource</td>
-<td>Show only scheduled transactions funded by a given funding source ID.</td>
+<td>Show only scheduled payments funded by a given funding source ID.</td>
 </tr>
 </tbody></table>
 <h3 id='response'>Response</h3>
@@ -4470,28 +4470,30 @@ print_r($Transactions-&gt;scheduled());
 </tr>
 <tr>
 <td>Results</td>
-<td>JSON array of <a href="#scheduled-transaction-resource">Scheduled Transactions</a></td>
+<td>JSON array of [Scheduled Payments](#scheduled-payment</td>
 </tr>
 </tbody></table>
-<h2 id='retrieve-scheduled-transaction'>Retrieve Scheduled Transaction</h2><pre class="highlight php">/**
- * Get scheduled transaction with ID
+
+<p>-resource)</p>
+<h2 id='retrieve-scheduled-payment'>Retrieve Scheduled Payment</h2><pre class="highlight php">/**
+ * Get scheduled payment with ID
  * 'd72b9f82-307e-4a35-9559-7889ea929db7'
  */
 print_r($Transactions-&gt;scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'));
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
- * Get scheduled transaction with ID 'd72b9f82-307e-4a35-9559-7889ea929db7'
+ * Get scheduled payment with ID 'd72b9f82-307e-4a35-9559-7889ea929db7'
  */</span>
 <span class="nx">Dwolla</span><span class="p">.</span><span class="nx">scheduledById</span><span class="p">(</span><span class="s1">'d72b9f82-307e-4a35-9559-7889ea929db7'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
-<pre class="highlight ruby"><span class="c1">#   Get scheduled transaction with ID</span>
+<pre class="highlight ruby"><span class="c1">#   Get scheduled payment with ID</span>
 <span class="c1">#   'd72b9f82-307e-4a35-9559-7889ea929db7'</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">scheduled_by_id</span><span class="p">(</span><span class="s1">'d72b9f82-307e-4a35-9559-7889ea929db7'</span><span class="p">)</span> 
 </pre>
-<pre class="highlight python"><span class="c"># Get scheduled transaction with </span>
+<pre class="highlight python"><span class="c"># Get scheduled payment with </span>
 <span class="c"># ID 'd72b9f82-307e-4a35-9559-7889ea929db7'</span>
 <span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">scheduledbyid</span><span class="p">(</span><span class="s">'d72b9f82-307e-4a35-9559-7889ea929db7'</span><span class="p">)</span>
 </pre>
@@ -4519,12 +4521,12 @@ print_r($Transactions-&gt;scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'))
 <span class="o">}</span>
 </pre>
 
-<p>Retrieve a scheduled transaction by its ID.</p>
+<p>Retrieve a scheduled payment by its ID.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
-<h2 id='edit-scheduled-transaction'>Edit Scheduled Transaction</h2>
+<h2 id='edit-scheduled-payment'>Edit Scheduled Payment</h2>
 <blockquote>
 <p>Edit the amount:</p>
 </blockquote>
@@ -4534,13 +4536,13 @@ print_r($Transactions-&gt;scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'))
 <span class="o">}</span>
 </pre>
 <pre class="highlight php">/**
- * Edit scheduled transaction with ID
+ * Edit scheduled payment with ID
  * '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to reflect amount 16
  */
 print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', ['amount' =&gt; 16]));
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
- * Edit scheduled transaction with ID '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' 
+ * Edit scheduled payment with ID '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' 
  * to specify a new amount of 16
  */</span>
 <span class="nx">Dwolla</span><span class="p">.</span><span class="nx">editScheduled</span><span class="p">(</span><span class="s1">'08f9b638-0f8e-4e00-abe5-41c8fd24fbe8'</span><span class="p">,</span> <span class="nx">cfg</span><span class="p">.</span><span class="nx">pin</span><span class="p">,</span> <span class="p">{</span><span class="na">amount</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span> <span class="p">{</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
@@ -4548,11 +4550,11 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
-<pre class="highlight ruby"><span class="c1">#   Edit scheduled transaction with ID </span>
+<pre class="highlight ruby"><span class="c1">#   Edit scheduled payment with ID </span>
 <span class="c1">#   '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to have new amount 16</span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">edit_scheduled_by_id</span><span class="p">(</span><span class="s1">'08f9b638-0f8e-4e00-abe5-41c8fd24fbe8'</span><span class="p">,</span> <span class="p">{</span><span class="ss">:amount</span> <span class="o">=&gt;</span> <span class="mi">16</span><span class="p">})</span>
 </pre>
-<pre class="highlight python"><span class="c"># Edit scheduled transaction with ID</span>
+<pre class="highlight python"><span class="c"># Edit scheduled payment with ID</span>
 <span class="c"># '08f9b638-0f8e-4e00-abe5-41c8fd24fbe8' to reflect amount 16</span>
 <span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">editscheduledbyid</span><span class="p">(</span><span class="s">'08f9b638-0f8e-4e00-abe5-41c8fd24fbe8'</span><span class="p">,</span> <span class="p">{</span><span class="s">'amount'</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
 </pre>
@@ -4584,9 +4586,9 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
 <span class="o">}</span>
 </pre>
 
-<p>Edit an existing scheduled transaction. Partial editing is allowed: just supply the field(s) to change, along with the sender&rsquo;s PIN.  </p>
+<p>Edit an existing scheduled payment. Partial editing is allowed: just supply the field(s) to change, along with the sender&rsquo;s PIN.  </p>
 
-<p>Note: the <code class="prettyprint">recurrence</code> field <em>cannot</em> be modified.  If you need to change the recurrence of a scheduled transaction, delete it and create a new one.</p>
+<p>Note: the <code class="prettyprint">recurrence</code> field <em>cannot</em> be modified.  If you need to change the recurrence of a scheduled payment, delete it and create a new one.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -4607,7 +4609,7 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
 <tr>
 <td>amount</td>
 <td>yes</td>
-<td>Amount of transaction.  Must be within the sender&rsquo;s account transaction limit.</td>
+<td>Amount of payment.  Must be within the sender&rsquo;s account transaction limit.</td>
 </tr>
 <tr>
 <td>destinationId</td>
@@ -4627,7 +4629,7 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
 <tr>
 <td>scheduleDate</td>
 <td>yes</td>
-<td>Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.</td>
+<td>Date to initiate payment.  If the payment is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.</td>
 </tr>
 <tr>
 <td>assumeCosts</td>
@@ -4652,37 +4654,37 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
 <td>Unable to edit a transaction that has alredy been processed</td>
 </tr>
 <tr>
-<td>There was an error updating the scheduled transaction.</td>
-<td>Error occured when updating the scheduled transaction</td>
+<td>There was an error updating the scheduled payment.</td>
+<td>Error occured when updating the scheduled payment</td>
 </tr>
 </tbody></table>
-<h2 id='delete-scheduled-transaction'>Delete Scheduled Transaction</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/d856d2ec-4098-4b3b-b20f-b2561ec85871?pin<span class="o">={</span>PIN<span class="o">}</span>
+<h2 id='delete-scheduled-payment'>Delete Scheduled Payment</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/d856d2ec-4098-4b3b-b20f-b2561ec85871?pin<span class="o">={</span>PIN<span class="o">}</span>
 </pre>
 <pre class="highlight php">/**
- * Delete scheduled transaction with ID
+ * Delete scheduled payment with ID
  * 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
  */
 print_r($Transactions-&gt;deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85871'));
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
- * Delete scheduled transaction with ID 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
+ * Delete scheduled payment with ID 'd856d2ec-4098-4b3b-b20f-b2561ec85871'
  */</span>
 <span class="nx">Dwolla</span><span class="p">.</span><span class="nx">deleteScheduledById</span><span class="p">(</span><span class="s1">'d856d2ec-4098-4b3b-b20f-b2561ec85871'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
-<pre class="highlight ruby"><span class="c1">#   Delete the scheduled transaction with ID </span>
+<pre class="highlight ruby"><span class="c1">#   Delete the scheduled payment with ID </span>
 <span class="c1">#   'd856d2ec-4098-4b3b-b20f-b2561ec85871' </span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">delete_scheduled_by_id</span><span class="p">(</span><span class="s1">'d856d2ec-4098-4b3b-b20f-b2561ec85871'</span><span class="p">,</span> <span class="p">{</span><span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
 </pre>
-<pre class="highlight python"><span class="c"># Delete scheduled transaction with ID</span>
+<pre class="highlight python"><span class="c"># Delete scheduled payment with ID</span>
 <span class="c"># 'd856d2ec-4098-4b3b-b20f-b2561ec85871'</span>
 <span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">deletescheduledbyid</span><span class="p">(</span><span class="s">'d856d2ec-4098-4b3b-b20f-b2561ec85871'</span><span class="p">)</span>
 </pre>
 
 <blockquote>
-<p>If successful, response contains the ID of the deleted scheduled transaction:</p>
+<p>If successful, response contains the ID of the deleted scheduled payment:</p>
 </blockquote>
 <pre class="highlight shell"><span class="o">{</span>
     <span class="s2">"Success"</span>: <span class="nb">true</span>,
@@ -4691,7 +4693,7 @@ print_r($Transactions-&gt;deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85
 <span class="o">}</span>
 </pre>
 
-<p>Delete a <em>pending</em> scheduled transaction created by your application.  Status must be <code class="prettyprint">scheduled</code>.  Cannot delete a <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled transaction.</p>
+<p>Delete a <em>pending</em> scheduled payment created by your application.  Status must be <code class="prettyprint">scheduled</code>.  Cannot delete a <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled payment.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -4717,37 +4719,37 @@ print_r($Transactions-&gt;deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85
 </thead><tbody>
 <tr>
 <td>Scheduled transaction must not have been processed to delete.</td>
-<td>The scheduled transaction must be processed before deleting</td>
+<td>The scheduled payment must be deleted before the <code class="prettyprint">ScheduleDate</code></td>
 </tr>
 <tr>
-<td>There was an error deleting the scheduled transaction.</td>
-<td>There was an error deleting the scheduled transaction</td>
+<td>There was an error deleting the scheduled payment.</td>
+<td>Generic error.  If you&rsquo;re not sure why this happened, contact us.</td>
 </tr>
 </tbody></table>
-<h2 id='delete-all-scheduled-transactions'>Delete all Scheduled Transactions</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled?pin<span class="o">={</span>PIN<span class="o">}</span>
+<h2 id='delete-all-scheduled-payments'>Delete all Scheduled Payments</h2><pre class="highlight shell">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled?pin<span class="o">={</span>PIN<span class="o">}</span>
 </pre>
 <pre class="highlight php">/**
- * Delete all scheduled transactions
+ * Delete all scheduled payments
  */
 print_r($Transactions-&gt;deleteAllScheduled());
 </pre>
 <pre class="highlight javascript"><span class="cm">/**
- * Delete all scheduled transactions.
+ * Delete all scheduled payments.
  */</span>
 <span class="nx">Dwolla</span><span class="p">.</span><span class="nx">deleteAllScheduled</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);}</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
-<pre class="highlight ruby"><span class="c1">#   Delete all scheduled transactions </span>
+<pre class="highlight ruby"><span class="c1">#   Delete all scheduled payments </span>
 <span class="n">pp</span> <span class="no">Dwolla</span><span class="o">::</span><span class="no">Transactions</span><span class="p">.</span><span class="nf">delete_all_scheduled</span><span class="p">({</span><span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="vi">@pin</span><span class="p">})</span>
 </pre>
-<pre class="highlight python"><span class="c"># Delete all scheduled transactions</span>
+<pre class="highlight python"><span class="c"># Delete all scheduled payments</span>
 <span class="k">print</span> <span class="n">transactions</span><span class="o">.</span><span class="n">deleteallscheduled</span><span class="p">()</span>
 </pre>
 
 <blockquote>
-<p>If successful, response contains JSON array of IDs of scheduled transactions deleted:</p>
+<p>If successful, response contains JSON array of IDs of scheduled payments deleted:</p>
 </blockquote>
 <pre class="highlight shell"><span class="o">{</span>
   <span class="s2">"Success"</span>: <span class="nb">true</span>,
@@ -4760,7 +4762,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <span class="o">}</span>
 </pre>
 
-<p>Delete <strong>all</strong> of an authorized user&rsquo;s <em>pending</em> scheduled transactions created by your application.  Will not delete any <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled transactions.</p>
+<p>Delete <strong>all</strong> of an authorized user&rsquo;s <em>pending</em> scheduled payments created by your application.  Will not delete any <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled payments.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code class="prettyprint">Scheduled</code> scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
@@ -8325,7 +8327,7 @@ In an effort to remain transparent, here's a list of bugs we know about.
 </tr>
 <tr>
 <td>4/28/2015</td>
-<td>Add Scheduled Recurring documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.</td>
+<td>Add Scheduled Payments documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.</td>
 </tr>
 </tbody></table>
 
