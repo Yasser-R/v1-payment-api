@@ -736,29 +736,53 @@ Remember to url-encode all querystring parameters!
 </pre>
 
 <blockquote>
-<p>Response: Full user with token that contains Send, Scheduled, and Requests.</p>
-</blockquote>
-<pre class="highlight shell"><span class="o">{</span>
-    <span class="s2">"Success"</span>: <span class="nb">true</span>,
-    <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
-    <span class="s2">"Response"</span>: <span class="o">{}</span>,
-    <span class="s2">"_links"</span>: <span class="o">{</span>
-        <span class="s2">"self"</span>: <span class="o">{</span>
-            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/catalog"</span>
-        <span class="o">}</span>,
-        <span class="s2">"send"</span>: <span class="o">{</span>
-            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/transactions/send"</span>
-        <span class="o">}</span>,
-        <span class="s2">"createScheduled"</span>: <span class="o">{</span>
-            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/transactions/scheduled"</span>
-        <span class="o">}</span>,
-        <span class="s2">"fulfill"</span>: <span class="o">{</span>
-            <span class="s2">"href"</span>: <span class="s2">"http://uat.dwolla.com/oauth/rest/requests/{request_id}/fulfill"</span>,
-            <span class="s2">"templated"</span>: <span class="nb">true</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre>
+<p>Response: Full user with token that contains Send, Scheduled, and Requests.
+<code class="prettyprint">php
+/**
+ * Retrieve the catalog of endpoints that 
+ * are available to the OAuth token which you just 
+ * retrieved.
+ */
+print_r($OAuth-&gt;catalog(&quot;Your Access Token&quot;));
+</code>
+&ldquo;`ruby</p>
+<h1 id='retrieve-the-catalog-of-endpoints-that-are'>Retrieve the catalog of endpoints that are</h1><h1 id='available-to-the-oauth-token-passed-in'>available to the OAuth token passed in</h1>
+<p>[ Dwolla::OAuth.catalog(&quot;Another access token&rdquo;)
+<code class="prettyprint">
+</code>python</p>
+<h1 id='retrieve-the-catalog-of-endpoints-that'>Retrieve the catalog of endpoints that</h1><h1 id='are-available-to-the-current-oauth-token'>are available to the current OAuth token!</h1></blockquote>
+
+<p>print(oauth.catalog())
+<code class="prettyprint">
+</code>js
+// Get links to the endpoints elligible for use with
+// the passed OAuth token
+Dwolla.catalog(&ldquo;Access token here!&rdquo;, function(error, links) {
+    console.log(links);
+});
+<code class="prettyprint">
+</code>shell
+{
+    &ldquo;Success&rdquo;: true,
+    &ldquo;Message&rdquo;: &ldquo;Success&rdquo;,
+    &ldquo;Response&rdquo;: {},
+    &ldquo;<em>links&rdquo;: {
+        &ldquo;self&rdquo;: {
+            &ldquo;href&rdquo;: &ldquo;http://uat.dwolla.com/oauth/rest/catalog&rdquo;
+        },
+        &ldquo;send&rdquo;: {
+            &ldquo;href&rdquo;: &ldquo;http://uat.dwolla.com/oauth/rest/transactions/send&rdquo;
+        },
+        &ldquo;createScheduled&rdquo;: {
+            &ldquo;href&rdquo;: &ldquo;http://uat.dwolla.com/oauth/rest/transactions/scheduled&rdquo;
+        },
+        &ldquo;fulfill&rdquo;: {
+            &ldquo;href&rdquo;: &ldquo;http://uat.dwolla.com/oauth/rest/requests/{request</em>id}/fulfill&rdquo;,
+            &ldquo;templated&rdquo;: true
+        }
+    }
+}
+&ldquo;`</p>
 
 <blockquote>
 <p>Response: Direct user with token that contains Send, Scheduled, and Requests.</p>
@@ -789,7 +813,7 @@ Remember to url-encode all querystring parameters!
 
 <p>Currently, it only includes links to the Send, Create Scheduled, and Fulfill Request endpoints.  In the future, it will be extended to include all endpoints available to a user.</p>
 
-<p>Use this endpoint to determine whether or not the user needs to provide a PIN in order to use the Send, Create Scheduled, or Fulfill Request endpoints.  Since Direct users do not have a PIN, for instance, the <code class="prettyprint">sendWithoutPin</code> key will be included in <code class="prettyprint">_links</code> instead of the regular <code class="prettyprint">send</code> which you would see for Full users.  The URI remains the same in either case, but for any link with &ldquo;WithoutPin&rdquo; appended to it, you will not need to ask the user for their PIN and may omit the <code class="prettyprint">pin</code> parameter when calling the endpoint.</p>
+<p>Use this endpoint to determine whether or not the user needs to provide a PIN in order to use the Send, Create Scheduled, or Fulfill Request endpoints.  Since Direct users do not have a PIN, for instance, the <code class="prettyprint">sendWithoutPin</code> key will be included in <code class="prettyprint">_links</code> instead of the regular <code class="prettyprint">send</code> which you would see for Full users.  The URI remains the same in either case, but for any link with &quot;WithoutPin&rdquo; appended to it, you will not need to ask the user for their PIN and may omit the <code class="prettyprint">pin</code> parameter when calling the endpoint.</p>
 
 <p><aside class="reminder">This endpoint <a href="#authentication">requires</a> an OAuth access token but does not require a particular scope.</aside></p>
 <h3 id='http-request'>HTTP Request</h3>
