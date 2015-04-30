@@ -10,6 +10,7 @@
 ```
 
 > Response: Full user with token that contains Send, Scheduled, and Requests.
+
 ```php
 /**
  * Retrieve the catalog of endpoints that 
