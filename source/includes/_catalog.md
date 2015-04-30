@@ -10,7 +10,32 @@
 ```
 
 > Response: Full user with token that contains Send, Scheduled, and Requests.
+```php
+/**
+ * Retrieve the catalog of endpoints that 
+ * are available to the OAuth token which you just 
+ * retrieved.
+ */
+print_r($OAuth->catalog("Your Access Token"));
+```
+```ruby
+# Retrieve the catalog of endpoints that are 
+# available to the OAuth token passed in
+[ Dwolla::OAuth.catalog("Another access token")
+```
+```python
+# Retrieve the catalog of endpoints that
+# are available to the current OAuth token!
 
+print(oauth.catalog())
+```
+```js
+// Get links to the endpoints elligible for use with
+// the passed OAuth token
+Dwolla.catalog("Access token here!", function(error, links) {
+    console.log(links);
+});
+```
 ```shell
 {
     "Success": true,
