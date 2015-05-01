@@ -734,10 +734,6 @@ Remember to url-encode all querystring parameters!
 ====================\\|//====================
                     `---`  
 </pre>
-
-<blockquote>
-<p>Response: Full user with token that contains Send, Scheduled, and Requests.</p>
-</blockquote>
 <pre class="highlight php">/**
  * Retrieve the catalog of endpoints that 
  * are available to the OAuth token which you just 
@@ -760,6 +756,10 @@ print_r($OAuth-&gt;catalog("Your Access Token"));
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">links</span><span class="p">);</span>
 <span class="p">});</span>
 </pre>
+
+<blockquote>
+<p>Response: Full user with token that contains Send, Scheduled, and Requests.</p>
+</blockquote>
 <pre class="highlight shell"><span class="o">{</span>
     <span class="s2">"Success"</span>: <span class="nb">true</span>,
     <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
@@ -4175,16 +4175,21 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tr>
 </tbody></table>
 <h2 id='create-scheduled-payment'>Create Scheduled Payment</h2><pre class="highlight shell"><span class="o">{</span>
-  <span class="s2">"pin"</span>: <span class="s2">"9999"</span>,
-  <span class="s2">"destinationId"</span>: <span class="s2">"gordon@dwolla.com"</span>,
-  <span class="s2">"destinationType"</span>: <span class="s2">"Email"</span>,
-  <span class="s2">"amount"</span>: 300.00,
-  <span class="s2">"scheduleDate"</span>: <span class="s2">"2015-09-13"</span>,
-  <span class="s2">"assumeCosts"</span>: <span class="nb">true</span>,
-  <span class="s2">"fundsSource"</span>: <span class="s2">"5da016f7769bcc1de9998a30d194d5a7"</span>,
-  <span class="s2">"notes"</span>: <span class="s2">"here's this month's rent!"</span>,
-  <span class="s2">"metadata"</span>: <span class="o">{</span>
-    <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
+  <span class="s2">"amount"</span>:10,
+  <span class="s2">"assumeCosts"</span>:true,
+  <span class="s2">"destinationId"</span>:<span class="s2">"812-114-7461"</span>,
+  <span class="s2">"destinationType"</span>:<span class="s2">"Dwolla"</span>,
+  <span class="s2">"fundsSource"</span>:<span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
+  <span class="s2">"notes"</span>:<span class="s2">"Weekly recurring membership"</span>,
+  <span class="s2">"pin"</span>:<span class="s2">"7890"</span>,
+  <span class="s2">"scheduleDate"</span>:<span class="s2">"2015-05-04"</span>,
+  <span class="s2">"metadata"</span>:<span class="o">{</span>
+    <span class="s2">"foo"</span>: <span class="s2">"bar"</span>,
+    <span class="s2">"bar"</span>: <span class="s2">"baz"</span>
+  <span class="o">}</span>,
+  <span class="s2">"recurrence"</span>:<span class="o">{</span>
+    <span class="s2">"frequency"</span>:<span class="s2">"weekly"</span>,
+    <span class="s2">"onDays"</span>:<span class="s2">"2"</span>
   <span class="o">}</span>
 <span class="o">}</span>
 </pre>
@@ -4226,25 +4231,32 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
     <span class="s2">"Success"</span>: <span class="nb">true</span>,
     <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
     <span class="s2">"Response"</span>: <span class="o">{</span>
-        <span class="s2">"Id"</span>: <span class="s2">"3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef"</span>,
-        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2015-09-13"</span>,
-        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-09-18"</span>,
-        <span class="s2">"TransactionId"</span>: null,
-        <span class="s2">"Amount"</span>: 300.00,
-        <span class="s2">"FundingSource"</span>: <span class="s2">"5da016f7769bcc1de9998a30d194d5a7"</span>,
-        <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
+        <span class="s2">"Id"</span>: <span class="s2">"876a72fb-e817-4bec-a781-a97b1c41091e"</span>,
+        <span class="s2">"ScheduledDate"</span>: <span class="s2">"2015-05-04"</span>,
+        <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-05-07"</span>,
+        <span class="s2">"Amount"</span>: 10,
+        <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
+        <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
         <span class="s2">"Destination"</span>: <span class="o">{</span>
-            <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
-            <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
+            <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
+            <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
             <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
-            <span class="s2">"Image"</span>: <span class="s2">"http://www.dwolla.com/avatars/812-111-1111"</span>
+            <span class="s2">"Image"</span>: <span class="s2">"https://dwolla-avatars-uat.s3.amazonaws.com/812-114-7461/dec1fee7"</span>
         <span class="o">}</span>,
-        <span class="s2">"Notes"</span>: <span class="s2">"here's this month's rent!"</span>,
+        <span class="s2">"Notes"</span>: <span class="s2">"Weekly recurring membership"</span>,
         <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
-        <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-12T20:37:37Z"</span>,
+        <span class="s2">"CreatedDate"</span>: <span class="s2">"2015-05-01T19:51:30Z"</span>,
         <span class="s2">"Metadata"</span>: <span class="o">{</span>
-          <span class="s2">"foo"</span>: <span class="s2">"bar"</span>
-      <span class="o">}</span>
+            <span class="s2">"foo"</span>: <span class="s2">"bar"</span>,
+            <span class="s2">"bar"</span>: <span class="s2">"baz"</span>
+        <span class="o">}</span>,
+        <span class="s2">"Recurrence"</span>: <span class="o">{</span>
+            <span class="s2">"Frequency"</span>: <span class="s2">"Weekly"</span>,
+            <span class="s2">"RepeatEvery"</span>: 1,
+            <span class="s2">"OnDays"</span>: <span class="s2">"2"</span>,
+            <span class="s2">"NextRunDate"</span>: <span class="s2">"2015-05-04"</span>,
+            <span class="s2">"Status"</span>: <span class="s2">"Enabled"</span>
+        <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre>
@@ -4402,46 +4414,75 @@ print_r($Transactions-&gt;scheduled());
     <span class="s2">"Success"</span>: <span class="nb">true</span>,
     <span class="s2">"Message"</span>: <span class="s2">"Success"</span>,
     <span class="s2">"Response"</span>: <span class="o">{</span>
-        <span class="s2">"Total"</span>: 2,
-        <span class="s2">"Count"</span>: 2,
-        <span class="s2">"Results"</span>: <span class="o">[</span>
-            <span class="o">{</span>
-                <span class="s2">"Id"</span>: <span class="s2">"59be7670-343b-46a1-bbb0-7070c2ba1806"</span>,
-                <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-10"</span>,
-                <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-15"</span>,
-                <span class="s2">"TransactionId"</span>: 329870,
-                <span class="s2">"Amount"</span>: 12,
-                <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
-                <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
-                <span class="s2">"Destination"</span>: <span class="o">{</span>
-                    <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
-                    <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
-                    <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
-                    <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
-                <span class="o">}</span>,
-                <span class="s2">"Notes"</span>: <span class="s2">"scheduled 1"</span>,
-                <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
-                <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-09T22:00:03Z"</span>
+        <span class="s2">"Total"</span>: 3,
+        <span class="s2">"Count"</span>: 3,
+        <span class="s2">"Results"</span>: <span class="o">[{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"62dc6dcb-cc88-476f-a5c9-ce20e4d9d5af"</span>,
+            <span class="s2">"ScheduledDate"</span>: <span class="s2">"2015-05-04"</span>,
+            <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-05-07"</span>,
+            <span class="s2">"Amount"</span>: 5,
+            <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
+            <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+            <span class="s2">"Destination"</span>: <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
+                <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
+                <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                <span class="s2">"Image"</span>: <span class="s2">"https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"</span>
             <span class="o">}</span>,
-            <span class="o">{</span>
-                <span class="s2">"Id"</span>: <span class="s2">"1d7c80c6-8dcd-4219-8ddc-440909eccc0d"</span>,
-                <span class="s2">"ScheduledDate"</span>: <span class="s2">"2014-09-10"</span>,
-                <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2014-09-15"</span>,
-                <span class="s2">"TransactionId"</span>: 329867,
-                <span class="s2">"Amount"</span>: 1,
-                <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
-                <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
-                <span class="s2">"Destination"</span>: <span class="o">{</span>
-                    <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
-                    <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
-                    <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
-                    <span class="s2">"Image"</span>: <span class="s2">"http://uat.dwolla.com/avatars/812-111-1111"</span>
-                <span class="o">}</span>,
-                <span class="s2">"Notes"</span>: <span class="s2">"This is a scheduled"</span>,
-                <span class="s2">"Status"</span>: <span class="s2">"processed"</span>,
-                <span class="s2">"CreatedDate"</span>: <span class="s2">"2014-09-09T21:58:14Z"</span>
+            <span class="s2">"Notes"</span>: <span class="s2">"Daily recurring membership"</span>,
+            <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+            <span class="s2">"CreatedDate"</span>: <span class="s2">"2015-05-01T19:35:04Z"</span>,
+            <span class="s2">"Recurrence"</span>: <span class="o">{</span>
+                <span class="s2">"Frequency"</span>: <span class="s2">"Weekly"</span>,
+                <span class="s2">"RepeatEvery"</span>: 1,
+                <span class="s2">"OnDays"</span>: <span class="s2">"1,2,3,4,5,6,7"</span>,
+                <span class="s2">"NextRunDate"</span>: <span class="s2">"2015-05-04"</span>,
+                <span class="s2">"Status"</span>: <span class="s2">"Enabled"</span>
             <span class="o">}</span>
-        <span class="o">]</span>
+        <span class="o">}</span>, <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"c9cb400b-bb58-4d63-b000-662e93d22119"</span>,
+            <span class="s2">"ScheduledDate"</span>: <span class="s2">"2015-05-04"</span>,
+            <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-05-07"</span>,
+            <span class="s2">"Amount"</span>: 10,
+            <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
+            <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+            <span class="s2">"Destination"</span>: <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
+                <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
+                <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                <span class="s2">"Image"</span>: <span class="s2">"https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"</span>
+            <span class="o">}</span>,
+            <span class="s2">"Notes"</span>: <span class="s2">"Weekly recurring membership"</span>,
+            <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+            <span class="s2">"CreatedDate"</span>: <span class="s2">"2015-05-01T19:30:17Z"</span>,
+            <span class="s2">"Recurrence"</span>: <span class="o">{</span>
+                <span class="s2">"Frequency"</span>: <span class="s2">"Weekly"</span>,
+                <span class="s2">"RepeatEvery"</span>: 1,
+                <span class="s2">"OnDays"</span>: <span class="s2">"2"</span>,
+                <span class="s2">"NextRunDate"</span>: <span class="s2">"2015-05-04"</span>,
+                <span class="s2">"Status"</span>: <span class="s2">"Enabled"</span>
+            <span class="o">}</span>
+        <span class="o">}</span>, <span class="o">{</span>
+            <span class="s2">"Id"</span>: <span class="s2">"35921635-aeb4-4c83-b730-6b61b1749127"</span>,
+            <span class="s2">"ScheduledDate"</span>: <span class="s2">"2015-06-01"</span>,
+            <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-06-04"</span>,
+            <span class="s2">"Amount"</span>: 900,
+            <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
+            <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
+            <span class="s2">"Destination"</span>: <span class="o">{</span>
+                <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
+                <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
+                <span class="s2">"Type"</span>: <span class="s2">"Dwolla"</span>,
+                <span class="s2">"Image"</span>: <span class="s2">"https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"</span>
+            <span class="o">}</span>,
+            <span class="s2">"Notes"</span>: <span class="s2">"Rent payment"</span>,
+            <span class="s2">"Status"</span>: <span class="s2">"scheduled"</span>,
+            <span class="s2">"CreatedDate"</span>: <span class="s2">"2015-05-01T19:57:50Z"</span>,
+            <span class="s2">"Metadata"</span>: <span class="o">{</span>
+                <span class="s2">"foo"</span>: <span class="s2">"bar"</span>,
+                <span class="s2">"bar"</span>: <span class="s2">"baz"</span>
+            <span class="o">}</span>
+        <span class="o">}]</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre>
