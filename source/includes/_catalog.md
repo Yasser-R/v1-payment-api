@@ -9,7 +9,6 @@
                     `---`  
 ```
 
-> Response: Full user with token that contains Send, Scheduled, and Requests.
 
 ```php
 /**
@@ -37,6 +36,8 @@ Dwolla.catalog("Access token here!", function(error, links) {
     console.log(links);
 });
 ```
+> Response: Full user with token that contains Send, Scheduled, and Requests.
+
 ```shell
 {
     "Success": true,

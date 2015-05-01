@@ -68,16 +68,21 @@ Metadata | JSON object with max 10 key-value pairs. Keys and values are strings 
 
 ```shell
 {
-  "pin": "9999",
-  "destinationId": "gordon@dwolla.com",
-  "destinationType": "Email",
-  "amount": 300.00,
-  "scheduleDate": "2015-09-13",
-  "assumeCosts": true,
-  "fundsSource": "5da016f7769bcc1de9998a30d194d5a7",
-  "notes": "here's this month's rent!",
-  "metadata": {
-    "foo": "bar"
+  "amount":10,
+  "assumeCosts":true,
+  "destinationId":"812-114-7461",
+  "destinationType":"Dwolla",
+  "fundsSource":"33be0db8a99c1a03e01e7c6dd54dff26",
+  "notes":"Weekly recurring membership",
+  "pin":"7890",
+  "scheduleDate":"2015-05-04",
+  "metadata":{
+    "foo": "bar",
+    "bar": "baz"
+  },
+  "recurrence":{
+    "frequency":"weekly",
+    "onDays":"2"
   }
 }
 ```
@@ -123,25 +128,32 @@ print(transactions.schedule('812-111-1111', 300, '2018-01-01', '5da016f7769bcc1d
     "Success": true,
     "Message": "Success",
     "Response": {
-        "Id": "3bfaf7fb-b5e9-4a6e-ab09-1ef30d30bbef",
-        "ScheduledDate": "2015-09-13",
-        "ExpectedClearingDate": "2015-09-18",
-        "TransactionId": null,
-        "Amount": 300.00,
-        "FundingSource": "5da016f7769bcc1de9998a30d194d5a7",
-        "AssumeCosts": false,
+        "Id": "876a72fb-e817-4bec-a781-a97b1c41091e",
+        "ScheduledDate": "2015-05-04",
+        "ExpectedClearingDate": "2015-05-07",
+        "Amount": 10,
+        "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
+        "AssumeCosts": true,
         "Destination": {
-            "Id": "812-111-1111",
-            "Name": "Jane Doe",
+            "Id": "812-114-7461",
+            "Name": "WidgetCorp",
             "Type": "Dwolla",
-            "Image": "http://www.dwolla.com/avatars/812-111-1111"
+            "Image": "https://dwolla-avatars-uat.s3.amazonaws.com/812-114-7461/dec1fee7"
         },
-        "Notes": "here's this month's rent!",
+        "Notes": "Weekly recurring membership",
         "Status": "scheduled",
-        "CreatedDate": "2014-09-12T20:37:37Z",
+        "CreatedDate": "2015-05-01T19:51:30Z",
         "Metadata": {
-          "foo": "bar"
-      }
+            "foo": "bar",
+            "bar": "baz"
+        },
+        "Recurrence": {
+            "Frequency": "Weekly",
+            "RepeatEvery": 1,
+            "OnDays": "2",
+            "NextRunDate": "2015-05-04",
+            "Status": "Enabled"
+        }
     }
 }
 ```
@@ -215,46 +227,75 @@ print(transactions.scheduled())
     "Success": true,
     "Message": "Success",
     "Response": {
-        "Total": 2,
-        "Count": 2,
-        "Results": [
-            {
-                "Id": "59be7670-343b-46a1-bbb0-7070c2ba1806",
-                "ScheduledDate": "2014-09-10",
-                "ExpectedClearingDate": "2014-09-15",
-                "TransactionId": 329870,
-                "Amount": 12,
-                "FundingSource": "3eacc3e3f6da404aa5735911219f277",
-                "AssumeCosts": true,
-                "Destination": {
-                    "Id": "812-111-1111",
-                    "Name": "Jane Doe",
-                    "Type": "Dwolla",
-                    "Image": "http://uat.dwolla.com/avatars/812-111-1111"
-                },
-                "Notes": "scheduled 1",
-                "Status": "processed",
-                "CreatedDate": "2014-09-09T22:00:03Z"
+        "Total": 3,
+        "Count": 3,
+        "Results": [{
+            "Id": "62dc6dcb-cc88-476f-a5c9-ce20e4d9d5af",
+            "ScheduledDate": "2015-05-04",
+            "ExpectedClearingDate": "2015-05-07",
+            "Amount": 5,
+            "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
+            "AssumeCosts": true,
+            "Destination": {
+                "Id": "812-114-7461",
+                "Name": "WidgetCorp",
+                "Type": "Dwolla",
+                "Image": "https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"
             },
-            {
-                "Id": "1d7c80c6-8dcd-4219-8ddc-440909eccc0d",
-                "ScheduledDate": "2014-09-10",
-                "ExpectedClearingDate": "2014-09-15",
-                "TransactionId": 329867,
-                "Amount": 1,
-                "FundingSource": "3eacc3e3f6da404aa5735911219f277",
-                "AssumeCosts": false,
-                "Destination": {
-                    "Id": "812-111-1111",
-                    "Name": "Jane Doe",
-                    "Type": "Dwolla",
-                    "Image": "http://uat.dwolla.com/avatars/812-111-1111"
-                },
-                "Notes": "This is a scheduled",
-                "Status": "processed",
-                "CreatedDate": "2014-09-09T21:58:14Z"
+            "Notes": "Daily recurring membership",
+            "Status": "scheduled",
+            "CreatedDate": "2015-05-01T19:35:04Z",
+            "Recurrence": {
+                "Frequency": "Weekly",
+                "RepeatEvery": 1,
+                "OnDays": "1,2,3,4,5,6,7",
+                "NextRunDate": "2015-05-04",
+                "Status": "Enabled"
             }
-        ]
+        }, {
+            "Id": "c9cb400b-bb58-4d63-b000-662e93d22119",
+            "ScheduledDate": "2015-05-04",
+            "ExpectedClearingDate": "2015-05-07",
+            "Amount": 10,
+            "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
+            "AssumeCosts": true,
+            "Destination": {
+                "Id": "812-114-7461",
+                "Name": "WidgetCorp",
+                "Type": "Dwolla",
+                "Image": "https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"
+            },
+            "Notes": "Weekly recurring membership",
+            "Status": "scheduled",
+            "CreatedDate": "2015-05-01T19:30:17Z",
+            "Recurrence": {
+                "Frequency": "Weekly",
+                "RepeatEvery": 1,
+                "OnDays": "2",
+                "NextRunDate": "2015-05-04",
+                "Status": "Enabled"
+            }
+        }, {
+            "Id": "35921635-aeb4-4c83-b730-6b61b1749127",
+            "ScheduledDate": "2015-06-01",
+            "ExpectedClearingDate": "2015-06-04",
+            "Amount": 900,
+            "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
+            "AssumeCosts": true,
+            "Destination": {
+                "Id": "812-114-7461",
+                "Name": "WidgetCorp",
+                "Type": "Dwolla",
+                "Image": "https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"
+            },
+            "Notes": "Rent payment",
+            "Status": "scheduled",
+            "CreatedDate": "2015-05-01T19:57:50Z",
+            "Metadata": {
+                "foo": "bar",
+                "bar": "baz"
+            }
+        }]
     }
 }
 ```
