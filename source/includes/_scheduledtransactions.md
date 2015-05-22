@@ -138,7 +138,7 @@ print(transactions.schedule('812-111-1111', 300, '2018-01-01', '5da016f7769bcc1d
             "Id": "812-114-7461",
             "Name": "WidgetCorp",
             "Type": "Dwolla",
-            "Image": "https://dwolla-avatars-uat.s3.amazonaws.com/812-114-7461/dec1fee7"
+            "Image": "https://uat.dwolla.com/avatars/812-114-7461/dec1fee7"
         },
         "Notes": "Weekly recurring membership",
         "Status": "scheduled",
