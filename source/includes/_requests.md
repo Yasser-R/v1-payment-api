@@ -56,7 +56,6 @@
     },
     "CancelledBy": null,
     "DateCancelled": "",
-    "SenderAssumeFee": false,
     "SenderAssumeAdditionalFees": false,
     "AdditionalFees": [],
     "Metadata": null
@@ -91,7 +90,7 @@ Status | Status of Money Request.  [See statuses](#money-request-statuses).
 Transaction | If fulfilled, a JSON object representing the resulting Transaction.  Otherwise, `null`.
 CancelledBy | If cancelled, a JSON object representing the user who cancelled the request.  Otherwise, `null`.
 DateCancelled | If cancelled, the date and time when the request was cancelled.  Otherwise, empty string: `""`.
-SenderAssumeFee | Boolean.  `true` if sender will assume the $0.25 transaction fee if applicable.
+SenderAssumeFee | Boolean.  Deprecated
 SenderAssumeAdditionalFees | Boolean.  `true` if sender will assume all facilitator fees.
 AdditionalFees | Any additional facilitator fees attached to the request.
 Metadata | An optional [metadata](#metadata) object.
@@ -173,7 +172,7 @@ Send a Money Request from the authorized user to a destination Dwolla user, emai
 | sourceType | yes | Type of source user (either `Dwolla`, `Email` or `Phone`).  Defaults to `Dwolla`.|
 | facilitatorAmount | yes | Amount of the facilitator feeto override. Only applicable if the facilitator fee feature is enabled for your API application. If set to 0, facilitator fee is disabled for transaction. Cannot exceed 50% of the `amount`. 
 | notes | yes | Note to attach to request (250 character limit).
-| senderAssumeCosts | yes | Set to `true` if the fulfilling user is to assume the Dwolla fee. Defaults to `false`; does not include facilitator fees.
+| senderAssumeCosts | yes | Deprecated
 | senderAssumeAdditionalFees | yes | Set to `true` if the fulfilling user is to assume all facilitator fees. Defaults to `false`; does not include the Dwolla transaction fee.
 | additionalFees             | yes | Array of additional facilitator fee objects.  `[{"destinationId": "", "amount": 0.01}, ...]` |
 | metadata                   | yes | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)  |
@@ -259,7 +258,6 @@ array (
     'Transaction' => NULL,
     'CancelledBy' => NULL,
     'DateCancelled' => '',
-    'SenderAssumeFee' => false,
     'SenderAssumeAdditionalFees' => false,
     'AdditionalFees' =>
     array (
@@ -294,7 +292,6 @@ array (
             "Transaction": null,
             "CancelledBy": null,
             "DateCancelled": "",
-            "SenderAssumeFee": false,
             "SenderAssumeAdditionalFees": false,
             "AdditionalFees": [],
             "Metadata": null 
@@ -325,7 +322,6 @@ array (
     "Transaction"                => nil,
     "CancelledBy"                => nil,
     "DateCancelled"              => "",
-    "SenderAssumeFee"            => false,
     "SenderAssumeAdditionalFees" => false,
     "AdditionalFees"             => [],
     "Metadata"                   => nil
@@ -357,7 +353,6 @@ array (
     "Transaction": null,
     "CancelledBy": null,
     "DateCancelled": "",
-    "SenderAssumeFee": false,
     "SenderAssumeAdditionalFees": false,
     "AdditionalFees": [],
     "Metadata": null 
@@ -397,7 +392,6 @@ array (
             "Transaction": null,
             "CancelledBy": null,
             "DateCancelled": "",
-            "SenderAssumeFee": false,
             "SenderAssumeAdditionalFees": false,
             "AdditionalFees": [],
             "Metadata": null 
@@ -482,7 +476,6 @@ array (
   'Transaction' => NULL,
   'CancelledBy' => NULL,
   'DateCancelled' => '',
-  'SenderAssumeFee' => false,
   'SenderAssumeAdditionalFees' => false,
   'AdditionalFees' =>
   array (
@@ -513,7 +506,6 @@ array (
     "Transaction"                => nil,
     "CancelledBy"                => nil,
     "DateCancelled"              => "",
-    "SenderAssumeFee"            => false,
     "SenderAssumeAdditionalFees" => false,
     "AdditionalFees"             => [],
     "Metadata"                   => nil
@@ -541,7 +533,6 @@ array (
             "Transaction": null,
             "CancelledBy": null,
             "DateCancelled": "",
-            "SenderAssumeFee": false,
             "SenderAssumeAdditionalFees": false,
             "AdditionalFees": [],
             "Metadata": null 
@@ -569,7 +560,6 @@ array (
   "Transaction": null,
   "CancelledBy": null,
   "DateCancelled": "",
-  "SenderAssumeFee": false,
   "SenderAssumeAdditionalFees": false,
   "AdditionalFees": [],
   "Metadata": {
@@ -606,7 +596,6 @@ array (
         "Transaction": null,
         "CancelledBy": null,
         "DateCancelled": "",
-        "SenderAssumeFee": false,
         "SenderAssumeAdditionalFees": false,
         "AdditionalFees": [],
         "Metadata": {
@@ -806,7 +795,7 @@ Fulfill an authorized user's pending money request.  Request must have a status 
 | amount  | no | Amount to pay for request (must be greater than or equal to the request amount).
 | notes | yes | Note to attach to transaction (250 character limit). |
 | fundsSource | yes | ID of funding source to use for transaction (defaults to `Balance`). 
-| assumeCosts | yes | Set to `true` for the fulfilling user to assume the Dwolla fee, `false` for the destination user to assume the fee. |
+| assumeCosts | yes | Deprecated |
 | metadata | yes | An optional [metadata](#metadata) object.
 
 ### Errors

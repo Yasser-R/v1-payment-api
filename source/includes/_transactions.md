@@ -87,7 +87,6 @@ Similarly, when Alice looks up this payment, she will see a different transactio
 For a particular payment, additional transactions are created: 
 
  - if the payment is bank sourced, to fund the payment
- - if the payment is over $10 it will incur a $0.25 _Dwolla Fee_
  - if there is a facilitator fee
 
 Learn how to correlate the sender's and recipient's transaction ID with [this guide](https://developers.dwolla.com/dev/pages/guides/correlate_transactions).
@@ -100,7 +99,6 @@ money_sent | Payment sent by a user
 money_received | Payment received by a user
 deposit | Funds deposited from a Funding Source (e.g. bank account) to the user's Dwolla account balance
 withdrawal | Funds withdrawn from the user's Dwolla account balance to an associated Funding Source
-fee | Transaction fee of $0.25 or Facilitator Fee
 
 ### Transaction Statuses
 

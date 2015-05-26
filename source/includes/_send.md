@@ -98,8 +98,6 @@ Dwolla.send(pin, 'gordon@dwolla.com', 1.00, params, function(err, data) {
 
 Send money from an authorized user's account to any Dwolla account ID, phone number, or e-mail address. You can send money to any phone number or email address -- if the recipient doesn't yet have a Dwolla account, they'll be sent an SMS or email notifying them of the payment and prompting them to sign up to claim the funds.
 
-You can optionally have the sender cover the transaction fee, if applicable, by setting `assumeCosts` to `true`.  By default, the recipient of the payment covers the $0.25 fee.
-
 Facilitator fees allow you, as the application facilitating a payment, to take a cut up to 50% of the payment amount.  By default, the facilitator fee is sent to the application owner's account, but you can have them sent to other recipients by declaring additional facilitator fees in the optional `additionalFees` array.
   
 ### HTTP Request
@@ -115,8 +113,7 @@ Facilitator fees allow you, as the application facilitating a payment, to take a
 | amount               | no        | Amount of funds to transfer to destination user.                                                                                                                                                   |
 | destinationType      | yes       | Type of destination user. Defaults to 'Dwolla'. Possible values are `Dwolla`, `Email`, and `Phone`.                                                                                               |
 | fundsSource          | yes       | ID of [funding source](#funding-sources) to use for transaction (defaults to `Balance`). |
-| notes | yes | Note to attach to the resulting transaction.  Will be visible from dwolla.com dashboard to both sender and recipient.  Max 250 characters.
-| assumeCosts          | yes       | Set to `true` for the fulfilling user to assume the Dwolla fee, `false` for the destination user to assume the fee.                                                                                |
+| notes | yes | Note to attach to the resulting transaction.  Will be visible from dwolla.com dashboard to both sender and recipient.  Max 250 characters.                                                                           |
 | additionalFees       | yes       | Array of additional facilitator fee objects.  `[{"destinationId": "", "amount": 0.01}, ...]`                                                                                                                                                               |
 | metadata             | yes       | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters).  [Read more](#metadata)                                                                                   |
 | assumeAdditionalFees | yes       | Set to `true` if the sending user will assume all additional facilitator fees, `false` if the destination user will assume the fees. Defaults to `false`.                                          |

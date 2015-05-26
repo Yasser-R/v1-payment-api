@@ -102,7 +102,7 @@ array (
 
 Commercial, Non-Profit, and Government type accounts can refund payments that have been received.  There is no limit on the window of time in which a payment can be refunded.  Individual accounts currently cannot refund payments.
 
-A refund creates a new transaction.  This transaction will not incur a $0.25 transaction fee.  The refund amount can be up to the total payment amount, plus any transaction fee assumed by the sender and any facilitator fees assumed by the sender.
+A refund creates a new transaction. The refund amount can be up to the total payment amount, plus any facilitator fees assumed by the sender.
 
 The Refund API requires the [_Recipient's_ Transaction ID](#how-transactions-work) to be provided.
 

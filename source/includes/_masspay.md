@@ -166,7 +166,7 @@ array (
   'AssumeCosts' => true,
   'FundingSource' => '5da016f7769bcb1de9938a30d194d5a7',
   'Total' => 15.80,
-  'Fees' => 0.25,
+  'Fees' => 0,
   'CreatedDate' => '2014-10-24T23:06:08Z',
   'Status' => 'queued',
   'ItemSummary' =>
@@ -265,7 +265,7 @@ Create a new MassPay job.
 | pin | no | User account PIN
 | items | no | An array of `Item` objects.  See below.
 | userJobId | yes | An optional custom identifer for this job
-| assumeCosts | yes | If `true`, the sender will assume the $0.25 Dwolla fee for each payment, if applicable.  Defaults to `false`.
+| assumeCosts | yes | Deprecated
 
 ### Items
 Each payment to be created in a MassPay job is represented as a JSON object with the following properties:
@@ -321,7 +321,7 @@ array (
     'AssumeCosts' => true,
     'FundingSource' => '5da016f7769bcb1de9938a30d194d5a7',
     'Total' => 15.80,
-    'Fees' => 0.25,
+    'Fees' => 0,
     'CreatedDate' => '2014-10-24T23:06:08Z',
     'Status' => 'queued',
     'ItemSummary' =>
@@ -531,7 +531,7 @@ array (
   'AssumeCosts' => true,
   'FundingSource' => '5da016f7769bcb1de9938a30d194d5a7',
   'Total' => 15.80,
-  'Fees' => 0.25,
+  'Fees' => 0,
   'CreatedDate' => '2014-10-24T23:06:08Z',
   'Status' => 'complete',
   'ItemSummary' =>

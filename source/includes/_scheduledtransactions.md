@@ -26,7 +26,6 @@
   "TransactionId": null,
   "Amount": 10,
   "FundingSource": "3eacc3e3f6da404aa5735911219f277",
-  "AssumeCosts": false,
   "Destination": {
       "Id": "812-111-1111",
       "Name": "Jane Doe",
@@ -58,7 +57,7 @@ ExpectedClearingDate | Estimated date when the funds will be available to the re
 TransactionId | Transaction ID of resulting Transaction.  `null` until the transaction is successfully created.
 Amount | Amount of the transaction to be created.
 FundingSource | ID of the bank funding source which will fund the transaction
-AssumeCosts | Boolean.  Set to `true` if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).
+AssumeCosts | Boolean.  Deprecated.
 Destination | JSON object describing the recipient.  `Id` is the recipient's Dwolla ID or email address, `Name` is the recipient's full name, `Type` is either `Dwolla` or `Email` and `Image` is a URL to the recipient's avatar, if the recipient is an existing Dwolla user.
 Notes | Optional notes field.  Max 250 chars.
 Status | Possible values: 'scheduled', 'processed', 'failed'
@@ -69,7 +68,6 @@ Metadata | JSON object with max 10 key-value pairs. Keys and values are strings 
 ```shell
 {
   "amount":10,
-  "assumeCosts":true,
   "destinationId":"812-114-7461",
   "destinationType":"Dwolla",
   "fundsSource":"33be0db8a99c1a03e01e7c6dd54dff26",
@@ -133,7 +131,6 @@ print(transactions.schedule('812-111-1111', 300, '2018-01-01', '5da016f7769bcc1d
         "ExpectedClearingDate": "2015-05-07",
         "Amount": 10,
         "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
-        "AssumeCosts": true,
         "Destination": {
             "Id": "812-114-7461",
             "Name": "WidgetCorp",
@@ -174,7 +171,7 @@ pin | | Sender's account PIN
 fundsSource | | ID of the [Funding Source](#funding-sources) to fund this payment.
 scheduleDate | | Date to initiate payment.  If the transaction is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.
 recurrence | yes | A recurrence JSON object. [See below](#recurrence-object)
-assumeCosts | yes | Boolean.  Set to `true` if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).
+assumeCosts | yes | Boolean. Deprecated.
 notes | yes | Optional note to attach to transaction.  Max 250 chars.
 metadata | yes | Optional JSON object of a maximum of 10 key-value pairs (each key and value must be less than 255 characters). [Read more](#metadata)
 
@@ -235,7 +232,6 @@ print(transactions.scheduled())
             "ExpectedClearingDate": "2015-05-07",
             "Amount": 5,
             "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
-            "AssumeCosts": true,
             "Destination": {
                 "Id": "812-114-7461",
                 "Name": "WidgetCorp",
@@ -258,7 +254,6 @@ print(transactions.scheduled())
             "ExpectedClearingDate": "2015-05-07",
             "Amount": 10,
             "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
-            "AssumeCosts": true,
             "Destination": {
                 "Id": "812-114-7461",
                 "Name": "WidgetCorp",
@@ -281,7 +276,6 @@ print(transactions.scheduled())
             "ExpectedClearingDate": "2015-06-04",
             "Amount": 900,
             "FundingSource": "33be0db8a99c1a03e01e7c6dd54dff26",
-            "AssumeCosts": true,
             "Destination": {
                 "Id": "812-114-7461",
                 "Name": "WidgetCorp",
@@ -363,7 +357,6 @@ print transactions.scheduledbyid('d72b9f82-307e-4a35-9559-7889ea929db7')
         "TransactionId": 330295,
         "Amount": 100,
         "FundingSource": "3eacc3e3f6da404aa5735911219f277",
-        "AssumeCosts": false,
         "Destination": {
             "Id": "812-111-1111",
             "Name": "Jane Doe",
@@ -435,7 +428,6 @@ print transactions.editscheduledbyid('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', {'a
         "TransactionId": null,
         "Amount": 16,
         "FundingSource": "3eacc3e3f6da404aa5735911219f277",
-        "AssumeCosts": true,
         "Destination": {
             "Id": "812-111-1111",
             "Name": "Jane Doe",
@@ -466,7 +458,7 @@ destinationId | yes | Recipient's Dwolla ID or email address.
 destinationType | yes | Recipient type: `Dwolla` or `Email`.  Must set this to `Email` if you provided an email as the `destinationId`.
 fundsSource | yes | ID of the [Funding Source](#funding-sources) to fund this payment.
 scheduleDate | yes | Date to initiate payment.  If the payment is funded by an ACH bank funding source, funds will be available to the recipient typically 1-3 business days after this date.
-assumeCosts | yes | Boolean.  Set to `true` if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).
+assumeCosts | yes | Boolean. Deprecated.
 notes | yes | Optional note to attach to transaction.  Max 250 chars.
 
 ### Errors

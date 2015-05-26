@@ -45,7 +45,6 @@ X-Dwolla-Signature: d0a74b17a31334edc4e6698c59e460c61bb7f21a
     "Transaction": {
         "Type": "money_sent",
         "Notes": "",
-        "Fees": [],
         "Id": 4444962,
         "Source": {
             "Id": "812-687-7049",
@@ -135,7 +134,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
         "Status": "processed"
     },
     "DateCancelled": "",
-    "SenderAssumeFee": false,
     "SenderAssumeAdditionalFees": false,
     "AdditionalFees": [],
     "Metadata": {
@@ -176,7 +174,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
     "Status": "Cancelled",
     "CancelledBy": "812-687-7049",
     "DateCancelled": "2014-01-21T19:07:30Z",
-    "SenderAssumeFee": false,
     "SenderAssumeAdditionalFees": false,
     "AdditionalFees": [],
     "Metadata": {
