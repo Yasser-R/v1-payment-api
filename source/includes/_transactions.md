@@ -172,7 +172,7 @@ ClearingDate | For bank funded payments, this is the expected clearing date.  Ot
 Notes | Note attached to the payment.  Max 250 characters.
 OriginalTransactionId | If the transaction is a refund, this is the transaction ID of the original transaction which was refunded. Otherwise, `null`.
 Metadata | JSON object with max 10 key-value pairs. Keys and values are strings of max length 255. `null` if not provided or visible to application.  [Read more](#metadata)
-Fees | Array of any facilitator fees or transaction fees incurred by this payment.  Otherwise, `null`.
+Fees | Array of any facilitator fees incurred by this payment.  Otherwise, `null`.
 
 ## List a user's transactions
 

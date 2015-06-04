@@ -126,7 +126,6 @@ dwolla.createMassPayJob('Balance', '2908', items, {
 
 /*
  * Send $3.40 to an email address and $12.40 to a Dwolla ID.
- * Assume transaction fees.
  */
 
 $MassPay = new Dwolla\MassPay();
