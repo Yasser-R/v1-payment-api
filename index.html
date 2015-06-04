@@ -857,7 +857,6 @@ X-Dwolla-Signature: d0a74b17a31334edc4e6698c59e460c61bb7f21a
     <span class="s2">"Transaction"</span>: <span class="o">{</span>
         <span class="s2">"Type"</span>: <span class="s2">"money_sent"</span>,
         <span class="s2">"Notes"</span>: <span class="s2">""</span>,
-        <span class="s2">"Fees"</span>: <span class="o">[]</span>,
         <span class="s2">"Id"</span>: 4444962,
         <span class="s2">"Source"</span>: <span class="o">{</span>
             <span class="s2">"Id"</span>: <span class="s2">"812-687-7049"</span>,
@@ -939,7 +938,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
         <span class="s2">"Status"</span>: <span class="s2">"processed"</span>
     <span class="o">}</span>,
     <span class="s2">"DateCancelled"</span>: <span class="s2">""</span>,
-    <span class="s2">"SenderAssumeFee"</span>: <span class="nb">false</span>,
     <span class="s2">"SenderAssumeAdditionalFees"</span>: <span class="nb">false</span>,
     <span class="s2">"AdditionalFees"</span>: <span class="o">[]</span>,
     <span class="s2">"Metadata"</span>: <span class="o">{</span>
@@ -976,7 +974,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
     <span class="s2">"Status"</span>: <span class="s2">"Cancelled"</span>,
     <span class="s2">"CancelledBy"</span>: <span class="s2">"812-687-7049"</span>,
     <span class="s2">"DateCancelled"</span>: <span class="s2">"2014-01-21T19:07:30Z"</span>,
-    <span class="s2">"SenderAssumeFee"</span>: <span class="nb">false</span>,
     <span class="s2">"SenderAssumeAdditionalFees"</span>: <span class="nb">false</span>,
     <span class="s2">"AdditionalFees"</span>: <span class="o">[]</span>,
     <span class="s2">"Metadata"</span>: <span class="o">{</span>
@@ -1071,8 +1068,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 
 <p>Send money from an authorized user&rsquo;s account to any Dwolla account ID, phone number, or e-mail address. You can send money to any phone number or email address &ndash; if the recipient doesn&rsquo;t yet have a Dwolla account, they&rsquo;ll be sent an SMS or email notifying them of the payment and prompting them to sign up to claim the funds.</p>
 
-<p>You can optionally have the sender cover the transaction fee, if applicable, by setting <code class="prettyprint">assumeCosts</code> to <code class="prettyprint">true</code>.  By default, the recipient of the payment covers the $0.25 fee.</p>
-
 <p>Facilitator fees allow you, as the application facilitating a payment, to take a cut up to 50% of the payment amount.  By default, the facilitator fee is sent to the application owner&rsquo;s account, but you can have them sent to other recipients by declaring additional facilitator fees in the optional <code class="prettyprint">additionalFees</code> array.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/send</code></p>
@@ -1115,11 +1110,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 <td>notes</td>
 <td>yes</td>
 <td>Note to attach to the resulting transaction.  Will be visible from dwolla.com dashboard to both sender and recipient.  Max 250 characters.</td>
-</tr>
-<tr>
-<td>assumeCosts</td>
-<td>yes</td>
-<td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
 </tr>
 <tr>
 <td>additionalFees</td>
@@ -3072,7 +3062,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 <ul>
 <li>if the payment is bank sourced, to fund the payment</li>
-<li>if the payment is over $10 it will incur a $0.25 <em>Dwolla Fee</em></li>
 <li>if there is a facilitator fee</li>
 </ul>
 
@@ -3099,10 +3088,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <tr>
 <td>withdrawal</td>
 <td>Funds withdrawn from the user&rsquo;s Dwolla account balance to an associated Funding Source</td>
-</tr>
-<tr>
-<td>fee</td>
-<td>Transaction fee of $0.25 or Facilitator Fee</td>
 </tr>
 </tbody></table>
 <h3 id='transaction-statuses'>Transaction Statuses</h3>
@@ -3247,7 +3232,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tr>
 <tr>
 <td>Fees</td>
-<td>Array of any facilitator fees or transaction fees incurred by this payment.  Otherwise, <code class="prettyprint">null</code>.</td>
+<td>Array of any facilitator fees incurred by this payment.  Otherwise, <code class="prettyprint">null</code>.</td>
 </tr>
 </tbody></table>
 <h2 id='list-a-user39s-transactions'>List a user&rsquo;s transactions</h2><pre class="highlight javascript"><span class="cm">/**
@@ -4101,7 +4086,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
   <span class="s2">"TransactionId"</span>: null,
   <span class="s2">"Amount"</span>: 10,
   <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
-  <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
   <span class="s2">"Destination"</span>: <span class="o">{</span>
       <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
       <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
@@ -4155,7 +4139,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tr>
 <tr>
 <td>AssumeCosts</td>
-<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+<td>Boolean.  Deprecated.</td>
 </tr>
 <tr>
 <td>Destination</td>
@@ -4176,7 +4160,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </tbody></table>
 <h2 id='create-scheduled-payment'>Create Scheduled Payment</h2><pre class="highlight shell"><span class="o">{</span>
   <span class="s2">"amount"</span>:10,
-  <span class="s2">"assumeCosts"</span>:true,
   <span class="s2">"destinationId"</span>:<span class="s2">"812-114-7461"</span>,
   <span class="s2">"destinationType"</span>:<span class="s2">"Dwolla"</span>,
   <span class="s2">"fundsSource"</span>:<span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
@@ -4236,7 +4219,6 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
         <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-05-07"</span>,
         <span class="s2">"Amount"</span>: 10,
         <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
-        <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
         <span class="s2">"Destination"</span>: <span class="o">{</span>
             <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
             <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
@@ -4312,7 +4294,7 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
 <tr>
 <td>assumeCosts</td>
 <td>yes</td>
-<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+<td>Boolean. Deprecated.</td>
 </tr>
 <tr>
 <td>notes</td>
@@ -4422,7 +4404,6 @@ print_r($Transactions-&gt;scheduled());
             <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-05-07"</span>,
             <span class="s2">"Amount"</span>: 5,
             <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
-            <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
             <span class="s2">"Destination"</span>: <span class="o">{</span>
                 <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
                 <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
@@ -4445,7 +4426,6 @@ print_r($Transactions-&gt;scheduled());
             <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-05-07"</span>,
             <span class="s2">"Amount"</span>: 10,
             <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
-            <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
             <span class="s2">"Destination"</span>: <span class="o">{</span>
                 <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
                 <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
@@ -4468,7 +4448,6 @@ print_r($Transactions-&gt;scheduled());
             <span class="s2">"ExpectedClearingDate"</span>: <span class="s2">"2015-06-04"</span>,
             <span class="s2">"Amount"</span>: 900,
             <span class="s2">"FundingSource"</span>: <span class="s2">"33be0db8a99c1a03e01e7c6dd54dff26"</span>,
-            <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
             <span class="s2">"Destination"</span>: <span class="o">{</span>
                 <span class="s2">"Id"</span>: <span class="s2">"812-114-7461"</span>,
                 <span class="s2">"Name"</span>: <span class="s2">"WidgetCorp"</span>,
@@ -4568,7 +4547,6 @@ print_r($Transactions-&gt;scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'))
         <span class="s2">"TransactionId"</span>: 330295,
         <span class="s2">"Amount"</span>: 100,
         <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
-        <span class="s2">"AssumeCosts"</span>: <span class="nb">false</span>,
         <span class="s2">"Destination"</span>: <span class="o">{</span>
             <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
             <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
@@ -4633,7 +4611,6 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
         <span class="s2">"TransactionId"</span>: null,
         <span class="s2">"Amount"</span>: 16,
         <span class="s2">"FundingSource"</span>: <span class="s2">"3eacc3e3f6da404aa5735911219f277"</span>,
-        <span class="s2">"AssumeCosts"</span>: <span class="nb">true</span>,
         <span class="s2">"Destination"</span>: <span class="o">{</span>
             <span class="s2">"Id"</span>: <span class="s2">"812-111-1111"</span>,
             <span class="s2">"Name"</span>: <span class="s2">"Jane Doe"</span>,
@@ -4695,7 +4672,7 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
 <tr>
 <td>assumeCosts</td>
 <td>yes</td>
-<td>Boolean.  Set to <code class="prettyprint">true</code> if the sender of the funds will assume the $0.25 transaction fee (only applies if transaction is greater than $10.00).</td>
+<td>Boolean. Deprecated.</td>
 </tr>
 <tr>
 <td>notes</td>
@@ -6089,7 +6066,6 @@ print_r($Transactions-&gt;deleteAllScheduled());
 
 <span class="cm">/*
  * Send $3.40 to an email address and $12.40 to a Dwolla ID.
- * Assume transaction fees.
  */</span>
 
 <span class="nv">$MassPay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dwolla\MassPay</span><span class="p">();</span>
@@ -6129,7 +6105,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
   'AssumeCosts' =&gt; true,
   'FundingSource' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
   'Total' =&gt; 15.80,
-  'Fees' =&gt; 0.25,
+  'Fees' =&gt; 0,
   'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
   'Status' =&gt; 'queued',
   'ItemSummary' =&gt;
@@ -6243,7 +6219,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <tr>
 <td>assumeCosts</td>
 <td>yes</td>
-<td>If <code class="prettyprint">true</code>, the sender will assume the $0.25 Dwolla fee for each payment, if applicable.  Defaults to <code class="prettyprint">false</code>.</td>
+<td>Deprecated</td>
 </tr>
 </tbody></table>
 <h3 id='items'>Items</h3>
@@ -6325,7 +6301,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
     'AssumeCosts' =&gt; true,
     'FundingSource' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
     'Total' =&gt; 15.80,
-    'Fees' =&gt; 0.25,
+    'Fees' =&gt; 0,
     'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
     'Status' =&gt; 'queued',
     'ItemSummary' =&gt;
@@ -6538,7 +6514,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
   'AssumeCosts' =&gt; true,
   'FundingSource' =&gt; '5da016f7769bcb1de9938a30d194d5a7',
   'Total' =&gt; 15.80,
-  'Fees' =&gt; 0.25,
+  'Fees' =&gt; 0,
   'CreatedDate' =&gt; '2014-10-24T23:06:08Z',
   'Status' =&gt; 'complete',
   'ItemSummary' =&gt;
@@ -7054,7 +7030,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
 
 <p>Commercial, Non-Profit, and Government type accounts can refund payments that have been received.  There is no limit on the window of time in which a payment can be refunded.  Individual accounts currently cannot refund payments.</p>
 
-<p>A refund creates a new transaction.  This transaction will not incur a $0.25 transaction fee.  The refund amount can be up to the total payment amount, plus any transaction fee assumed by the sender and any facilitator fees assumed by the sender.</p>
+<p>A refund creates a new transaction. The refund amount can be up to the total payment amount, plus any facilitator fees assumed by the sender.</p>
 
 <p>The Refund API requires the <a href="#how-transactions-work"><em>Recipient&rsquo;s</em> Transaction ID</a> to be provided.</p>
 
@@ -7189,7 +7165,6 @@ print_r($Transactions-&gt;deleteAllScheduled());
     <span class="o">}</span>,
     <span class="s2">"CancelledBy"</span>: null,
     <span class="s2">"DateCancelled"</span>: <span class="s2">""</span>,
-    <span class="s2">"SenderAssumeFee"</span>: <span class="nb">false</span>,
     <span class="s2">"SenderAssumeAdditionalFees"</span>: <span class="nb">false</span>,
     <span class="s2">"AdditionalFees"</span>: <span class="o">[]</span>,
     <span class="s2">"Metadata"</span>: null
@@ -7270,7 +7245,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </tr>
 <tr>
 <td>SenderAssumeFee</td>
-<td>Boolean.  <code class="prettyprint">true</code> if sender will assume the $0.25 transaction fee if applicable.</td>
+<td>Boolean.  Deprecated</td>
 </tr>
 <tr>
 <td>SenderAssumeAdditionalFees</td>
@@ -7375,7 +7350,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <tr>
 <td>senderAssumeCosts</td>
 <td>yes</td>
-<td>Set to <code class="prettyprint">true</code> if the fulfilling user is to assume the Dwolla fee. Defaults to <code class="prettyprint">false</code>; does not include facilitator fees.</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td>senderAssumeAdditionalFees</td>
@@ -7490,7 +7465,6 @@ else { print_r($requests); }
     'Transaction' =&gt; NULL,
     'CancelledBy' =&gt; NULL,
     'DateCancelled' =&gt; '',
-    'SenderAssumeFee' =&gt; false,
     'SenderAssumeAdditionalFees' =&gt; false,
     'AdditionalFees' =&gt;
     array (
@@ -7524,7 +7498,6 @@ else { print_r($requests); }
             <span class="s">"Transaction"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
             <span class="s">"CancelledBy"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
             <span class="s">"DateCancelled"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
-            <span class="s">"SenderAssumeFee"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
             <span class="s">"SenderAssumeAdditionalFees"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
             <span class="s">"AdditionalFees"</span><span class="p">:</span> <span class="p">[],</span>
             <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span> 
@@ -7554,7 +7527,6 @@ else { print_r($requests); }
     <span class="s2">"Transaction"</span>                <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
     <span class="s2">"CancelledBy"</span>                <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
     <span class="s2">"DateCancelled"</span>              <span class="o">=&gt;</span> <span class="s2">""</span><span class="p">,</span>
-    <span class="s2">"SenderAssumeFee"</span>            <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
     <span class="s2">"SenderAssumeAdditionalFees"</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
     <span class="s2">"AdditionalFees"</span>             <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
     <span class="s2">"Metadata"</span>                   <span class="o">=&gt;</span> <span class="kp">nil</span>
@@ -7584,7 +7556,6 @@ else { print_r($requests); }
     <span class="s2">"Transaction"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="s2">"CancelledBy"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="s2">"DateCancelled"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-    <span class="s2">"SenderAssumeFee"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="s2">"AdditionalFees"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="s2">"Metadata"</span><span class="p">:</span> <span class="kc">null</span> 
@@ -7622,7 +7593,6 @@ else { print_r($requests); }
             </span><span class="s2">"Transaction"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
             </span><span class="s2">"CancelledBy"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
             </span><span class="s2">"DateCancelled"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"SenderAssumeFee"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
             </span><span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
             </span><span class="s2">"AdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
             </span><span class="s2">"Metadata"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="w"> 
@@ -7714,7 +7684,6 @@ else { print_r($requests); }
   'Transaction' =&gt; NULL,
   'CancelledBy' =&gt; NULL,
   'DateCancelled' =&gt; '',
-  'SenderAssumeFee' =&gt; false,
   'SenderAssumeAdditionalFees' =&gt; false,
   'AdditionalFees' =&gt;
   array (
@@ -7743,7 +7712,6 @@ else { print_r($requests); }
     <span class="s2">"Transaction"</span>                <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
     <span class="s2">"CancelledBy"</span>                <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
     <span class="s2">"DateCancelled"</span>              <span class="o">=&gt;</span> <span class="s2">""</span><span class="p">,</span>
-    <span class="s2">"SenderAssumeFee"</span>            <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
     <span class="s2">"SenderAssumeAdditionalFees"</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
     <span class="s2">"AdditionalFees"</span>             <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
     <span class="s2">"Metadata"</span>                   <span class="o">=&gt;</span> <span class="kp">nil</span>
@@ -7770,7 +7738,6 @@ else { print_r($requests); }
             <span class="s">"Transaction"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
             <span class="s">"CancelledBy"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
             <span class="s">"DateCancelled"</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span>
-            <span class="s">"SenderAssumeFee"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
             <span class="s">"SenderAssumeAdditionalFees"</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
             <span class="s">"AdditionalFees"</span><span class="p">:</span> <span class="p">[],</span>
             <span class="s">"Metadata"</span><span class="p">:</span> <span class="n">null</span> 
@@ -7797,7 +7764,6 @@ else { print_r($requests); }
   <span class="s2">"Transaction"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
   <span class="s2">"CancelledBy"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
   <span class="s2">"DateCancelled"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
-  <span class="s2">"SenderAssumeFee"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
   <span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
   <span class="s2">"AdditionalFees"</span><span class="p">:</span> <span class="p">[],</span>
   <span class="s2">"Metadata"</span><span class="p">:</span> <span class="p">{</span>
@@ -7832,7 +7798,6 @@ else { print_r($requests); }
         </span><span class="s2">"Transaction"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"CancelledBy"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"DateCancelled"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"SenderAssumeFee"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="s2">"SenderAssumeAdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="s2">"AdditionalFees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
         </span><span class="s2">"Metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -8046,7 +8011,7 @@ else { print_r($requests); }
 <tr>
 <td>assumeCosts</td>
 <td>yes</td>
-<td>Set to <code class="prettyprint">true</code> for the fulfilling user to assume the Dwolla fee, <code class="prettyprint">false</code> for the destination user to assume the fee.</td>
+<td>Deprecated</td>
 </tr>
 <tr>
 <td>metadata</td>
