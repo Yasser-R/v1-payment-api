@@ -247,6 +247,8 @@ $result = $OAuth->refresh($refreshToken);
 
 Use a valid `refresh_token` to generate a new `access_token` and `refresh_token` pair.
 
+**NOTE:** The `refresh_token` you receive will *change* every time you exchange either an `authorization_code` or `refresh_token` for a new token pair. Only the most recently issued `refresh_token` will allow you to receive a new pair.
+
 ### HTTP Request
 `POST https://www.dwolla.com/oauth/v2/token`
 
