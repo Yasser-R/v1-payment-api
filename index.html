@@ -675,6 +675,8 @@ Remember to url-encode all querystring parameters!
 </pre>
 
 <p>Use a valid <code class="prettyprint">refresh_token</code> to generate a new <code class="prettyprint">access_token</code> and <code class="prettyprint">refresh_token</code> pair.</p>
+
+<p><strong>NOTE:</strong> The <code class="prettyprint">refresh_token</code> you receive will <em>change</em> every time you exchange either an <code class="prettyprint">authorization_code</code> or <code class="prettyprint">refresh_token</code> for a new token pair. Only the most recently issued <code class="prettyprint">refresh_token</code> will allow you to receive a new pair.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/v2/token</code></p>
 
