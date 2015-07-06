@@ -35,9 +35,9 @@ api = Kittn::APIClient.authorize!('meowmeowmeow')
 ```
 
 ```python
-import 'kittn'
+import kittn
 
-api = Kittn.authorize('meowmeowmeow')
+api = kittn.authorize('meowmeowmeow')
 ```
 
 ```shell
@@ -55,7 +55,7 @@ Kittn expects for the API key to be included in all API requests to the server i
 `Authorization: meowmeowmeow`
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
 # Kittens
@@ -70,9 +70,9 @@ api.kittens.get
 ```
 
 ```python
-import 'kittn'
+import kittn
 
-api = Kittn.authorize('meowmeowmeow')
+api = kittn.authorize('meowmeowmeow')
 api.kittens.get()
 ```
 
@@ -106,7 +106,7 @@ This endpoint retrieves all kittens.
 
 ### HTTP Request
 
-`GET http://example.com/kittens`
+`GET http://example.com/api/kittens`
 
 ### Query Parameters
 
@@ -129,14 +129,14 @@ api.kittens.get(2)
 ```
 
 ```python
-import 'kittn'
+import kittn
 
-api = Kittn.authorize('meowmeowmeow')
+api = kittn.authorize('meowmeowmeow')
 api.kittens.get(2)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/3"
+curl "http://example.com/api/kittens/2"
   -H "Authorization: meowmeowmeow"
 ```
 
@@ -164,5 +164,5 @@ This endpoint retrieves a specific kitten.
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the cat to retrieve
+ID | The ID of the kitten to retrieve
 
