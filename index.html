@@ -130,11 +130,8 @@ GET https://www.dwolla.com/oauth/rest/transactions?client_id<span class="o">=</s
 <p><code class="prettyprint">GET</code> requests have parameters provided in the querysting.</p>
 
 <p>All requests must be made over HTTPS.  Any HTTP requests are met with a HTTP 302 to its HTTPS equivalent.</p>
-
-<aside class="notice">
-Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET querystring parameters!
-</aside>
-<h2 id='responses'>Responses</h2>
+<aside class="notice"><p>Remember to <a href="http://en.wikipedia.org/wiki/Percent-encoding">url-encode</a> all GET querystring parameters!</p>
+</aside><h2 id='responses'>Responses</h2>
 <blockquote>
 <p>Happy response</p>
 </blockquote>
@@ -172,21 +169,12 @@ Remember to [url-encode](http://en.wikipedia.org/wiki/Percent-encoding) all GET 
 <ul>
 <li><code class="prettyprint">_links</code>, object that contains links (to URIs). Keys within _links are the name of the link and describe the relationship between the current resource and the link.</li>
 </ul>
-
-<!---
-## Errors
-
-TODO: document errors
--->
 <h2 id='facilitator-fees'>Facilitator Fees</h2>
 <p>By <a href="https://developers.dwolla.com/dev/pages/guides/facilitator_fee">enabling</a> the facilitator fee application feature, you can set your own percentage or flat fee from incoming transactions.  Transactions created via the Send endpoint and  transactions resulting from an <a href="#checkouts">Off-Site Gateway</a> checkout can have a facilitator fee attached to it.  Facilitator fees can also be attached to <a href="#money-requests">Money Requests</a> created by your application.  When the Money Request is fulfilled, the facilitator fee will be paid out.</p>
 
 <p>Facilitator fees can be up to 50% of the transaction amount and must be at least $0.01.  They do not affect the original transaction amount, and exist as a separate <a href="#transactions">Transaction</a> resource with a unique Transaction ID.</p>
-
-<aside class="notice">
-**Note**: facilitator fee is a premium application feature. To try it out, please [contact us](https://www.dwolla.com/contact) or call 1-888-289-8744.
-</aside>
-<h2 id='metadata'>Metadata</h2>
+<aside class="notice"><p><strong>Note</strong>: facilitator fee is a premium application feature. To try it out, please <a href="https://www.dwolla.com/contact">contact us</a> or call 1-888-289-8744.</p>
+</aside><h2 id='metadata'>Metadata</h2>
 <p>Metadata can be supplied for Send, MassPay Items, Money Requests, Refunds, and Checkouts in the metadata property. The <code class="prettyprint">metadata</code> property is a JSON object (a collection of &ldquo;key&rdquo;: &ldquo;value&rdquo; pairs). A maximum of 10 key-value pairs can be stored. Keys and values must be strings of maximum length 255 characters.</p>
 <pre class="highlight shell"><code><span class="o">{</span>
     <span class="s2">"Shipment ID"</span>: <span class="s2">"d289e89ej893r3r"</span>,
@@ -367,11 +355,8 @@ TODO: document errors
 <p>For endpoints that require an OAuth access token, it should be included in the Authorization HTTP header like so:</p>
 
 <p><code class="prettyprint">Authorization: Bearer &lt;T0K3N_H3R3&gt;</code></p>
-
-<aside class="notice">
-Needless to say, you should replace `<T0K3N_H3R3>` with an OAuth `access_token`!
+<aside class="notice"><p>Needless to say, you should replace <code>&lt;T0K3N_H3R3&gt;</code> with an OAuth <code>access_token</code>!</p>
 </aside>
-
           <h1 id='oauth'>OAuth</h1><pre class="highlight plaintext"><code>  /$$$$$$   /$$$$$$              /$$     /$$      
  /$$__  $$ /$$__  $$            | $$    | $$      
 | $$  \ $$| $$  \ $$ /$$   /$$ /$$$$$$  | $$$$$$$ 
@@ -462,11 +447,8 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <td>Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account.</td>
 </tr>
 </tbody></table>
-
-<aside class="notice">
-Remember to url-encode all querystring parameters!
-</aside>
-<h3 id='oauth-scopes'>OAuth Scopes</h3>
+<aside class="notice"><p>Remember to url-encode all querystring parameters!</p>
+</aside><h3 id='oauth-scopes'>OAuth Scopes</h3>
 <p>Applications may request the following permission scopes when generating an access token:</p>
 
 <table><thead>
@@ -820,9 +802,8 @@ print_r($OAuth-&gt;catalog("Your Access Token"));
 <p>Currently, it only includes links to the Send, Create Scheduled, and Fulfill Request endpoints.  In the future, it will be extended to include all endpoints available to a user.</p>
 
 <p>Use this endpoint to determine whether or not the user needs to provide a PIN in order to use the Send, Create Scheduled, or Fulfill Request endpoints.  Since Direct users do not have a PIN, for instance, the <code class="prettyprint">sendWithoutPin</code> key will be included in <code class="prettyprint">_links</code> instead of the regular <code class="prettyprint">send</code> which you would see for Full users.  The URI remains the same in either case, but for any link with &ldquo;WithoutPin&rdquo; appended to it, you will not need to ask the user for their PIN and may omit the <code class="prettyprint">pin</code> parameter when calling the endpoint.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token but does not require a particular scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token but does not require a particular scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/catalog</code></p>
 
           <h1 id='webhooks'>Webhooks</h1>
@@ -1079,9 +1060,8 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 <p>Facilitator fees allow you, as the application facilitating a payment, to take a cut up to 50% of the payment amount.  By default, the facilitator fee is sent to the application owner&rsquo;s account, but you can have them sent to other recipients by declaring additional facilitator fees in the optional <code class="prettyprint">additionalFees</code> array.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/send</code></p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Send` scope.</aside>
-
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Send</code> scope.</p>
+</aside>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -2019,9 +1999,8 @@ Invalid purchase order.
 </code></pre>
 
 <p>Enumerate a user&rsquo;s funding sources.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/fundingsources/</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <p>The following querystring parameters are optional:</p>
@@ -2146,9 +2125,8 @@ Invalid purchase order.
 </code></pre>
 
 <p>Look up a particular funding source by its funding source ID.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/fundingsources/{id}</code></p>
 <h3 id='errors'>Errors</h3>
 <table><thead>
@@ -2358,9 +2336,8 @@ Invalid purchase order.
 </code></pre>
 
 <p>Withdraw funds from a user&rsquo;s account balance to one of the user&rsquo;s bank funding sources.  A new <a href="#transactions">Transaction</a> of type <code class="prettyprint">withdrawal</code> is created as a result.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/fundingsources/{id}/withdraw</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -2600,9 +2577,8 @@ Invalid purchase order.
 </span></code></pre>
 
 <p>Add funds from a user&rsquo;s bank funding source to the user&rsquo;s Dwolla account balance.  A new <a href="#transactions">Transaction</a> of type <code class="prettyprint">deposit</code> is created as a result.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/fundingsources/{id}/deposit</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -2750,9 +2726,8 @@ Invalid purchase order.
 </span></code></pre>
 
 <p>Add a new ACH bank account as a funding source for the authenticated user.  Once created, the funding source will need to be verified before it can be used.  Two micro-deposits will be made, and their amounts must be verified using the <a href="#verify-a-funding-source">Verify endpoint</a> or manually by the user on <a href="https://www.dwolla.com/">www.dwolla.com</a>.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/fundingsources/</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -2918,9 +2893,8 @@ Invalid purchase order.
 </span></code></pre>
 
 <p>Verify the amounts of the 2 micro-deposits sent to a funding source.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/fundingsources/{id}/verify</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -3126,9 +3100,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 <td>The payment was returned to the sender after being unclaimed by the recipient for a period of time.</td>
 </tr>
 </tbody></table>
-
-<aside class="notice">The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be &ldquo;processed&rdquo;.</aside>
-<h3 id='transaction-resource'>Transaction Resource</h3><pre class="highlight plaintext"><code>{
+<aside class="notice"><p>The initial transaction state for all real-time (e.g. Balance, FiSync, Credit) funded transfers will always be &ldquo;processed&rdquo;.</p>
+</aside><h3 id='transaction-resource'>Transaction Resource</h3><pre class="highlight plaintext"><code>{
   "Amount": 1,
   "Date": "2014-01-22T13:11:10Z",
   "UserType": "Email",
@@ -3454,9 +3427,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </span></code></pre>
 
 <p>Retrieve the transaction history of the authenticated user.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions</code></p>
 <h4 id='example'>Example:</h4>
 <p>To get the latest 200 transactions of type <code class="prettyprint">money_sent</code>, <code class="prettyprint">fee</code>, and <code class="prettyprint">deposit</code>:</p>
@@ -3929,9 +3901,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </span></code></pre>
 
 <p>Look up a particular transaction by its ID (Either Sender&rsquo;s or Recipient&rsquo;s.  Read about transaction IDs <a href="#how-transactions-work">here</a>.)  Either an OAuth access token can be supplied, or if your API application facilitated this transaction, you can supply an application key and secret instead.</p>
-
-<aside class="reminder">This endpoint can take either an [an OAuth access token](#authentication) with the `Transactions` scope or an API application&rsquo;s `client_id` and `client_secret`.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint can take either an <a href="#authentication">an OAuth access token</a> with the <code>Transactions</code> scope or an API application&rsquo;s <code>client_id</code> and <code>client_secret</code>.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p>To fetch a transaction which belongs to the authorized user:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/{id}</code></p>
@@ -4004,9 +3975,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 </code></pre>
 
 <p>Search a user&rsquo;s transactions, filtering results based on an amount range, date range, transaction type, transaction status, individual&rsquo;s name, business name, Dwolla ID, email address, or phone number.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p>To fetch a transaction which belongs to the authorized user:</p>
 
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/search?limit={}</code></p>
@@ -4252,9 +4222,8 @@ print_r($Transactions-&gt;schedule('812-197-4121', 300, '2018-01-01', 'ashfdjh8f
 </code></pre>
 
 <p>Create a new Scheduled Payment on behalf of the authorized user.  Initial <code class="prettyprint">Status</code> will be <code class="prettyprint">scheduled</code>.  Must fund payment with a bank-funding source. Allows scheduling of a one-time payment, or recurring payments with use of the <code class="prettyprint">recurrence</code> object.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Scheduled</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/scheduled</code></p>
 
 <table><thead>
@@ -4475,9 +4444,8 @@ print_r($Transactions-&gt;scheduled());
 </code></pre>
 
 <p>List the authorized user&rsquo;s scheduled payments which have been created by your application.  </p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Scheduled</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled?limit=10</code></p>
 <h3 id='optional-parameters'>Optional Parameters</h3>
 <table><thead>
@@ -4569,9 +4537,8 @@ print_r($Transactions-&gt;scheduledById('d72b9f82-307e-4a35-9559-7889ea929db7'))
 </code></pre>
 
 <p>Retrieve a scheduled payment by its ID.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Scheduled</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
 <h2 id='edit-scheduled-payment'>Edit Scheduled Payment</h2>
 <blockquote>
@@ -4635,9 +4602,8 @@ print_r($Transactions-&gt;editScheduled('08f9b638-0f8e-4e00-abe5-41c8fd24fbe8', 
 <p>Edit an existing scheduled payment. Partial editing is allowed: just supply the field(s) to change, along with the sender&rsquo;s PIN.  </p>
 
 <p>Note: the <code class="prettyprint">recurrence</code> field <em>cannot</em> be modified.  If you need to change the recurrence of a scheduled payment, delete it and create a new one.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Scheduled</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">PUT https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}</code></p>
 
 <table><thead>
@@ -4740,9 +4706,8 @@ print_r($Transactions-&gt;deleteScheduledById('d856d2ec-4098-4b3b-b20f-b2561ec85
 </code></pre>
 
 <p>Delete a <em>pending</em> scheduled payment created by your application.  Status must be <code class="prettyprint">scheduled</code>.  Cannot delete a <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled payment.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Scheduled</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled/{id}?pin={PIN}</code></p>
 <h3 id='querystring-params'>Querystring params</h3>
 <table><thead>
@@ -4809,9 +4774,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </code></pre>
 
 <p>Delete <strong>all</strong> of an authorized user&rsquo;s <em>pending</em> scheduled payments created by your application.  Will not delete any <code class="prettyprint">processed</code> or <code class="prettyprint">failed</code> scheduled payments.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Scheduled` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Scheduled</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">DELETE https://www.dwolla.com/oauth/rest/transactions/scheduled?pin={PIN}</code></p>
 <h3 id='querystring-params'>Querystring params</h3>
 <table><thead>
@@ -4883,9 +4847,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </code></pre>
 
 <p>Transaction statistics can be retrieved for the authenticated user.   Currently, the report contains a count of transactions and sum of transactions over a given period of time.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/transactions/stats</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -5150,9 +5113,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Retrieve information about the authorized user.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `AccountInfoFull` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>AccountInfoFull</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/users/</code></p>
 <h3 id='response'>Response</h3>
 <table><thead>
@@ -5885,9 +5847,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Use the following endpoint to fetch the authorized user&rsquo;s contacts.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Contacts` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Contacts</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/contacts/</code></p>
 <h3 id='optional-paramters'>Optional Paramters</h3>
 <table><thead>
@@ -5956,9 +5917,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Fetch a user&rsquo;s account balance.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Balance` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Balance</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/balance/</code></p>
 
           <h1 id='masspay'>MassPay</h1><pre class="highlight shell"><code><span class="nv">$~</span> cowsay MOOOspay
@@ -6192,9 +6152,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Create a new MassPay job.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Send` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Send</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/masspay/</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -6449,9 +6408,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>List a user&rsquo;s existing MassPay jobs.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/</code></p>
 
 <table><thead>
@@ -6601,9 +6559,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Look up a particular MassPay job by its ID.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{id}</code></p>
 <h3 id='errors'>Errors</h3>
 <table><thead>
@@ -6791,9 +6748,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Retrieve the items for a particular MassPay job.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{id}/items</code></p>
 
 <table><thead>
@@ -6929,9 +6885,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Retrieve a particular MassPay Job Item, by the Job ID and Item ID.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Transactions` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Transactions</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/masspay/{job_id}/items/{item_id}</code></p>
 <h3 id='errors'>Errors</h3>
 <table><thead>
@@ -7041,9 +6996,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <p>A refund creates a new transaction. The refund amount can be up to the total payment amount, plus any facilitator fees assumed by the sender.</p>
 
 <p>The Refund API requires the <a href="#how-transactions-work"><em>Recipient&rsquo;s</em> Transaction ID</a> to be provided.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Send` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Send</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/transactions/refund</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -7318,9 +7272,8 @@ print_r($Transactions-&gt;deleteAllScheduled());
 </span></code></pre>
 
 <p>Send a Money Request from the authorized user to a destination Dwolla user, email address or phone number.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Request</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/</code></p>
 
 <table><thead>
@@ -7613,9 +7566,8 @@ else { print_r($requests); }
 </span></code></pre>
 
 <p>List the authorized user&rsquo;s pending requests.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Request</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/requests/</code></p>
 <h3 id='request-parameters'>Request Parameters</h3>
 <table><thead>
@@ -7819,9 +7771,8 @@ else { print_r($requests); }
 </span></code></pre>
 
 <p>Retrieve a single Money Request by its ID.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Request</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/requests/{id}</code></p>
 <h3 id='errors'>Errors</h3>
 <table><thead>
@@ -7984,9 +7935,8 @@ else { print_r($requests); }
 </span></code></pre>
 
 <p>Fulfill an authorized user&rsquo;s pending money request.  Request must have a status of <code class="prettyprint">Pending</code>.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Request</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/{request_id}/fulfill</code></p>
 
 <table><thead>
@@ -8113,9 +8063,8 @@ else { print_r($requests); }
     </span><span class="nt">"Response"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Request</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/{request_id}/cancel</code></p>
 
 <table><thead>
@@ -8238,9 +8187,8 @@ else { print_r($requests); }
 </span></code></pre>
 
 <p>Determine whether the Auto Withdrawal is enabled for the authorized user.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `ManageAccount` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>ManageAccount</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl</code></p>
 <h2 id='enabledisable-auto-withdrawal'>Enable/Disable Auto Withdrawal</h2><pre class="highlight python"><code><span class="c"># Toggle the auto-withdrawal status of an account</span>
 <span class="c"># under the Dwolla user associated with the current OAuth token.</span>
@@ -8303,9 +8251,8 @@ else { print_r($requests); }
 </span></code></pre>
 
 <p>Enable or disable Auto Withdrawal for the authorized user.</p>
-
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `ManageAccount` scope.</aside>
-<h3 id='http-request'>HTTP Request</h3>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>ManageAccount</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/accounts/features/auto_withdrawl</code></p>
 
 <table><thead>
@@ -8324,16 +8271,7 @@ else { print_r($requests); }
 </tr>
 </tbody></table>
 
-          <!--
-
-TODO: document known bugs
-
-# Known Bugs
-
-In an effort to remain transparent, here's a list of bugs we know about.
-
--->
-
+          
           <h1 id='changelog'>Changelog</h1>
 <p>Track our changes on <a href="https://github.com/Dwolla/slate/commits/master">Github</a>!</p>
 
