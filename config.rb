@@ -1,4 +1,4 @@
-require './lib/redcarpet_header_fix'
+require './lib/redcarpet_mods'
 
 set :css_dir, 'stylesheets'
 
