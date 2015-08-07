@@ -9,3 +9,4 @@ Date | Changes
 03/17/2015 | Add new parameters `processingTypes` and `verified` to the [List Funding Sources](#list-funding-sources) endpoint.
 4/1/2015 | Added Python example code
 4/28/2015 | Add Scheduled Payments documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.
+8/7/2015 | Add `dwolla_landing` parameter to the initial OAuth authorization request.
