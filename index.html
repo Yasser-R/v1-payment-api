@@ -444,7 +444,12 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 <tr>
 <td>verified_account</td>
 <td>yes</td>
-<td>Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account.</td>
+<td>Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account. <code class="prettyprint">true</code> or <code class="prettyprint">false</code></td>
+</tr>
+<tr>
+<td>dwolla_landing</td>
+<td>yes</td>
+<td>An optional override that force displays either the login or create an account screen. Valid values are: <code class="prettyprint">login</code>, <code class="prettyprint">register</code>, or <code class="prettyprint">null</code>.</td>
 </tr>
 </tbody></table>
 <aside class="notice"><p>Remember to url-encode all querystring parameters!</p>
@@ -8300,6 +8305,10 @@ else { print_r($requests); }
 <tr>
 <td>4/28/2015</td>
 <td>Add Scheduled Payments documentation. Introduce Scheduled scope. Add Catalog endpoint. Update sample code for scheduled and catalog.</td>
+</tr>
+<tr>
+<td>8/7/2015</td>
+<td>Add <code class="prettyprint">dwolla_landing</code> parameter to the initial OAuth authorization request.</td>
 </tr>
 </tbody></table>
 
