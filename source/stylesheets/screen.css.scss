@@ -22,13 +22,41 @@ License for the specific language governing permissions and limitations
 under the License.
 */
 
+// dwolla stuff
+
+.notification {
+    height: 44px;
+    background: $color-black-dark;
+    text-align: center;
+    float: left;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    top: -44px;
+
+    a {
+        color: $color-blue;
+        text-decoration: none;
+        position: relative;
+        top:13px;
+
+        span {
+            margin-right: 10px;
+            padding: 4px 10px;
+            background: $color-black;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // GENERAL STUFF
 ////////////////////////////////////////////////////////////////////////////////
 
 html, body {
   color: $main-text;
-  padding: 0;
+  padding: 22px 0 0 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -278,6 +306,7 @@ html, body {
   }
 
   .lang-selector {
+    margin-top: -44px;
     position: fixed;
     z-index: 50;
     border-bottom: 5px solid $lang-select-active-bg;
