@@ -33,6 +33,7 @@ under the License.
     z-index: 100;
     width: 100%;
     top: -44px;
+    overflow: hidden;
 
     a {
         color: $color-blue;
@@ -64,6 +65,7 @@ html, body {
   background-color: $main-bg;
   height: 100%;
   -webkit-text-size-adjust: none; /* Never autoresize text */
+  //overflow-x: hidden;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -284,6 +286,7 @@ html, body {
 
 .page-wrapper {
   margin-left: $nav-width;
+  margin-right: 0;
   position: relative;
   z-index: 10;
   background-color: $main-bg;
@@ -306,8 +309,9 @@ html, body {
   }
 
   .lang-selector {
-    margin-top: -44px;
     position: fixed;
+    margin-top: -44px;
+    margin-right:0;
     z-index: 50;
     border-bottom: 5px solid $lang-select-active-bg;
   }
@@ -317,6 +321,7 @@ html, body {
   background-color: $lang-select-bg;
   width: 100%;
   font-weight: bold;
+  overflow: hidden;
   a {
     display: block;
     float:left;
@@ -357,6 +362,7 @@ html, body {
   // to place content above the dark box
   position: relative;
   z-index: 30;
+  overflow: hidden;
 
   &:after {
     content: '';
