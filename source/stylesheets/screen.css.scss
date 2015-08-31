@@ -28,11 +28,8 @@ under the License.
     height: 44px;
     background: $color-black-dark;
     text-align: center;
-    float: left;
-    position: absolute;
     z-index: 100;
     width: 100%;
-    top: -44px;
     overflow: hidden;
 
     a {
@@ -47,6 +44,10 @@ under the License.
             background: $color-black;
             border-radius: 3px;
             text-transform: uppercase;
+        }
+
+        span.unselected {
+          background: none;
         }
     }
 }
