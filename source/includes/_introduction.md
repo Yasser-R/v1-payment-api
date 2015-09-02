@@ -12,9 +12,13 @@
 
 ```
 
-Welcome to the Dwolla API documentation.  Dwolla's Web API enables you to send money, retrieve transaction data, request money, add bank accounts, accept payments, and a whole lot more.
+Welcome to the Dwolla API V1 documentation. Dwolla’s API enables you to send money, retrieve transaction data, request money, add bank accounts, accept payments, and a whole lot more.
 
-Sample code is available in PHP, Ruby, Python, and Node.JS in the dark area to the right. JSON is shown by default but the tabs on the top right can be used to switch the language in which the examples are displayed in.
+Sample code is available in PHP, Ruby, Python, and Node.JS in the dark area to the right. 
+
+We’re in the process of migrating to a new API version -- [Version 2](https://docsv2.dwolla.com/). Initially, the primary focus of the new version centers around a premium feature: White Label, and will not provide the same functionality as Version 1 does. API V1 will continue to be supported for the foreseeable future. Over time, we will add the same functionality currently available in V1 to V2. Feel free to [sign up](http://eepurl.com/bhjXeP) for our Developer Newsletter to remain informed of our ongoing changes. 
+
+If you’re not sure where to start, ask a question in our [developer forum](https://discuss.dwolla.com/c/api-support) or [get in touch](mailto:api@dwolla.com) with our Developer Relations team. 
 
 ## Helper Libraries
 ```
