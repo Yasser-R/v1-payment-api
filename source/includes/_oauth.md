@@ -75,7 +75,7 @@ Parameter | Optional |Description
 ----------|----------|------------
 client_id | | Application key
 response_type | | This must always be set to `code`
-redirect_uri | | URL where the user will be redirected to afterwards
+redirect_uri | | URL where the user will be redirected to afterwards. The value of this parameter must match one of the values that appear in your [application details](https://www.dwolla.com/applications) page. (We compare: protocol, subdomain, domain, tld, and file path. Querystring parameters are ignored)
 scope | | Permissions you are requesting.  See [below](#oauth-scopes) for list of available scopes.  Scopes are delimited by a pipe ("&#124;")
 verified_account | yes | Require new users opting to register for Dwolla to create a fully-verified Dwolla account instead of a default lightweight Direct account. `true` or `false`
 dwolla_landing | yes | An optional override that force displays either the login or create an account screen. Valid values are: `login`, `register`, or `null`.
