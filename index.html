@@ -502,7 +502,7 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 <tr>
 <td>Funding</td>
-<td>Access the user&rsquo;s funding sources (i.e. connected bank accounts)</td>
+<td>Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources.</td>
 </tr>
 <tr>
 <td>ManageAccount</td>
@@ -2110,40 +2110,46 @@ Invalid purchase order.
   <span class="s2">"Id"</span>             <span class="o">=&gt;</span> <span class="s2">"5da016f7769bcb1de9938a30d194d5a7"</span><span class="p">,</span>
   <span class="s2">"Name"</span>           <span class="o">=&gt;</span> <span class="s2">"Blah - Checking"</span><span class="p">,</span>
   <span class="s2">"Type"</span>           <span class="o">=&gt;</span> <span class="s2">"Checking"</span><span class="p">,</span>
+  <span class="s2">"Balance"</span>        <span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
   <span class="s2">"Verified"</span>       <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
-  <span class="s2">"ProcessingType"</span> <span class="o">=&gt;</span> <span class="s2">"ACH"</span>
+  <span class="s2">"ProcessingType"</span> <span class="o">=&gt;</span> <span class="s2">"FiSync"</span>
 <span class="p">}</span>
 </code></pre>
 <pre class="highlight python"><code><span class="p">{</span>
 <span class="s">"Id"</span><span class="p">:</span> <span class="s">"12345678"</span><span class="p">,</span>
 <span class="s">"Name"</span><span class="p">:</span> <span class="s">"Donations Payout Account - Checking"</span><span class="p">,</span>
 <span class="s">"Type"</span><span class="p">:</span> <span class="s">"Checking"</span><span class="p">,</span>
+<span class="s">"Balance"</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
 <span class="s">"Verified"</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
 <span class="s">"ProcessingType"</span><span class="p">:</span> <span class="s">"FiSync"</span>
 <span class="p">}</span>
 </code></pre>
 <pre class="highlight json"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c58bb9f7f1d51d5547e1987a2833f4fb"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Donations Payout Account - Checking"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Checking"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"Verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"ProcessingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FiSync"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+  </span><span class="nt">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Balance"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a1578b447d79ad16eea8601d46d006cb"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Veridian Credit Union - Savings"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Savings"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"Verified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ProcessingType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FiSync"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
+
 </span></code></pre>
 <pre class="highlight javascript"><code><span class="p">{</span> 
     <span class="nl">Id</span><span class="p">:</span> <span class="s1">'5da016f7769bcb1de9938a30d194d5a7'</span><span class="p">,</span>
     <span class="nx">Name</span><span class="err">:</span> <span class="s1">'Blah - Checking'</span><span class="p">,</span>
+    <span class="nx">Balance</span><span class="err">:</span> <span class="kc">null</span><span class="p">,</span>
     <span class="nx">Type</span><span class="err">:</span> <span class="s1">'Checking'</span><span class="p">,</span>
     <span class="nx">Verified</span><span class="err">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">ProcessingType</span><span class="err">:</span> <span class="s1">'ACH'</span> 
+    <span class="nx">ProcessingType</span><span class="err">:</span> <span class="s1">'FiSync'</span> 
 <span class="p">}</span> 
 </code></pre>
 
-<p>Look up a particular funding source by its funding source ID.</p>
+<p>Look up a particular funding source by its funding source ID.  This endpoint includes an additional <code class="prettyprint">Balance</code> parameter. If the funding source is of type <code class="prettyprint">Credit</code> or is a Dwolla account balance, the funding source&rsquo;s available funds will be returned.  Otherwise, for ACH and FiSync funding sources, <code class="prettyprint">Balance</code> will be <code class="prettyprint">null</code>.</p>
 <aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Funding</code> scope.</p>
 </aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/fundingsources/{id}</code></p>
@@ -7954,7 +7960,7 @@ else { print_r($requests); }
 </span></code></pre>
 
 <p>Fulfill an authorized user&rsquo;s pending money request.  Request must have a status of <code class="prettyprint">Pending</code>.</p>
-<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Request</code> scope.</p>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Send</code> scope.</p>
 </aside><h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">POST https://www.dwolla.com/oauth/rest/requests/{request_id}/fulfill</code></p>
 
