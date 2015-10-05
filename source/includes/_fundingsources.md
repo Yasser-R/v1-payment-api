@@ -329,8 +329,9 @@ array (
   "Id"             => "5da016f7769bcb1de9938a30d194d5a7",
   "Name"           => "Blah - Checking",
   "Type"           => "Checking",
+  "Balance"        => nil,
   "Verified"       => true,
-  "ProcessingType" => "ACH"
+  "ProcessingType" => "FiSync"
 }
 ```
 ```python
@@ -338,35 +339,40 @@ array (
 "Id": "12345678",
 "Name": "Donations Payout Account - Checking",
 "Type": "Checking",
+"Balance": null,
 "Verified": true,
 "ProcessingType": "FiSync"
 }
 ```
 ```json
 {
-    "Success": true,
-    "Message": "Success",
-    "Response": {
-        "Id": "c58bb9f7f1d51d5547e1987a2833f4fb",
-        "Name": "Donations Payout Account - Checking",
-        "Type": "Checking",
-        "Verified": true,
-        "ProcessingType": "FiSync"
-    }
+  "Success": true,
+  "Message": "Success",
+  "Response": {
+    "Balance": null,
+    "Id": "a1578b447d79ad16eea8601d46d006cb",
+    "Name": "Veridian Credit Union - Savings",
+    "Type": "Savings",
+    "Verified": true,
+    "ProcessingType": "FiSync"
+  },
+  "_links": null
 }
+
 ```
 
 ```js
 { 
     Id: '5da016f7769bcb1de9938a30d194d5a7',
     Name: 'Blah - Checking',
+    Balance: null,
     Type: 'Checking',
     Verified: true,
-    ProcessingType: 'ACH' 
+    ProcessingType: 'FiSync' 
 } 
 ```
 
-Look up a particular funding source by its funding source ID.
+Look up a particular funding source by its funding source ID.  This endpoint includes an additional `Balance` parameter. If the funding source is of type `Credit` or is a Dwolla account balance, the funding source's available funds will be returned.  Otherwise, for ACH and FiSync funding sources, `Balance` will be `null`.
 
 <aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Funding` scope.</aside>
 
