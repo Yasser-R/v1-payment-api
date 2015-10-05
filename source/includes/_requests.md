@@ -783,7 +783,7 @@ array (
 
 Fulfill an authorized user's pending money request.  Request must have a status of `Pending`.
 
-<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Request` scope.</aside>
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Send` scope.</aside>
 
 ### HTTP Request
 
