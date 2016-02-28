@@ -501,7 +501,7 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 <tr>
 <td>Funding</td>
-<td>Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources.</td>
+<td>Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources</td>
 </tr>
 <tr>
 <td>ManageAccount</td>
@@ -509,7 +509,11 @@ https://www.dwolla.com/oauth/v2/authenticate?client_id={client_id}&amp;response_
 </tr>
 <tr>
 <td>Scheduled</td>
-<td>Allow scheduling one-time and recurring payments.</td>
+<td>Allow scheduling one-time and recurring payments</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Access the user&rsquo;s Dwolla account email address</td>
 </tr>
 </tbody></table>
 <h2 id='finish-authorization'>Finish Authorization</h2><pre class="highlight php"><code><span class="cp">&lt;?php</span>
@@ -5174,6 +5178,56 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <tr>
 <td>Type</td>
 <td><code class="prettyprint">Personal</code> or <code class="prettyprint">Commercial</code></td>
+</tr>
+</tbody></table>
+<h2 id='get-email-address'>Get Email Address</h2><pre class="highlight php"><code>/**
+ *   No example for this language yet.
+ **/
+</code></pre>
+<pre class="highlight ruby"><code><span class="c1">#   No example for this language yet.</span>
+</code></pre>
+<pre class="highlight python"><code><span class="c"># No example for this language yet.</span>
+</code></pre>
+<pre class="highlight javascript"><code><span class="cm">/**
+ *   No example for this language yet.
+ **/</span>
+</code></pre>
+
+<blockquote>
+<p>If successful, you&rsquo;ll receive this response:</p>
+</blockquote>
+<pre class="highlight ruby"><code>
+</code></pre>
+<pre class="highlight python"><code>
+</code></pre>
+<pre class="highlight javascript"><code>
+</code></pre>
+<pre class="highlight php"><code>
+</code></pre>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+  </span><span class="nt">"Success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Success"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Response"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nt">"Email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test+user@email.com"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nt">"_links"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>Retrieve the email address for the authorized user.</p>
+<aside class="reminder"><p>This endpoint <a href="#authentication">requires</a> an OAuth access token with the <code>Email</code> scope.</p>
+</aside><h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/users/email</code></p>
+<h3 id='response'>Response</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Email</td>
+<td>Dwolla user account email address.</td>
 </tr>
 </tbody></table>
 <h2 id='get-avatar'>Get Avatar</h2><pre class="highlight shell"><code>GET https://www.dwolla.com/avatars/812-713-9234
