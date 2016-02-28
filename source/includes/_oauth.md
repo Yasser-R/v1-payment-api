@@ -97,9 +97,10 @@ Transactions | Access the user's transaction data
 Balance | Access the user's Dwolla account balance
 Send | Send money on the user's behalf
 Request | Send money requests, list them, fulfill them
-Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources.
+Funding | Access names of funding sources the user has connected to Dwolla, access available balance information for Dwolla Balance and Dwolla Credit (if applicable), add new funding sources, verify funding sources, initiate transfers to and from funding sources
 ManageAccount | Manage the user's account settings
-Scheduled | Allow scheduling one-time and recurring payments.
+Scheduled | Allow scheduling one-time and recurring payments
+Email | Access the user's Dwolla account email address
 
 ## Finish Authorization
 

@@ -244,6 +244,67 @@ City | User's home city
 State | User's home state
 Type | `Personal` or `Commercial`
 
+## Get Email Address
+
+```php
+/**
+ *   No example for this language yet.
+ **/
+```
+```ruby
+#   No example for this language yet.
+```
+```python
+# No example for this language yet.
+```
+```js
+/**
+ *   No example for this language yet.
+ **/
+```
+
+> If successful, you'll receive this response:
+
+```ruby
+
+```
+```python
+
+```
+
+```js
+
+```
+
+```php
+
+```
+
+```json
+{
+  "Success": true,
+  "Message": "Success",
+  "Response": {
+    "Email": "test+user@email.com"
+  },
+  "_links": null
+}
+```
+
+Retrieve the email address for the authorized user.
+
+<aside class="reminder">This endpoint [requires](#authentication) an OAuth access token with the `Email` scope.</aside>
+
+### HTTP Request
+
+`GET https://www.dwolla.com/oauth/rest/users/email`
+
+### Response
+
+Parameter | Description
+----------|-------------
+Email | Dwolla user account email address.
+
 ## Get Avatar
 
 ```shell
