@@ -39,7 +39,6 @@ includes:
  
   # misc
   - bugs
-  - changelog
 
 search: true
 
