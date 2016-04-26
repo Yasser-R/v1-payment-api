@@ -6259,7 +6259,7 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <tr>
 <td>userJobId</td>
 <td>yes</td>
-<td>An optional custom identifer for this job</td>
+<td>An optional custom identifier for this job. <strong>Note:</strong> Must be a unique string identifier that hasn&rsquo;t already been supplied in an existing request.</td>
 </tr>
 <tr>
 <td>assumeCosts</td>
@@ -6313,6 +6313,10 @@ print_r($Transactions-&gt;deleteAllScheduled());
 <tr>
 <td>The selected funding source doesn&rsquo;t have enough funds to cover this job&rsquo;s payout.</td>
 <td>Insufficient funds to cover total job payout. Select alternative funding source.</td>
+</tr>
+<tr>
+<td>A job with UserJobId of &rsquo;{}&rsquo; already exists.</td>
+<td>A MassPay job has already been created with the supplied <code class="prettyprint">userJobId</code>. Supply a new unique value.</td>
 </tr>
 </tbody></table>
 <h2 id='list-jobs'>List Jobs</h2><pre class="highlight php"><code><span class="cp">&lt;?php</span>
