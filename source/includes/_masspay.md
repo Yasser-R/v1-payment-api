@@ -263,7 +263,7 @@ Create a new MassPay job.
 | fundsSource | no | ID of [funding source](#funding-sources) from which to fund the payments
 | pin | no | User account PIN
 | items | no | An array of `Item` objects.  See below.
-| userJobId | yes | An optional custom identifer for this job
+| userJobId | yes | An optional custom identifier for this job. **Note:** Must be a unique string identifier that hasn't already been supplied in an existing request.
 | assumeCosts | yes | Deprecated
 
 ### Items
@@ -281,6 +281,7 @@ Each payment to be created in a MassPay job is represented as a JSON object with
 | Error String | Description |
 |--------------|-------------|
 | The selected funding source doesn't have enough funds to cover this job's payout. | Insufficient funds to cover total job payout. Select alternative funding source. |
+| A job with UserJobId of '{}' already exists. | A MassPay job has already been created with the supplied `userJobId`. Supply a new unique value.
 
 ## List Jobs
 
