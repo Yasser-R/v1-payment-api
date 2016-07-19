@@ -33,11 +33,15 @@ Quote of the day:
 
 A handful of libraries are officially maintained, and others are community maintained.
 
+
+### Officially maintained
 - PHP: [dwolla-php](https://github.com/Dwolla/dwolla-php)
 - Ruby: [dwolla-ruby](https://github.com/Dwolla/dwolla-ruby)
 - Python: [dwolla-python](https://github.com/Dwolla/dwolla-python)
 - Node.JS: [dwolla-node](https://github.com/Dwolla/dwolla-node)
 - Java: [dwolla-java](https://github.com/Dwolla/dwolla-java)
+
+### Unsupported or community maintained
 - Clojure: [dwolla-clojure](https://github.com/Dwolla/dwolla-clojure)
 - Scala: [dwolla-scala](https://github.com/Dwolla/dwolla-scala)
 - Windows 8 SDK
