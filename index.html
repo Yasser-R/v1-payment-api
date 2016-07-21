@@ -1532,7 +1532,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
         </span><span class="nt">"Status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Completed"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"FundingSource"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Balance"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"TransactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">69960</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"ProfileId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nt">"DestinationTransactionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">69959</span><span class="p">,</span><span class="w">
         </span><span class="nt">"OrderItems"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
@@ -1555,7 +1554,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
   <span class="nx">Status</span><span class="err">:</span> <span class="s1">'Completed'</span><span class="p">,</span>
   <span class="nx">FundingSource</span><span class="err">:</span> <span class="s1">'Balance'</span><span class="p">,</span>
   <span class="nx">TransactionId</span><span class="err">:</span> <span class="mi">290142</span><span class="p">,</span>
-  <span class="nx">ProfileId</span><span class="err">:</span> <span class="kc">null</span><span class="p">,</span>
   <span class="nx">DestinationTransactionId</span><span class="err">:</span> <span class="mi">290141</span><span class="p">,</span>
   <span class="nx">OrderItems</span><span class="err">:</span> <span class="p">[],</span>
   <span class="nx">Metadata</span><span class="err">:</span> <span class="kc">null</span> 
@@ -1570,7 +1568,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
   <span class="s">u'Status'</span><span class="p">:</span> <span class="s">u'Completed'</span><span class="p">,</span>
   <span class="s">u'FundingSource'</span><span class="p">:</span> <span class="s">u'Balance'</span><span class="p">,</span>
   <span class="s">u'TransactionId'</span><span class="p">:</span> <span class="mi">290142</span><span class="p">,</span>
-  <span class="s">u'ProfileId'</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
   <span class="s">u'DestinationTransactionId'</span><span class="p">:</span> <span class="mi">290141</span><span class="p">,</span>
   <span class="s">u'OrderItems'</span><span class="p">:</span> <span class="p">[],</span>
   <span class="s">u'Metadata'</span><span class="p">:</span> <span class="n">null</span> 
@@ -1585,7 +1582,6 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
   'Status' =&gt; 'Created',
   'FundingSource' =&gt; NULL,
   'TransactionId' =&gt; NULL,
-  'ProfileId' =&gt; NULL,
   'DestinationTransactionId' =&gt; NULL,
   'OrderItems' =&gt;
   array (
@@ -1600,7 +1596,7 @@ X-Dwolla-Signature: f71c2f49a87b6d0a662f449b7dbb83a5c918e237
 <h3 id='http-request'>HTTP Request</h3>
 <p><code class="prettyprint">GET https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}?client_id={key}&amp;client_secret={secret}</code></p>
 <h3 id='response-parameters'>Response Parameters</h3>
-<p>This returns the <code class="prettyprint">CheckoutId</code>, <code class="prettyprint">Discount</code>, <code class="prettyprint">Shipping</code>, <code class="prettyprint">Tax</code>, <code class="prettyprint">Total</code>, <code class="prettyprint">OrderItems</code>, <code class="prettyprint">ProfileId</code>, <code class="prettyprint">Metadata</code> of the checkout and some additional information:</p>
+<p>This returns the <code class="prettyprint">CheckoutId</code>, <code class="prettyprint">Discount</code>, <code class="prettyprint">Shipping</code>, <code class="prettyprint">Tax</code>, <code class="prettyprint">Total</code>, <code class="prettyprint">OrderItems</code>, <code class="prettyprint">Metadata</code> of the checkout and some additional information:</p>
 
 <table><thead>
 <tr>
