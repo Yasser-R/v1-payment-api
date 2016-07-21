@@ -267,7 +267,6 @@ This method is not yet supported in dwolla-ruby.
         "Status": "Completed",
         "FundingSource": "Balance",
         "TransactionId": 69960,
-        "ProfileId": null,
         "DestinationTransactionId": 69959,
         "OrderItems": [
             {
@@ -292,7 +291,6 @@ This method is not yet supported in dwolla-ruby.
   Status: 'Completed',
   FundingSource: 'Balance',
   TransactionId: 290142,
-  ProfileId: null,
   DestinationTransactionId: 290141,
   OrderItems: [],
   Metadata: null 
@@ -308,7 +306,6 @@ This method is not yet supported in dwolla-ruby.
   u'Status': u'Completed',
   u'FundingSource': u'Balance',
   u'TransactionId': 290142,
-  u'ProfileId': null,
   u'DestinationTransactionId': 290141,
   u'OrderItems': [],
   u'Metadata': null 
@@ -324,7 +321,6 @@ array (
   'Status' => 'Created',
   'FundingSource' => NULL,
   'TransactionId' => NULL,
-  'ProfileId' => NULL,
   'DestinationTransactionId' => NULL,
   'OrderItems' =>
   array (
@@ -343,7 +339,7 @@ Fetch an existing checkout by its `checkoutId` to get its status and details.
 `GET https://www.dwolla.com/oauth/rest/offsitegateway/checkouts/{checkoutId}?client_id={key}&client_secret={secret}`
 
 ### Response Parameters
-This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems`, `ProfileId`, `Metadata` of the checkout and some additional information:
+This returns the `CheckoutId`, `Discount`, `Shipping`, `Tax`, `Total`, `OrderItems`, `Metadata` of the checkout and some additional information:
 
 Parameter | Description
 --------- | -----------
