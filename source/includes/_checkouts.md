@@ -192,7 +192,6 @@ allowGuestCheckout | yes | Enable [Dwolla Direct](https://developers.dwolla.com/
 orderId | yes | Custom string to identify the checkout.  Not persisted in resulting transaction.
 allowFundingSources | yes | Allow the user to pay with a funding source other than their account Balance.  Defaults to `false`.
 additionalFundingSources | yes | If `allowFundingSources` enabled, use this to filter the types of funding sources allowed. <br> `credit`: Only allow Dwolla Credit, if both the merchant and user support it <br> `banks`: Only allow bank (ACH) funding sources <br> `fisync`: Only allow FiSync-enabled bank funding sources <br> `realtime`: Only allow `credit` and `fisync` sources <br> `true`: Allow all funding source types <br> `false`: Do not allow any funding sources
-profileId | yes | This feature allows a recipient to display a different avatar and name, to collect money on a different person/entity's behalf. Requires special permission to use. Contact us if you're interested!
 
 ### PurchaseOrder Object
 
