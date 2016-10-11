@@ -12,13 +12,11 @@
 
 ```
 
-Welcome to the Dwolla API V1 documentation. Dwolla’s API enables you to send money, retrieve transaction data, request money, add bank accounts, accept payments, and a whole lot more.
+The API v1 will continue to function for the foreseeable future, but Dwolla is no longer adding features, supporting minor bug fixes, or maintaining its SDK.
 
-Sample code is available in PHP, Ruby, Python, and Node.JS in the dark area to the right. 
+The new API version, [Version 2](https://docsv2.dwolla.com/#introduction), features improved event-driven notifications, white label capabilities, developer experiences, and an intuitive dashboard and admin interface. V2 will also provide some of the same functionality as Version 1, like MassPay. 
 
-We’re in the process of migrating to a new API version -- [Version 2](https://docsv2.dwolla.com/). Initially, the primary focus of the new version centers around a premium feature: White Label, and will not provide the same functionality as Version 1 does. API V1 will continue to be supported for the foreseeable future. Over time, we will add the same functionality currently available in V1 to V2. Feel free to [sign up](http://eepurl.com/bhjXeP) for our Developer Newsletter to remain informed of our ongoing changes. 
-
-If you’re not sure where to start, ask a question in our [developer forum](https://discuss.dwolla.com/c/api-support) or [get in touch](mailto:api@dwolla.com) with our Developer Relations team. 
+Feel free to [sign up for our Developer Newsletter](http://dwolla.us3.list-manage.com/subscribe?u=bd010d6cd015c558a27b4a232&id=4e85ae585c) to remain informed of ongoing changes, checkout our [migration documentation](https://developers.dwolla.com/guides/migrate-to-v2/), or join us in the [developer forum](https://discuss.dwolla.com/c/api-support).
 
 ## Helper Libraries
 ```
@@ -31,17 +29,14 @@ Quote of the day:
 
 ```
 
-A handful of libraries are officially maintained, and others are community maintained.
+Helper libraries for API v1 are no longer officially supported by Dwolla. Please consider our new and improved v2 API which includes [updated SDKs](https://developers.dwolla.com/pages/sdks.html).
 
-
-### Officially maintained
+### Unsupported or community maintained
 - PHP: [dwolla-php](https://github.com/Dwolla/dwolla-php)
 - Ruby: [dwolla-ruby](https://github.com/Dwolla/dwolla-ruby)
 - Python: [dwolla-python](https://github.com/Dwolla/dwolla-python)
 - Node.JS: [dwolla-node](https://github.com/Dwolla/dwolla-node)
 - Java: [dwolla-java](https://github.com/Dwolla/dwolla-java)
-
-### Unsupported or community maintained
 - Clojure: [dwolla-clojure](https://github.com/Dwolla/dwolla-clojure)
 - Scala: [dwolla-scala](https://github.com/Dwolla/dwolla-scala)
 - Windows 8 SDK
