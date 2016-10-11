@@ -24,6 +24,16 @@ under the License.
 
 // dwolla stuff
 
+.v2-banner {
+  background: #f1dc8f;
+  padding: 13px 28px;
+  margin-right: 50%;
+
+  @media (max-width: $phone-width) {
+    margin-right: 0;
+  }
+}
+
 .notification {
     height: 44px;
     background: $color-black-dark;
@@ -58,7 +68,7 @@ under the License.
 
 html, body {
   color: $main-text;
-  padding: 22px 0 0 0;
+  padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -81,7 +91,7 @@ html, body {
 }
 
 @mixin embossed-bg {
-  
+
 }
 
 .tocify-wrapper {
@@ -211,7 +221,7 @@ html, body {
     display: none; // tocify will override this when needed
     background-color: $nav-subitem-bg;
     font-weight: 500;
-    
+
     .tocify-item>a {
       padding-left: $nav-padding + $nav-indent;
       font-size: 12px;
