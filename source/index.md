@@ -36,6 +36,7 @@ includes:
   - refund
   - requests
   - accountsettings
+  - test
  
   # misc
   - bugs
